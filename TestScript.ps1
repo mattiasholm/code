@@ -14,6 +14,3 @@ foreach ($Item in $Items)
     Write-Host -NoNewline "of size "
     Write-Host -ForegroundColor Magenta "$($Item.Length)"
 }
-
-
-# Teständring!
