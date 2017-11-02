@@ -11,14 +11,3 @@ Import-PSSession $Session
 Connect-MsolService -Credential $Credential
 
 $TenantId = (Get-MsolPartnerContract -DomainName $Domain).TenantId
-
-
-
-
-
-
-
-
-
-# office365@DonatorAB.onmicrosoft.com
-# a***6***
