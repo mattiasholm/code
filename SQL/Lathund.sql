@@ -1,30 +1,17 @@
 -- Lista samtliga ärenden
 SELECT IssueID,Subject,Body,IssueDate FROM hdIssues;
 
-SELECT IssueID,Subject,Body,CONVERT(DATETIME2(0), IssueDate) AS 'Date' FROM hdIssues;
-
-DECLARE @VAR DATETIME = '2012-03-27 12:34:39.807';
-
-SELECT @VAR, CONVERT(VARCHAR(5),@VAR, 108);
 
 -- Lista ärenden från en viss dag
-SELECT IssueID,Subject,Body,IssueDate FROM hdIssues WHERE CONVERT(VARCHAR(10),IssueDate,121) = '2017-11-21'
+SELECT IssueID,Subject,Body,IssueDate FROM hdIssues WHERE CONVERT(VARCHAR(10),IssueDate,121) = '2017-11-21';
 
 
 -- Lista ärenden nyare än en viss dag
-SELECT IssueID,Subject,Body,IssueDate FROM hdIssues WHERE IssueDate > '2017-10-01'
+SELECT IssueID,Subject,Body,IssueDate FROM hdIssues WHERE IssueDate > '2017-10-01';
 
 
 -- Lista öppna ärenden
-SELECT IssueID,Subject,Body,IssueDate FROM hdIssues WHERE ResolvedDate LIKE '2017-06-05'
-
-
-
-select * from hdIssues;
-select * from hdCategories;
-
-
-
+SELECT IssueID,Subject,Body,IssueDate FROM hdIssues WHERE ResolvedDate IS NULL;
 
 
 -- Lista 10 ärenden med högst prioritet:
@@ -116,3 +103,10 @@ LEFT JOIN hdCompanies ON hdUsers.CompanyID = hdCompanies.CompanyID
 LEFT JOIN b3Contact_Company ON hdUsers.UserID = b3Contact_Company.UserID
 LEFT JOIN b3Roles ON b3Roles.RoleID = b3Contact_Company.RoleID
 WHERE hdUsers.FirstName <> '';
+
+
+-- Lista antal ärenden per dag
+SELECT CONVERT(VARCHAR(10),IssueDate,121) AS 'Datum',COUNT(*) AS 'Antal ärenden'
+FROM hdIssues
+GROUP BY CONVERT(VARCHAR(10),IssueDate,121)
+ORDER BY CONVERT(VARCHAR(10),IssueDate,121) DESC;
