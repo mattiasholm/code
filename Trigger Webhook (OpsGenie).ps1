@@ -23,13 +23,13 @@
 
 
 
-
+<# GAMMAL SKRIPTINFO, FLYTTA UPP TILL COMMENT-BASED HELP OVAN!
 # Author: Mattias Holm
 # GitHub: https://github.com/mattiasholm
 # 
 # Description: Trigger webhook and send JSON payload
 # Disclaimer: Please run this script at your own risk. I take no personal responsibility whatsoever should it fail you or wreak havoc amongst your environment.
-
+#>
 
 
 $WebhookUrl = "https://api.opsgenie.com/v1/json/azure?apiKey=d9df92f1-a024-4bb9-a251-099b63838f3e"
