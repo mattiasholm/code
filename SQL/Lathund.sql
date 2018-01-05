@@ -110,3 +110,12 @@ SELECT CONVERT(VARCHAR(10),IssueDate,121) AS 'Datum',COUNT(*) AS 'Antal ärenden
 FROM hdIssues
 GROUP BY CONVERT(VARCHAR(10),IssueDate,121)
 ORDER BY CONVERT(VARCHAR(10),IssueDate,121) DESC;
+
+
+-- Lista alla ärenden, samt en kolumn med totalt antal ärenden från den dagen:
+SELECT dbo.hdIssues.IssueID AS 'Ärendenummer', dbo.hdIssues.Subject AS 'Rubrik',
+dbo.hdUsers.Email AS 'Tilldelad', dbo.hdIssues.IssueDate AS 'Startdatum',
+COUNT(*) OVER (PARTITION BY CONVERT(date, IssueDate)) AS AntalPerDatum
+FROM dbo.hdIssues
+LEFT JOIN dbo.hdUsers ON dbo.hdIssues.AssignedToUserID = dbo.hdUsers.UserID
+ORDER BY IssueDate DESC;
