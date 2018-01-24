@@ -79,3 +79,9 @@ $chevy6::numberOfWheels
 
 
 [Car2]::new.OverloadDefinitions
+
+[Car2]::new
+
+###
+New-Variable -Scope Private -Name TS -Value "Tomas"
+$TS
