@@ -1,4 +1,5 @@
-function Remove-Alias {
+function Remove-Alias
+{
     Param (
         [Parameter(Mandatory = $true)]
         [String]$Name
