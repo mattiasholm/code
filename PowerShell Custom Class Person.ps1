@@ -8,19 +8,25 @@ $SSN
 [string]
 $Sex
 
+[ValidateNotNullOrEmpty()]
 [string]
 $FirstName
 
+[ValidateNotNullOrEmpty()]
 [string]
 $LastName
 
-[ValidateRange(100,250)]
+[ValidateRange(30,300)]
 [int]
 $Height
 
 [ValidateRange(30,300)]
 [int]
 $Weight
+
+[ValidateLength(3,3)]
+[string]
+$Nationality
 
 static
 [int]
@@ -31,7 +37,7 @@ Person ()
 
 }
 
-Person ($SSN,$Sex,$FirstName,$LastName,$Height,$Weight)
+Person ($SSN,$Sex,$FirstName,$LastName,$Height,$Weight,$Nationality)
 {
     $this.SSN = $SSN;
     $this.Sex = $Sex;
@@ -39,6 +45,7 @@ Person ($SSN,$Sex,$FirstName,$LastName,$Height,$Weight)
     $this.LastName = $LastName;
     $this.Height = $Height;
     $this.Weight = $Weight;
+    $this.Nationality = $Nationality
 }
 
 }
@@ -46,7 +53,7 @@ Person ($SSN,$Sex,$FirstName,$LastName,$Height,$Weight)
 
 $Person1 = [Person]::new()
 
-$Person1.SSN = "19910324-3391"
+$Person1.SSN = "19910324-1111"
 
 $Person1.Sex = "Man"
 
@@ -58,25 +65,30 @@ $person1.Height = "178"
 
 $person1.Weight = "75"
 
+$person1.Nationality = "SWE"
+
 $Person1::NumberOfArms
 
-$person1
+$Person1
 
 
-[Person]::new("19910324-3391","Man","Mattias","Holm","178","75")
 
+$Person2 = [Person]::new("19910324-1111","Man","Mattias","Holm","178","75","SWE")
 
+$Person2
 
 
 
 function New-Person
 {
     Param (
-        [Parameter(Mandatory = $true)]
+        #[Parameter(Mandatory = $true)]
         [string]
         $SSN
 
-
+        [string]
+        $Sex
+        
     )
 [Person]::new()
 }
@@ -104,3 +116,8 @@ class MyClass
     }
     private _doSomething($a) {}
 }#>
+
+
+
+# # # CHILD CLASSES: http://overpoweredshell.com/Introduction-to-PowerShell-Classes/#this
+
