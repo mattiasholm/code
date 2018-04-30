@@ -1,0 +1,37 @@
+// Hårdkoda server+service (ChangeTracking)
+let server_name="snowwebSrv0";
+let service_name="Software Protection";
+ConfigurationChange
+| where ConfigChangeType == "WindowsServices" and SvcDisplayName == service_name and Computer == server_name
+| top 1 by TimeGenerated 
+| where SvcState != "Running" and SvcPreviousState == "Running"
+| project Computer, SvcDisplayName, SvcState, SvcPreviousState, SvcStartupType, TimeGenerated
+
+
+// Hårdkoda server+service (Event-Log)
+// OBS: Tveksamt om nedanstående fångar upp en service som fastnar i Stopping eller Starting? Bättre att kolla om Running?
+let server_name="snowwebSrv0";
+let service_name="Software Protection";
+Event
+| where EventLog == "System" and EventID == 7036 and Source == "Service Control Manager" and Computer == server_name 
+| top 1 by TimeGenerated
+| where RenderedDescription contains strcat("The ", service_name, " service entered the stopped state.")
+| project Computer, RenderedDescription, TimeGenerated
+
+
+
+
+
+
+
+
+// Utan att hårdkoda server?
+// Evaluating sub-groups
+
+requests 
+| where timestamp > ago(1h) 
+| summarize dcountif(user_Id, success==False) by client_CountryOrRegion  
+
+requests 
+| where timestamp > ago(1h) 
+| summarize dcountif(user_Id, success==False) by client_CountryOrRegion, resultCode

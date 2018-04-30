@@ -1,0 +1,10 @@
+let start_time=now(-7d);
+let end_time=now();
+Heartbeat
+| where TimeGenerated > start_time and TimeGenerated < end_time
+| summarize heartbeat_per_hour=count() by bin_at(TimeGenerated, 1h, start_time), Computer
+| extend available_per_hour=iff(heartbeat_per_hour>0, true, false)
+| summarize total_available_hours=countif(available_per_hour==true) by Computer 
+| extend total_number_of_buckets=round((end_time-start_time)/1h)+1
+| extend availability_rate=total_available_hours*100/total_number_of_buckets
+| project Computer, availability_rate
