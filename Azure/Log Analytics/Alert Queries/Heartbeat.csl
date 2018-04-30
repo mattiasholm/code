@@ -1,4 +1,3 @@
 Heartbeat
 | summarize LastHeartbeat = max(TimeGenerated) by Computer
-| where isnotempty(Computer)
 | where LastHeartbeat < ago(10m)
