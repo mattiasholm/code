@@ -1,37 +1,24 @@
-// Hårdkoda server+service (ChangeTracking)
-let server_name="snowwebSrv0";
-let service_name="Software Protection";
-ConfigurationChange
-| where ConfigChangeType == "WindowsServices" and SvcDisplayName == service_name and Computer == server_name
-| top 1 by TimeGenerated 
-| where SvcState != "Running" and SvcPreviousState == "Running"
-| project Computer, SvcDisplayName, SvcState, SvcPreviousState, SvcStartupType, TimeGenerated
+// Delay notifications? Dvs. Måste den ha varit nere i minst 5 minuter innan vi larmar???
 
-
-// Hårdkoda server+service (Event-Log)
-// OBS: Tveksamt om nedanstående fångar upp en service som fastnar i Stopping eller Starting? Bättre att kolla om Running?
-let server_name="snowwebSrv0";
-let service_name="Software Protection";
+let service_name = "World Wide Web Publishing Service";
 Event
-| where EventLog == "System" and EventID == 7036 and Source == "Service Control Manager" and Computer == server_name 
-| top 1 by TimeGenerated
-| where RenderedDescription contains strcat("The ", service_name, " service entered the stopped state.")
-| project Computer, RenderedDescription, TimeGenerated
+| where EventLog == 'System' and EventID == 7036 and Source == "Service Control Manager"
+| parse kind=relaxed EventData with * '<Data Name="param1">' Windows_Service_Name '</Data><Data Name="param2">' Windows_Service_State '</Data>' *
+| where Windows_Service_Name == service_name
+| summarize arg_max(TimeGenerated, *) by Computer
+| where Windows_Service_State != "running"
+| project Computer, Windows_Service_Name, Windows_Service_State, TimeGenerated
 
 
 
 
 
-
-
-
-// Utan att hårdkoda server?
-// Evaluating sub-groups
-
-requests 
-| where timestamp > ago(1h) 
-| summarize dcountif(user_Id, success==False) by client_CountryOrRegion  
-
-requests 
-| where timestamp > ago(1h) 
-| summarize dcountif(user_Id, success==False) by client_CountryOrRegion, resultCode
+let server_name="testservervm01";
+let service_name = "World Wide Web Publishing Service";
+Event
+| where EventLog == 'System' and EventID == 7036 and Source == "Service Control Manager" and Computer == server_name
+| parse kind=relaxed EventData with * '<Data Name="param1">' Windows_Service_Name '</Data><Data Name="param2">' Windows_Service_State '</Data>' *
+| where Windows_Service_Name == service_name
+| top 1 by TimeGenerated desc
+| where Windows_Service_State != "running"
+| project Computer, Windows_Service_Name, Windows_Service_State, TimeGenerated
