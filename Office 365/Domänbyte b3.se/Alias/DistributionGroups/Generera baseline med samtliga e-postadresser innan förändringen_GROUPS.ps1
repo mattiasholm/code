@@ -1,3 +1,5 @@
+Connect-EXOPSSession
+
 $ErrorActionPreference = "Stop"
 
 Class Group
@@ -7,7 +9,7 @@ Class Group
 }
 
 
-$Groups = Get-DynamicDistributionGroup
+$Groups = Get-DistributionGroup
 $ListOfGroups = @()
 
 
@@ -21,4 +23,4 @@ foreach ($Group in $Groups)
 }
 
 
-$ListOfGroups | Export-Csv -Path "C:\Temp\Baseline samtliga adresser_DynGROUPS.csv" -Encoding Unicode -Delimiter "," -NoTypeInformation
+$ListOfGroups | Export-Csv -Path "C:\Temp\Baseline samtliga adresser_GROUPS.csv" -Encoding Unicode -Delimiter "," -NoTypeInformation

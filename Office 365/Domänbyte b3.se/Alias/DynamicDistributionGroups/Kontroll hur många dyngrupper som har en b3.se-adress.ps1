@@ -1,3 +1,5 @@
+Connect-EXOPSSession
+
 $ErrorActionPreference = "Stop"
 
 $Count = (Get-DynamicDistributionGroup | Where-Object {$_.EmailAddresses -like "*@b3.se*"}).Count

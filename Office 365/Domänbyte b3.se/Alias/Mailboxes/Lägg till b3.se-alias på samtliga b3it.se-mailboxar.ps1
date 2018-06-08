@@ -1,3 +1,5 @@
+Connect-EXOPSSession
+
 $Mailboxes = Get-Mailbox | Where-Object {$_.EmailAddresses -like "*@b3it.se*"}
 
 foreach ($Mailbox in $Mailboxes)

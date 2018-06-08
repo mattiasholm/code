@@ -1,3 +1,5 @@
+Connect-EXOPSSession
+
 $Groups = Get-DynamicDistributionGroup | Where-Object {$_.EmailAddresses -like "*@b3it.se*"}
 
 foreach ($Group in $Groups)

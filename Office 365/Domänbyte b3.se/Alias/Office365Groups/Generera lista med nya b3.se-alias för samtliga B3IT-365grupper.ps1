@@ -1,6 +1,8 @@
+Connect-EXOPSSession
+
 $ErrorActionPreference = "Stop"
 
-Class Mailbox
+Class Group
 {
     [String]$DisplayName
     [String]$PrimarySmtpAddress
@@ -8,13 +10,13 @@ Class Mailbox
 }
 
 
-$Mailboxes = Get-Mailbox | Where-Object {$_.EmailAddresses -like "*@b3it.se*"}
-$ListOfMailboxes = @()
+$Groups = Get-UnifiedGroup | Where-Object {$_.EmailAddresses -like "*@b3it.se*"}
+$ListOfGroups = @()
 
 
-foreach ($Mailbox in $Mailboxes)
+foreach ($Group in $Groups)
 {
-    $EmailAddresses = $Mailbox.EmailAddresses
+    $EmailAddresses = $Group.EmailAddresses
     foreach ($EmailAddress in $EmailAddresses)
     {
         if ($EmailAddress -like "smtp:*@b3it.se")
@@ -25,12 +27,12 @@ foreach ($Mailbox in $Mailboxes)
     }
     $EmailAddresses = $EmailAddresses | Sort-Object -Unique
     $EmailAddressesSerialized = $EmailAddresses -clike "smtp:*" -notlike "*@b3it.onmicrosoft.com" -creplace "smtp:","" -join ", "
-    $MailboxRow = New-Object Mailbox
-    $MailboxRow.DisplayName = $Mailbox.DisplayName
-    $MailboxRow.PrimarySmtpAddress = $Mailbox.PrimarySmtpAddress
+    $MailboxRow = New-Object Group
+    $MailboxRow.DisplayName = $Group.DisplayName
+    $MailboxRow.PrimarySmtpAddress = $Group.PrimarySmtpAddress
     $MailboxRow.Aliases = $EmailAddressesSerialized
-    $ListOfMailboxes += $MailboxRow
+    $ListOfGroups += $MailboxRow
 }
 
 
-$ListOfMailboxes | Export-Csv -Path "C:\Temp\Alias b3.se lista.csv" -Encoding Unicode -Delimiter "," -NoTypeInformation
+$ListOfGroups | Export-Csv -Path "C:\Temp\Alias b3.se lista_365GROUPS.csv" -Encoding Unicode -Delimiter "," -NoTypeInformation

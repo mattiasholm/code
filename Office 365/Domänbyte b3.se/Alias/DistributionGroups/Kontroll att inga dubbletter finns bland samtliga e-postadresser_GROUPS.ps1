@@ -1,19 +1,21 @@
+Connect-EXOPSSession
+
 $ErrorActionPreference = "Stop"
 
-Class Mailbox
+Class Group
 {
     [String]$DisplayName
     [String]$EmailAddresses
 }
 
 
-$Mailboxes = Get-Mailbox
-$ListOfMailboxes = @()
+$Groups = Get-DistributionGroup
+$ListOfGroups = @()
 
 
-foreach ($Mailbox in $Mailboxes)
+foreach ($Group in $Groups)
 {
-    $EmailAddresses = $Mailbox.EmailAddresses
+    $EmailAddresses = $Group.EmailAddresses
     foreach ($EmailAddress in $EmailAddresses)
     {
         if ($EmailAddress -like "smtp:*@b3it.se")
@@ -23,14 +25,14 @@ foreach ($Mailbox in $Mailboxes)
         }
     }
     $EmailAddresses = $EmailAddresses | Sort-Object -Unique
-    $MailboxRow = New-Object -TypeName Mailbox
-    $MailboxRow.DisplayName = $Mailbox.DisplayName
+    $MailboxRow = New-Object -TypeName Group
+    $MailboxRow.DisplayName = $Group.DisplayName
     $MailboxRow.EmailAddresses = $EmailAddresses
-    $ListOfMailboxes += $MailboxRow
+    $ListOfGroups += $MailboxRow
 }
 
 
-$AllEmailAddresses = $ListOfMailboxes.EmailAddresses.Split(" ")
+$AllEmailAddresses = $ListOfGroups.EmailAddresses.Split(" ")
 $Difference = ($AllEmailAddresses.Count - ($AllEmailAddresses | Sort-Object -Unique).Count)
 
 Write-Host "`n$Difference dubbletter hittades!`n($($AllEmailAddresses.Count) respektive $(($AllEmailAddresses | Sort-Object -Unique).Count))"

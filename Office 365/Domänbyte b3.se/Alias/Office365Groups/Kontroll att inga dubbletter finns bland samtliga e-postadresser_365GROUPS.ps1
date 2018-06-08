@@ -1,14 +1,15 @@
+Connect-EXOPSSession
+
 $ErrorActionPreference = "Stop"
 
 Class Group
 {
     [String]$DisplayName
-    [String]$PrimarySmtpAddress
-    [String]$Aliases
+    [String]$EmailAddresses
 }
 
 
-$Groups = Get-UnifiedGroup | Where-Object {$_.EmailAddresses -like "*@b3it.se*"}
+$Groups = Get-UnifiedGroup
 $ListOfGroups = @()
 
 
@@ -24,13 +25,14 @@ foreach ($Group in $Groups)
         }
     }
     $EmailAddresses = $EmailAddresses | Sort-Object -Unique
-    $EmailAddressesSerialized = $EmailAddresses -clike "smtp:*" -notlike "*@b3it.onmicrosoft.com" -creplace "smtp:","" -join ", "
-    $MailboxRow = New-Object Group
+    $MailboxRow = New-Object -TypeName Group
     $MailboxRow.DisplayName = $Group.DisplayName
-    $MailboxRow.PrimarySmtpAddress = $Group.PrimarySmtpAddress
-    $MailboxRow.Aliases = $EmailAddressesSerialized
+    $MailboxRow.EmailAddresses = $EmailAddresses
     $ListOfGroups += $MailboxRow
 }
 
 
-$ListOfGroups | Export-Csv -Path "C:\Temp\Alias b3.se lista_365GROUPS.csv" -Encoding Unicode -Delimiter "," -NoTypeInformation
+$AllEmailAddresses = $ListOfGroups.EmailAddresses.Split(" ")
+$Difference = ($AllEmailAddresses.Count - ($AllEmailAddresses | Sort-Object -Unique).Count)
+
+Write-Host "`n$Difference dubbletter hittades!`n($($AllEmailAddresses.Count) respektive $(($AllEmailAddresses | Sort-Object -Unique).Count))"

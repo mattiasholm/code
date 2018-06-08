@@ -1,6 +1,8 @@
+Connect-EXOPSSession
+
 $ErrorActionPreference = "Stop"
 
-Class Group
+Class Mailbox
 {
     [String]$DisplayName
     [String]$PrimarySmtpAddress
@@ -8,13 +10,13 @@ Class Group
 }
 
 
-$Groups = Get-DynamicDistributionGroup | Where-Object {$_.EmailAddresses -like "*@b3it.se*"}
-$ListOfGroups = @()
+$Mailboxes = Get-Mailbox | Where-Object {$_.EmailAddresses -like "*@b3it.se*"}
+$ListOfMailboxes = @()
 
 
-foreach ($Group in $Groups)
+foreach ($Mailbox in $Mailboxes)
 {
-    $EmailAddresses = $Group.EmailAddresses
+    $EmailAddresses = $Mailbox.EmailAddresses
     foreach ($EmailAddress in $EmailAddresses)
     {
         if ($EmailAddress -like "smtp:*@b3it.se")
@@ -25,12 +27,12 @@ foreach ($Group in $Groups)
     }
     $EmailAddresses = $EmailAddresses | Sort-Object -Unique
     $EmailAddressesSerialized = $EmailAddresses -clike "smtp:*" -notlike "*@b3it.onmicrosoft.com" -creplace "smtp:","" -join ", "
-    $MailboxRow = New-Object Group
-    $MailboxRow.DisplayName = $Group.DisplayName
-    $MailboxRow.PrimarySmtpAddress = $Group.PrimarySmtpAddress
+    $MailboxRow = New-Object Mailbox
+    $MailboxRow.DisplayName = $Mailbox.DisplayName
+    $MailboxRow.PrimarySmtpAddress = $Mailbox.PrimarySmtpAddress
     $MailboxRow.Aliases = $EmailAddressesSerialized
-    $ListOfGroups += $MailboxRow
+    $ListOfMailboxes += $MailboxRow
 }
 
 
-$ListOfGroups | Export-Csv -Path "C:\Temp\Alias b3.se lista_DynGROUPS.csv" -Encoding Unicode -Delimiter "," -NoTypeInformation
+$ListOfMailboxes | Export-Csv -Path "C:\Temp\Alias b3.se lista.csv" -Encoding Unicode -Delimiter "," -NoTypeInformation

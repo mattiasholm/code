@@ -1,3 +1,5 @@
+Connect-EXOPSSession
+
     $ErrorActionPreference = "Stop"
 
     Class Group

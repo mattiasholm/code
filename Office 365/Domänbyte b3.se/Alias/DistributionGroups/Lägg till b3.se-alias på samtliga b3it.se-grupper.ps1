@@ -1,4 +1,6 @@
-$Groups = Get-UnifiedGroup | Where-Object {$_.EmailAddresses -like "*@b3it.se*"}
+Connect-EXOPSSession
+
+$Groups = Get-DistributionGroup | Where-Object {$_.EmailAddresses -like "*@b3it.se"}
 
 foreach ($Group in $Groups)
 {
@@ -16,6 +18,6 @@ foreach ($Group in $Groups)
     }
     $EmailAddresses = $EmailAddresses | Sort-Object -Unique
     
-    Set-UnifiedGroup -Identity $Group.PrimarySmtpAddress -EmailAddresses $EmailAddresses 
+    Set-DistributionGroup -Identity $Group.PrimarySmtpAddress -EmailAddresses $EmailAddresses 
     Write-Host "$($Group.DisplayName) - updated!"
 }
