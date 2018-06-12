@@ -1,8 +1,8 @@
-Connect-EXOPSSession
-Connect-MsolService
+#Connect-EXOPSSession
+#Connect-MsolService
 
 
-$DynGroup = Get-DynamicDistributionGroup 'Alla anställda B3IT Dalarna AB'
+$DynGroup = Get-DynamicDistributionGroup 'Alla anställda i B3IT DBAce AB'
 
 $Mailboxes = Get-Recipient -RecipientPreviewFilter ($DynGroup.RecipientFilter)
 
