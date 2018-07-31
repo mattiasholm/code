@@ -1,10 +1,10 @@
 $Verbose = $false
 
-$OnCallStart = Get-Date '2018-05-24 17:00'
-$OnCallEnd = Get-Date '2018-05-31 08:00'
+$OnCallStart = Get-Date '2018-07-12 18:00'
+$OnCallEnd = Get-Date '2018-07-19 07:00'
 
-$OfficeHoursStart = Get-Date '08:00'
-$OfficeHoursEnd = Get-Date '17:00'
+$OfficeHoursStart = Get-Date '07:00'
+$OfficeHoursEnd = Get-Date '18:00'
 
 $MonthlySalary = 0
 
@@ -87,7 +87,7 @@ do {
                 if ($Verbose) {Write-Host "$($OnCallHour.DayOfWeek) - $($OnCallHour.ToString('HH:mm')) - $([Math]::Round($CurrentRate,2)) SEK"}
                 $TotalPay += $CurrentRate
             }
-        }   
+        }
         Sunday
         {
             $CurrentRate = $Rate3
