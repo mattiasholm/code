@@ -5,7 +5,8 @@ $ErrorActionPreference = "Stop"
 Class Mailbox
 {
     [String]$DisplayName
-    [String]$EmailAddresses
+    [Int]$NumberOfAddresses
+    [String]$EmailAddresses    
 }
 
 
@@ -16,7 +17,7 @@ $ListOfMailboxes = @()
 foreach ($Mailbox in $Mailboxes)
 {
     $EmailAddresses = $Mailbox.EmailAddresses -match "smtp:"
-    $DisallowedEmailAddresses = $null
+    $DisallowedEmailAddresses = @()
 
     foreach ($EmailAddress in $EmailAddresses)
     {        
@@ -31,6 +32,7 @@ foreach ($Mailbox in $Mailboxes)
     {
         $MailboxRow = New-Object Mailbox
         $MailboxRow.DisplayName = $Mailbox.DisplayName
+        $MailboxRow.NumberOfAddresses = $DisallowedEmailAddresses.Count
         $MailboxRow.EmailAddresses = $DisallowedEmailAddresses
         $ListOfMailboxes += $MailboxRow
     }
