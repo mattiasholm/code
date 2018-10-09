@@ -203,7 +203,34 @@
             "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-APN')]",
             "location": "[resourceGroup().location]",
             "properties": {
-                "securityRules": []
+                "securityRules": [
+                    {
+                        "name": "DenyAll_Inbound",
+                        "properties": {
+                            "access": "Deny",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "*",
+                            "direction": "Inbound",
+                            "priority": 4096,
+                            "protocol": "*",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    },
+                    {
+                        "name": "DenyAll_Outbound",
+                        "properties": {
+                            "access": "Deny",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "*",
+                            "direction": "Outbound",
+                            "priority": 4096,
+                            "protocol": "*",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    }
+                ]
             }
         },
         {
