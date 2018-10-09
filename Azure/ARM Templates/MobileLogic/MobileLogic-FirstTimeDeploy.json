@@ -1,0 +1,166 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "EnvironmentPrefix": {
+            "type": "string"
+        },
+        "VmSize": {
+            "type": "string"
+        },
+        "Capacity": {
+            "type": "string"
+        },
+        "DurabilityLevel": {
+            "type": "string"
+        },
+        "ReliabilityLevel": {
+            "type": "string"
+        },
+        "AdminUsername": {
+            "type": "string"
+        },
+        "AdminPassword": {
+            "type": "securestring"
+        },
+        "P2SRootCertificate": {
+            "type": "securestring"
+        },
+        "CertificateUrl": {
+            "type": "string"
+        },
+        "CertificateThumbprint": {
+            "type": "string"
+        },
+        "PublicIpAllow": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apiVersion_KeyVault": "2018-02-14-preview"
+    },
+    "resources": [
+        {
+            "apiVersion": "[variables('apiVersion_KeyVault')]",
+            "type": "Microsoft.KeyVault/vaults",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-KeyVault')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "tenantId": "[subscription().tenantId]",
+                "sku": {
+                    "family": "A",
+                    "name": "Standard"
+                },
+                "accessPolicies": [
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "0a4b27a2-fb2f-4f09-b6be-471edee2e5f8",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ],
+                            "storage": []
+                        }
+                    },
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "f77c970b-617e-484a-8e81-94e136142b8f",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ],
+                            "storage": []
+                        }
+                    }
+                ],
+                "enabledForDeployment": true,
+                "enabledForDiskEncryption": true,
+                "enabledForTemplateDeployment": true,
+                "enableSoftDelete": true,
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "defaultAction": "Deny",
+                    "ipRules": [
+                        {
+                            "value": "[parameters('PublicIpAllow')]"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "KeyVaultResourceId": {
+            "value": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('EnvironmentPrefix'),'-KeyVault'))]",
+            "type": "string"
+        }
+    }
+}

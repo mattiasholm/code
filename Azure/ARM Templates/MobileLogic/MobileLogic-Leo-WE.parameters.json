@@ -1,0 +1,49 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "EnvironmentPrefix": {
+            "value": "Leo-WE"
+        },
+        "VmSize": {
+            "value": "Standard_D2S_V3"
+        },
+        "Capacity": {
+            "value": "3"
+        },
+        "DurabilityLevel": {
+            "value": "Bronze"
+        },
+        "ReliabilityLevel": {
+            "value": "Bronze"
+        },
+        "AdminUsername": {
+            "value": "mobilelogic"
+        },
+        "AdminPassword": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/62f6fec8-c1e8-460d-96b6-d38309e00669/resourceGroups/Leo-WE-KeyVault/providers/Microsoft.KeyVault/vaults/Leo-WE-KeyVault"
+                },
+                "secretName": "AdminPassword"
+            }
+        },
+        "P2SRootCertificate": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/62f6fec8-c1e8-460d-96b6-d38309e00669/resourceGroups/Leo-WE-KeyVault/providers/Microsoft.KeyVault/vaults/Leo-WE-KeyVault"
+                },
+                "secretName": "P2SRootCertificate"
+            }
+        },
+        "CertificateUrl": {
+            "value": "https://leo-we-keyvault.vault.azure.net/secrets/Leo-WE-Cluster-Secret/1d77a931fd284d778b05078639c44dbf"
+        },
+        "CertificateThumbprint": {
+            "value": "0E113AA0D8457735638AC1BB8CDE47B691EEFF03"
+        },
+        "PublicIpAllow": {
+            "value": "213.66.146.139"
+        }
+    }
+}

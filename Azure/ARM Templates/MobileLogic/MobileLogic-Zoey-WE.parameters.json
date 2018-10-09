@@ -1,0 +1,49 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "EnvironmentPrefix": {
+            "value": "Zoey-WE"
+        },
+        "VmSize": {
+            "value": "Standard_D2S_V3"
+        },
+        "Capacity": {
+            "value": "3"
+        },
+        "DurabilityLevel": {
+            "value": "Bronze"
+        },
+        "ReliabilityLevel": {
+            "value": "Bronze"
+        },
+        "AdminUsername": {
+            "value": "mobilelogic"
+        },
+        "AdminPassword": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/6acc898d-136f-4cd1-89af-9a1f4ea62404/resourceGroups/Zoey-WE-KeyVault/providers/Microsoft.KeyVault/vaults/Zoey-WE-KeyVault"
+                },
+                "secretName": "AdminPassword"
+            }
+        },
+        "P2SRootCertificate": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/6acc898d-136f-4cd1-89af-9a1f4ea62404/resourceGroups/Zoey-WE-KeyVault/providers/Microsoft.KeyVault/vaults/Zoey-WE-KeyVault"
+                },
+                "secretName": "P2SRootCertificate"
+            }
+        },
+        "CertificateUrl": {
+            "value": "https://zoey-we-keyvault.vault.azure.net/secrets/Zoey-WE-Cluster-Secret/587627dd61764f149a8cc3cbdf38c351"
+        },
+        "CertificateThumbprint": {
+            "value": "FBE388558DAEE25589698654C1AB7EB59F90403B"
+        },
+        "PublicIpAllow": {
+            "value": "213.66.146.139"
+        }
+    }
+}
