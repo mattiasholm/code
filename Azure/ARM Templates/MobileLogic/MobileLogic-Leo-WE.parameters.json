@@ -37,10 +37,10 @@
             }
         },
         "CertificateUrl": {
-            "value": "https://leo-we-keyvault.vault.azure.net/secrets/Leo-WE-Cluster-Secret/1d77a931fd284d778b05078639c44dbf"
+            "value": "https://leo-we-keyvault.vault.azure.net/secrets/Leo-WE-Cluster-Secret/9c542a86bddd4f28938e6d19ef7c9310"
         },
         "CertificateThumbprint": {
-            "value": "0E113AA0D8457735638AC1BB8CDE47B691EEFF03"
+            "value": "1C04D83946EB49779FE8DD943A08A780C6A4B049"
         },
         "PublicIpAllow": {
             "value": "213.66.146.139"

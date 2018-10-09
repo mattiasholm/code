@@ -37,10 +37,10 @@
             }
         },
         "CertificateUrl": {
-            "value": "https://zoey-we-keyvault.vault.azure.net/secrets/Zoey-WE-Cluster-Secret/587627dd61764f149a8cc3cbdf38c351"
+            "value": "https://zoey-we-keyvault.vault.azure.net/secrets/Zoey-WE-Cluster-Secret/bfa75c381ea049c9a3b41d3abe47b5f5"
         },
         "CertificateThumbprint": {
-            "value": "FBE388558DAEE25589698654C1AB7EB59F90403B"
+            "value": "E3B08069E1496FF39DA5DEA2F30BE26FED819FE5"
         },
         "PublicIpAllow": {
             "value": "213.66.146.139"
