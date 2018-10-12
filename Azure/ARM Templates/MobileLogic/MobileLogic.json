@@ -57,22 +57,13 @@
         "SF_EphemeralPortEnd": 65534,
         "SF_ApplicationPortStart": 20000,
         "SF_ApplicationPortEnd": 30000,
-        "SF_NodeType": "N01",
+        "SF_NodeType": "N01"
     },
     "resources": [
         {
             "apiVersion": "[variables('apiVersion_NSG')]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-SF-Frontend')]",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "securityRules": []
-            }
-        },
-        {
-            "apiVersion": "[variables('apiVersion_NSG')]",
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-SF-Backend')]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "securityRules": [
@@ -173,6 +164,15 @@
         {
             "apiVersion": "[variables('apiVersion_NSG')]",
             "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-SF-Backend')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_NSG')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-VM-Frontend')]",
             "location": "[resourceGroup().location]",
             "properties": {
@@ -189,51 +189,6 @@
             }
         },
         {
-            "apiVersion": "[variables('apiVersion_NSG')]",
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-ELK')]",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "securityRules": []
-            }
-        },
-        {
-            "apiVersion": "[variables('apiVersion_NSG')]",
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-APN')]",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "securityRules": [
-                    {
-                        "name": "DenyAll_Inbound",
-                        "properties": {
-                            "access": "Deny",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "*",
-                            "direction": "Inbound",
-                            "priority": 4096,
-                            "protocol": "*",
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*"
-                        }
-                    },
-                    {
-                        "name": "DenyAll_Outbound",
-                        "properties": {
-                            "access": "Deny",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "*",
-                            "direction": "Outbound",
-                            "priority": 4096,
-                            "protocol": "*",
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*"
-                        }
-                    }
-                ]
-            }
-        },
-        {
             "apiVersion": "[variables('apiVersion_VNet')]",
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[concat(parameters('EnvironmentPrefix'),'-VNet')]",
@@ -242,9 +197,7 @@
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Frontend'))]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Backend'))]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-VM-Frontend'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-Redis'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-ELK'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-APN'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-Redis'))]"
             ],
             "properties": {
                 "addressSpace": {
@@ -265,7 +218,15 @@
                             "addressPrefix": "10.0.2.0/24",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Frontend'))]"
-                            }
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.KeyVault"
+                                },
+                                {
+                                    "service": "Microsoft.Storage"
+                                }
+                            ]
                         }
                     },
                     {
@@ -274,12 +235,7 @@
                             "addressPrefix": "10.0.3.0/24",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Backend'))]"
-                            },
-                            "serviceEndpoints": [
-                                {
-                                    "service": "Microsoft.KeyVault"
-                                }
-                            ]
+                            }
                         }
                     },
                     {
@@ -297,24 +253,6 @@
                             "addressPrefix": "10.0.5.0/24",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-Redis'))]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "ELKSubnet",
-                        "properties": {
-                            "addressPrefix": "10.0.6.0/24",
-                            "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-ELK'))]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "APNSubnet",
-                        "properties": {
-                            "addressPrefix": "10.1.0.0/24",
-                            "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-APN'))]"
                             }
                         }
                     }
@@ -540,7 +478,7 @@
                                         "dataPath": "D:\\\\SvcFab",
                                         "durabilityLevel": "[parameters('DurabilityLevel')]",
                                         "enableParallelJobs": true,
-                                        "nicPrefixOverride": "[reference(resourceId('Microsoft.Network/virtualNetworks/subnets',concat(parameters('EnvironmentPrefix'),'-VNet'),'SF-BackendSubnet'),variables('apiVersion_VNet')).addressPrefix]",
+                                        "nicPrefixOverride": "[reference(resourceId('Microsoft.Network/virtualNetworks/subnets',concat(parameters('EnvironmentPrefix'),'-VNet'),'SF-FrontendSubnet'),variables('apiVersion_VNet')).addressPrefix]",
                                         "certificate": {
                                             "thumbprint": "[parameters('CertificateThumbprint')]",
                                             "x509StoreName": "My"
@@ -623,7 +561,7 @@
                                                     }
                                                 ],
                                                 "subnet": {
-                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(parameters('EnvironmentPrefix'),'-VNet'),'SF-BackendSubnet')]"
+                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(parameters('EnvironmentPrefix'),'-VNet'),'SF-FrontendSubnet')]"
                                                 }
                                             }
                                         }
@@ -666,7 +604,8 @@
                             }
                         }
                     }
-                }
+                },
+                "overprovision": false
             },
             "sku": {
                 "name": "[parameters('VmSize')]",
@@ -730,7 +669,7 @@
                 ],
                 "provisioningState": "Default",
                 "reliabilityLevel": "[parameters('ReliabilityLevel')]",
-                "upgradeMode": "Automatic",
+                "upgradeMode": "Manual",
                 "vmImage": "Windows"
             }
         },
@@ -863,7 +802,7 @@
                                     ],
                                     "virtualNetworkRules": [
                                         {
-                                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(parameters('EnvironmentPrefix'),'-VNet'),'SF-BackendSubnet')]"
+                                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(parameters('EnvironmentPrefix'),'-VNet'),'SF-FrontendSubnet')]"
                                         }
                                     ]
                                 }

@@ -1,13 +1,13 @@
+$ErrorActionPreference = 'Stop'
+Add-AzureRmAccount
+# mattias.holm@mobilelogic.se
+
+
+
 $EnvironmentPrefix = 'Zoey-WE'
 $Location = 'WestEurope'
 $SubscriptionName = 'Zoey (Prod)'
 $TenantDomain = 'mobilelogic.se'
-
-
-
-$ErrorActionPreference = 'Stop'
-Add-AzureRmAccount
-# mattias.holm@mobilelogic.se
 
 
 

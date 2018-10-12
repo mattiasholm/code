@@ -1,13 +1,13 @@
+$ErrorActionPreference = 'Stop'
+Add-AzureRmAccount
+# mattias.holm@mobilelogic.se
+
+
+
 $EnvironmentPrefix = 'Leo-WE'
 $Location = 'WestEurope'
 $SubscriptionName = 'Leo (Test)'
 $TenantDomain = 'mobilelogic.se'
-
-
-
-$ErrorActionPreference = 'Stop'
-Add-AzureRmAccount
-# mattias.holm@mobilelogic.se
 
 
 

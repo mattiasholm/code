@@ -9,13 +9,13 @@
             "value": "Standard_D2S_V3"
         },
         "Capacity": {
-            "value": "3"
+            "value": "5"
         },
         "DurabilityLevel": {
-            "value": "Bronze"
+            "value": "Silver"
         },
         "ReliabilityLevel": {
-            "value": "Bronze"
+            "value": "Silver"
         },
         "AdminUsername": {
             "value": "mobilelogic"
