@@ -31,9 +31,6 @@
         },
         "CertificateThumbprint": {
             "type": "string"
-        },
-        "PublicIpAllow": {
-            "type": "string"
         }
     },
     "variables": {
@@ -147,12 +144,8 @@
                 "enableSoftDelete": true,
                 "networkAcls": {
                     "bypass": "AzureServices",
-                    "defaultAction": "Deny",
-                    "ipRules": [
-                        {
-                            "value": "[parameters('PublicIpAllow')]"
-                        }
-                    ]
+                    "defaultAction": "Allow",
+                    "ipRules": []
                 }
             }
         }
