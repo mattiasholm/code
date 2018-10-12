@@ -31,9 +31,6 @@
         },
         "CertificateThumbprint": {
             "type": "string"
-        },
-        "PublicIpAllow": {
-            "type": "string"
         }
     },
     "variables": {
@@ -142,19 +139,6 @@
                             "priority": 3940,
                             "protocol": "*",
                             "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*"
-                        }
-                    },
-                    {
-                        "name": "Allow_VMSS_RDP",
-                        "properties": {
-                            "access": "Allow",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "3389-4500",
-                            "direction": "Inbound",
-                            "priority": 3960,
-                            "protocol": "*",
-                            "sourceAddressPrefix": "[parameters('PublicIpAllow')]",
                             "sourcePortRange": "*"
                         }
                     }
@@ -794,17 +778,9 @@
                                 "enableSoftDelete": true,
                                 "networkAcls": {
                                     "bypass": "AzureServices",
-                                    "defaultAction": "Deny",
-                                    "ipRules": [
-                                        {
-                                            "value": "[parameters('PublicIpAllow')]"
-                                        }
-                                    ],
-                                    "virtualNetworkRules": [
-                                        {
-                                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(parameters('EnvironmentPrefix'),'-VNet'),'SF-FrontendSubnet')]"
-                                        }
-                                    ]
+                                    "defaultAction": "Allow",
+                                    "ipRules": [],
+                                    "virtualNetworkRules": []
                                 }
                             }
                         }
