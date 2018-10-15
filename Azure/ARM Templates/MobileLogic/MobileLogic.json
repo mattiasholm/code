@@ -203,14 +203,7 @@
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Frontend'))]"
                             },
-                            "serviceEndpoints": [
-                                {
-                                    "service": "Microsoft.KeyVault"
-                                },
-                                {
-                                    "service": "Microsoft.Storage"
-                                }
-                            ]
+                            "serviceEndpoints": []
                         }
                     },
                     {
@@ -219,7 +212,8 @@
                             "addressPrefix": "10.0.3.0/24",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Backend'))]"
-                            }
+                            },
+                            "serviceEndpoints": []
                         }
                     },
                     {
@@ -228,7 +222,8 @@
                             "addressPrefix": "10.0.4.0/24",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-VM-Frontend'))]"
-                            }
+                            },
+                            "serviceEndpoints": []
                         }
                     },
                     {
@@ -237,7 +232,8 @@
                             "addressPrefix": "10.0.5.0/24",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-Redis'))]"
-                            }
+                            },
+                            "serviceEndpoints": []
                         }
                     }
                 ]
