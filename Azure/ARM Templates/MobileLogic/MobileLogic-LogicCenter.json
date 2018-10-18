@@ -1,0 +1,265 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "EnvironmentPrefix": {
+            "type": "string"
+        },
+        "AppServiceSku": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apiVersion_KeyVault": "2018-02-14-preview",
+        "apiVersion_Deployments": "2018-08-01",
+        "apiVersion_Storage": "2018-07-01",
+        "apiVersion_ServerFarms": "2018-02-01",
+        "apiVersion_Sites": "2018-02-01",
+        "apiVersion_Slots": "2018-02-01"
+    },
+    "resources": [
+        {
+            "apiVersion": "[variables('apiVersion_KeyVault')]",
+            "type": "Microsoft.KeyVault/vaults",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-KeyVault')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "tenantId": "[subscription().tenantId]",
+                "sku": {
+                    "family": "A",
+                    "name": "Standard"
+                },
+                "accessPolicies": [
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "0a4b27a2-fb2f-4f09-b6be-471edee2e5f8",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ],
+                            "storage": []
+                        }
+                    },
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "f77c970b-617e-484a-8e81-94e136142b8f",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ],
+                            "storage": []
+                        }
+                    }
+                ],
+                "enabledForDeployment": true,
+                "enabledForDiskEncryption": true,
+                "enabledForTemplateDeployment": true,
+                "enableSoftDelete": true,
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "defaultAction": "Allow",
+                    "ipRules": []
+                }
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Deployments')]",
+            "type": "Microsoft.Resources/deployments",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-DataServices')]",
+            "resourceGroup": "[concat(parameters('EnvironmentPrefix'),'-DataServices')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "[variables('apiVersion_Storage')]",
+                            "type": "Microsoft.Storage/storageAccounts",
+                            "name": "[toLower(replace(concat(parameters('EnvironmentPrefix'),'storage01'),'-',''))]",
+                            "location": "[resourceGroup().location]",
+                            "sku": {
+                                "name": "Standard_LRS"
+                            },
+                            "kind": "StorageV2",
+                            "properties": {}
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Deployments')]",
+            "type": "Microsoft.Resources/deployments",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-AppServices')]",
+            "resourceGroup": "[concat(parameters('EnvironmentPrefix'),'-AppServices')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "[variables('apiVersion_ServerFarms')]",
+                            "type": "Microsoft.Web/serverfarms",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-AppServicePlan01')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {},
+                            "sku": {
+                                "name": "[parameters('AppServiceSku')]"
+                            }
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Sites')]",
+                            "type": "Microsoft.Web/sites",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-App01')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppServicePlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppServicePlan01'))]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Sites')]",
+                            "type": "Microsoft.Web/sites",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-App02')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppServicePlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppServicePlan01'))]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Slots')]",
+                            "type": "Microsoft.Web/sites/slots",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-App01', '/Test')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppServicePlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-App01'))]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Slots')]",
+                            "type": "Microsoft.Web/sites/slots",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-App01', '/Staging')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppServicePlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-App01'))]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Slots')]",
+                            "type": "Microsoft.Web/sites/slots",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-App02', '/Test')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppServicePlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-App02'))]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Slots')]",
+                            "type": "Microsoft.Web/sites/slots",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-App02', '/Staging')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppServicePlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-App02'))]"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}
