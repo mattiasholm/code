@@ -41,6 +41,9 @@
         },
         "CertificateThumbprint": {
             "value": "1C04D83946EB49779FE8DD943A08A780C6A4B049"
+        },
+        "AppServiceSku": {
+            "value": "S1"
         }
     }
 }

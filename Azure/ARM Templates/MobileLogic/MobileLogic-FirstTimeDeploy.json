@@ -31,6 +31,9 @@
         },
         "CertificateThumbprint": {
             "type": "string"
+        },
+        "AppServiceSku": {
+            "value": "S1"
         }
     },
     "variables": {

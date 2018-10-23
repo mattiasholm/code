@@ -4,9 +4,6 @@
     "parameters": {
         "EnvironmentPrefix": {
             "value": "LogicCenter-WE"
-        },
-        "AppServiceSku": {
-            "value": "S1"
         }
     }
 }

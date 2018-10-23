@@ -31,6 +31,9 @@
         },
         "CertificateThumbprint": {
             "type": "string"
+        },
+        "AppServiceSku": {
+            "type": "string"
         }
     },
     "variables": {
@@ -44,16 +47,16 @@
         "apiVersion_VMSS": "2018-10-01",
         "apiVersion_SF": "2018-02-01-privatepreview",
         "apiVersion_Deployments": "2018-08-01",
+        "apiVersion_ServerFarms": "2018-02-01",
+        "apiVersion_Sites": "2018-02-01",
+        "apiVersion_Slots": "2018-02-01",
         "LB_Id": "[resourceId('Microsoft.Network/loadBalancers',concat(parameters('EnvironmentPrefix'),'-LB'))]",
-        "LB_IpConfig": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-LB-IpConfig')))]",
-        "LB_BackendPool": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]",
-        "LB_NatPool": "[concat(variables('LB_Id'),concat('/inboundNatPools/',concat(parameters('EnvironmentPrefix'),'-LB-NatPool')))]",
         "SF_TcpPort": 19000,
         "SF_HttpPort": 19080,
         "SF_EphemeralPortStart": 49152,
         "SF_EphemeralPortEnd": 65534,
         "SF_ApplicationPortStart": 1810,
-        "SF_ApplicationPortEnd": 2003,
+        "SF_ApplicationPortEnd": 2103,
         "SF_NodeType": "N01"
     },
     "resources": [
@@ -157,7 +160,7 @@
         {
             "apiVersion": "[variables('apiVersion_NSG')]",
             "type": "Microsoft.Network/networkSecurityGroups",
-            "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-VM-Frontend')]",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-VM')]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "securityRules": []
@@ -180,13 +183,13 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Frontend'))]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Backend'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-VM-Frontend'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-VM'))]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-Redis'))]"
             ],
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "10.0.0.0/15"
+                        "10.0.0.0/16"
                     ]
                 },
                 "subnets": [
@@ -217,11 +220,11 @@
                         }
                     },
                     {
-                        "name": "VM-FrontendSubnet",
+                        "name": "VMSubnet",
                         "properties": {
                             "addressPrefix": "10.0.4.0/24",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-VM-Frontend'))]"
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-VM'))]"
                             },
                             "serviceEndpoints": []
                         }
@@ -330,11 +333,14 @@
             "name": "[if(greater(copyIndex(1),9),concat(parameters('EnvironmentPrefix'),'-SF-PIP',copyIndex(1)),concat(parameters('EnvironmentPrefix'),'-SF-PIP0',copyIndex(1)))]",
             "location": "[resourceGroup().location]",
             "properties": {
+                "dnsSettings": {
+                    "domainNameLabel": "[if(greater(copyIndex(1),9),toLower(concat(parameters('EnvironmentPrefix'),'-SF-PIP',copyIndex(1))),toLower(concat(parameters('EnvironmentPrefix'),'-SF-PIP0',copyIndex(1))))]"
+                },
                 "publicIPAllocationMethod": "Dynamic"
             },
             "copy": {
                 "name": "PIP",
-                "count": 11
+                "count": 4
             }
         },
         {
@@ -347,17 +353,12 @@
                 "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP01'))]",
                 "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP02'))]",
                 "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP03'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP04'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP05'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP06'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP07'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP08'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP09'))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP04'))]"
             ],
             "properties": {
                 "frontendIPConfigurations": [
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-IpConfig')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-PIP')]",
                         "properties": {
                             "publicIPAddress": {
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-LB-PIP'))]"
@@ -395,46 +396,6 @@
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP04'))]"
                             }
                         }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-SF-PIP05')]",
-                        "properties": {
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP05'))]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-SF-PIP06')]",
-                        "properties": {
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP06'))]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-SF-PIP07')]",
-                        "properties": {
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP07'))]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-SF-PIP08')]",
-                        "properties": {
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP08'))]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-SF-PIP09')]",
-                        "properties": {
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP09'))]"
-                            }
-                        }
                     }
                 ],
                 "backendAddressPools": [
@@ -445,55 +406,55 @@
                 ],
                 "loadBalancingRules": [
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-Tcp')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-',variables('SF_TcpPort'))]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                             },
                             "backendPort": "[variables('SF_TcpPort')]",
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
-                                "id": "[variables('LB_IpConfig')]"
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-LB-PIP')))]"
                             },
                             "frontendPort": "[variables('SF_TcpPort')]",
                             "idleTimeoutInMinutes": 5,
                             "probe": {
-                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-Tcp')))]"
+                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-',variables('SF_TcpPort'))))]"
                             },
                             "protocol": "Tcp"
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-Http')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-',variables('SF_HttpPort'))]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                             },
                             "backendPort": "[variables('SF_HttpPort')]",
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
-                                "id": "[variables('LB_IpConfig')]"
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-LB-PIP')))]"
                             },
                             "frontendPort": "[variables('SF_HttpPort')]",
                             "idleTimeoutInMinutes": 5,
                             "probe": {
-                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-Http')))]"
+                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-',variables('SF_HttpPort'))))]"
                             },
                             "protocol": "Tcp"
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-SF-PIP01')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-1810')]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                             },
                             "backendPort": 1810,
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
                                 "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP01')))]"
                             },
-                            "frontendPort": 443,
+                            "frontendPort": 1810,
                             "idleTimeoutInMinutes": 5,
                             "probe": {
                                 "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1810')))]"
@@ -502,17 +463,17 @@
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-SF-PIP02')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-1811')]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                             },
                             "backendPort": 1811,
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
-                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP02')))]"
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP01')))]"
                             },
-                            "frontendPort": 443,
+                            "frontendPort": 1811,
                             "idleTimeoutInMinutes": 5,
                             "probe": {
                                 "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1811')))]"
@@ -521,17 +482,17 @@
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-SF-PIP03')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-1812')]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                             },
                             "backendPort": 1812,
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
-                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP03')))]"
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP01')))]"
                             },
-                            "frontendPort": 443,
+                            "frontendPort": 1812,
                             "idleTimeoutInMinutes": 5,
                             "probe": {
                                 "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1812')))]"
@@ -540,36 +501,17 @@
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-SF-PIP04')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-1901')]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
-                            },
-                            "backendPort": 1851,
-                            "enableFloatingIP": false,
-                            "frontendIPConfiguration": {
-                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP04')))]"
-                            },
-                            "frontendPort": 443,
-                            "idleTimeoutInMinutes": 5,
-                            "probe": {
-                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1851')))]"
-                            },
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-SF-PIP05')]",
-                        "properties": {
-                            "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                             },
                             "backendPort": 1901,
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
-                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP05')))]"
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP02')))]"
                             },
-                            "frontendPort": 443,
+                            "frontendPort": 1901,
                             "idleTimeoutInMinutes": 5,
                             "probe": {
                                 "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1901')))]"
@@ -578,17 +520,17 @@
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-SF-PIP06')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-1902')]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                             },
                             "backendPort": 1902,
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
-                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP06')))]"
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP02')))]"
                             },
-                            "frontendPort": 443,
+                            "frontendPort": 1902,
                             "idleTimeoutInMinutes": 5,
                             "probe": {
                                 "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1902')))]"
@@ -597,17 +539,17 @@
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-SF-PIP07')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-1903')]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                             },
                             "backendPort": 1903,
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
-                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP07')))]"
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP02')))]"
                             },
-                            "frontendPort": 443,
+                            "frontendPort": 1903,
                             "idleTimeoutInMinutes": 5,
                             "probe": {
                                 "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1903')))]"
@@ -616,17 +558,17 @@
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-SF-PIP08')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-1904')]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                             },
                             "backendPort": 1904,
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
-                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP08')))]"
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP02')))]"
                             },
-                            "frontendPort": 443,
+                            "frontendPort": 1904,
                             "idleTimeoutInMinutes": 5,
                             "probe": {
                                 "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1904')))]"
@@ -635,20 +577,115 @@
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-SF-PIP09')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-2001')]",
                         "properties": {
                             "backendAddressPool": {
-                                "id": "[variables('LB_BackendPool')]"
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                             },
                             "backendPort": 2001,
                             "enableFloatingIP": false,
                             "frontendIPConfiguration": {
-                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP09')))]"
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP03')))]"
                             },
-                            "frontendPort": 443,
+                            "frontendPort": 2001,
                             "idleTimeoutInMinutes": 5,
                             "probe": {
                                 "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-2001')))]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-2002')]",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
+                            },
+                            "backendPort": 2002,
+                            "enableFloatingIP": false,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP03')))]"
+                            },
+                            "frontendPort": 2002,
+                            "idleTimeoutInMinutes": 5,
+                            "probe": {
+                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-2002')))]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-2003')]",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
+                            },
+                            "backendPort": 2003,
+                            "enableFloatingIP": false,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP03')))]"
+                            },
+                            "frontendPort": 2003,
+                            "idleTimeoutInMinutes": 5,
+                            "probe": {
+                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-2003')))]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-2101')]",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
+                            },
+                            "backendPort": 2101,
+                            "enableFloatingIP": false,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP04')))]"
+                            },
+                            "frontendPort": 2101,
+                            "idleTimeoutInMinutes": 5,
+                            "probe": {
+                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-2101')))]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-2102')]",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
+                            },
+                            "backendPort": 2102,
+                            "enableFloatingIP": false,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP04')))]"
+                            },
+                            "frontendPort": 2102,
+                            "idleTimeoutInMinutes": 5,
+                            "probe": {
+                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-2102')))]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-2103')]",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
+                            },
+                            "backendPort": 2103,
+                            "enableFloatingIP": false,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-SF-PIP04')))]"
+                            },
+                            "frontendPort": 2103,
+                            "idleTimeoutInMinutes": 5,
+                            "probe": {
+                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-2103')))]"
                             },
                             "protocol": "Tcp"
                         }
@@ -656,7 +693,7 @@
                 ],
                 "probes": [
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-Tcp')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-',variables('SF_TcpPort'))]",
                         "properties": {
                             "intervalInSeconds": 5,
                             "numberOfProbes": 2,
@@ -665,7 +702,7 @@
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-Http')]",
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-',variables('SF_HttpPort'))]",
                         "properties": {
                             "intervalInSeconds": 5,
                             "numberOfProbes": 2,
@@ -697,15 +734,6 @@
                             "intervalInSeconds": 5,
                             "numberOfProbes": 2,
                             "port": 1812,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-1851')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 1851,
                             "protocol": "Tcp"
                         }
                     },
@@ -771,6 +799,33 @@
                             "port": 2003,
                             "protocol": "Tcp"
                         }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-2101')]",
+                        "properties": {
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2,
+                            "port": 2101,
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-2102')]",
+                        "properties": {
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2,
+                            "port": 2102,
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-2103')]",
+                        "properties": {
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2,
+                            "port": 2103,
+                            "protocol": "Tcp"
+                        }
                     }
                 ],
                 "inboundNatPools": [
@@ -779,7 +834,7 @@
                         "properties": {
                             "backendPort": 3389,
                             "frontendIPConfiguration": {
-                                "id": "[variables('LB_IpConfig')]"
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-LB-PIP')))]"
                             },
                             "frontendPortRangeStart": 3389,
                             "frontendPortRangeEnd": 4500,
@@ -896,12 +951,12 @@
                                             "properties": {
                                                 "loadBalancerBackendAddressPools": [
                                                     {
-                                                        "id": "[variables('LB_BackendPool')]"
+                                                        "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
                                                     }
                                                 ],
                                                 "loadBalancerInboundNatPools": [
                                                     {
-                                                        "id": "[variables('LB_NatPool')]"
+                                                        "id": "[concat(variables('LB_Id'),concat('/inboundNatPools/',concat(parameters('EnvironmentPrefix'),'-LB-NatPool')))]"
                                                     }
                                                 ],
                                                 "subnet": {
@@ -1147,11 +1202,131 @@
                     ]
                 }
             }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Deployments')]",
+            "type": "Microsoft.Resources/deployments",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-AppServices')]",
+            "resourceGroup": "[concat(parameters('EnvironmentPrefix'),'-AppServices')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "[variables('apiVersion_ServerFarms')]",
+                            "type": "Microsoft.Web/serverfarms",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-AppPlan01')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {},
+                            "sku": {
+                                "name": "[parameters('AppServiceSku')]"
+                            }
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Sites')]",
+                            "type": "Microsoft.Web/sites",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Sites')]",
+                            "type": "Microsoft.Web/sites",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'DeviceWebApp')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Slots')]",
+                            "type": "Microsoft.Web/sites/slots",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp', '/Test')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-CenterWebApp'))]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Slots')]",
+                            "type": "Microsoft.Web/sites/slots",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp', '/Staging')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-CenterWebApp'))]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Slots')]",
+                            "type": "Microsoft.Web/sites/slots",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'DeviceWebApp', '/Test')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'DeviceWebApp'))]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Slots')]",
+                            "type": "Microsoft.Web/sites/slots",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'DeviceWebApp', '/Staging')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                            },
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'DeviceWebApp'))]"
+                            ]
+                        }
+                    ]
+                }
+            }
         }
     ],
     "outputs": {
         "ServiceFabricPortal": {
             "value": "[concat('https://',reference(resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-LB-PIP'))).dnsSettings.fqdn,':',variables('SF_HttpPort'))]",
+            "type": "string"
+        },
+        "FQDN_PIP01": {
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP01'))).dnsSettings.fqdn]",
+            "type": "string"
+        },
+        "FQDN_PIP02": {
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP02'))).dnsSettings.fqdn]",
+            "type": "string"
+        },
+        "FQDN_PIP03": {
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP03'))).dnsSettings.fqdn]",
+            "type": "string"
+        },
+        "FQDN_PIP04": {
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP04'))).dnsSettings.fqdn]",
             "type": "string"
         }
     }
