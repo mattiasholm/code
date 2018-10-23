@@ -9,7 +9,7 @@
             "value": "Standard_D2S_V3"
         },
         "Capacity": {
-            "value": "5"
+            "value": 5
         },
         "DurabilityLevel": {
             "value": "Silver"
@@ -18,29 +18,40 @@
             "value": "Silver"
         },
         "AdminUsername": {
-            "value": "mobilelogic"
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault"
+                },
+                "secretName": "Zoey-WE-AdminUsername"
+            }
         },
         "AdminPassword": {
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/6acc898d-136f-4cd1-89af-9a1f4ea62404/resourceGroups/Zoey-WE-KeyVault/providers/Microsoft.KeyVault/vaults/Zoey-WE-KeyVault"
+                    "id": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault"
                 },
-                "secretName": "AdminPassword"
+                "secretName": "Zoey-WE-AdminPassword"
             }
         },
         "P2SRootCertificate": {
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/6acc898d-136f-4cd1-89af-9a1f4ea62404/resourceGroups/Zoey-WE-KeyVault/providers/Microsoft.KeyVault/vaults/Zoey-WE-KeyVault"
+                    "id": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault"
                 },
                 "secretName": "P2SRootCertificate"
             }
         },
-        "CertificateUrl": {
-            "value": "https://zoey-we-keyvault.vault.azure.net/secrets/Zoey-WE-Cluster-Secret/bfa75c381ea049c9a3b41d3abe47b5f5"
+        "CertificateUrls": {
+            "value": [
+                "https://logiccenter-we-keyvault.vault.azure.net/secrets/Zoey-WE-Cluster-Secret/5d5c24639f174f52a064fc999820749c",
+                "https://logiccenter-we-keyvault.vault.azure.net/secrets/wildcard-logiccenter-com/d4f087fc5ddd490b84183eddbffcad24"
+            ]
         },
         "CertificateThumbprint": {
             "value": "E3B08069E1496FF39DA5DEA2F30BE26FED819FE5"
+        },
+        "KeyVaultResourceId": {
+            "value": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault"
         },
         "AppServiceSku": {
             "value": "S1"

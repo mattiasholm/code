@@ -9,7 +9,7 @@
             "type": "string"
         },
         "Capacity": {
-            "type": "string"
+            "type": "int"
         },
         "DurabilityLevel": {
             "type": "string"
@@ -26,10 +26,13 @@
         "P2SRootCertificate": {
             "type": "securestring"
         },
-        "CertificateUrl": {
-            "type": "string"
+        "CertificateUrls": {
+            "type": "array"
         },
         "CertificateThumbprint": {
+            "type": "string"
+        },
+        "KeyVaultResourceId": {
             "type": "string"
         },
         "AppServiceSku": {
@@ -42,7 +45,6 @@
         "apiVersion_PIP": "2018-08-01",
         "apiVersion_VNGW": "2018-08-01",
         "apiVersion_Storage": "2018-07-01",
-        "apiVersion_KeyVault": "2018-02-14-preview",
         "apiVersion_LB": "2018-08-01",
         "apiVersion_VMSS": "2018-10-01",
         "apiVersion_SF": "2018-02-01-privatepreview",
@@ -98,7 +100,7 @@
                         "properties": {
                             "access": "Allow",
                             "destinationAddressPrefix": "*",
-                            "destinationPortRange": "[concat(variables('SF_EphemeralPortStart'), '-', variables('SF_EphemeralPortEnd'))]",
+                            "destinationPortRange": "[concat(variables('SF_EphemeralPortStart'),'-',variables('SF_EphemeralPortEnd'))]",
                             "direction": "Inbound",
                             "priority": 3930,
                             "protocol": "*",
@@ -137,7 +139,7 @@
                         "properties": {
                             "access": "Allow",
                             "destinationAddressPrefix": "*",
-                            "destinationPortRange": "[concat(variables('SF_ApplicationPortStart'), '-', variables('SF_ApplicationPortEnd'))]",
+                            "destinationPortRange": "[concat(variables('SF_ApplicationPortStart'),'-',variables('SF_ApplicationPortEnd'))]",
                             "direction": "Inbound",
                             "priority": 3940,
                             "protocol": "*",
@@ -856,7 +858,11 @@
             ],
             "properties": {
                 "upgradePolicy": {
-                    "mode": "Automatic"
+                    "mode": "Automatic",
+                    "automaticOSUpgradePolicy": {
+                        "enableAutomaticOSUpgrade": true,
+                        "disableAutomaticRollback": false
+                    }
                 },
                 "virtualMachineProfile": {
                     "extensionProfile": {
@@ -883,7 +889,7 @@
                                             "x509StoreName": "My"
                                         }
                                     },
-                                    "typeHandlerVersion": "1.0"
+                                    "typeHandlerVersion": "1.1"
                                 }
                             },
                             {
@@ -977,12 +983,16 @@
                         "secrets": [
                             {
                                 "sourceVault": {
-                                    "id": "[resourceId(concat(parameters('EnvironmentPrefix'),'-KeyVault'),'Microsoft.KeyVault/vaults',concat(parameters('EnvironmentPrefix'),'-KeyVault'))]"
+                                    "id": "[parameters('KeyVaultResourceId')]"
                                 },
-                                "vaultCertificates": [
+                                "copy": [
                                     {
-                                        "certificateStore": "My",
-                                        "certificateUrl": "[parameters('CertificateUrl')]"
+                                        "name": "vaultCertificates",
+                                        "count": "[length(parameters('CertificateUrls'))]",
+                                        "input": {
+                                            "certificateStore": "My",
+                                            "certificateUrl": "[parameters('CertificateUrls')[copyIndex('vaultCertificates')]]"
+                                        }
                                     }
                                 ]
                             }
@@ -1075,137 +1085,6 @@
         {
             "apiVersion": "[variables('apiVersion_Deployments')]",
             "type": "Microsoft.Resources/deployments",
-            "name": "[concat(parameters('EnvironmentPrefix'),'-KeyVault')]",
-            "resourceGroup": "[concat(parameters('EnvironmentPrefix'),'-KeyVault')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks',concat(parameters('EnvironmentPrefix'),'-VNet'))]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                    "contentVersion": "1.0.0.0",
-                    "resources": [
-                        {
-                            "apiVersion": "[variables('apiVersion_KeyVault')]",
-                            "type": "Microsoft.KeyVault/vaults",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-KeyVault')]",
-                            "location": "[resourceGroup().location]",
-                            "properties": {
-                                "tenantId": "[subscription().tenantId]",
-                                "sku": {
-                                    "family": "A",
-                                    "name": "Standard"
-                                },
-                                "accessPolicies": [
-                                    {
-                                        "tenantId": "[subscription().tenantId]",
-                                        "objectId": "0a4b27a2-fb2f-4f09-b6be-471edee2e5f8",
-                                        "permissions": {
-                                            "keys": [
-                                                "Get",
-                                                "List",
-                                                "Update",
-                                                "Create",
-                                                "Import",
-                                                "Delete",
-                                                "Recover",
-                                                "Backup",
-                                                "Restore"
-                                            ],
-                                            "secrets": [
-                                                "Get",
-                                                "List",
-                                                "Set",
-                                                "Delete",
-                                                "Recover",
-                                                "Backup",
-                                                "Restore"
-                                            ],
-                                            "certificates": [
-                                                "Get",
-                                                "List",
-                                                "Update",
-                                                "Create",
-                                                "Import",
-                                                "Delete",
-                                                "Recover",
-                                                "Backup",
-                                                "Restore",
-                                                "ManageContacts",
-                                                "ManageIssuers",
-                                                "GetIssuers",
-                                                "ListIssuers",
-                                                "SetIssuers",
-                                                "DeleteIssuers"
-                                            ],
-                                            "storage": []
-                                        }
-                                    },
-                                    {
-                                        "tenantId": "[subscription().tenantId]",
-                                        "objectId": "f77c970b-617e-484a-8e81-94e136142b8f",
-                                        "permissions": {
-                                            "keys": [
-                                                "Get",
-                                                "List",
-                                                "Update",
-                                                "Create",
-                                                "Import",
-                                                "Delete",
-                                                "Recover",
-                                                "Backup",
-                                                "Restore"
-                                            ],
-                                            "secrets": [
-                                                "Get",
-                                                "List",
-                                                "Set",
-                                                "Delete",
-                                                "Recover",
-                                                "Backup",
-                                                "Restore"
-                                            ],
-                                            "certificates": [
-                                                "Get",
-                                                "List",
-                                                "Update",
-                                                "Create",
-                                                "Import",
-                                                "Delete",
-                                                "Recover",
-                                                "Backup",
-                                                "Restore",
-                                                "ManageContacts",
-                                                "ManageIssuers",
-                                                "GetIssuers",
-                                                "ListIssuers",
-                                                "SetIssuers",
-                                                "DeleteIssuers"
-                                            ],
-                                            "storage": []
-                                        }
-                                    }
-                                ],
-                                "enabledForDeployment": true,
-                                "enabledForDiskEncryption": true,
-                                "enabledForTemplateDeployment": true,
-                                "enableSoftDelete": true,
-                                "networkAcls": {
-                                    "bypass": "AzureServices",
-                                    "defaultAction": "Allow",
-                                    "ipRules": [],
-                                    "virtualNetworkRules": []
-                                }
-                            }
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "apiVersion": "[variables('apiVersion_Deployments')]",
-            "type": "Microsoft.Resources/deployments",
             "name": "[concat(parameters('EnvironmentPrefix'),'-AppServices')]",
             "resourceGroup": "[concat(parameters('EnvironmentPrefix'),'-AppServices')]",
             "properties": {
@@ -1254,7 +1133,7 @@
                         {
                             "apiVersion": "[variables('apiVersion_Slots')]",
                             "type": "Microsoft.Web/sites/slots",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp', '/Test')]",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp','/Test')]",
                             "kind": "app",
                             "location": "[resourceGroup().location]",
                             "properties": {
@@ -1267,7 +1146,7 @@
                         {
                             "apiVersion": "[variables('apiVersion_Slots')]",
                             "type": "Microsoft.Web/sites/slots",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp', '/Staging')]",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp','/Staging')]",
                             "kind": "app",
                             "location": "[resourceGroup().location]",
                             "properties": {
@@ -1280,7 +1159,7 @@
                         {
                             "apiVersion": "[variables('apiVersion_Slots')]",
                             "type": "Microsoft.Web/sites/slots",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'DeviceWebApp', '/Test')]",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'DeviceWebApp','/Test')]",
                             "kind": "app",
                             "location": "[resourceGroup().location]",
                             "properties": {
@@ -1293,7 +1172,7 @@
                         {
                             "apiVersion": "[variables('apiVersion_Slots')]",
                             "type": "Microsoft.Web/sites/slots",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'DeviceWebApp', '/Staging')]",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'DeviceWebApp','/Staging')]",
                             "kind": "app",
                             "location": "[resourceGroup().location]",
                             "properties": {

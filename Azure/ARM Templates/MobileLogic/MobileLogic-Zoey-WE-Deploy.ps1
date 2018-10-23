@@ -6,7 +6,7 @@ Add-AzureRmAccount
 
 $EnvironmentPrefix = 'Zoey-WE'
 $Location = 'WestEurope'
-$SubscriptionName = 'Zoey (Prod)'
+$SubscriptionName = 'LogicCenter'
 $TenantDomain = 'mobilelogic.se'
 
 
@@ -20,11 +20,9 @@ Select-AzureRmSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
 # Create Resource Groups
 
 $ResourceGroupNames = `
-    'KeyVault', `
     'ServiceFabric', `
     'DataServices', `
-    'AppServices', `
-    'Backup'
+    'AppServices'
 
 foreach ($ResourceGroupName in $ResourceGroupNames) {
     New-AzureRmResourceGroup `
@@ -35,29 +33,13 @@ foreach ($ResourceGroupName in $ResourceGroupNames) {
 
 
 
-
-
-# Deploy ARM Template "FirstTimeDeploy"
-
-$TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-FirstTimeDeploy.json"
-$ParameterFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-$($EnvironmentPrefix).parameters.json"
-
-New-AzureRmResourceGroupDeployment `
-    -ResourceGroupname  "$EnvironmentPrefix-KeyVault" `
-    -TemplateFile $TemplateFilePath `
-    -TemplateParameterFile $ParameterFilePath `
-    -Mode Incremental
-
-
-
-
-
-# # # Manuella steg efter "FirstTimeDeploy":
+# # # Prereqs vid first time deploy:
+# Deploya ARM Template "LogicCenter" för att skapa upp KeyVault
 # Generera SF-certifikat och ladda upp som Secret i KeyVault, uppdatera parameter i JSON-fil
+# Lägg upp önskat adminanvändarnamn som Secret i KeyVault, uppdatera parameter i JSON-fil
 # Generera adminlösenord och ladda upp som Secret i KeyVault, uppdatera parameter i JSON-fil
 # Ladda upp P2S-rotcertifikat som Secret i KeyVault, uppdatera parameter i JSON-fil
-
-
+# Ladda upp wildcard-certifikat som Secret i KeyVault, uppdatera parameter i JSON-fil
 
 
 

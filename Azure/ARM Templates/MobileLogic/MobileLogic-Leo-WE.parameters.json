@@ -9,38 +9,49 @@
             "value": "Standard_D2S_V3"
         },
         "Capacity": {
-            "value": "3"
+            "value": 5
         },
         "DurabilityLevel": {
-            "value": "Bronze"
+            "value": "Silver"
         },
         "ReliabilityLevel": {
-            "value": "Bronze"
+            "value": "Silver"
         },
         "AdminUsername": {
-            "value": "mobilelogic"
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault"
+                },
+                "secretName": "Leo-WE-AdminUsername"
+            }
         },
         "AdminPassword": {
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/62f6fec8-c1e8-460d-96b6-d38309e00669/resourceGroups/Leo-WE-KeyVault/providers/Microsoft.KeyVault/vaults/Leo-WE-KeyVault"
+                    "id": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault"
                 },
-                "secretName": "AdminPassword"
+                "secretName": "Leo-WE-AdminPassword"
             }
         },
         "P2SRootCertificate": {
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/62f6fec8-c1e8-460d-96b6-d38309e00669/resourceGroups/Leo-WE-KeyVault/providers/Microsoft.KeyVault/vaults/Leo-WE-KeyVault"
+                    "id": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault"
                 },
                 "secretName": "P2SRootCertificate"
             }
         },
-        "CertificateUrl": {
-            "value": "https://leo-we-keyvault.vault.azure.net/secrets/Leo-WE-Cluster-Secret/9c542a86bddd4f28938e6d19ef7c9310"
+        "CertificateUrls": {
+            "value": [
+                "https://logiccenter-we-keyvault.vault.azure.net/secrets/Leo-WE-Cluster-Secret/c70ad5318dda4391b4d994bccb505fd8",
+                "https://logiccenter-we-keyvault.vault.azure.net/secrets/wildcard-logiccenter-com/d4f087fc5ddd490b84183eddbffcad24"
+            ]
         },
         "CertificateThumbprint": {
             "value": "1C04D83946EB49779FE8DD943A08A780C6A4B049"
+        },
+        "KeyVaultResourceId": {
+            "value": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault"
         },
         "AppServiceSku": {
             "value": "S1"

@@ -6,7 +6,7 @@ Add-AzureRmAccount
 
 $EnvironmentPrefix = 'LogicCenter-WE'
 $Location = 'WestEurope'
-$SubscriptionName = 'LogicCenter (Gemensam)'
+$SubscriptionName = 'LogicCenter'
 $TenantDomain = 'mobilelogic.se'
 
 
@@ -21,7 +21,6 @@ Select-AzureRmSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
 
 $ResourceGroupNames = `
     'KeyVault', `
-    'AppServices', `
     'DataServices'
 
 foreach ($ResourceGroupName in $ResourceGroupNames) {
