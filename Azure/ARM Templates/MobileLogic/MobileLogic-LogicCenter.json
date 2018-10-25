@@ -4,6 +4,9 @@
     "parameters": {
         "EnvironmentPrefix": {
             "type": "string"
+        },
+        "KeyVaultAdmins": {
+            "type": "array"
         }
     },
     "variables": {
@@ -23,93 +26,53 @@
                     "family": "A",
                     "name": "Standard"
                 },
-                "accessPolicies": [
+                "copy": [
                     {
-                        "tenantId": "[subscription().tenantId]",
-                        "objectId": "0a4b27a2-fb2f-4f09-b6be-471edee2e5f8",
-                        "permissions": {
-                            "keys": [
-                                "Get",
-                                "List",
-                                "Update",
-                                "Create",
-                                "Import",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore"
-                            ],
-                            "secrets": [
-                                "Get",
-                                "List",
-                                "Set",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore"
-                            ],
-                            "certificates": [
-                                "Get",
-                                "List",
-                                "Update",
-                                "Create",
-                                "Import",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore",
-                                "ManageContacts",
-                                "ManageIssuers",
-                                "GetIssuers",
-                                "ListIssuers",
-                                "SetIssuers",
-                                "DeleteIssuers"
-                            ],
-                            "storage": []
-                        }
-                    },
-                    {
-                        "tenantId": "[subscription().tenantId]",
-                        "objectId": "f77c970b-617e-484a-8e81-94e136142b8f",
-                        "permissions": {
-                            "keys": [
-                                "Get",
-                                "List",
-                                "Update",
-                                "Create",
-                                "Import",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore"
-                            ],
-                            "secrets": [
-                                "Get",
-                                "List",
-                                "Set",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore"
-                            ],
-                            "certificates": [
-                                "Get",
-                                "List",
-                                "Update",
-                                "Create",
-                                "Import",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore",
-                                "ManageContacts",
-                                "ManageIssuers",
-                                "GetIssuers",
-                                "ListIssuers",
-                                "SetIssuers",
-                                "DeleteIssuers"
-                            ],
-                            "storage": []
+                        "name": "accessPolicies",
+                        "count": "[length(parameters('KeyVaultAdmins'))]",
+                        "input": {
+                            "tenantId": "[subscription().tenantId]",
+                            "objectId": "[parameters('KeyVaultAdmins')[copyIndex('accessPolicies')]]",
+                            "permissions": {
+                                "keys": [
+                                    "Get",
+                                    "List",
+                                    "Update",
+                                    "Create",
+                                    "Import",
+                                    "Delete",
+                                    "Recover",
+                                    "Backup",
+                                    "Restore"
+                                ],
+                                "secrets": [
+                                    "Get",
+                                    "List",
+                                    "Set",
+                                    "Delete",
+                                    "Recover",
+                                    "Backup",
+                                    "Restore"
+                                ],
+                                "certificates": [
+                                    "Get",
+                                    "List",
+                                    "Update",
+                                    "Create",
+                                    "Import",
+                                    "Delete",
+                                    "Recover",
+                                    "Backup",
+                                    "Restore",
+                                    "ManageContacts",
+                                    "ManageIssuers",
+                                    "GetIssuers",
+                                    "ListIssuers",
+                                    "SetIssuers",
+                                    "DeleteIssuers"
+                                ],
+                                "storage": []
+                            }
                         }
                     }
                 ],
@@ -155,7 +118,10 @@
         "KeyVaultResourceId": {
             "value": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('EnvironmentPrefix'),'-KeyVault'))]",
             "type": "string"
+        },
+        "KeyVaultAdmins": {
+            "value": "[parameters('KeyVaultAdmins')]",
+            "type": "array"
         }
-
     }
 }

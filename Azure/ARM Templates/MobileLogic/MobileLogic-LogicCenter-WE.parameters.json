@@ -4,6 +4,12 @@
     "parameters": {
         "EnvironmentPrefix": {
             "value": "LogicCenter-WE"
+        },
+        "KeyVaultAdmins": {
+            "value": [
+                "0a4b27a2-fb2f-4f09-b6be-471edee2e5f8",
+                "f77c970b-617e-484a-8e81-94e136142b8f"
+            ]
         }
     }
 }

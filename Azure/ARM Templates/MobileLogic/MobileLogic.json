@@ -32,11 +32,11 @@
         "CertificateThumbprint": {
             "type": "string"
         },
-        "KeyVaultResourceId": {
-            "type": "string"
-        },
         "AppServiceSku": {
             "type": "string"
+        },
+        "NumberOfPublicIPs": {
+            "type": "int"
         }
     },
     "variables": {
@@ -57,9 +57,9 @@
         "SF_HttpPort": 19080,
         "SF_EphemeralPortStart": 49152,
         "SF_EphemeralPortEnd": 65534,
-        "SF_ApplicationPortStart": 1810,
-        "SF_ApplicationPortEnd": 2103,
-        "SF_NodeType": "N01"
+        "SF_NodeType": "N01",
+        "KeyVaultResourceId": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault",
+        "SF_ApplicationPorts": "1810,1811,1812,1901,1902,1903,1904,2001,2002,2003,2101,2102,2103"
     },
     "resources": [
         {
@@ -70,52 +70,13 @@
             "properties": {
                 "securityRules": [
                     {
-                        "name": "Allow_SF_SMB",
-                        "properties": {
-                            "access": "Allow",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "445",
-                            "direction": "Inbound",
-                            "priority": 3950,
-                            "protocol": "*",
-                            "sourceAddressPrefix": "VirtualNetwork",
-                            "sourcePortRange": "*"
-                        }
-                    },
-                    {
-                        "name": "Allow_SF_Cluster",
-                        "properties": {
-                            "access": "Allow",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "1025-1027",
-                            "direction": "Inbound",
-                            "priority": 3920,
-                            "protocol": "*",
-                            "sourceAddressPrefix": "VirtualNetwork",
-                            "sourcePortRange": "*"
-                        }
-                    },
-                    {
-                        "name": "Allow_SF_Ephemeral",
-                        "properties": {
-                            "access": "Allow",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "[concat(variables('SF_EphemeralPortStart'),'-',variables('SF_EphemeralPortEnd'))]",
-                            "direction": "Inbound",
-                            "priority": 3930,
-                            "protocol": "*",
-                            "sourceAddressPrefix": "VirtualNetwork",
-                            "sourcePortRange": "*"
-                        }
-                    },
-                    {
                         "name": "Allow_SF_Portal",
                         "properties": {
                             "access": "Allow",
                             "destinationAddressPrefix": "*",
                             "destinationPortRange": "[variables('SF_HttpPort')]",
                             "direction": "Inbound",
-                            "priority": 3900,
+                            "priority": 1000,
                             "protocol": "*",
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*"
@@ -128,9 +89,35 @@
                             "destinationAddressPrefix": "*",
                             "destinationPortRange": "[variables('SF_TcpPort')]",
                             "direction": "Inbound",
-                            "priority": 3910,
+                            "priority": 1100,
                             "protocol": "*",
                             "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    },
+                    {
+                        "name": "Allow_SF_Cluster",
+                        "properties": {
+                            "access": "Allow",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "1025-1027",
+                            "direction": "Inbound",
+                            "priority": 1200,
+                            "protocol": "*",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "sourcePortRange": "*"
+                        }
+                    },
+                    {
+                        "name": "Allow_SF_Ephemeral",
+                        "properties": {
+                            "access": "Allow",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "[concat(variables('SF_EphemeralPortStart'),'-',variables('SF_EphemeralPortEnd'))]",
+                            "direction": "Inbound",
+                            "priority": 1300,
+                            "protocol": "*",
+                            "sourceAddressPrefix": "VirtualNetwork",
                             "sourcePortRange": "*"
                         }
                     },
@@ -139,11 +126,24 @@
                         "properties": {
                             "access": "Allow",
                             "destinationAddressPrefix": "*",
-                            "destinationPortRange": "[concat(variables('SF_ApplicationPortStart'),'-',variables('SF_ApplicationPortEnd'))]",
+                            "destinationPortRange": "[concat(first(split(variables('SF_ApplicationPorts'),',')),'-',last(split(variables('SF_ApplicationPorts'),',')))]",
                             "direction": "Inbound",
-                            "priority": 3940,
+                            "priority": 1400,
                             "protocol": "*",
                             "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    },
+                    {
+                        "name": "Allow_SF_SMB",
+                        "properties": {
+                            "access": "Allow",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "445",
+                            "direction": "Inbound",
+                            "priority": 1500,
+                            "protocol": "*",
+                            "sourceAddressPrefix": "VirtualNetwork",
                             "sourcePortRange": "*"
                         }
                     }
@@ -342,7 +342,7 @@
             },
             "copy": {
                 "name": "PIP",
-                "count": 4
+                "count": "[parameters('NumberOfPublicIPs')]"
             }
         },
         {
@@ -352,50 +352,32 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-LB-PIP'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP01'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP02'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP03'))]",
-                "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP04'))]"
+                "PIP"
             ],
             "properties": {
-                "frontendIPConfigurations": [
+                "copy": [
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-PIP')]",
-                        "properties": {
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-LB-PIP'))]"
+                        "name": "frontendIPConfigurations",
+                        "count": "[add(parameters('NumberOfPublicIPs'),1)]",
+                        "input": {
+                            "name": "[if(equals(copyIndex('frontendIPConfigurations'),parameters('NumberOfPublicIPs')),concat(parameters('EnvironmentPrefix'),'-LB-PIP'),if(greater(copyIndex('frontendIPConfigurations',1),9),concat(parameters('EnvironmentPrefix'),'-SF-PIP',copyIndex('frontendIPConfigurations',1)),concat(parameters('EnvironmentPrefix'),'-SF-PIP0',copyIndex('frontendIPConfigurations',1))))]",
+                            "properties": {
+                                "publicIPAddress": {
+                                    "id": "[resourceId('Microsoft.Network/publicIPAddresses',if(equals(copyIndex('frontendIPConfigurations'),parameters('NumberOfPublicIPs')),concat(parameters('EnvironmentPrefix'),'-LB-PIP'),if(greater(copyIndex('frontendIPConfigurations',1),9),concat(parameters('EnvironmentPrefix'),'-SF-PIP',copyIndex('frontendIPConfigurations',1)),concat(parameters('EnvironmentPrefix'),'-SF-PIP0',copyIndex('frontendIPConfigurations',1)))))]"
+                                }
                             }
                         }
                     },
                     {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-SF-PIP01')]",
-                        "properties": {
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP01'))]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-SF-PIP02')]",
-                        "properties": {
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP02'))]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-SF-PIP03')]",
-                        "properties": {
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP03'))]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-SF-PIP04')]",
-                        "properties": {
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-SF-PIP04'))]"
+                        "name": "probes",
+                        "count": "[add(length(split(variables('SF_ApplicationPorts'),',')),2)]",
+                        "input": {
+                            "name": "[if(equals(copyIndex('probes'),length(split(variables('SF_ApplicationPorts'),','))),concat(parameters('EnvironmentPrefix'),'-LB-Probe-',variables('SF_TcpPort')),if(equals(copyIndex('probes'),add(length(split(variables('SF_ApplicationPorts'),',')),1)),concat(parameters('EnvironmentPrefix'),'-LB-Probe-',variables('SF_HttpPort')),concat(parameters('EnvironmentPrefix'),'-LB-Probe-',split(variables('SF_ApplicationPorts'),',')[copyIndex('probes')])))]",
+                            "properties": {
+                                "intervalInSeconds": 5,
+                                "numberOfProbes": 2,
+                                "port": "[if(equals(copyIndex('probes'),length(split(variables('SF_ApplicationPorts'),','))),variables('SF_TcpPort'),if(equals(copyIndex('probes'),add(length(split(variables('SF_ApplicationPorts'),',')),1)),variables('SF_HttpPort'),split(variables('SF_ApplicationPorts'),',')[copyIndex('probes')]))]",
+                                "protocol": "Tcp"
                             }
                         }
                     }
@@ -693,143 +675,6 @@
                         }
                     }
                 ],
-                "probes": [
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-',variables('SF_TcpPort'))]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": "[variables('SF_TcpPort')]",
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-',variables('SF_HttpPort'))]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": "[variables('SF_HttpPort')]",
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-1810')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 1810,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-1811')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 1811,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-1812')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 1812,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-1901')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 1901,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-1902')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 1902,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-1903')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 1903,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-1904')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 1904,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-2001')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 2001,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-2002')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 2002,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-2003')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 2003,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-2101')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 2101,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-2102')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 2102,
-                            "protocol": "Tcp"
-                        }
-                    },
-                    {
-                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Probe-2103')]",
-                        "properties": {
-                            "intervalInSeconds": 5,
-                            "numberOfProbes": 2,
-                            "port": 2103,
-                            "protocol": "Tcp"
-                        }
-                    }
-                ],
                 "inboundNatPools": [
                     {
                         "name": "[concat(parameters('EnvironmentPrefix'),'-LB-NatPool')]",
@@ -983,7 +828,7 @@
                         "secrets": [
                             {
                                 "sourceVault": {
-                                    "id": "[parameters('KeyVaultResourceId')]"
+                                    "id": "[variables('KeyVaultResourceId')]"
                                 },
                                 "copy": [
                                     {
@@ -1062,8 +907,8 @@
                     {
                         "name": "[variables('SF_NodeType')]",
                         "applicationPorts": {
-                            "startPort": "[variables('SF_ApplicationPortStart')]",
-                            "endPort": "[variables('SF_ApplicationPortEnd')]"
+                            "startPort": "[first(split(variables('SF_ApplicationPorts'),','))]",
+                            "endPort": "[last(split(variables('SF_ApplicationPorts'),','))]"
                         },
                         "clientConnectionEndpointPort": "[variables('SF_TcpPort')]",
                         "durabilityLevel": "[parameters('DurabilityLevel')]",

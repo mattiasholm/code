@@ -50,11 +50,11 @@
         "CertificateThumbprint": {
             "value": "1C04D83946EB49779FE8DD943A08A780C6A4B049"
         },
-        "KeyVaultResourceId": {
-            "value": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault"
-        },
         "AppServiceSku": {
             "value": "S1"
+        },
+        "NumberOfPublicIPs": {
+            "value": 4
         }
     }
 }
