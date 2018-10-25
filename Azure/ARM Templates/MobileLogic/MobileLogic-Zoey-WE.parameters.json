@@ -51,7 +51,7 @@
             "value": "E3B08069E1496FF39DA5DEA2F30BE26FED819FE5"
         },
         "AppServiceSku": {
-            "value": "S1"
+            "value": "S2"
         },
         "NumberOfPublicIPs": {
             "value": 4
