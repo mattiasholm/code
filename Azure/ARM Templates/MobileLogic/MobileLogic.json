@@ -34,9 +34,6 @@
         },
         "AppServiceSku": {
             "type": "string"
-        },
-        "NumberOfPublicIPs": {
-            "type": "int"
         }
     },
     "variables": {
@@ -51,7 +48,6 @@
         "apiVersion_Deployments": "2018-08-01",
         "apiVersion_ServerFarms": "2018-02-01",
         "apiVersion_Sites": "2018-02-01",
-        "apiVersion_Slots": "2018-02-01",
         "apiVersion_Bindings": "2018-02-01",
         "LB_Id": "[resourceId('Microsoft.Network/loadBalancers',concat(parameters('EnvironmentPrefix'),'-LB'))]",
         "SF_TcpPort": 19000,
@@ -62,9 +58,10 @@
         "KeyVaultResourceId": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault",
         "SF_ApplicationPorts": "1810,1811,1812,1901,1902,1903,1904,2001,2002,2003,2101,2102,2103",
         "Subnets": "Gateway,SF-Frontend,SF-Backend,VM,Redis",
-        "CenterWebApp_CustomDomains": "center.logiccenter.com",
-        "CenterStageWebApp_CustomDomains": "stage.logiccenter.com",
-        "DeviceWebApp_CustomDomains": "logic.app"
+        "NumberOfPublicIPs": 4,
+        "CenterWebApp_CustomDomain": "center.logiccenter.com",
+        "CenterStageWebApp_CustomDomain": "stage.logiccenter.com",
+        "DeviceWebApp_CustomDomain": "logic.app"
     },
     "resources": [
         {
@@ -313,7 +310,7 @@
             },
             "copy": {
                 "name": "PIP",
-                "count": "[parameters('NumberOfPublicIPs')]"
+                "count": "[variables('NumberOfPublicIPs')]"
             }
         },
         {
@@ -329,12 +326,12 @@
                 "copy": [
                     {
                         "name": "frontendIPConfigurations",
-                        "count": "[add(parameters('NumberOfPublicIPs'),1)]",
+                        "count": "[add(variables('NumberOfPublicIPs'),1)]",
                         "input": {
-                            "name": "[if(equals(copyIndex('frontendIPConfigurations'),parameters('NumberOfPublicIPs')),concat(parameters('EnvironmentPrefix'),'-LB-PIP'),if(greater(copyIndex('frontendIPConfigurations',1),9),concat(parameters('EnvironmentPrefix'),'-SF-PIP',copyIndex('frontendIPConfigurations',1)),concat(parameters('EnvironmentPrefix'),'-SF-PIP0',copyIndex('frontendIPConfigurations',1))))]",
+                            "name": "[if(equals(copyIndex('frontendIPConfigurations'),variables('NumberOfPublicIPs')),concat(parameters('EnvironmentPrefix'),'-LB-PIP'),if(greater(copyIndex('frontendIPConfigurations',1),9),concat(parameters('EnvironmentPrefix'),'-SF-PIP',copyIndex('frontendIPConfigurations',1)),concat(parameters('EnvironmentPrefix'),'-SF-PIP0',copyIndex('frontendIPConfigurations',1))))]",
                             "properties": {
                                 "publicIPAddress": {
-                                    "id": "[resourceId('Microsoft.Network/publicIPAddresses',if(equals(copyIndex('frontendIPConfigurations'),parameters('NumberOfPublicIPs')),concat(parameters('EnvironmentPrefix'),'-LB-PIP'),if(greater(copyIndex('frontendIPConfigurations',1),9),concat(parameters('EnvironmentPrefix'),'-SF-PIP',copyIndex('frontendIPConfigurations',1)),concat(parameters('EnvironmentPrefix'),'-SF-PIP0',copyIndex('frontendIPConfigurations',1)))))]"
+                                    "id": "[resourceId('Microsoft.Network/publicIPAddresses',if(equals(copyIndex('frontendIPConfigurations'),variables('NumberOfPublicIPs')),concat(parameters('EnvironmentPrefix'),'-LB-PIP'),if(greater(copyIndex('frontendIPConfigurations',1),9),concat(parameters('EnvironmentPrefix'),'-SF-PIP',copyIndex('frontendIPConfigurations',1)),concat(parameters('EnvironmentPrefix'),'-SF-PIP0',copyIndex('frontendIPConfigurations',1)))))]"
                                 }
                             }
                         }
@@ -960,112 +957,34 @@
                             }
                         },
                         {
-                            "apiVersion": "[variables('apiVersion_Slots')]",
-                            "type": "Microsoft.Web/sites/slots",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp','/Test')]",
-                            "kind": "app",
-                            "location": "[resourceGroup().location]",
-                            "properties": {
-                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
-                            },
-                            "dependsOn": [
-                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-CenterWebApp'))]"
-                            ]
-                        },
-                        {
-                            "apiVersion": "[variables('apiVersion_Slots')]",
-                            "type": "Microsoft.Web/sites/slots",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp','/Staging')]",
-                            "kind": "app",
-                            "location": "[resourceGroup().location]",
-                            "properties": {
-                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
-                            },
-                            "dependsOn": [
-                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-CenterWebApp'))]"
-                            ]
-                        },
-                        {
-                            "apiVersion": "[variables('apiVersion_Slots')]",
-                            "type": "Microsoft.Web/sites/slots",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-DeviceWebApp','/Test')]",
-                            "kind": "app",
-                            "location": "[resourceGroup().location]",
-                            "dependsOn": [
-                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-DeviceWebApp'))]"
-                            ],
-                            "properties": {
-                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
-                            }
-                        },
-                        {
-                            "apiVersion": "[variables('apiVersion_Slots')]",
-                            "type": "Microsoft.Web/sites/slots",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-DeviceWebApp','/Staging')]",
-                            "kind": "app",
-                            "location": "[resourceGroup().location]",
-                            "dependsOn": [
-                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-DeviceWebApp'))]"
-                            ],
-                            "properties": {
-                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
-                            }
-                        },
-                        {
-                            "apiVersion": "[variables('apiVersion_Slots')]",
-                            "type": "Microsoft.Web/sites/slots",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp','/Test')]",
-                            "kind": "app",
-                            "location": "[resourceGroup().location]",
-                            "dependsOn": [
-                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp'))]"
-                            ],
-                            "properties": {
-                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
-                            }
-                        },
-                        {
-                            "apiVersion": "[variables('apiVersion_Slots')]",
-                            "type": "Microsoft.Web/sites/slots",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp','/Staging')]",
-                            "kind": "app",
-                            "location": "[resourceGroup().location]",
-                            "dependsOn": [
-                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp'))]"
-                            ],
-                            "properties": {
-                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
-                            }
-                        },
-                        {
                             "apiVersion": "[variables('apiVersion_Bindings')]",
                             "type": "Microsoft.Web/sites/hostnameBindings",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp','/',variables('CenterWebApp_CustomDomains'))]",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp','/',variables('CenterWebApp_CustomDomain'))]",
                             "location": "[resourceGroup().location]",
-                            "properties": {},
                             "dependsOn": [
                                 "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp')]"
-                            ]
+                            ],
+                            "properties": {} 
                         },
                         {
                             "apiVersion": "[variables('apiVersion_Bindings')]",
                             "type": "Microsoft.Web/sites/hostnameBindings",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp','/',variables('CenterStageWebApp_CustomDomains'))]",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp','/',variables('CenterStageWebApp_CustomDomain'))]",
                             "location": "[resourceGroup().location]",
-                            "properties": {},
                             "dependsOn": [
                                 "[concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp')]"
-                            ]
+                            ],
+                            "properties": {} 
                         },
                         {
                             "apiVersion": "[variables('apiVersion_Bindings')]",
                             "type": "Microsoft.Web/sites/hostnameBindings",
-                            "name": "[concat(parameters('EnvironmentPrefix'),'-DeviceWebApp','/',variables('DeviceWebApp_CustomDomains'))]",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-DeviceWebApp','/',variables('DeviceWebApp_CustomDomain'))]",
                             "location": "[resourceGroup().location]",
-                            "properties": {},
                             "dependsOn": [
                                 "[concat(parameters('EnvironmentPrefix'),'-DeviceWebApp')]"
-                            ]
+                            ],
+                            "properties": {} 
                         }
                     ]
                 }

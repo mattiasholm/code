@@ -6,7 +6,7 @@
             "value": "Leo-WE"
         },
         "VmSize": {
-            "value": "Standard_D2_v2"
+            "value": "Standard_D2_v3"
         },
         "Capacity": {
             "value": 5
@@ -51,10 +51,7 @@
             "value": "1C04D83946EB49779FE8DD943A08A780C6A4B049"
         },
         "AppServiceSku": {
-            "value": "S2"
-        },
-        "NumberOfPublicIPs": {
-            "value": 4
+            "value": "S1"
         }
     }
 }

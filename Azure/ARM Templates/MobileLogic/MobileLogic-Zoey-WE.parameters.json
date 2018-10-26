@@ -6,7 +6,7 @@
             "value": "Zoey-WE"
         },
         "VmSize": {
-            "value": "Standard_D2S_V3"
+            "value": "Standard_D2_v3"
         },
         "Capacity": {
             "value": 5
@@ -51,10 +51,7 @@
             "value": "E3B08069E1496FF39DA5DEA2F30BE26FED819FE5"
         },
         "AppServiceSku": {
-            "value": "S2"
-        },
-        "NumberOfPublicIPs": {
-            "value": 4
+            "value": "S1"
         }
     }
 }
