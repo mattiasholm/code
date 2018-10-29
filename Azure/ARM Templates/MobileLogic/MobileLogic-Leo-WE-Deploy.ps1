@@ -33,13 +33,15 @@ foreach ($ResourceGroupName in $ResourceGroupNames) {
 
 
 
-# # # Prereqs vid first time deploy:
-# Deploya ARM Template "LogicCenter" för att skapa upp KeyVault
-# Generera SF-certifikat och ladda upp som Secret i KeyVault, uppdatera parameter i JSON-fil
+# # # FirstTimeDeploy
+# Deploya ARM Template "LogicCenter_PreDeploy" för att skapa upp KeyVault
 # Lägg upp önskat adminanvändarnamn som Secret i KeyVault, uppdatera parameter i JSON-fil
 # Generera adminlösenord och ladda upp som Secret i KeyVault, uppdatera parameter i JSON-fil
 # Ladda upp P2S-rotcertifikat som Secret i KeyVault, uppdatera parameter i JSON-fil
 # Ladda upp wildcard-certifikat som Secret i KeyVault, uppdatera parameter i JSON-fil
+# Deploya ARM Template "MobileLogic" en första gång
+# Deploya ARM Template "LogicCenter_PostDeploy" för att konfigurera klart KeyVault.
+# Deploya ARM Template "MobileLogic" en andra gång
 
 
 
@@ -49,7 +51,7 @@ $TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM 
 $ParameterFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-$($EnvironmentPrefix).parameters.json"
 
 New-AzureRmResourceGroupDeployment `
-    -ResourceGroupname  "$EnvironmentPrefix-ServiceFabric" `    
+    -ResourceGroupname  "$EnvironmentPrefix-ServiceFabric" `
     -TemplateFile $TemplateFilePath `
     -TemplateParameterFile $ParameterFilePath `
-    -Mode Incremental
+    -Mode Incremental #-Verbose

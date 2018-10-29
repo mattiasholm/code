@@ -148,8 +148,7 @@
                             "certificates": [],
                             "storage": []
                         }
-                    },
-
+                    }
                 ],
                 "enabledForDeployment": true,
                 "enabledForDiskEncryption": true,
@@ -193,10 +192,6 @@
         "KeyVaultResourceId": {
             "value": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('EnvironmentPrefix'),'-KeyVault'))]",
             "type": "string"
-        },
-        "KeyVaultAdmins": {
-            "value": "[parameters('KeyVaultAdmins')]",
-            "type": "array"
         }
     }
 }

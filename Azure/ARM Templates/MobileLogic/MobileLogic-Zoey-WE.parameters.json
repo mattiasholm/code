@@ -43,8 +43,7 @@
         },
         "CertificateUrls": {
             "value": [
-                "https://logiccenter-we-keyvault.vault.azure.net/secrets/Zoey-WE-Cluster-Secret/5d5c24639f174f52a064fc999820749c",
-                "https://logiccenter-we-keyvault.vault.azure.net/secrets/wildcard-logiccenter-com/d4f087fc5ddd490b84183eddbffcad24"
+                "https://logiccenter-we-keyvault.vault.azure.net/secrets/LogicCenter-CER-Secret/e98f4a98e69c48feacba83b7c14aa830"
             ]
         },
         "AppServiceSku": {

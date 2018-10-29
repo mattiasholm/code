@@ -32,9 +32,22 @@ foreach ($ResourceGroupName in $ResourceGroupNames) {
 
 
 
-# Deploy ARM Template
+# Deploy ARM Template "PreDeploy"
 
-$TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-LogicCenter.json"
+$TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-LogicCenter_PreDeploy.json"
+$ParameterFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-$($EnvironmentPrefix).parameters.json"
+
+New-AzureRmResourceGroupDeployment `
+    -ResourceGroupname  "$EnvironmentPrefix-KeyVault" `
+    -TemplateFile $TemplateFilePath `
+    -TemplateParameterFile $ParameterFilePath `
+    -Mode Incremental
+
+
+
+# Deploy ARM Template "PostDeploy"
+
+$TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-LogicCenter_PostDeploy.json"
 $ParameterFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-$($EnvironmentPrefix).parameters.json"
 
 New-AzureRmResourceGroupDeployment `
