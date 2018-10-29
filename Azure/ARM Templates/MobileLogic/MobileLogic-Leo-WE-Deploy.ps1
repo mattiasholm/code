@@ -49,7 +49,7 @@ $TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM 
 $ParameterFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-$($EnvironmentPrefix).parameters.json"
 
 New-AzureRmResourceGroupDeployment `
-    -ResourceGroupname  "$EnvironmentPrefix-ServiceFabric" `
+    -ResourceGroupname  "$EnvironmentPrefix-ServiceFabric" `    
     -TemplateFile $TemplateFilePath `
     -TemplateParameterFile $ParameterFilePath `
     -Mode Incremental
