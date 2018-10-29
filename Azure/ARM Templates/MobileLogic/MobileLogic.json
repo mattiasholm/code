@@ -29,9 +29,6 @@
         "CertificateUrls": {
             "type": "array"
         },
-        "CertificateThumbprint": {
-            "type": "string"
-        },
         "AppServiceSku": {
             "type": "string"
         }
@@ -60,11 +57,13 @@
         "SF_EphemeralPortEnd": 65534,
         "SF_NodeType": "N01",
         "KeyVaultResourceId": "/subscriptions/9fd419d4-5a52-44a7-8d06-bda8e3a1d980/resourceGroups/LogicCenter-WE-KeyVault/providers/Microsoft.KeyVault/vaults/LogicCenter-WE-KeyVault",
+        "CertificateCommonName": "[toLower(concat(parameters('EnvironmentPrefix'),'-cluster.westeurope.cloudapp.azure.com'))]",
         "Subnets": "Gateway,SF-Frontend,SF-Backend,VM,Redis",
         "NumberOfPublicIPs": 5,
         "CenterWebApp_CustomDomain": "center.logiccenter.com",
         "CenterStageWebApp_CustomDomain": "stage.logiccenter.com",
         "DeviceWebApp_CustomDomain": "logic.app"
+        
     },
     "resources": [
         {
@@ -701,7 +700,9 @@
                                         "enableParallelJobs": true,
                                         "nicPrefixOverride": "[reference(resourceId('Microsoft.Network/virtualNetworks/subnets',concat(parameters('EnvironmentPrefix'),'-VNet'),'SF-FrontendSubnet'),variables('apiVersion_VNet')).addressPrefix]",
                                         "certificate": {
-                                            "thumbprint": "[parameters('CertificateThumbprint')]",
+                                            "commonNames": [
+                                                "[variables('CertificateCommonName')]"
+                                               ],
                                             "x509StoreName": "My"
                                         }
                                     },
@@ -850,8 +851,13 @@
                 "addonFeatures": [
                     "DnsService"
                 ],
-                "certificate": {
-                    "thumbprint": "[parameters('CertificateThumbprint')]",
+                "certificateCommonNames": {
+                    "commonNames": [
+                    {
+                        "certificateCommonName": "[variables('CertificateCommonName')]",
+                        "certificateIssuerThumbprint": ""
+                    }
+                    ],
                     "x509StoreName": "My"
                 },
                 "clusterState": "Default",

@@ -47,9 +47,6 @@
                 "https://logiccenter-we-keyvault.vault.azure.net/secrets/wildcard-logiccenter-com/d4f087fc5ddd490b84183eddbffcad24"
             ]
         },
-        "CertificateThumbprint": {
-            "value": "E3B08069E1496FF39DA5DEA2F30BE26FED819FE5"
-        },
         "AppServiceSku": {
             "value": "S1"
         }
