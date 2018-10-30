@@ -937,7 +937,11 @@
                                 "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
                             ],
                             "properties": {
-                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]",
+                                "httpsOnly": true,
+                                "siteConfig": {
+                                    "alwaysOn": true
+                                }
                             },
                             "identity": {
                                 "type": "SystemAssigned"
@@ -953,7 +957,11 @@
                                 "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
                             ],
                             "properties": {
-                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]",
+                                "httpsOnly": true,
+                                "siteConfig": {
+                                    "alwaysOn": true
+                                }
                             },
                             "identity": {
                                 "type": "SystemAssigned"
@@ -969,7 +977,11 @@
                                 "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
                             ],
                             "properties": {
-                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]",
+                                "httpsOnly": true,
+                                "siteConfig": {
+                                    "alwaysOn": true
+                                }
                             },
                             "identity": {
                                 "type": "SystemAssigned"

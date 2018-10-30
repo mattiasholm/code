@@ -117,7 +117,7 @@
                 "enabledForDeployment": true,
                 "enabledForDiskEncryption": true,
                 "enabledForTemplateDeployment": true,
-                "enableSoftDelete": true,
+                "enableSoftDelete": false,
                 "networkAcls": {
                     "bypass": "AzureServices",
                     "defaultAction": "Allow",

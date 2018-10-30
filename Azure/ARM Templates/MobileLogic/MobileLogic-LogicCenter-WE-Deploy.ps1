@@ -32,6 +32,7 @@ foreach ($ResourceGroupName in $ResourceGroupNames) {
 
 
 
+
 # Deploy ARM Template "PreDeploy"
 
 $TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-LogicCenter_PreDeploy.json"
