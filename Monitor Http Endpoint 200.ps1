@@ -1,11 +1,17 @@
 $Uri = 'https://login.b3care.se'
 #$Uri = 'https://support.b3.se/foobar'
 $LogPath = 'C:\Temp\MonitorHttpEndpoint_login_b3care_se.log'
-$Credential = Get-Credential -UserName 'support@b3.se' -Message 'Enter password'
+$IntervalSeconds = 5
+$TraceTimeout = 60
+$ExoCredential = Get-Credential -UserName 'support@b3.se' -Message 'Enter password'
+$Hostname = 'netscaler.b3care.se'
+$Username = 'nsroot'
+$NetScalerPassword = Read-Host -Prompt "Enter nsroot password" -AsSecureString
 
 
-if (!($Credential)) {
-    Write-Host -ForegroundColor Red 'No credentials entered'
+
+if (!($ExoCredential) -or $([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($NetScalerPassword))).Length -eq 0) {
+    Write-Host -ForegroundColor Red 'Missing password/credential'
     break
 }
 
@@ -29,12 +35,16 @@ function GetWebSiteStatusCode {
     $Request.StatusCode
 }
 
-
+$TraceStarted = $false
 
 while ($true) {
     
     $StatusCode = GetWebSiteStatusCode -TestUri $Uri
     $Timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+
+    if ($TraceStarted -eq $true) {
+        $TraceTimeout = $TraceTimeout - $IntervalSeconds
+    }
 
     if ($StatusCode -eq 200) {
         Write-Host -ForegroundColor Green -NoNewline "Site up"
@@ -56,8 +66,21 @@ while ($true) {
             -SmtpServer 'smtp.office365.com' `
             -Port 587 `
             -UseSsl `
-            -Credential $Credential
+            -Credential $ExoCredential
+
+
+        if ($TraceStarted -eq $false) {
+            $CliCommand = "start nstrace"
+            plink -ssh $Username@$Hostname -pw $([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($NetScalerPassword))) $CliCommand
+            $TraceStarted = $true
+        }
     }
 
-    Start-Sleep 5
+    if ($TraceTimeout -le 0) {
+        $CliCommand = "stop nstrace"
+        plink -ssh $Username@$Hostname -pw $([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($NetScalerPassword))) $CliCommand
+        break
+    }
+
+    Start-Sleep $IntervalSeconds
 }
