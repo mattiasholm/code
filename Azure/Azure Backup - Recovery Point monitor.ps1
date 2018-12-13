@@ -28,3 +28,7 @@ foreach ($Container in $Containers)
 {
     $LatestRecoveryPoint = Get-AzureRmRecoveryServicesBackupItem -Container $Container -WorkloadType AzureVM | Select-Object LatestRecoveryPoint
 }
+
+
+
+$LatestRecoveryPoint
