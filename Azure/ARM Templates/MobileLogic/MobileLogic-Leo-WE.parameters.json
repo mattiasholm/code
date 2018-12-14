@@ -9,13 +9,13 @@
             "value": "Standard_D2_v3"
         },
         "Capacity": {
-            "value": 5
+            "value": 3
         },
         "DurabilityLevel": {
-            "value": "Silver"
+            "value": "Bronze"
         },
         "ReliabilityLevel": {
-            "value": "Silver"
+            "value": "Bronze"
         },
         "AdminUsername": {
             "reference": {

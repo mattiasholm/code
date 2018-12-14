@@ -46,7 +46,9 @@
         "apiVersion_ServerFarms": "2018-02-01",
         "apiVersion_Sites": "2018-02-01",
         "apiVersion_Bindings": "2018-02-01",
-        "apiVersion_Certificates": "2018-02-01",
+        //"apiVersion_Certificates": "2018-02-01",
+        "apiVersion_CosmosDB": "2016-03-31",
+        "Tag_Environment": "[split(parameters('EnvironmentPrefix'),'-')[0]]",
         "LB_Id": "[resourceId('Microsoft.Network/loadBalancers',concat(parameters('EnvironmentPrefix'),'-LB'))]",
         "SF_MobileLogicPorts": "1810,1811,1812,1901,1902,1903,1904,2001,2002,2003,2101,2102,2103",
         "SF_TcpPort": 19000,
@@ -63,7 +65,8 @@
         "NumberOfPublicIPs": 5,
         "CenterWebApp_CustomDomain": "center.logiccenter.com",
         "CenterStageWebApp_CustomDomain": "stage.logiccenter.com",
-        "DeviceWebApp_CustomDomain": "logic.app"
+        "DeviceWebApp_CustomDomain": "logic.app",
+        "Cosmos_Kind": "MongoDB"
     },
     "resources": [
         {
@@ -220,7 +223,11 @@
                             "properties": {
                                 "addressPrefix": "[concat('10.0.',copyIndex('subnets',1),'.0/24')]",
                                 "networkSecurityGroup": "[if(equals(split(variables('Subnets'),',')[copyIndex('subnets')],'Gateway'),json('null'),json(concat('{\"id\": \"',resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-',split(variables('Subnets'),',')[copyIndex('subnets')])),'\"}')))]",
-                                "serviceEndpoints": []
+                                "serviceEndpoints": [
+                                    {
+                                        "service": "Microsoft.AzureCosmosDB"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -675,10 +682,7 @@
             "properties": {
                 "upgradePolicy": {
                     "mode": "Automatic",
-                    "automaticOSUpgradePolicy": {
-                        "enableAutomaticOSUpgrade": true,
-                        "disableAutomaticRollback": false
-                    }
+                    "automaticOSUpgradePolicy": "[if(equals(parameters('DurabilityLevel'),'Bronze'),json('null'),json('{\"enableAutomaticOSUpgrade\": true, \"disableAutomaticRollback\": false}'))]"
                 },
                 "virtualMachineProfile": {
                     "extensionProfile": {
@@ -1042,6 +1046,54 @@
                     ]
                 }
             }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Deployments')]",
+            "type": "Microsoft.Resources/deployments",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-DataServices')]",
+            "resourceGroup": "[concat(parameters('EnvironmentPrefix'),'-DataServices')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "[variables('apiVersion_CosmosDB')]",
+                            "type": "Microsoft.DocumentDB/databaseAccounts",
+                            "name": "[toLower(concat(parameters('EnvironmentPrefix'),'-CosmosDB'))]",
+                            "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]",
+                                "defaultExperience": "[variables('Cosmos_Kind')]"
+                            },
+                            "kind": "[variables('Cosmos_Kind')]",
+                            "properties": {
+                                "consistencyPolicy": {
+                                    "defaultConsistencyLevel": "Session"
+                                },
+                                "locations": [
+                                    {
+                                        "locationName": "[resourceGroup().location]",
+                                        "failoverPriority": 0
+                                    }
+                                ],
+                                "databaseAccountOfferType": "Standard",
+                                "ipRangeFilter": "",
+                                "isVirtualNetworkFilterEnabled": true,
+                                "enableAutomaticFailover": false,
+                                //                                "capabilities": [],
+                                //                                "virtualNetworkRules": [
+                                //                                    {
+                                //                                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Frontend'))]"
+                                //                                    }
+                                //                                ],
+                                "enableMultipleWriteLocations": false
+                            }
+                        }
+                    ]
+                }
+            }
         }
     ],
     "outputs": {
@@ -1067,6 +1119,10 @@
         },
         "FQDN-PIP05": {
             "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-LB-PIP05'))).dnsSettings.fqdn]",
+            "type": "string"
+        },
+        "TEST_TAG": {
+            "value": "[variables('Tag_Environment')]",
             "type": "string"
         }
     }

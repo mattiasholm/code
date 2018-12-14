@@ -1,5 +1,5 @@
 $Uri = 'https://login.b3care.se'
-#$Uri = 'https://support.b3.se/foobar'
+#$Uri = 'https://ftp.donator.se/foobar'
 $LogPath = 'C:\Temp\MonitorHttpEndpoint_login_b3care_se.log'
 $IntervalSeconds = 5
 $TraceTimeout = 60
@@ -7,8 +7,6 @@ $ExoCredential = Get-Credential -UserName 'support@b3.se' -Message 'Enter passwo
 $Hostname = 'netscaler.b3care.se'
 $Username = 'nsroot'
 $NetScalerPassword = Read-Host -Prompt "Enter nsroot password" -AsSecureString
-
-
 
 if (!($ExoCredential) -or $([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($NetScalerPassword))).Length -eq 0) {
     Write-Host -ForegroundColor Red 'Missing password/credential'
@@ -38,7 +36,7 @@ function GetWebSiteStatusCode {
 $TraceStarted = $false
 
 while ($true) {
-    
+    $StatusCode = $null
     $StatusCode = GetWebSiteStatusCode -TestUri $Uri
     $Timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
 

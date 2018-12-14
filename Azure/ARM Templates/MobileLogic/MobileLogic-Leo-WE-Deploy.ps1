@@ -28,6 +28,7 @@ foreach ($ResourceGroupName in $ResourceGroupNames) {
     New-AzureRmResourceGroup `
         -Name "$EnvironmentPrefix-$ResourceGroupName" `
         -Location $Location `
+        -Tag @{Environment="Test"} `
         -Force
 }
 
