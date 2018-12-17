@@ -11,6 +11,13 @@ $TenantDomain = 'mobilelogic.se'
 
 
 
+switch ($EnvironmentPrefix.Split('-')[0])
+{
+    Zoey {$Environment = 'Production'}
+    Leo {$Environment = 'Test'}
+    LogicCenter {$Environment = 'Shared'}
+}
+
 $TenantId = (Invoke-WebRequest -Uri "https://login.windows.net/$TenantDomain/.well-known/openid-configuration" | ConvertFrom-Json).token_endpoint.Split('/')[3]
 $SubscriptionId = (Get-AzureRmSubscription -TenantId $TenantId | Where-Object {$_.Name -eq $SubscriptionName}).Id
 Select-AzureRmSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
@@ -23,13 +30,13 @@ $ResourceGroupNames = `
     'KeyVault', `
     'DataServices'
 
-foreach ($ResourceGroupName in $ResourceGroupNames) {
-    New-AzureRmResourceGroup `
-        -Name "$EnvironmentPrefix-$ResourceGroupName" `
-        -Location $Location `
-        -Force
-}
-
+    foreach ($ResourceGroupName in $ResourceGroupNames) {
+        New-AzureRmResourceGroup `
+            -Name "$EnvironmentPrefix-$ResourceGroupName" `
+            -Location $Location `
+            -Tag @{Environment=$Environment} `
+            -Force
+    }
 
 
 

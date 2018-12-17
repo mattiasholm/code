@@ -14,7 +14,8 @@
         "apiVersion_VNet": "2018-08-01",
         "apiVersion_Deployments": "2018-08-01",
         "apiVersion_ServerFarms": "2018-02-01",
-        "apiVersion_Sites": "2018-02-01"
+        "apiVersion_Sites": "2018-02-01",
+        "Tag_Environment": "Demo"
     },
     "resources": [
         {
@@ -22,6 +23,9 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[0])]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "properties": {
                 "securityRules": [
                     {
@@ -58,6 +62,9 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[1])]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "properties": {
                 "securityRules": [
                     {
@@ -94,6 +101,9 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[2])]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "properties": {
                 "securityRules": [
                     {
@@ -130,6 +140,9 @@
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[concat(parameters('EnvironmentPrefix'),'-VNet')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[0]))]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[1]))]",

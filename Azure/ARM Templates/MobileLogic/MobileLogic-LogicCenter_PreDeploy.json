@@ -10,7 +10,7 @@
         "apiVersion_KeyVault": "2018-02-14-preview",
         "apiVersion_Deployments": "2018-08-01",
         "apiVersion_Storage": "2018-07-01",
-        "apiVersion_MSI": "2015-08-31-PREVIEW"
+        "Tag_Environment": "[if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'Zoey'),'Production',if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'Leo'),'Test',if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'LogicCenter'),'Shared','Unknown')))]"
     },
     "resources": [
         {
@@ -18,6 +18,9 @@
             "type": "Microsoft.KeyVault/vaults",
             "name": "[concat(parameters('EnvironmentPrefix'),'-KeyVault')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "properties": {
                 "tenantId": "[subscription().tenantId]",
                 "sku": {
@@ -117,7 +120,7 @@
                 "enabledForDeployment": true,
                 "enabledForDiskEncryption": true,
                 "enabledForTemplateDeployment": true,
-                "enableSoftDelete": false,
+                "enableSoftDelete": true,
                 "networkAcls": {
                     "bypass": "AzureServices",
                     "defaultAction": "Allow",
@@ -141,6 +144,9 @@
                             "type": "Microsoft.Storage/storageAccounts",
                             "name": "[toLower(replace(concat(parameters('EnvironmentPrefix'),'storage01'),'-',''))]",
                             "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]"
+                                },
                             "sku": {
                                 "name": "Standard_LRS"
                             },
@@ -155,6 +161,10 @@
     "outputs": {
         "KeyVaultResourceId": {
             "value": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('EnvironmentPrefix'),'-KeyVault'))]",
+            "type": "string"
+        },
+        "Environment": {
+            "value": "[variables('Tag_Environment')]",
             "type": "string"
         }
     }

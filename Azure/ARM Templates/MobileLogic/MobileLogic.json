@@ -46,11 +46,10 @@
         "apiVersion_ServerFarms": "2018-02-01",
         "apiVersion_Sites": "2018-02-01",
         "apiVersion_Bindings": "2018-02-01",
-        //"apiVersion_Certificates": "2018-02-01",
         "apiVersion_CosmosDB": "2016-03-31",
-        "Tag_Environment": "[split(parameters('EnvironmentPrefix'),'-')[0]]",
+        "Tag_Environment": "[if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'Zoey'),'Production',if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'Leo'),'Test',if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'LogicCenter'),'Shared','Unknown')))]",
         "LB_Id": "[resourceId('Microsoft.Network/loadBalancers',concat(parameters('EnvironmentPrefix'),'-LB'))]",
-        "SF_MobileLogicPorts": "1810,1811,1812,1901,1902,1903,1904,2001,2002,2003,2101,2102,2103",
+        "SF_MobileLogicPorts": "1810,1811,1812,1813,1814,1901,1902,1903,1904,2001,2002,2003,2101,2102,2103",
         "SF_TcpPort": 19000,
         "SF_HttpPort": 19080,
         "SF_ApplicationPortStart": 20000,
@@ -66,7 +65,8 @@
         "CenterWebApp_CustomDomain": "center.logiccenter.com",
         "CenterStageWebApp_CustomDomain": "stage.logiccenter.com",
         "DeviceWebApp_CustomDomain": "logic.app",
-        "Cosmos_Kind": "MongoDB"
+        "CosmosDB_ApiType": "SQL",
+        "CosmosDB_ConsistencyLevel": "Session"
     },
     "resources": [
         {
@@ -74,6 +74,9 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-SF-Frontend')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "properties": {
                 "securityRules": [
                     {
@@ -175,6 +178,9 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-SF-Backend')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "properties": {
                 "securityRules": []
             }
@@ -184,6 +190,9 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-VM')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "properties": {
                 "securityRules": []
             }
@@ -193,6 +202,9 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-Redis')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "properties": {
                 "securityRules": []
             }
@@ -202,6 +214,9 @@
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[concat(parameters('EnvironmentPrefix'),'-VNet')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Frontend'))]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Backend'))]",
@@ -223,11 +238,7 @@
                             "properties": {
                                 "addressPrefix": "[concat('10.0.',copyIndex('subnets',1),'.0/24')]",
                                 "networkSecurityGroup": "[if(equals(split(variables('Subnets'),',')[copyIndex('subnets')],'Gateway'),json('null'),json(concat('{\"id\": \"',resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-',split(variables('Subnets'),',')[copyIndex('subnets')])),'\"}')))]",
-                                "serviceEndpoints": [
-                                    {
-                                        "service": "Microsoft.AzureCosmosDB"
-                                    }
-                                ]
+                                "serviceEndpoints": []
                             }
                         }
                     }
@@ -239,6 +250,9 @@
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[concat(parameters('EnvironmentPrefix'),'-Gateway-PIP')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "sku": {
                 "name": "Basic"
             },
@@ -252,6 +266,9 @@
             "type": "Microsoft.Network/virtualNetworkGateways",
             "name": "[concat(parameters('EnvironmentPrefix'),'-Gateway')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks',concat(parameters('EnvironmentPrefix'),'-VNet'))]",
                 "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-Gateway-PIP'))]"
@@ -301,6 +318,9 @@
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[toLower(replace(concat(parameters('EnvironmentPrefix'),'storage01'),'-',''))]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "sku": {
                 "name": "Standard_LRS"
             },
@@ -312,6 +332,9 @@
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[if(greater(copyIndex(1),9),concat(parameters('EnvironmentPrefix'),'-LB-PIP',copyIndex(1)),concat(parameters('EnvironmentPrefix'),'-LB-PIP0',copyIndex(1)))]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "properties": {
                 "dnsSettings": {
                     "domainNameLabel": "[if(greater(copyIndex(1),9),toLower(concat(parameters('EnvironmentPrefix'),'-LB-PIP',copyIndex(1))),toLower(concat(parameters('EnvironmentPrefix'),'-LB-PIP0',copyIndex(1))))]"
@@ -329,6 +352,9 @@
             "type": "Microsoft.Network/loadBalancers",
             "name": "[concat(parameters('EnvironmentPrefix'),'-LB')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "dependsOn": [
                 "PIP"
             ],
@@ -458,6 +484,44 @@
                             "idleTimeoutInMinutes": 5,
                             "probe": {
                                 "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1812')))]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-1813')]",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
+                            },
+                            "backendPort": 1813,
+                            "enableFloatingIP": false,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-LB-PIP02')))]"
+                            },
+                            "frontendPort": 1813,
+                            "idleTimeoutInMinutes": 5,
+                            "probe": {
+                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1813')))]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-1814')]",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
+                            },
+                            "backendPort": 1814,
+                            "enableFloatingIP": false,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-LB-PIP02')))]"
+                            },
+                            "frontendPort": 1814,
+                            "idleTimeoutInMinutes": 5,
+                            "probe": {
+                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-1814')))]"
                             },
                             "protocol": "Tcp"
                         }
@@ -674,6 +738,9 @@
             "type": "Microsoft.Compute/virtualMachineScaleSets",
             "name": "[concat(parameters('EnvironmentPrefix'),'-VMSS')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks',concat(parameters('EnvironmentPrefix'),'-VNet'))]",
                 "[resourceId('Microsoft.Network/loadBalancers',concat(parameters('EnvironmentPrefix'),'-LB'))]",
@@ -849,6 +916,9 @@
             "type": "Microsoft.ServiceFabric/clusters",
             "name": "[concat(parameters('EnvironmentPrefix'),'-Cluster')]",
             "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts',toLower(replace(concat(parameters('EnvironmentPrefix'),'storage01'),'-','')))]"
             ],
@@ -924,8 +994,11 @@
                             "apiVersion": "[variables('apiVersion_ServerFarms')]",
                             "type": "Microsoft.Web/serverfarms",
                             "name": "[concat(parameters('EnvironmentPrefix'),'-AppPlan01')]",
-                            "kind": "app",
                             "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]"
+                                },
+                            "kind": "app",
                             "properties": {},
                             "sku": {
                                 "name": "[parameters('AppServiceSku')]"
@@ -935,8 +1008,11 @@
                             "apiVersion": "[variables('apiVersion_Sites')]",
                             "type": "Microsoft.Web/sites",
                             "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp')]",
-                            "kind": "app",
                             "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]"
+                                },
+                            "kind": "app",
                             "dependsOn": [
                                 "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
                             ],
@@ -955,8 +1031,11 @@
                             "apiVersion": "[variables('apiVersion_Sites')]",
                             "type": "Microsoft.Web/sites",
                             "name": "[concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp')]",
-                            "kind": "app",
                             "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]"
+                                },
+                            "kind": "app",
                             "dependsOn": [
                                 "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
                             ],
@@ -975,8 +1054,11 @@
                             "apiVersion": "[variables('apiVersion_Sites')]",
                             "type": "Microsoft.Web/sites",
                             "name": "[concat(parameters('EnvironmentPrefix'),'-DeviceWebApp')]",
-                            "kind": "app",
                             "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]"
+                                },
+                            "kind": "app",
                             "dependsOn": [
                                 "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
                             ],
@@ -996,53 +1078,38 @@
                             "type": "Microsoft.Web/sites/hostnameBindings",
                             "name": "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp','/',variables('CenterWebApp_CustomDomain'))]",
                             "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]"
+                                },
                             "dependsOn": [
                                 "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp')]"
-                            ],
-                            "properties": {
-                                //"sslState": "SniEnabled",
-                                //"thumbprint": "[reference(resourceId('Microsoft.Web/certificates', 'LogicCenter-CER')).Thumbprint]"
-                            }
+                            ]
                         },
                         {
                             "apiVersion": "[variables('apiVersion_Bindings')]",
                             "type": "Microsoft.Web/sites/hostnameBindings",
                             "name": "[concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp','/',variables('CenterStageWebApp_CustomDomain'))]",
                             "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]"
+                                },
                             "dependsOn": [
                                 "[concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp')]"
-                            ],
-                            "properties": {
-                                //"sslState": "SniEnabled",
-                                //"thumbprint": "[reference(resourceId('Microsoft.Web/certificates', 'LogicCenter-CER')).Thumbprint]"
-                            }
+                            ]
                         },
                         {
                             "apiVersion": "[variables('apiVersion_Bindings')]",
                             "type": "Microsoft.Web/sites/hostnameBindings",
                             "name": "[concat(parameters('EnvironmentPrefix'),'-DeviceWebApp','/',variables('DeviceWebApp_CustomDomain'))]",
                             "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]"
+                                },
                             "dependsOn": [
                                 "[concat(parameters('EnvironmentPrefix'),'-DeviceWebApp')]"
                             ],
                             "properties": {}
-                        } //,
-                        /*
-                        {
-                            "apiVersion": "[variables('apiVersion_Certificates')]",
-                            "type": "Microsoft.Web/certificates",
-                            "name": "LogicCenter-CER",
-                            "location": "[resourceGroup().location]",
-                            "dependsOn": [
-                                "[concat('Microsoft.Web/sites/',parameters('EnvironmentPrefix'),'-CenterWebApp')]",
-                                "[concat('Microsoft.Web/sites/',parameters('EnvironmentPrefix'),'-CenterStageWebApp')]"
-                            ],
-                            "properties": {
-                                "keyVaultId": "[variables('KeyVaultResourceId')]",
-                                "keyVaultSecretName": "LogicCenter-Secret"
-                            }
                         }
-                        */
                     ]
                 }
             }
@@ -1065,12 +1132,12 @@
                             "location": "[resourceGroup().location]",
                             "tags": {
                                 "Environment": "[variables('Tag_Environment')]",
-                                "defaultExperience": "[variables('Cosmos_Kind')]"
+                                "defaultExperience": "[if(equals(variables('CosmosDB_ApiType'), 'Cassandra'), 'Cassandra', if(equals(variables('CosmosDB_ApiType'), 'Gremlin'), 'Graph', if(equals(variables('CosmosDB_ApiType'), 'MongoDB'), 'MongoDB', if(equals(variables('CosmosDB_ApiType'), 'SQL'), 'DocumentDB', if(equals(variables('CosmosDB_ApiType'), 'Table'), 'Table', '')))))]"
                             },
-                            "kind": "[variables('Cosmos_Kind')]",
+                            "kind": "[if(equals(variables('CosmosDB_ApiType'), 'MongoDB'), 'MongoDB', 'GlobalDocumentDB')]",
                             "properties": {
                                 "consistencyPolicy": {
-                                    "defaultConsistencyLevel": "Session"
+                                    "defaultConsistencyLevel": "[variables('CosmosDB_ConsistencyLevel')]"
                                 },
                                 "locations": [
                                     {
@@ -1080,14 +1147,8 @@
                                 ],
                                 "databaseAccountOfferType": "Standard",
                                 "ipRangeFilter": "",
-                                "isVirtualNetworkFilterEnabled": true,
+                                "isVirtualNetworkFilterEnabled": false,
                                 "enableAutomaticFailover": false,
-                                //                                "capabilities": [],
-                                //                                "virtualNetworkRules": [
-                                //                                    {
-                                //                                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Frontend'))]"
-                                //                                    }
-                                //                                ],
                                 "enableMultipleWriteLocations": false
                             }
                         }
@@ -1121,7 +1182,7 @@
             "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-LB-PIP05'))).dnsSettings.fqdn]",
             "type": "string"
         },
-        "TEST_TAG": {
+        "Environment": {
             "value": "[variables('Tag_Environment')]",
             "type": "string"
         }
