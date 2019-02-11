@@ -68,7 +68,7 @@ while ($true) {
 
 
         if ($TraceStarted -eq $false) {
-            $CliCommand = "start nstrace -size 0 -nf 1"
+            $CliCommand = "start nstrace -size 0 -nf 1 -capsslkeys ENABLED"
             plink -ssh $Username@$Hostname -pw $([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($NetScalerPassword))) $CliCommand
             $TraceStarted = $true
         }
