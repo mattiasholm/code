@@ -1,3 +1,11 @@
 Heartbeat
 | summarize LastHeartbeat = max(TimeGenerated) by Computer
 | where LastHeartbeat < ago(10m)
+
+
+
+
+
+Heartbeat
+| where TimeGenerated >= startofweek(ago(21d))
+| summarize dcount(Computer) by endofweek(TimeGenerated) | render barchart kind=default
