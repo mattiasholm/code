@@ -1,21 +1,21 @@
 $ErrorActionPreference = 'Stop'
 Add-AzureRmAccount
-# mattias.holm@mobilelogic.se
+# mattias.holm@b3itadmin.onmicrosoft.com
+# # # BYT UT MOT DEDIKERAT ENVIROTAINER-KONTO OM STRUL MED CSP!
 
 
 
-$EnvironmentPrefix = 'Leo-WE'
+$EnvironmentSuffix = 'WEEU-Prod'
 $Location = 'WestEurope'
-$SubscriptionName = 'LogicCenter'
-$TenantDomain = 'mobilelogic.se'
+$SubscriptionName = '???'
+$TenantDomain = '???'
 
 
 
-switch ($EnvironmentPrefix.Split('-')[0])
+switch ($EnvironmentSuffix.Split('-')[1])
 {
-    Zoey {$Environment = 'Production'}
-    Leo {$Environment = 'Test'}
-    LogicCenter {$Environment = 'Shared'}
+    Prod {$Environment = 'Production'}
+    Dev {$Environment = 'Development'}
 }
 
 $TenantId = (Invoke-WebRequest -Uri "https://login.windows.net/$TenantDomain/.well-known/openid-configuration" | ConvertFrom-Json).token_endpoint.Split('/')[3]
@@ -27,13 +27,15 @@ Select-AzureRmSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
 # Create Resource Groups
 
 $ResourceGroupNames = `
-    'ServiceFabric', `
-    'DataServices', `
-    'AppServices'
+    'Portal', `
+    'DryIce', `
+    'Notifications', `
+    'OrderManagement', `
+    'OrderStatistics'
 
 foreach ($ResourceGroupName in $ResourceGroupNames) {
     New-AzureRmResourceGroup `
-        -Name "$EnvironmentPrefix-$ResourceGroupName" `
+        -Name "$ResourceGroupName-$EnvironmentSuffix" `
         -Location $Location `
         -Tag @{Environment=$Environment} `
         -Force
@@ -55,11 +57,11 @@ foreach ($ResourceGroupName in $ResourceGroupNames) {
 
 # Deploy ARM Template
 
-$TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic.json"
-$ParameterFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-$($EnvironmentPrefix).parameters.json"
+$TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\Envirotainer-Portal.json"
+$ParameterFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\Envirotainer-Portal-$($EnvironmentSuffix).parameters.json"
 
 New-AzureRmResourceGroupDeployment `
-    -ResourceGroupName  "$EnvironmentPrefix-$($ResourceGroupNames[0])" `
+    -ResourceGroupname  "$($ResourceGroupNames[0])-$EnvironmentSuffix" `
     -TemplateFile $TemplateFilePath `
     -TemplateParameterFile $ParameterFilePath `
     -Mode Incremental #-Verbose
