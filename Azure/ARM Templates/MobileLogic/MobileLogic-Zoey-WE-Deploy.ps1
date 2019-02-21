@@ -16,6 +16,7 @@ switch ($EnvironmentPrefix.Split('-')[0])
     Zoey {$Environment = 'Production'}
     Leo {$Environment = 'Test'}
     LogicCenter {$Environment = 'Shared'}
+    default {$Environment = 'Unknown'}
 }
 
 $TenantId = (Invoke-WebRequest -Uri "https://login.windows.net/$TenantDomain/.well-known/openid-configuration" | ConvertFrom-Json).token_endpoint.Split('/')[3]
@@ -62,4 +63,5 @@ New-AzureRmResourceGroupDeployment `
     -ResourceGroupName  "$EnvironmentPrefix-$($ResourceGroupNames[0])" `
     -TemplateFile $TemplateFilePath `
     -TemplateParameterFile $ParameterFilePath `
+    -EnvironmentSuffix $EnvironmentSuffix `
     -Mode Incremental #-Verbose

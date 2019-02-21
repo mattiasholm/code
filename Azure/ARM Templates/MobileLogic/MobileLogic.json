@@ -76,7 +76,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "properties": {
                 "securityRules": [
                     {
@@ -180,7 +180,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "properties": {
                 "securityRules": []
             }
@@ -192,7 +192,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "properties": {
                 "securityRules": []
             }
@@ -204,7 +204,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "properties": {
                 "securityRules": []
             }
@@ -216,7 +216,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Frontend'))]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-SF-Backend'))]",
@@ -252,7 +252,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "sku": {
                 "name": "Basic"
             },
@@ -268,7 +268,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks',concat(parameters('EnvironmentPrefix'),'-VNet'))]",
                 "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('EnvironmentPrefix'),'-Gateway-PIP'))]"
@@ -320,7 +320,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "sku": {
                 "name": "Standard_LRS"
             },
@@ -334,7 +334,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "properties": {
                 "dnsSettings": {
                     "domainNameLabel": "[if(greater(copyIndex(1),9),toLower(concat(parameters('EnvironmentPrefix'),'-LB-PIP',copyIndex(1))),toLower(concat(parameters('EnvironmentPrefix'),'-LB-PIP0',copyIndex(1))))]"
@@ -354,7 +354,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "dependsOn": [
                 "PIP"
             ],
@@ -740,7 +740,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "dependsOn": [
                 "[resourceId('Microsoft.Network/virtualNetworks',concat(parameters('EnvironmentPrefix'),'-VNet'))]",
                 "[resourceId('Microsoft.Network/loadBalancers',concat(parameters('EnvironmentPrefix'),'-LB'))]",
@@ -918,7 +918,7 @@
             "location": "[resourceGroup().location]",
             "tags": {
                 "Environment": "[variables('Tag_Environment')]"
-                },
+            },
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts',toLower(replace(concat(parameters('EnvironmentPrefix'),'storage01'),'-','')))]"
             ],
@@ -997,7 +997,7 @@
                             "location": "[resourceGroup().location]",
                             "tags": {
                                 "Environment": "[variables('Tag_Environment')]"
-                                },
+                            },
                             "kind": "app",
                             "properties": {},
                             "sku": {
@@ -1011,11 +1011,11 @@
                             "location": "[resourceGroup().location]",
                             "tags": {
                                 "Environment": "[variables('Tag_Environment')]"
-                                },
-                            "kind": "app",
+                            },
                             "dependsOn": [
                                 "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
                             ],
+                            "kind": "app",
                             "properties": {
                                 "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]",
                                 "httpsOnly": true,
@@ -1034,11 +1034,11 @@
                             "location": "[resourceGroup().location]",
                             "tags": {
                                 "Environment": "[variables('Tag_Environment')]"
-                                },
-                            "kind": "app",
+                            },
                             "dependsOn": [
                                 "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
                             ],
+                            "kind": "app",
                             "properties": {
                                 "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]",
                                 "httpsOnly": true,
@@ -1057,11 +1057,11 @@
                             "location": "[resourceGroup().location]",
                             "tags": {
                                 "Environment": "[variables('Tag_Environment')]"
-                                },
-                            "kind": "app",
+                            },
                             "dependsOn": [
                                 "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
                             ],
+                            "kind": "app",
                             "properties": {
                                 "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]",
                                 "httpsOnly": true,
@@ -1080,7 +1080,7 @@
                             "location": "[resourceGroup().location]",
                             "tags": {
                                 "Environment": "[variables('Tag_Environment')]"
-                                },
+                            },
                             "dependsOn": [
                                 "[concat(parameters('EnvironmentPrefix'),'-CenterWebApp')]"
                             ]
@@ -1092,7 +1092,7 @@
                             "location": "[resourceGroup().location]",
                             "tags": {
                                 "Environment": "[variables('Tag_Environment')]"
-                                },
+                            },
                             "dependsOn": [
                                 "[concat(parameters('EnvironmentPrefix'),'-CenterStageWebApp')]"
                             ]
@@ -1104,7 +1104,7 @@
                             "location": "[resourceGroup().location]",
                             "tags": {
                                 "Environment": "[variables('Tag_Environment')]"
-                                },
+                            },
                             "dependsOn": [
                                 "[concat(parameters('EnvironmentPrefix'),'-DeviceWebApp')]"
                             ],
