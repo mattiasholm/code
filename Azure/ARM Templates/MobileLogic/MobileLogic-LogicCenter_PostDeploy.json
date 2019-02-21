@@ -1,0 +1,208 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "EnvironmentPrefix": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apiVersion_KeyVault": "2018-02-14-preview",
+        "apiVersion_Deployments": "2018-08-01",
+        "apiVersion_Storage": "2018-07-01",
+        "apiVersion_MSI": "2015-08-31-PREVIEW",
+        "Tag_Environment": "[if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'Zoey'),'Production',if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'Leo'),'Test',if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'LogicCenter'),'Shared','Unknown')))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "[variables('apiVersion_KeyVault')]",
+            "type": "Microsoft.KeyVault/vaults",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-KeyVault')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
+            "properties": {
+                "tenantId": "[subscription().tenantId]",
+                "sku": {
+                    "family": "A",
+                    "name": "Standard"
+                },
+                "accessPolicies": [
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "0a4b27a2-fb2f-4f09-b6be-471edee2e5f8",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ],
+                            "storage": []
+                        }
+                    },
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "f77c970b-617e-484a-8e81-94e136142b8f",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ],
+                            "storage": []
+                        }
+                    }/*,
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "[reference(concat(resourceId('Zoey-WE-AppServices','Microsoft.Web/sites','Zoey-WE-CenterWebApp'),'/providers/Microsoft.ManagedIdentity/Identities/default'),variables('apiVersion_MSI')).principalId]",
+                        "permissions": {
+                            "keys": [],
+                            "secrets": [
+                                "Get",
+                                "List"],
+                            "certificates": [],
+                            "storage": []
+                        }
+                    },
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "[reference(concat(resourceId('Zoey-WE-AppServices','Microsoft.Web/sites','-CenterStageWebApp'),'/providers/Microsoft.ManagedIdentity/Identities/default'),variables('apiVersion_MSI')).principalId]",
+                        "permissions": {
+                            "keys": [],
+                            "secrets": [
+                                "Get",
+                                "List"],
+                            "certificates": [],
+                            "storage": []
+                        }
+                    },
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "[reference(concat(resourceId('Zoey-WE-AppServices','Microsoft.Web/sites',concat(parameters('EnvironmentPrefix'),'-DeviceWebApp'),'/providers/Microsoft.ManagedIdentity/Identities/default'),variables('apiVersion_MSI')).principalId]",
+                        "permissions": {
+                            "keys": [],
+                            "secrets": [
+                                "Get",
+                                "List"],
+                            "certificates": [],
+                            "storage": []
+                        }
+                    }*/                    
+                ],
+                "enabledForDeployment": true,
+                "enabledForDiskEncryption": true,
+                "enabledForTemplateDeployment": true,
+                "enableSoftDelete": true,
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "defaultAction": "Allow",
+                    "ipRules": []
+                }
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Deployments')]",
+            "type": "Microsoft.Resources/deployments",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-DataServices')]",
+            "resourceGroup": "[concat(parameters('EnvironmentPrefix'),'-DataServices')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "[variables('apiVersion_Storage')]",
+                            "type": "Microsoft.Storage/storageAccounts",
+                            "name": "[toLower(replace(concat(parameters('EnvironmentPrefix'),'storage01'),'-',''))]",
+                            "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]"
+                                },
+                            "sku": {
+                                "name": "Standard_LRS"
+                            },
+                            "kind": "StorageV2",
+                            "properties": {}
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "KeyVaultResourceId": {
+            "value": "[resourceId('Microsoft.KeyVault/vaults',concat(parameters('EnvironmentPrefix'),'-KeyVault'))]",
+            "type": "string"
+        },
+        "Environment": {
+            "value": "[variables('Tag_Environment')]",
+            "type": "string"
+        }
+    }
+}

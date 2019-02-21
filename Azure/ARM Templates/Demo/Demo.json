@@ -1,0 +1,224 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "EnvironmentPrefix": {
+            "type": "string"
+        },
+        "Subnets": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apiVersion_NSG": "2018-08-01",
+        "apiVersion_VNet": "2018-08-01",
+        "apiVersion_Deployments": "2018-08-01",
+        "apiVersion_ServerFarms": "2018-02-01",
+        "apiVersion_Sites": "2018-02-01",
+        "Tag_Environment": "Demo"
+    },
+    "resources": [
+        {
+            "apiVersion": "[variables('apiVersion_NSG')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[0])]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Allow_HTTPS",
+                        "properties": {
+                            "access": "Allow",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "443",
+                            "direction": "Inbound",
+                            "priority": 1000,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    },
+                    {
+                        "name": "Allow_HTTP",
+                        "properties": {
+                            "access": "Allow",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "80",
+                            "direction": "Inbound",
+                            "priority": 1100,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_NSG')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[1])]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Allow_HTTPS",
+                        "properties": {
+                            "access": "Allow",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "443",
+                            "direction": "Inbound",
+                            "priority": 1000,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    },
+                    {
+                        "name": "Allow_HTTP",
+                        "properties": {
+                            "access": "Allow",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "80",
+                            "direction": "Inbound",
+                            "priority": 1100,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_NSG')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[2])]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Allow_HTTPS",
+                        "properties": {
+                            "access": "Allow",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "443",
+                            "direction": "Inbound",
+                            "priority": 1000,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    },
+                    {
+                        "name": "Allow_HTTP",
+                        "properties": {
+                            "access": "Allow",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "80",
+                            "direction": "Inbound",
+                            "priority": 1100,
+                            "protocol": "Tcp",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_VNet')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-VNet')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+                },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[0]))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[1]))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[2]))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "copy": [
+                    {
+                        "name": "subnets",
+                        "count": "[length(split(parameters('Subnets'),','))]",
+                        "input": {
+                            "name": "[concat(split(parameters('Subnets'),',')[copyIndex('subnets')],'Subnet')]",
+                            "properties": {
+                                "addressPrefix": "[concat('10.0.',copyIndex('subnets',1),'.0/24')]",
+                                "networkSecurityGroup": "[if(equals(split(parameters('Subnets'),',')[copyIndex('subnets')],'Gateway'),json('null'),json(concat('{\"id\": \"',resourceId('Microsoft.Network/networkSecurityGroups',concat(parameters('EnvironmentPrefix'),'-NSG-',split(parameters('Subnets'),',')[copyIndex('subnets')])),'\"}')))]",
+                                "serviceEndpoints": []
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+        /*
+        ,
+        {
+            "apiVersion": "[variables('apiVersion_Deployments')]",
+            "type": "Microsoft.Resources/deployments",
+            "name": "[concat(parameters('EnvironmentPrefix'),'-Web')]",
+            "resourceGroup": "[concat(parameters('EnvironmentPrefix'),'-Web')]",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "apiVersion": "[variables('apiVersion_ServerFarms')]",
+                            "type": "Microsoft.Web/serverfarms",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-AppPlan01')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "properties": {},
+                            "sku": {
+                                "name": "[parameters('AppServiceSku')]"
+                            }
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Sites')]",
+                            "type": "Microsoft.Web/sites",
+                            "name": "[concat(parameters('EnvironmentPrefix'),'-AppService')]",
+                            "kind": "app",
+                            "location": "[resourceGroup().location]",
+                            "dependsOn": [
+                                "[resourceId(concat(parameters('EnvironmentPrefix'),'-Web'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]"
+                            ],
+                            "properties": {
+                                "serverFarmId": "[resourceId(concat(parameters('EnvironmentPrefix'),'-AppServices'),'Microsoft.Web/serverfarms',concat(parameters('EnvironmentPrefix'),'-AppPlan01'))]",
+                                "httpsOnly": true,
+                                "siteConfig": {
+                                    "alwaysOn": true
+                                }
+                            },
+                            "identity": {
+                                "type": "SystemAssigned"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+        */
+    ],
+    "outputs": {}
+}
