@@ -53,7 +53,9 @@
         "apiVersion_Autoscale": "2015-04-01",
         "Tag_Environment": "[if(equals(split(parameters('EnvironmentSuffix'),'-')[1],'Prod'),'Production',if(equals(split(parameters('EnvironmentSuffix'),'-')[1],'Dev'),'Development','Unknown'))]",
         "Autoscale_CpuPercentage_Increase": 70,
-        "Autoscale_CpuPercentage_Decrease": 30
+        "Autoscale_CpuPercentage_Decrease": 30,
+        "Autoscale_TimeWindow": "PT10M",
+        "Autoscale_Cooldown": "PT10M"
     },
     "resources": [
         {
@@ -169,7 +171,7 @@
                                     "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms',concat('Portal-',parameters('EnvironmentSuffix'),'-AppPlan01'))]",
                                     "timeGrain": "PT1M",
                                     "statistic": "Average",
-                                    "timeWindow": "PT10M",
+                                    "timeWindow": "[variables('Autoscale_TimeWindow')]",
                                     "timeAggregation": "Average",
                                     "operator": "GreaterThan",
                                     "threshold": "[variables('Autoscale_CpuPercentage_Increase')]"
@@ -178,7 +180,7 @@
                                     "direction": "Increase",
                                     "type": "ChangeCount",
                                     "value": 1,
-                                    "cooldown": "PT10M"
+                                    "cooldown": "[variables('Autoscale_Cooldown')]"
                                 }
                             },
                             {
@@ -187,7 +189,7 @@
                                     "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms',concat('Portal-',parameters('EnvironmentSuffix'),'-AppPlan01'))]",
                                     "timeGrain": "PT1M",
                                     "statistic": "Average",
-                                    "timeWindow": "PT10M",
+                                    "timeWindow": "[variables('Autoscale_TimeWindow')]",
                                     "timeAggregation": "Average",
                                     "operator": "LessThan",
                                     "threshold": "[variables('Autoscale_CpuPercentage_Decrease')]"
@@ -196,7 +198,7 @@
                                     "direction": "Decrease",
                                     "type": "ChangeCount",
                                     "value": 1,
-                                    "cooldown": "PT10M"
+                                    "cooldown": "[variables('Autoscale_Cooldown')]"
                                 }
                             }
                         ]

@@ -15,8 +15,7 @@ $TenantDomain = 'b3.se'
 
 
 
-switch ($EnvironmentSuffix.Split('-')[1])
-{
+switch ($EnvironmentSuffix.Split('-')[1]) {
     Prod {$Environment = 'Production'}
     Dev {$Environment = 'Development'}
     default {$Environment = 'Unknown'}
@@ -41,7 +40,7 @@ foreach ($ResourceGroupName in $ResourceGroupNames) {
     New-AzureRmResourceGroup `
         -Name "$ResourceGroupName-$EnvironmentSuffix" `
         -Location $Location `
-        -Tag @{Environment=$Environment} `
+        -Tag @{Environment = $Environment} `
         -Force
 }
 
