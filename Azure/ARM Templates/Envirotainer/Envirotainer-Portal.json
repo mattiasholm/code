@@ -16,7 +16,17 @@
                 "P3V2"
             ]
         },
-        "Portal-AppServiceCapacity": {
+        "Portal-AppServiceMinCapacity": {
+            "type": "int",
+            "minValue": 1,
+            "maxValue": 20
+        },
+        "Portal-AppServiceMaxCapacity": {
+            "type": "int",
+            "minValue": 1,
+            "maxValue": 20
+        },
+        "Portal-AppServiceDefaultCapacity": {
             "type": "int",
             "minValue": 1,
             "maxValue": 20
@@ -40,7 +50,10 @@
         "apiVersion_Sites": "2018-11-01",
         "apiVersion_Insights": "2018-05-01-preview",
         "apiVersion_Workspaces": "2017-04-26-preview",
-        "Tag_Environment": "[if(equals(split(parameters('EnvironmentSuffix'),'-')[1],'Prod'),'Production',if(equals(split(parameters('EnvironmentSuffix'),'-')[1],'Dev'),'Development','Unknown'))]"
+        "apiVersion_Autoscale": "2015-04-01",
+        "Tag_Environment": "[if(equals(split(parameters('EnvironmentSuffix'),'-')[1],'Prod'),'Production',if(equals(split(parameters('EnvironmentSuffix'),'-')[1],'Dev'),'Development','Unknown'))]",
+        "Autoscale_CpuPercentage_Increase": 70,
+        "Autoscale_CpuPercentage_Decrease": 30
     },
     "resources": [
         {
@@ -55,7 +68,7 @@
             "properties": {},
             "sku": {
                 "name": "[parameters('Portal-AppServiceSku')]",
-                "capacity": "[parameters('Portal-AppServiceCapacity')]"
+                "capacity": "[parameters('Portal-AppServiceDefaultCapacity')]"
             }
         },
         {
@@ -83,6 +96,10 @@
                     "apiVersion": "[variables('apiVersion_Sites')]",
                     "type": "siteextensions",
                     "name": "Microsoft.ApplicationInsights.AzureWebSites",
+                    "location": "[resourceGroup().location]",
+                    "tags": {
+                        "Environment": "[variables('Tag_Environment')]"
+                    },
                     "dependsOn": [
                         "[concat('Portal-',parameters('EnvironmentSuffix'),'-App01')]"
                     ]
@@ -91,6 +108,10 @@
                     "apiVersion": "[variables('apiVersion_Sites')]",
                     "type": "config",
                     "name": "appsettings",
+                    "location": "[resourceGroup().location]",
+                    "tags": {
+                        "Environment": "[variables('Tag_Environment')]"
+                    },
                     "dependsOn": [
                         "[concat('Portal-',parameters('EnvironmentSuffix'),'-App01')]",
                         "[concat('Portal-',parameters('EnvironmentSuffix'),'-AppInsights01')]",
@@ -117,6 +138,70 @@
             "properties": {
                 "Application_Type": "web",
                 "applicationId": "[concat('Portal-',parameters('EnvironmentSuffix'),'-App01')]"
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Autoscale')]",
+            "type": "Microsoft.Insights/autoscalesettings",
+            "name": "AutoscaleSetting01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]"
+            },
+            "dependsOn": [
+                "[concat('Portal-',parameters('EnvironmentSuffix'),'-AppPlan01')]"
+            ],
+            "properties": {
+                "enabled": true,
+                "targetResourceUri": "[resourceId('Microsoft.Web/serverfarms',concat('Portal-',parameters('EnvironmentSuffix'),'-AppPlan01'))]",
+                "profiles": [
+                    {
+                        "name": "AutoscaleProfile01",
+                        "capacity": {
+                            "minimum": "[parameters('Portal-AppServiceMinCapacity')]",
+                            "maximum": "[parameters('Portal-AppServiceMaxCapacity')]",
+                            "default": "[parameters('Portal-AppServiceDefaultCapacity')]"
+                        },
+                        "rules": [
+                            {
+                                "metricTrigger": {
+                                    "metricName": "CpuPercentage",
+                                    "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms',concat('Portal-',parameters('EnvironmentSuffix'),'-AppPlan01'))]",
+                                    "timeGrain": "PT1M",
+                                    "statistic": "Average",
+                                    "timeWindow": "PT10M",
+                                    "timeAggregation": "Average",
+                                    "operator": "GreaterThan",
+                                    "threshold": "[variables('Autoscale_CpuPercentage_Increase')]"
+                                },
+                                "scaleAction": {
+                                    "direction": "Increase",
+                                    "type": "ChangeCount",
+                                    "value": 1,
+                                    "cooldown": "PT10M"
+                                }
+                            },
+                            {
+                                "metricTrigger": {
+                                    "metricName": "CpuPercentage",
+                                    "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms',concat('Portal-',parameters('EnvironmentSuffix'),'-AppPlan01'))]",
+                                    "timeGrain": "PT1M",
+                                    "statistic": "Average",
+                                    "timeWindow": "PT10M",
+                                    "timeAggregation": "Average",
+                                    "operator": "LessThan",
+                                    "threshold": "[variables('Autoscale_CpuPercentage_Decrease')]"
+                                },
+                                "scaleAction": {
+                                    "direction": "Decrease",
+                                    "type": "ChangeCount",
+                                    "value": 1,
+                                    "cooldown": "PT10M"
+                                }
+                            }
+                        ]
+                    }
+                ]
             }
         },
         {

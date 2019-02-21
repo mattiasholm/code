@@ -5,7 +5,13 @@
         "Portal-AppServiceSku": {
             "value": "S1"
         },
-        "Portal-AppServiceCapacity": {
+        "Portal-AppServiceMinCapacity": {
+            "value": 1
+        },
+        "Portal-AppServiceMaxCapacity": {
+            "value": 5
+        },
+        "Portal-AppServiceDefaultCapacity": {
             "value": 2
         },
         "Portal-LogAnalyticsSku": {
