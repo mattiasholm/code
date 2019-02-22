@@ -44,8 +44,8 @@
         "apiVersion_Workspaces": "2017-04-26-preview",
         "apiVersion_Autoscale": "2015-04-01",
         "Tag_Environment": "[if(equals(split(parameters('EnvironmentSuffix'),'-')[1],'Prod'),'Production',if(equals(split(parameters('EnvironmentSuffix'),'-')[1],'Dev'),'Development','Unknown'))]",
-        "Autoscale_CpuPercentage_Increase": 70,
-        "Autoscale_CpuPercentage_Decrease": 30,
+        "Autoscale_CpuPercentage_Increase": 80,
+        "Autoscale_CpuPercentage_Decrease": 40,
         "Autoscale_TimeWindow": "PT10M",
         "Autoscale_Cooldown": "PT10M"
     },
