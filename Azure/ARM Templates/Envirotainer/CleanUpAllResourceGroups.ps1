@@ -4,8 +4,11 @@ Add-AzureRmAccount
 
 
 $EnvironmentSuffix = 'WEEU-Prod'
-$SubscriptionName = 'B3IT Cloud Services - Test'
-$TenantDomain = 'b3.se'
+$SubscriptionName = 'Envirotainer Portal - Prod'
+# # # TEMP # # #
+$SubscriptionName = 'MyEnvirotainer'
+# # # TEMP # # # 
+$TenantDomain = 'envirotainer.com'
 
 
 

@@ -14,9 +14,6 @@
         "Portal-AppServiceDefaultCapacity": {
             "value": 2
         },
-        "Portal-LogAnalyticsSku": {
-            "value": "Standard"
-        },
         "Portal-LogAnalyticsRetentionDays": {
             "value": 30
         }

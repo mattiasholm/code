@@ -1,17 +1,15 @@
 $ErrorActionPreference = 'Stop'
 Add-AzureRmAccount
-
+# mholm_adm@envirotainer.com
 
 
 $EnvironmentSuffix = 'WEEU-Prod'
 $Location = 'WestEurope'
 $SubscriptionName = 'Envirotainer Portal - Prod'
+# # # TEMP # # #
+$SubscriptionName = 'MyEnvirotainer'
+# # # TEMP # # # 
 $TenantDomain = 'envirotainer.com'
-
-# # # TEMP # # #
-$SubscriptionName = 'B3IT Cloud Services - Test'
-$TenantDomain = 'b3.se'
-# # # TEMP # # #
 
 
 

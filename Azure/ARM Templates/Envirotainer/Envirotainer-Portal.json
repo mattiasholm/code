@@ -31,14 +31,6 @@
             "minValue": 1,
             "maxValue": 20
         },
-        "Portal-LogAnalyticsSku": {
-            "type": "string",
-            "allowedValues": [
-                "Standard",
-                "Premium",
-                "Standalone"
-            ]
-        },
         "Portal-LogAnalyticsRetentionDays": {
             "type": "int",
             "minValue": 0,
@@ -216,7 +208,7 @@
             },
             "properties": {
                 "sku": {
-                    "name": "[parameters('Portal-LogAnalyticsSku')]"
+                    "name": "PerGB2018"
                 },
                 "retentionInDays": "[parameters('Portal-LogAnalyticsRetentionDays')]"
             }
