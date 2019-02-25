@@ -1,5 +1,6 @@
 $ErrorActionPreference = 'Stop'
-Add-AzureRmAccount
+Login-AzAccount
+# mholm_adm@envirotainer.com
 
 
 
@@ -13,8 +14,8 @@ $TenantDomain = 'envirotainer.com'
 
 
 $TenantId = (Invoke-WebRequest -Uri "https://login.windows.net/$TenantDomain/.well-known/openid-configuration" | ConvertFrom-Json).token_endpoint.Split('/')[3]
-$SubscriptionId = (Get-AzureRmSubscription -TenantId $TenantId | Where-Object {$_.Name -eq $SubscriptionName}).Id
-Select-AzureRmSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
+$SubscriptionId = (Get-AzSubscription -TenantId $TenantId | Where-Object {$_.Name -eq $SubscriptionName}).Id
+Select-AzSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
 
 
 
@@ -28,7 +29,7 @@ $ResourceGroupNames = `
     'OrderStatistics'
 
 foreach ($ResourceGroupName in $ResourceGroupNames) {
-    Remove-AzureRmResourceGroup `
+    Remove-AzResourceGroup `
         -Name "$ResourceGroupName-$EnvironmentSuffix" `
         -Force
 }

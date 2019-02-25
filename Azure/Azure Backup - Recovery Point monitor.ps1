@@ -1,7 +1,3 @@
-### Updated to use new Az module, run script in PowerShell Core (pwsh)
-
-
-
 $ErrorActionPreference = 'Stop'
 Login-AzAccount
 # mattias.holm@b3itadmin.onmicrosoft.com

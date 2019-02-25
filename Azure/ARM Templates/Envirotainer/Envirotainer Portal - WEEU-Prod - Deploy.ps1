@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-Add-AzureRmAccount
+Login-AzAccount
 # mholm_adm@envirotainer.com
 
 
@@ -20,8 +20,8 @@ switch ($EnvironmentSuffix.Split('-')[1]) {
 }
 
 $TenantId = (Invoke-WebRequest -Uri "https://login.windows.net/$TenantDomain/.well-known/openid-configuration" | ConvertFrom-Json).token_endpoint.Split('/')[3]
-$SubscriptionId = (Get-AzureRmSubscription -TenantId $TenantId | Where-Object {$_.Name -eq $SubscriptionName}).Id
-Select-AzureRmSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
+$SubscriptionId = (Get-AzSubscription -TenantId $TenantId | Where-Object {$_.Name -eq $SubscriptionName}).Id
+Select-AzSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
 
 
 
@@ -35,7 +35,7 @@ $ResourceGroupNames = `
     'OrderStatistics'
 
 foreach ($ResourceGroupName in $ResourceGroupNames) {
-    New-AzureRmResourceGroup `
+    New-AzResourceGroup `
         -Name "$ResourceGroupName-$EnvironmentSuffix" `
         -Location $Location `
         -Tag @{Environment = $Environment} `
@@ -50,7 +50,7 @@ $FilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Template
 $TemplateFileName = "Envirotainer-Portal.json"
 $ParameterFileName = "Envirotainer-Portal-$($EnvironmentSuffix).parameters.json"
 
-New-AzureRmResourceGroupDeployment `
+New-AzResourceGroupDeployment `
     -ResourceGroupname  "$($ResourceGroupNames[0])-$EnvironmentSuffix" `
     -TemplateFile (Join-Path -Path $FilePath -ChildPath $TemplateFileName) `
     -TemplateParameterFile (Join-Path -Path $FilePath -ChildPath $ParameterFileName) `
