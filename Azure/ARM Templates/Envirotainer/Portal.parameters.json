@@ -2,19 +2,19 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "Portal-AppServiceSku": {
+        "AppServiceSku": {
             "value": "S1"
         },
-        "Portal-AppServiceMinCapacity": {
+        "AppServiceMinCapacity": {
             "value": 1
         },
-        "Portal-AppServiceMaxCapacity": {
+        "AppServiceMaxCapacity": {
             "value": 5
         },
-        "Portal-AppServiceDefaultCapacity": {
+        "AppServiceDefaultCapacity": {
             "value": 2
         },
-        "Portal-LogAnalyticsRetentionDays": {
+        "LogAnalyticsRetentionDays": {
             "value": 30
         }
     }
