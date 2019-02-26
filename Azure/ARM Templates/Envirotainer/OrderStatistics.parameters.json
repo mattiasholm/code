@@ -9,10 +9,41 @@
             "value": 1
         },
         "AppServiceMaxCapacity": {
-            "value": 5
+            "value": 3
         },
         "AppServiceDefaultCapacity": {
             "value": 2
+        },
+        "Autoscale_CpuPercentage_Increase": {
+            "value": 80
+        },
+        "Autoscale_CpuPercentage_Decrease": {
+            "value": 40
+        },
+        "Autoscale_TimeWindow": {
+            "value": "PT10M"
+        },
+        "Autoscale_Cooldown": {
+            "value": "PT10M"
+        },
+        "SqlSku": {
+            "value": "S1"
+        },
+        "SqlUsername": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/901cac60-5de4-4d34-80a7-13dc59c7d184/resourceGroups/Portal-WEEU-Prod/providers/Microsoft.KeyVault/vaults/Portal-WEEU-Prod-Vault01"
+                },
+                "secretName": "OrderStatistics-SqlUsername"
+            }
+        },
+        "SqlPassword": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/901cac60-5de4-4d34-80a7-13dc59c7d184/resourceGroups/Portal-WEEU-Prod/providers/Microsoft.KeyVault/vaults/Portal-WEEU-Prod-Vault01"
+                },
+                "secretName": "OrderStatistics-SqlPassword"
+            }
         }
     }
 }

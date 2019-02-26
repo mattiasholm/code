@@ -9,13 +9,25 @@
             "value": 1
         },
         "AppServiceMaxCapacity": {
-            "value": 5
+            "value": 3
         },
         "AppServiceDefaultCapacity": {
             "value": 2
         },
+        "Autoscale_CpuPercentage_Increase": {
+            "value": 80
+        },
+        "Autoscale_CpuPercentage_Decrease": {
+            "value": 40
+        },
+        "Autoscale_TimeWindow": {
+            "value": "PT10M"
+        },
+        "Autoscale_Cooldown": {
+            "value": "PT10M"
+        },
         "LogAnalyticsRetentionDays": {
-            "value": 30
+            "value": 90
         }
     }
 }

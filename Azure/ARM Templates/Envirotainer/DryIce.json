@@ -14,9 +14,9 @@
                 "S1",
                 "S2",
                 "S3",
-                "P1V2",
-                "P2V2",
-                "P3V2"
+                "P1v2",
+                "P2v2",
+                "P3v2"
             ]
         },
         "AppServiceMinCapacity": {
@@ -33,27 +33,37 @@
             "type": "int",
             "minValue": 1,
             "maxValue": 20
+        },
+        "Autoscale_CpuPercentage_Increase": {
+            "type": "int",
+            "minValue": 50,
+            "maxValue": 100
+        },
+        "Autoscale_CpuPercentage_Decrease": {
+            "type": "int",
+            "minValue": 0,
+            "maxValue": 50
+        },
+        "Autoscale_TimeWindow": {
+            "type": "string"
+        },
+        "Autoscale_Cooldown": {
+            "type": "string"
         }
     },
     "variables": {
-        "apiVersion_ServerFarms": "2018-11-01",
-        "apiVersion_Sites": "2018-11-01",
-        "apiVersion_Slots": "2018-11-01",
+        "apiVersion_Web": "2018-11-01",
         "apiVersion_Insights": "2018-05-01-preview",
         "apiVersion_Autoscale": "2015-04-01",
         "Tag_Environment": "[if(equals(split(parameters('EnvironmentSuffix'),'-')[1],'Prod'),'Production',if(equals(split(parameters('EnvironmentSuffix'),'-')[1],'Dev'),'Development','Unknown'))]",
         "AppSetting_AlwaysOn": true,
         "AppSetting_SessionAffinity": false,
         "AppSetting_HttpsOnly": true,
-        "SlotName": "Staging",
-        "Autoscale_CpuPercentage_Increase": 80,
-        "Autoscale_CpuPercentage_Decrease": 40,
-        "Autoscale_TimeWindow": "PT10M",
-        "Autoscale_Cooldown": "PT10M"
+        "SlotName": "Staging"
     },
     "resources": [
         {
-            "apiVersion": "[variables('apiVersion_ServerFarms')]",
+            "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/serverfarms",
             "name": "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-AppPlan01')]",
             "location": "[resourceGroup().location]",
@@ -68,7 +78,7 @@
             }
         },
         {
-            "apiVersion": "[variables('apiVersion_Sites')]",
+            "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/sites",
             "name": "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-App01')]",
             "location": "[resourceGroup().location]",
@@ -89,7 +99,7 @@
             },
             "resources": [
                 {
-                    "apiVersion": "[variables('apiVersion_Sites')]",
+                    "apiVersion": "[variables('apiVersion_Web')]",
                     "type": "siteextensions",
                     "name": "Microsoft.ApplicationInsights.AzureWebSites",
                     "location": "[resourceGroup().location]",
@@ -101,7 +111,7 @@
                     ]
                 },
                 {
-                    "apiVersion": "[variables('apiVersion_Sites')]",
+                    "apiVersion": "[variables('apiVersion_Web')]",
                     "type": "config",
                     "name": "appsettings",
                     "location": "[resourceGroup().location]",
@@ -116,25 +126,25 @@
                     "properties": {
                         "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-AppInsights01'),variables('apiVersion_Insights')).InstrumentationKey]"
                     }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Web')]",
+                    "type": "slots",
+                    "name": "[variables('SlotName')]",
+                    "location": "[resourceGroup().location]",
+                    "tags": {
+                        "Environment": "[variables('Tag_Environment')]"
+                    },
+                    "dependsOn": [
+                        "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-App01')]"
+                    ],
+                    "kind": "app",
+                    "properties": {
+                        "serverFarmId": "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-AppPlan01')]",
+                        "httpsOnly": "[variables('AppSetting_HttpsOnly')]"
+                    }
                 }
             ]
-        },
-        {
-            "apiVersion": "[variables('apiVersion_Slots')]",
-            "type": "Microsoft.Web/sites/slots",
-            "name": "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-App01','/',variables('SlotName'))]",
-            "location": "[resourceGroup().location]",
-            "tags": {
-                "Environment": "[variables('Tag_Environment')]"
-            },
-            "dependsOn": [
-                "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-App01')]"
-            ],
-            "kind": "app",
-            "properties": {
-                "serverFarmId": "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-AppPlan01')]",
-                "httpsOnly": "[variables('AppSetting_HttpsOnly')]"
-            }
         },
         {
             "apiVersion": "[variables('apiVersion_Insights')]",
@@ -182,16 +192,16 @@
                                     "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms',concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-AppPlan01'))]",
                                     "timeGrain": "PT1M",
                                     "statistic": "Average",
-                                    "timeWindow": "[variables('Autoscale_TimeWindow')]",
+                                    "timeWindow": "[parameters('Autoscale_TimeWindow')]",
                                     "timeAggregation": "Average",
                                     "operator": "GreaterThan",
-                                    "threshold": "[variables('Autoscale_CpuPercentage_Increase')]"
+                                    "threshold": "[parameters('Autoscale_CpuPercentage_Increase')]"
                                 },
                                 "scaleAction": {
                                     "direction": "Increase",
                                     "type": "ChangeCount",
                                     "value": 1,
-                                    "cooldown": "[variables('Autoscale_Cooldown')]"
+                                    "cooldown": "[parameters('Autoscale_Cooldown')]"
                                 }
                             },
                             {
@@ -200,16 +210,16 @@
                                     "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms',concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-AppPlan01'))]",
                                     "timeGrain": "PT1M",
                                     "statistic": "Average",
-                                    "timeWindow": "[variables('Autoscale_TimeWindow')]",
+                                    "timeWindow": "[parameters('Autoscale_TimeWindow')]",
                                     "timeAggregation": "Average",
                                     "operator": "LessThan",
-                                    "threshold": "[variables('Autoscale_CpuPercentage_Decrease')]"
+                                    "threshold": "[parameters('Autoscale_CpuPercentage_Decrease')]"
                                 },
                                 "scaleAction": {
                                     "direction": "Decrease",
                                     "type": "ChangeCount",
                                     "value": 1,
-                                    "cooldown": "[variables('Autoscale_Cooldown')]"
+                                    "cooldown": "[parameters('Autoscale_Cooldown')]"
                                 }
                             }
                         ]
