@@ -10,7 +10,7 @@ if (Test-Path -Path $CsvFilePath) {
     $Servers = Import-Csv $CsvFilePath
 }
 else {
-    Write-Host -ForegroundColor Red -Object "Failed to find CSV file - $CsvFilePath"
+    Write-Host -ForegroundColor Red -Object "Failed to find CSV file`t`t$CsvFilePath"
     Pause
     break
 }
@@ -30,10 +30,10 @@ foreach ($Server in $Servers) {
     New-Item -ItemType File -Path $UncFilePath -Value "Testfil skapad $TimeStamp" | Out-Null
 
     if (Test-Path -Path $UncFilePath) {
-        Write-Host -ForegroundColor Green -Object "$($Server.ServerName) - Successfully created test file - $FileName"
+        Write-Host -ForegroundColor Green -Object ("$($Server.ServerName)`t`tSuccessfully created test file`t`t$FileName").Replace('Testfil_','').Replace('.txt','').Replace('.',':')
     }
     else {
-        Write-Host -ForegroundColor Red -Object "$($Server.ServerName) - Failed to create test file - $FileName"
+        Write-Host -ForegroundColor Red -Object "$($Server.ServerName)`t`tFailed to create test file`t`t$FileName"
     }
 }
 

@@ -10,7 +10,7 @@ if (Test-Path -Path $CsvFilePath) {
     $Servers = Import-Csv $CsvFilePath
 }
 else {
-    Write-Host -ForegroundColor Red -Object "Failed to find CSV file - $CsvFilePath"
+    Write-Host -ForegroundColor Red -Object "Failed to find CSV file`t`t$CsvFilePath"
     Pause
     break
 }
@@ -25,11 +25,10 @@ foreach ($Server in $Servers) {
 
     if (Test-Path -Path $UncFilePath) {
         $LatestTestFile = (Get-ChildItem -Path $UncFilePath | Sort-Object -Property Name -Descending | Select-Object -First 1).Name
-        Write-Host -ForegroundColor Green -Object "$($Server.ServerName) - Successfully found latest test file - $LatestTestFile"
+        Write-Host -ForegroundColor Green -Object ("$($Server.ServerName)`t`tSuccessfully found latest test file`t`t$LatestTestFile").Replace('Testfil_','').Replace('.txt','').Replace('.',':')
     }
     else {
-        Write-Host -ForegroundColor Red -Object "$($Server.ServerName) - Failed to find test file(s)"
-        break
+        Write-Host -ForegroundColor Red -Object "$($Server.ServerName)`t`tFailed to find test file(s)"
     }
 }
 

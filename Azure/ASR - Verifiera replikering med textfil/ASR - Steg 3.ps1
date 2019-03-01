@@ -10,7 +10,7 @@ if (Test-Path -Path $CsvFilePath) {
     $Servers = Import-Csv $CsvFilePath
 }
 else {
-    Write-Host -ForegroundColor Red -Object "Failed to find CSV file - $CsvFilePath"
+    Write-Host -ForegroundColor Red -Object "Failed to find CSV file`t`t$CsvFilePath"
     Pause
     break
 }
@@ -27,12 +27,11 @@ foreach ($Server in $Servers) {
         Remove-Item -Path $UncFilePath
         
         if (!(Test-Path -Path $UncFilePath)) {
-            Write-Host -ForegroundColor Green -Object "$($Server.ServerName) - Successfully deleted test file(s)"
+            Write-Host -ForegroundColor Green -Object "$($Server.ServerName)`t`tSuccessfully deleted test file(s)"
         }
     }
     else {
-        Write-Host -ForegroundColor Yellow -Object "$($Server.ServerName) - Test file(s) no longer exists"
-        break
+        Write-Host -ForegroundColor Yellow -Object "$($Server.ServerName)`t`tTest file(s) no longer exists"
     }
 }
 
