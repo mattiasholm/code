@@ -76,7 +76,9 @@
         "AppSetting_AlwaysOn": true,
         "AppSetting_SessionAffinity": false,
         "AppSetting_HttpsOnly": true,
-        "SlotName": "Staging"
+        "AppSetting_UserApi": "https://portal-userapi.envirotainer.com",
+        "SlotName": "Staging",
+        "SqlCollation": "Finnish_Swedish_CI_AS"
     },
     "resources": [
         {
@@ -141,7 +143,27 @@
                         "Microsoft.ApplicationInsights.AzureWebSites"
                     ],
                     "properties": {
-                        "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-AppInsights01'),variables('apiVersion_Insights')).InstrumentationKey]"
+                        "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-AppInsights01'),variables('apiVersion_Insights')).InstrumentationKey]",
+                        "UserApi:BaseUri": "[variables('AppSetting_UserApi')]"
+                    }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Web')]",
+                    "type": "config",
+                    "name": "connectionstrings",
+                    "location": "[resourceGroup().location]",
+                    "tags": {
+                        "Environment": "[variables('Tag_Environment')]"
+                    },
+                    "dependsOn": [
+                        "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-App01')]",
+                        "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-SqlDb01')]"
+                    ],
+                    "properties": {
+                        "Database": {
+                            "type": "SQLAzure",
+                            "value": "[concat('Data Source=tcp:',reference(concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-SqlServer01')).fullyQualifiedDomainName,',1433;Initial Catalog=',concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-SqlDb01'),';User Id=',parameters('SqlUsername'),';Password=',parameters('SqlPassword'),';')]"
+                        }
                     }
                 },
                 {
@@ -259,6 +281,22 @@
             "resources": [
                 {
                     "apiVersion": "[variables('apiVersion_Sql')]",
+                    "type": "firewallRules",
+                    "name": "firewallRules",
+                    "location": "[resourceGroup().location]",
+                    "tags": {
+                        "Environment": "[variables('Tag_Environment')]"
+                    },
+                    "dependsOn": [
+                        "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-SqlServer01')]"
+                    ],
+                    "properties": {
+                        "startIpAddress": "0.0.0.0",
+                        "endIpAddress": "0.0.0.0"
+                    }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Sql')]",
                     "type": "databases",
                     "name": "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-SqlDb01')]",
                     "location": "[resourceGroup().location]",
@@ -271,7 +309,9 @@
                     "sku": {
                         "name": "[parameters('SqlSku')]"
                     },
-                    "properties": {}
+                    "properties": {
+                        "collation": "[variables('SqlCollation')]"
+                    }
                 }
             ]
         }

@@ -1,0 +1,30 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "AppServiceSku": {
+            "value": "S1"
+        },
+        "AppServiceMinCapacity": {
+            "value": 1
+        },
+        "AppServiceMaxCapacity": {
+            "value": 3
+        },
+        "AppServiceDefaultCapacity": {
+            "value": 2
+        },
+        "Autoscale_CpuPercentage_Increase": {
+            "value": 80
+        },
+        "Autoscale_CpuPercentage_Decrease": {
+            "value": 40
+        },
+        "Autoscale_TimeWindow": {
+            "value": "PT10M"
+        },
+        "Autoscale_Cooldown": {
+            "value": "PT10M"
+        }
+    }
+}
