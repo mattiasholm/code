@@ -34,6 +34,12 @@
             "minValue": 1,
             "maxValue": 20
         },
+        "Autoscale_TimeWindow": {
+            "type": "string"
+        },
+        "Autoscale_Cooldown": {
+            "type": "string"
+        },
         "Autoscale_CpuPercentage_Increase": {
             "type": "int",
             "minValue": 50,
@@ -44,11 +50,15 @@
             "minValue": 0,
             "maxValue": 50
         },
-        "Autoscale_TimeWindow": {
-            "type": "string"
+        "Autoscale_MemoryPercentage_Increase": {
+            "type": "int",
+            "minValue": 50,
+            "maxValue": 100
         },
-        "Autoscale_Cooldown": {
-            "type": "string"
+        "Autoscale_MemoryPercentage_Decrease": {
+            "type": "int",
+            "minValue": 0,
+            "maxValue": 50
         },
         "LogAnalyticsRetentionDays": {
             "type": "int",
@@ -222,6 +232,42 @@
                                     "timeAggregation": "Average",
                                     "operator": "LessThan",
                                     "threshold": "[parameters('Autoscale_CpuPercentage_Decrease')]"
+                                },
+                                "scaleAction": {
+                                    "direction": "Decrease",
+                                    "type": "ChangeCount",
+                                    "value": 1,
+                                    "cooldown": "[parameters('Autoscale_Cooldown')]"
+                                }
+                            },
+                            {
+                                "metricTrigger": {
+                                    "metricName": "MemoryPercentage",
+                                    "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms',concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-AppPlan01'))]",
+                                    "timeGrain": "PT1M",
+                                    "statistic": "Average",
+                                    "timeWindow": "[parameters('Autoscale_TimeWindow')]",
+                                    "timeAggregation": "Average",
+                                    "operator": "GreaterThan",
+                                    "threshold": "[parameters('Autoscale_MemoryPercentage_Increase')]"
+                                },
+                                "scaleAction": {
+                                    "direction": "Increase",
+                                    "type": "ChangeCount",
+                                    "value": 1,
+                                    "cooldown": "[parameters('Autoscale_Cooldown')]"
+                                }
+                            },
+                            {
+                                "metricTrigger": {
+                                    "metricName": "MemoryPercentage",
+                                    "metricResourceUri": "[resourceId('Microsoft.Web/serverfarms',concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-AppPlan01'))]",
+                                    "timeGrain": "PT1M",
+                                    "statistic": "Average",
+                                    "timeWindow": "[parameters('Autoscale_TimeWindow')]",
+                                    "timeAggregation": "Average",
+                                    "operator": "LessThan",
+                                    "threshold": "[parameters('Autoscale_MemoryPercentage_Decrease')]"
                                 },
                                 "scaleAction": {
                                     "direction": "Decrease",

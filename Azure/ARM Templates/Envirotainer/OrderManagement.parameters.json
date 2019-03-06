@@ -14,17 +14,23 @@
         "AppServiceDefaultCapacity": {
             "value": 2
         },
+        "Autoscale_TimeWindow": {
+            "value": "PT10M"
+        },
+        "Autoscale_Cooldown": {
+            "value": "PT10M"
+        },
         "Autoscale_CpuPercentage_Increase": {
             "value": 80
         },
         "Autoscale_CpuPercentage_Decrease": {
             "value": 40
         },
-        "Autoscale_TimeWindow": {
-            "value": "PT10M"
+        "Autoscale_MemoryPercentage_Increase": {
+            "value": 80
         },
-        "Autoscale_Cooldown": {
-            "value": "PT10M"
+        "Autoscale_MemoryPercentage_Decrease": {
+            "value": 40
         }
     }
 }
