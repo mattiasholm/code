@@ -1,0 +1,127 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Prefix": {
+            "type": "string"
+        },
+        "Suffix": {
+            "type": "string"
+        },
+        "KeyVault_Admin": {
+            "type": "string"
+        },
+        "KeyVault_IP": {
+            "type": "string"
+        },
+        "AddressSpace": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apiVersion_KeyVault": "2018-02-14-preview",
+        "apiVersion_Network": "2018-12-01",
+        "FullPrefix": "[concat(parameters('Prefix'),'-',parameters('Suffix'))]",
+        "SubnetRange": "[replace(parameters('AddressSpace'),'/16','/24')]",
+        "Tag_Environment": "[if(equals(split(parameters('Suffix'),'-')[1],'Prod'),'Production',if(equals(split(parameters('Suffix'),'-')[1],'Dev'),'Development','Unknown'))]",
+        "Tag_SecurityLevel": "[if(equals(parameters('Prefix'),'Red'),'Red',if(equals(parameters('Prefix'),'Blue'),'Blue',if(equals(parameters('Prefix'),'Green'),'Green','Unknown')))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[concat(variables('FullPrefix'),'-NSG-ASE')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]",
+                "SecurityLevel": "[variables('Tag_SecurityLevel')]"
+            },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Deny_Inbound_All",
+                        "properties": {
+                            "access": "Deny",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "*",
+                            "direction": "Inbound",
+                            "priority": 4096,
+                            "protocol": "*",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    },
+                    {
+                        "name": "Deny_Outbound_All",
+                        "properties": {
+                            "access": "Deny",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "*",
+                            "direction": "Outbound",
+                            "priority": 4096,
+                            "protocol": "*",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[concat(variables('FullPrefix'),'-VNet01')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "Environment": "[variables('Tag_Environment')]",
+                "SecurityLevel": "[variables('Tag_SecurityLevel')]"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('AddressSpace')]"
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "apiVersion": "[variables('apiVersion_Network')]",
+                    "type": "subnets",
+                    "name": "GatewaySubnet",
+                    "location": "[resourceGroup().location]",
+                    "dependsOn": [
+                        "[concat(variables('FullPrefix'),'-VNet01')]"
+                    ],
+                    "properties": {
+                        "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.','0','.',split(variables('SubnetRange'),'.')[3])]"
+                    }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Network')]",
+                    "type": "subnets",
+                    "name": "ASESubnet",
+                    "location": "[resourceGroup().location]",
+                    "dependsOn": [
+                        "[concat(variables('FullPrefix'),'-VNet01')]",
+                        "[concat(variables('FullPrefix'),'-NSG-ASE')]"
+                    ],
+                    "properties": {
+                        "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.','1','.',split(variables('SubnetRange'),'.')[3])]",
+                        "networkSecurityGroup": {
+                            "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(variables('FullPrefix'),'-NSG-ASE'))]"
+                        },
+                        "serviceEndpoints": [
+                            {
+                                "service": "Microsoft.KeyVault"
+                            },
+                            {
+                                "service": "Microsoft.Storage"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "outputs": {}
+}

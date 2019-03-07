@@ -132,16 +132,16 @@ New-AzResourceGroupDeployment `
 
 
 
-    # Deploy 'Content'
+# Deploy 'Content'
     
-    $Module = $ResourceGroupNames[5]
-    $TemplateFileName = "$Module.json"
-    $ParameterFileName = "$Module.parameters.json"
+$Module = $ResourceGroupNames[5]
+$TemplateFileName = "$Module.json"
+$ParameterFileName = "$Module.parameters.json"
     
-    New-AzResourceGroupDeployment `
-        -ResourceGroupname  "$Module-$EnvironmentSuffix" `
-        -TemplateFile (Join-Path -Path $FilePath -ChildPath $TemplateFileName) `
-        -TemplateParameterFile (Join-Path -Path $FilePath -ChildPath $ParameterFileName) `
-        -EnvironmentSuffix $EnvironmentSuffix `
-        -Module $Module `
-        -Mode Incremental
+New-AzResourceGroupDeployment `
+    -ResourceGroupname  "$Module-$EnvironmentSuffix" `
+    -TemplateFile (Join-Path -Path $FilePath -ChildPath $TemplateFileName) `
+    -TemplateParameterFile (Join-Path -Path $FilePath -ChildPath $ParameterFileName) `
+    -EnvironmentSuffix $EnvironmentSuffix `
+    -Module $Module `
+    -Mode Incremental

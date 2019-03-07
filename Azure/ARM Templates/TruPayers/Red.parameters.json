@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "KeyVault_Admin": {
+            "value": "c8758164-4366-4eb6-b260-c8bf90c01b60"
+        },
+        "KeyVault_IP": {
+            "value": "83.218.79.218"
+        },
+        "AddressSpace": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "Red-AddressSpace"
+            }
+        }
+    }
+}

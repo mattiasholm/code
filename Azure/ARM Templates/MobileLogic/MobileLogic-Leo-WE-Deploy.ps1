@@ -11,8 +11,7 @@ $TenantDomain = 'mobilelogic.se'
 
 
 
-switch ($EnvironmentPrefix.Split('-')[0])
-{
+switch ($EnvironmentPrefix.Split('-')[0]) {
     Zoey {$Environment = 'Production'}
     Leo {$Environment = 'Test'}
     LogicCenter {$Environment = 'Shared'}
@@ -36,7 +35,7 @@ foreach ($ResourceGroupName in $ResourceGroupNames) {
     New-AzureRmResourceGroup `
         -Name "$EnvironmentPrefix-$ResourceGroupName" `
         -Location $Location `
-        -Tag @{Environment=$Environment} `
+        -Tag @{Environment = $Environment} `
         -Force
 }
 
