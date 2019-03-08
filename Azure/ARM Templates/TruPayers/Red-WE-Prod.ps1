@@ -33,7 +33,7 @@ foreach ($ResourceGroupName in $ResourceGroupNames) {
     New-AzResourceGroup `
         -Name "$ResourceGroupName-$Suffix" `
         -Location $Location `
-        -Tag @{Environment = $Environment} `
+        -Tag @{Environment = $Environment; SecurityLevel = $ResourceGroupName} `
         -Force
 }
 
