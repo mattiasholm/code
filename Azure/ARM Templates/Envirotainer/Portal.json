@@ -356,7 +356,7 @@
                         }
                     }
                 ],
-                "enabledForDeployment": true,
+                "enabledForDeployment": false,
                 "enabledForTemplateDeployment": true,
                 "enableSoftDelete": true,
                 "networkAcls": {
