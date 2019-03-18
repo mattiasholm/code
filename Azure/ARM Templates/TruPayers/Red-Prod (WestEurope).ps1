@@ -2,15 +2,14 @@ $ErrorActionPreference = 'Stop'
 Login-AzAccount
 
 
-
-$Suffix = 'WE-Prod'
+$ResourceGroupName = "Red-WE-Prod"
 $Location = 'WestEurope'
 $SubscriptionName = 'TruPayers - Red - Prod'
 $TenantDomain = 'trupayers.onmicrosoft.com'
 
 
 
-switch ($Suffix.Split('-')[1]) {
+switch ($ResourceGroupName.Split('-')[2]) {
     Prod {$Environment = 'Production'}
     Dev {$Environment = 'Development'}
     default {$Environment = 'Unknown'}
@@ -22,55 +21,44 @@ Select-AzSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
 
 
 
-# Create Resource Groups
+# Create Resource Group
 
-$ResourceGroupNames = `
-    'Red', `
-    'Blue', `
-    'Green'
-
-foreach ($ResourceGroupName in $ResourceGroupNames) {
-    New-AzResourceGroup `
-        -Name "$ResourceGroupName-$Suffix" `
-        -Location $Location `
-        -Tag @{Environment = $Environment; SecurityLevel = $ResourceGroupName} `
-        -Force
-}
+New-AzResourceGroup `
+    -Name $ResourceGroupName `
+    -Location $Location `
+    -Tag @{Environment = $Environment; SecurityLevel = $ResourceGroupName.Split('-')[0]} `
+    -Force
 
 
 
 $Customer = 'TruPayers'
 $ArmPath = 'C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates'
 $FilePath = Join-Path -Path $ArmPath -ChildPath $Customer
+$FilePrefix = $ResourceGroupName.Replace("$($ResourceGroupName.Split('-')[1])-", '')
 
 
 
-# Deploy 'Red_PreDeploy'
+# PreDeploy
 
-$Prefix = $ResourceGroupNames[0]
-$TemplateFileName = "$Prefix`_PreDeploy.json"
-$ParameterFileName = "$Prefix`_PreDeploy.parameters.json"
+$TemplateFileName = "$FilePrefix`_PreDeploy.json"
+$ParameterFileName = "$FilePrefix`_PreDeploy.parameters.json"
 
 New-AzResourceGroupDeployment `
-    -ResourceGroupname  "$Prefix-$Suffix" `
+    -ResourceGroupname  $ResourceGroupName `
     -TemplateFile (Join-Path -Path $FilePath -ChildPath $TemplateFileName) `
     -TemplateParameterFile (Join-Path -Path $FilePath -ChildPath $ParameterFileName) `
-    -Prefix $Prefix `
-    -Suffix $Suffix `
     -Mode Incremental
 
 
 
-# Deploy 'Red'
+# Deploy
 
-$Prefix = $ResourceGroupNames[0]
-$TemplateFileName = "$Prefix.json"
-$ParameterFileName = "$Prefix.parameters.json"
+$TemplateFileName = "$FilePrefix.json"
+$ParameterFileName = "$FilePrefix.parameters.json"
 
 New-AzResourceGroupDeployment `
-    -ResourceGroupname  "$Prefix-$Suffix" `
+    -ResourceGroupname  $ResourceGroupName `
     -TemplateFile (Join-Path -Path $FilePath -ChildPath $TemplateFileName) `
     -TemplateParameterFile (Join-Path -Path $FilePath -ChildPath $ParameterFileName) `
-    -Prefix $Prefix `
-    -Suffix $Suffix `
+    -ASE_Location ($Location -creplace '([A-Z\W_]|\d+)(?<![a-z])', ' $&').Trim() `
     -Mode Incremental

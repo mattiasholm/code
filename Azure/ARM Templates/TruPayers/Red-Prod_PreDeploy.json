@@ -2,12 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "Prefix": {
-            "type": "string"
-        },
-        "Suffix": {
-            "type": "string"
-        },
         "KeyVault_Admin": {
             "type": "string"
         },
@@ -16,21 +10,15 @@
         }
     },
     "variables": {
-        "apiVersion_KeyVault": "2018-02-14-preview",
-        "FullPrefix": "[concat(parameters('Prefix'),'-',parameters('Suffix'))]",
-        "Tag_Environment": "[if(equals(split(parameters('Suffix'),'-')[1],'Prod'),'Production',if(equals(split(parameters('Suffix'),'-')[1],'Dev'),'Development','Unknown'))]",
-        "Tag_SecurityLevel": "[if(equals(parameters('Prefix'),'Red'),'Red',if(equals(parameters('Prefix'),'Blue'),'Blue',if(equals(parameters('Prefix'),'Green'),'Green','Unknown')))]"
+        "apiVersion_KeyVault": "2018-02-14-preview"
     },
     "resources": [
         {
             "apiVersion": "[variables('apiVersion_KeyVault')]",
             "type": "Microsoft.KeyVault/vaults",
-            "name": "[concat(variables('FullPrefix'),'-Vault01')]",
+            "name": "[concat(resourceGroup().name,'-Vault01')]",
             "location": "[resourceGroup().location]",
-            "tags": {
-                "Environment": "[variables('Tag_Environment')]",
-                "SecurityLevel": "[variables('Tag_SecurityLevel')]"
-            },
+            "tags": "[resourceGroup().tags]",
             "properties": {
                 "tenantId": "[subscription().tenantId]",
                 "sku": {
@@ -101,7 +89,7 @@
     ],
     "outputs": {
         "KeyVaultResourceId": {
-            "value": "[resourceId('Microsoft.KeyVault/vaults',concat(variables('FullPrefix'),'-Vault01'))]",
+            "value": "[resourceId('Microsoft.KeyVault/vaults',concat(resourceGroup().name,'-Vault01'))]",
             "type": "string"
         }
     }

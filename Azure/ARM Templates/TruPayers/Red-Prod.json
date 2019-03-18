@@ -2,20 +2,40 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "Prefix": {
+        "VNet_AddressSpace": {
             "type": "string"
         },
-        "Suffix": {
+        "ASE_Location": {
             "type": "string"
         },
-        "KeyVault_Admin": {
+        "ASE_Sku": {
+            "type": "string",
+            "allowedValues": [
+                "I1",
+                "I2",
+                "I3"
+            ]
+        },
+        "ASE_DefaultCapacity": {
+            "type": "int",
+            "minValue": 1,
+            "maxValue": 10
+        },
+        "SQL_Sku": {
+            "type": "string",
+            "allowedValues": [
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "P1"
+            ]
+        },
+        "SQL_Username": {
             "type": "string"
         },
-        "KeyVault_IP": {
-            "type": "string"
-        },
-        "AddressSpace": {
-            "type": "string"
+        "SQL_Password": {
+            "type": "securestring"
         }
     },
     "variables": {
@@ -23,23 +43,19 @@
         "apiVersion_Network": "2018-12-01",
         "apiVersion_Storage": "2018-11-01",
         "apiVersion_Web": "2019-01-01",
-        "Tag_Environment": "[if(equals(split(parameters('Suffix'),'-')[1],'Prod'),'Production',if(equals(split(parameters('Suffix'),'-')[1],'Dev'),'Development','Unknown'))]",
-        "Tag_SecurityLevel": "[if(equals(parameters('Prefix'),'Red'),'Red',if(equals(parameters('Prefix'),'Blue'),'Blue',if(equals(parameters('Prefix'),'Green'),'Green','Unknown')))]",
-        "FullPrefix": "[concat(parameters('Prefix'),'-',parameters('Suffix'))]",
-        "SubnetRange": "[replace(parameters('AddressSpace'),'/16','/24')]",
+        "apiVersion_Sql": "2015-05-01-preview",
+        "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "Subnets": "ASE",
-        "StorageSku": "Standard_LRS"
+        "StorageSku": "Standard_LRS",
+        "SQL_Collation": "Finnish_Swedish_CI_AS"
     },
     "resources": [
         {
             "apiVersion": "[variables('apiVersion_Network')]",
             "type": "Microsoft.Network/networkSecurityGroups",
-            "name": "[concat(variables('FullPrefix'),'-NSG-',split(variables('Subnets'),',')[0])]",
+            "name": "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[0])]",
             "location": "[resourceGroup().location]",
-            "tags": {
-                "Environment": "[variables('Tag_Environment')]",
-                "SecurityLevel": "[variables('Tag_SecurityLevel')]"
-            },
+            "tags": "[resourceGroup().tags]",
             "properties": {
                 "securityRules": [
                     {
@@ -100,19 +116,16 @@
         {
             "apiVersion": "[variables('apiVersion_Network')]",
             "type": "Microsoft.Network/virtualNetworks",
-            "name": "[concat(variables('FullPrefix'),'-VNet01')]",
+            "name": "[concat(resourceGroup().name,'-VNet01')]",
             "location": "[resourceGroup().location]",
-            "tags": {
-                "Environment": "[variables('Tag_Environment')]",
-                "SecurityLevel": "[variables('Tag_SecurityLevel')]"
-            },
+            "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(variables('FullPrefix'),'-NSG-',split(variables('Subnets'),',')[0])]"
+                "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[0])]"
             ],
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "[parameters('AddressSpace')]"
+                        "[parameters('VNet_AddressSpace')]"
                     ]
                 },
                 "copy": [
@@ -124,7 +137,7 @@
                             "properties": {
                                 "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.',copyIndex('subnets',1),'.',split(variables('SubnetRange'),'.')[3])]",
                                 "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(variables('FullPrefix'),'-NSG-',split(variables('Subnets'),',')[copyIndex('subnets')]))]"
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[copyIndex('subnets')]))]"
                                 },
                                 "serviceEndpoints": [
                                     {
@@ -146,7 +159,7 @@
                     "name": "GatewaySubnet",
                     "location": "[resourceGroup().location]",
                     "dependsOn": [
-                        "[concat(variables('FullPrefix'),'-VNet01')]"
+                        "[concat(resourceGroup().name,'-VNet01')]"
                     ],
                     "properties": {
                         "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.','0','.',split(variables('SubnetRange'),'.')[3])]"
@@ -157,14 +170,11 @@
         {
             "apiVersion": "[variables('apiVersion_Storage')]",
             "type": "Microsoft.Storage/storageAccounts",
-            "name": "[ToLower(replace(concat(variables('FullPrefix'),'-Storage01'),'-',''))]",
+            "name": "[ToLower(replace(concat(resourceGroup().name,'-Storage01'),'-',''))]",
             "location": "[resourceGroup().location]",
-            "tags": {
-                "Environment": "[variables('Tag_Environment')]",
-                "SecurityLevel": "[variables('Tag_SecurityLevel')]"
-            },
+            "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(variables('FullPrefix'),'-VNet01')]"
+                "[concat(resourceGroup().name,'-VNet01')]"
             ],
             "sku": {
                 "name": "[variables('StorageSku')]"
@@ -177,7 +187,7 @@
                     "ipRules": [],
                     "virtualNetworkRules": [
                         {
-                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(variables('FullPrefix'),'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]",
+                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]",
                             "action": "Allow"
                         }
                     ]
@@ -188,14 +198,11 @@
         {
             "apiVersion": "[variables('apiVersion_KeyVault')]",
             "type": "Microsoft.KeyVault/vaults",
-            "name": "[concat(variables('FullPrefix'),'-Vault01')]",
+            "name": "[concat(resourceGroup().name,'-Vault01')]",
             "location": "[resourceGroup().location]",
-            "tags": {
-                "Environment": "[variables('Tag_Environment')]",
-                "SecurityLevel": "[variables('Tag_SecurityLevel')]"
-            },
+            "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(variables('FullPrefix'),'-VNet01')]"
+                "[concat(resourceGroup().name,'-VNet01')]"
             ],
             "properties": {
                 "tenantId": "[subscription().tenantId]",
@@ -213,40 +220,108 @@
                     "ipRules": [],
                     "virtualNetworkRules": [
                         {
-                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(variables('FullPrefix'),'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]",
+                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]",
                             "action": "Allow"
                         }
                     ]
                 }
             }
         },
-        {
+        /*{
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/hostingEnvironments",
-            "name": "[concat(variables('FullPrefix'),'-ASE01')]",
-            //"location": "[resourceGroup().location]",
-            "location": "West Europe",
-            "tags": {
-                "Environment": "[variables('Tag_Environment')]",
-                "SecurityLevel": "[variables('Tag_SecurityLevel')]"
-            },
+            "name": "[concat(resourceGroup().name,'-ASE01')]",
+            "location": "[parameters('ASE_Location')]",
+            "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(variables('FullPrefix'),'-VNet01')]"
+                "[concat(resourceGroup().name,'-VNet01')]"
             ],
             "kind": "ASEV2",
             "properties": {
-                //                "name": "[parameters('aseName')]",
-                //                "location": "[parameters('aseLocation')]",
                 "virtualNetwork": {
-                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(variables('FullPrefix'),'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
                 }
             }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Web')]",
+            "type": "Microsoft.Web/serverfarms",
+            "name": "[concat(resourceGroup().name,'-AppPlan01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-ASE01')]"
+            ],
+            "properties": {
+                //"name": "[parameters('appServicePlanName')]",
+                "hostingEnvironmentProfile": {
+                    "id": "[concat(resourceGroup().name,'-ASE01')]"
+                }
+            },
+            "sku": {
+                "name": "[parameters('ASE_Sku')]",
+                "capacity": "[parameters('ASE_DefaultCapacity')]"
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Web')]",
+            "type": "Microsoft.Web/sites",
+            "name": "[concat(resourceGroup().name,'-App01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-AppPlan01')]"
+            ],
+            "properties": {
+                "serverFarmId": "[concat(resourceGroup().name,'-AppPlan01')]",
+                "hostingEnvironmentProfile": {
+                    "id": "[concat(resourceGroup().name,'-ASE01')]"
+                }
+            }
+        },*/
+        {
+            "apiVersion": "[variables('apiVersion_Sql')]",
+            "type": "Microsoft.Sql/servers",
+            "name": "[concat(resourceGroup().name,'-SqlServer01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "properties": {
+                "administratorLogin": "[parameters('SQL_Username')]",
+                "administratorLoginPassword": "[parameters('SQL_Password')]"
+            },
+            "resources": [
+                {
+                    "apiVersion": "[variables('apiVersion_Sql')]",
+                    "type": "virtualNetworkRules",
+                    "name": "virtualNetworkRules",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-SqlServer01')]",
+                        "[concat(resourceGroup().name,'-VNet01')]"
+                    ],
+                    "properties": {
+                        "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
+                    }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Sql')]",
+                    "type": "databases",
+                    "name": "[concat(resourceGroup().name,'-SqlDb01')]",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-SqlServer01')]"
+                    ],
+                    "sku": {
+                        "name": "[parameters('SQL_Sku')]"
+                    },
+                    "properties": {
+                        "collation": "[variables('SqlCollation')]"
+                    }
+                }
+            ]
         }
     ],
-    "outputs": {
-        "Blaha": {
-            "type": "string",
-            "value": "[resourceGroup().location]"
-        }
-    }
+    "outputs": {}
 }
