@@ -43,7 +43,8 @@
         "apiVersion_Network": "2018-12-01",
         "apiVersion_Storage": "2018-11-01",
         "apiVersion_Web": "2019-01-01",
-        "apiVersion_Sql": "2015-05-01-preview",
+        "apiVersion_Sql": "2018-06-01-preview",
+        "apiVersion_SqlVNetRules": "2015-05-01-preview",
         "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "Subnets": "ASE",
         "StorageSku": "Standard_LRS",
@@ -145,6 +146,12 @@
                                     },
                                     {
                                         "service": "Microsoft.Storage"
+                                    },
+                                    {
+                                        "service": "Microsoft.Sql"
+                                    },
+                                    {
+                                        "service": "Microsoft.AzureActiveDirectory"
                                     }
                                 ]
                             }
@@ -292,20 +299,6 @@
             "resources": [
                 {
                     "apiVersion": "[variables('apiVersion_Sql')]",
-                    "type": "virtualNetworkRules",
-                    "name": "virtualNetworkRules",
-                    "location": "[resourceGroup().location]",
-                    "tags": "[resourceGroup().tags]",
-                    "dependsOn": [
-                        "[concat(resourceGroup().name,'-SqlServer01')]",
-                        "[concat(resourceGroup().name,'-VNet01')]"
-                    ],
-                    "properties": {
-                        "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
-                    }
-                },
-                {
-                    "apiVersion": "[variables('apiVersion_Sql')]",
                     "type": "databases",
                     "name": "[concat(resourceGroup().name,'-SqlDb01')]",
                     "location": "[resourceGroup().location]",
@@ -317,10 +310,24 @@
                         "name": "[parameters('SQL_Sku')]"
                     },
                     "properties": {
-                        "collation": "[variables('SqlCollation')]"
+                        "collation": "[variables('SQL_Collation')]"
                     }
                 }
             ]
+        },
+        {
+            "apiVersion": "[variables('apiVersion_SqlVNetRules')]",
+            "type": "Microsoft.Sql/servers/virtualNetworkRules",
+            "name": "[concat(resourceGroup().name,'-SqlServer01','/','virtualNetworkRules')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-SqlServer01')]",
+                "[concat(resourceGroup().name,'-VNet01')]"
+            ],
+            "properties": {
+                "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
+            }
         }
     ],
     "outputs": {}
