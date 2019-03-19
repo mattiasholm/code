@@ -99,6 +99,19 @@
                         }
                     },
                     {
+                        "name": "Allow_Outbound_Sql",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "Sql",
+                            "destinationPortRange": "1433",
+                            "protocol": "TCP",
+                            "priority": 1200
+                        }
+                    },
+                    {
                         "name": "Deny_Outbound_All",
                         "properties": {
                             "access": "Deny",
@@ -120,59 +133,58 @@
             "name": "[concat(resourceGroup().name,'-VNet01')]",
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
-            "dependsOn": [
-                "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[0])]"
-            ],
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
                         "[parameters('VNet_AddressSpace')]"
                     ]
+                }
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "name": "[concat(resourceGroup().name,'-VNet01','/','GatewaySubnet')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-VNet01')]"
+            ],
+            "properties": {
+                "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.','0','.',split(variables('SubnetRange'),'.')[3])]"
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "name": "[concat(resourceGroup().name,'-VNet01','/',split(variables('Subnets'),',')[copyIndex()],'Subnet')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "GatewaySubnet"
+            ],
+            "properties": {
+                "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.',copyIndex(1),'.',split(variables('SubnetRange'),'.')[3])]",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[copyIndex()]))]"
                 },
-                "copy": [
+                "serviceEndpoints": [
                     {
-                        "name": "subnets",
-                        "count": "[length(split(variables('Subnets'),','))]",
-                        "input": {
-                            "name": "[concat(split(variables('Subnets'),',')[copyIndex('subnets')],'Subnet')]",
-                            "properties": {
-                                "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.',copyIndex('subnets',1),'.',split(variables('SubnetRange'),'.')[3])]",
-                                "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[copyIndex('subnets')]))]"
-                                },
-                                "serviceEndpoints": [
-                                    {
-                                        "service": "Microsoft.KeyVault"
-                                    },
-                                    {
-                                        "service": "Microsoft.Storage"
-                                    },
-                                    {
-                                        "service": "Microsoft.Sql"
-                                    },
-                                    {
-                                        "service": "Microsoft.AzureActiveDirectory"
-                                    }
-                                ]
-                            }
-                        }
+                        "service": "Microsoft.KeyVault"
+                    },
+                    {
+                        "service": "Microsoft.Storage"
+                    },
+                    {
+                        "service": "Microsoft.Sql"
+                    },
+                    {
+                        "service": "Microsoft.AzureActiveDirectory"
                     }
                 ]
             },
-            "resources": [
-                {
-                    "apiVersion": "[variables('apiVersion_Network')]",
-                    "type": "subnets",
-                    "name": "GatewaySubnet",
-                    "location": "[resourceGroup().location]",
-                    "dependsOn": [
-                        "[concat(resourceGroup().name,'-VNet01')]"
-                    ],
-                    "properties": {
-                        "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.','0','.',split(variables('SubnetRange'),'.')[3])]"
-                    }
-                }
-            ]
+            "copy": {
+                "name": "subnets",
+                "count": "[length(split(variables('Subnets'),','))]"
+            }
         },
         {
             "apiVersion": "[variables('apiVersion_Storage')]",
@@ -181,7 +193,7 @@
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(resourceGroup().name,'-VNet01')]"
+                "subnets"
             ],
             "sku": {
                 "name": "[variables('StorageSku')]"
@@ -209,7 +221,7 @@
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(resourceGroup().name,'-VNet01')]"
+                "subnets"
             ],
             "properties": {
                 "tenantId": "[subscription().tenantId]",
@@ -241,7 +253,7 @@
             "location": "[parameters('ASE_Location')]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(resourceGroup().name,'-VNet01')]"
+                "subnets"
             ],
             "kind": "ASEV2",
             "properties": {
@@ -286,10 +298,10 @@
                 }
             }
         },*/
-        {
+       {
             "apiVersion": "[variables('apiVersion_Sql')]",
             "type": "Microsoft.Sql/servers",
-            "name": "[concat(resourceGroup().name,'-SqlServer01')]",
+            "name": "[concat(resourceGroup().name,'-SQL01')]",
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "properties": {
@@ -300,11 +312,11 @@
                 {
                     "apiVersion": "[variables('apiVersion_Sql')]",
                     "type": "databases",
-                    "name": "[concat(resourceGroup().name,'-SqlDb01')]",
+                    "name": "[concat(resourceGroup().name,'-DB01')]",
                     "location": "[resourceGroup().location]",
                     "tags": "[resourceGroup().tags]",
                     "dependsOn": [
-                        "[concat(resourceGroup().name,'-SqlServer01')]"
+                        "[concat(resourceGroup().name,'-SQL01')]"
                     ],
                     "sku": {
                         "name": "[parameters('SQL_Sku')]"
@@ -318,12 +330,12 @@
         {
             "apiVersion": "[variables('apiVersion_SqlVNetRules')]",
             "type": "Microsoft.Sql/servers/virtualNetworkRules",
-            "name": "[concat(resourceGroup().name,'-SqlServer01','/','virtualNetworkRules')]",
+            "name": "[concat(resourceGroup().name,'-SQL01','/','virtualNetworkRules')]",
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(resourceGroup().name,'-SqlServer01')]",
-                "[concat(resourceGroup().name,'-VNet01')]"
+                "[concat(resourceGroup().name,'-SQL01')]",
+                "subnets"
             ],
             "properties": {
                 "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
