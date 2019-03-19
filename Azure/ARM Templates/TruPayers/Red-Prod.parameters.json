@@ -10,14 +10,19 @@
                 "secretName": "VNet-AddressSpace"
             }
         },
+        "ASE_DnsSuffix": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "ASE-DnsSuffix"
+            }
+        },
         "ASE_Sku": {
             "value": "I1"
         },
         "ASE_DefaultCapacity": {
             "value": 1
-        },
-        "SQL_Sku": {
-            "value": "S1"
         },
         "SQL_Username": {
             "reference": {
@@ -34,6 +39,9 @@
                 },
                 "secretName": "SQL-Password"
             }
+        },
+        "SQL_Sku": {
+            "value": "S1"
         }
     }
 }

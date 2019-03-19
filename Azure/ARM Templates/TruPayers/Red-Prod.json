@@ -8,6 +8,9 @@
         "ASE_Location": {
             "type": "string"
         },
+        "ASE_DnsSuffix": {
+            "type": "string"
+        },
         "ASE_Sku": {
             "type": "string",
             "allowedValues": [
@@ -21,6 +24,12 @@
             "minValue": 1,
             "maxValue": 10
         },
+        "SQL_Username": {
+            "type": "string"
+        },
+        "SQL_Password": {
+            "type": "securestring"
+        },
         "SQL_Sku": {
             "type": "string",
             "allowedValues": [
@@ -30,25 +39,21 @@
                 "S4",
                 "P1"
             ]
-        },
-        "SQL_Username": {
-            "type": "string"
-        },
-        "SQL_Password": {
-            "type": "securestring"
         }
     },
     "variables": {
-        "apiVersion_KeyVault": "2018-02-14-preview",
         "apiVersion_Network": "2018-12-01",
         "apiVersion_Storage": "2018-11-01",
+        "apiVersion_KeyVault": "2018-02-14-preview",
         "apiVersion_Web": "2019-01-01",
         "apiVersion_Sql": "2018-06-01-preview",
         "apiVersion_SqlVNetRules": "2015-05-01-preview",
-        "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "Subnets": "ASE",
+        "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "StorageSku": "Standard_LRS",
+        "ASE_ILB": 3,
         "SQL_Collation": "Finnish_Swedish_CI_AS"
+        
     },
     "resources": [
         {
@@ -246,7 +251,12 @@
                 }
             }
         },
-        /*{
+
+
+
+
+
+        {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/hostingEnvironments",
             "name": "[concat(resourceGroup().name,'-ASE01')]",
@@ -259,10 +269,12 @@
             "properties": {
                 "virtualNetwork": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
-                }
+                },
+                "dnsSuffix": "[parameters('ASE_DnsSuffix')]",
+                "internalLoadBalancingMode": "[variables('ASE_ILB')]"
             }
         },
-        {
+/*        {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/serverfarms",
             "name": "[concat(resourceGroup().name,'-AppPlan01')]",
@@ -272,7 +284,6 @@
                 "[concat(resourceGroup().name,'-ASE01')]"
             ],
             "properties": {
-                //"name": "[parameters('appServicePlanName')]",
                 "hostingEnvironmentProfile": {
                     "id": "[concat(resourceGroup().name,'-ASE01')]"
                 }
@@ -297,7 +308,20 @@
                     "id": "[concat(resourceGroup().name,'-ASE01')]"
                 }
             }
-        },*/
+        },
+*/
+
+
+
+
+
+
+
+
+
+
+
+
        {
             "apiVersion": "[variables('apiVersion_Sql')]",
             "type": "Microsoft.Sql/servers",
