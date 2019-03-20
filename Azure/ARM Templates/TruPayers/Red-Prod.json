@@ -42,15 +42,16 @@
         }
     },
     "variables": {
-        "apiVersion_Network": "2018-12-01",
+        "apiVersion_Network": "2018-05-01",
         "apiVersion_Storage": "2018-11-01",
         "apiVersion_KeyVault": "2018-02-14-preview",
-        "apiVersion_Web": "2019-01-01",
+        "apiVersion_Web": "2018-02-01",
+        //"apiVersion_Web": "2019-01-01",
         "apiVersion_Sql": "2018-06-01-preview",
         "apiVersion_SqlVNetRules": "2015-05-01-preview",
         "Subnets": "ASE",
         "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
-        "StorageSku": "Standard_LRS",
+        "StorageSku": "Standard_GRS",
         "ASE_ILB": 3,
         "SQL_Collation": "Finnish_Swedish_CI_AS"
         
@@ -65,6 +66,74 @@
             "properties": {
                 "securityRules": [
                     {
+                        "name": "Allow_Inbound_AppServiceManagement",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "AppServiceManagement",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "454-455",
+                            "protocol": "*",
+                            "priority": 1000
+                        }
+                    },
+                    {
+                        "name": "Allow_Inbound_ASESubnet",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.1.',split(variables('SubnetRange'),'.')[3])]",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "*",
+                            "protocol": "*",
+                            "priority": 1100
+                        }
+                    },
+                    {
+                        "name": "Allow_Inbound_AzureLoadBalancer",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "AzureLoadBalancer",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRanges": [
+                                "454-455",
+                                "16001"
+                            ],
+                            "protocol": "*",
+                            "priority": 1200
+                        }
+                    },
+                    {
+                        "name": "Allow_Inbound_HTTPS",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "443",
+                            "protocol": "Tcp",
+                            "priority": 1300
+                        }
+                    },
+                    {
+                        "name": "Allow_Inbound_Remote-Debugging",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "4016-4022",
+                            "protocol": "Tcp",
+                            "priority": 1400
+                        }
+                    },
+                    {
                         "name": "Deny_Inbound_All",
                         "properties": {
                             "access": "Deny",
@@ -78,16 +147,50 @@
                         }
                     },
                     {
-                        "name": "Allow_Outbound_AzureKeyVault",
+                        "name": "Allow_Outbound_NTP",
                         "properties": {
                             "access": "Allow",
                             "direction": "Outbound",
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
-                            "destinationAddressPrefix": "AzureKeyVault",
-                            "destinationPortRange": "443",
-                            "protocol": "TCP",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "123",
+                            "protocol": "*",
                             "priority": 1000
+                        }
+                    },
+                    {
+                        "name": "Allow_Outbound_ASE-12000",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "12000",
+                            "protocol": "*",
+                            "priority": 1100
+                        }
+                    },
+                    {
+                        "name": "Allow_Outbound_ASE-Monitor",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefixes": [
+                                "40.77.24.27/32",
+                                "13.90.249.229/32",
+                                "104.45.230.69/32",
+                                "13.82.184.151/32"
+                              ],
+                            "destinationPortRanges": [
+                                "80",
+                                "443"
+                            ],
+                            "protocol": "*",
+                            "priority": 1200
                         }
                     },
                     {
@@ -99,8 +202,21 @@
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "Storage",
                             "destinationPortRange": "443",
-                            "protocol": "TCP",
-                            "priority": 1100
+                            "protocol": "Tcp",
+                            "priority": 1300
+                        }
+                    },
+                    {
+                        "name": "Allow_Outbound_AzureKeyVault",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "AzureKeyVault",
+                            "destinationPortRange": "443",
+                            "protocol": "Tcp",
+                            "priority": 1400
                         }
                     },
                     {
@@ -112,8 +228,8 @@
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "Sql",
                             "destinationPortRange": "1433",
-                            "protocol": "TCP",
-                            "priority": 1200
+                            "protocol": "Tcp",
+                            "priority": 1500
                         }
                     },
                     {
@@ -127,6 +243,24 @@
                             "destinationPortRange": "*",
                             "protocol": "*",
                             "priority": 4096
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/routeTables",
+            "name": "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[0])]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "properties": {
+                "routes": [
+                    {
+                        "name": "Default_Internet",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "Internet"
                         }
                     }
                 ]
@@ -164,7 +298,9 @@
             "name": "[concat(resourceGroup().name,'-VNet01','/',split(variables('Subnets'),',')[copyIndex()],'Subnet')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "GatewaySubnet"
+                "GatewaySubnet",
+                "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[0])]",
+                "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[0])]"
             ],
             "properties": {
                 "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.',copyIndex(1),'.',split(variables('SubnetRange'),'.')[3])]",
@@ -184,7 +320,10 @@
                     {
                         "service": "Microsoft.AzureActiveDirectory"
                     }
-                ]
+                ],
+                "routeTable": {
+                    "id": "[resourceId('Microsoft.Network/routeTables',concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[copyIndex()]))]"
+                }
             },
             "copy": {
                 "name": "subnets",
@@ -250,12 +389,7 @@
                     ]
                 }
             }
-        },
-
-
-
-
-
+        },/*
         {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/hostingEnvironments",
@@ -267,13 +401,23 @@
             ],
             "kind": "ASEV2",
             "properties": {
+                "name": "[concat(resourceGroup().name,'-ASE01')]",
+                "location": "[parameters('ASE_Location')]",
                 "virtualNetwork": {
-                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks',concat(resourceGroup().name,'-VNet01'))]",
+                    "subnet": "[concat(split(variables('Subnets'),',')[0],'Subnet')]"
                 },
+//                "virtualNetwork": {
+//                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
+//                },
                 "dnsSuffix": "[parameters('ASE_DnsSuffix')]",
+                // EV T ABORT ILB LB MODE??? Verkar inte vara required... Troligtvis 3 som är default-valet, extrakolla!
                 "internalLoadBalancingMode": "[variables('ASE_ILB')]"
+                // workerPools ÄR REQUIRED ENLIGT DOKUMENTATION??? Dock ej med i ref ARM template
+                // 2015-02-01 apiVersion används av ref template!
+                // UDR är med i tmp ref - verkar bara behövas vid force tunneling? Detta eftersom trafik på management 454-455 MÅSTE komma tillbaka från samma VIP (DVS asymmetric routing STÖDS EJ)
             }
-        },
+        },*/
 /*        {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/serverfarms",
@@ -364,6 +508,106 @@
             "properties": {
                 "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
             }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/dnsZones",
+            "name": "[parameters('ASE_DnsSuffix')]",
+            "location": "global",
+            "tags": "[resourceGroup().tags]",
+            "properties": {
+              "zoneType": "Public"
+            },
+            "resources": [
+                // OBS: Här i läggs DNS-records som child resources till DNS-zon!
+/*
+                {
+                    "name": "string",
+                    "type": "Microsoft.Network/dnsZones/A",
+                    "apiVersion": "2018-05-01",
+                    "properties": {
+                      "metadata": {},
+                      "TTL": "integer",
+                      "targetResource": {
+                        "id": "string"
+                      },
+                      "ARecords": [
+                        {
+                          "ipv4Address": "string"
+                        }
+                      ],
+                      "AAAARecords": [
+                        {
+                          "ipv6Address": "string"
+                        }
+                      ],
+                      "MXRecords": [
+                        {
+                          "preference": "integer",
+                          "exchange": "string"
+                        }
+                      ],
+                      "NSRecords": [
+                        {
+                          "nsdname": "string"
+                        }
+                      ],
+                      "PTRRecords": [
+                        {
+                          "ptrdname": "string"
+                        }
+                      ],
+                      "SRVRecords": [
+                        {
+                          "priority": "integer",
+                          "weight": "integer",
+                          "port": "integer",
+                          "target": "string"
+                        }
+                      ],
+                      "TXTRecords": [
+                        {
+                          "value": [
+                            "string"
+                          ]
+                        }
+                      ],
+                      "CNAMERecord": {
+                        "cname": "string"
+                      },
+                      "SOARecord": {
+                        "host": "string",
+                        "email": "string",
+                        "serialNumber": "integer",
+                        "refreshTime": "integer",
+                        "retryTime": "integer",
+                        "expireTime": "integer",
+                        "minimumTTL": "integer"
+                      },
+                      "caaRecords": [
+                        {
+                          "flags": "integer",
+                          "tag": "string",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  }
+                  */
+            ]
+          },
+
+
+          {
+            "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/dnsZones",
+            "name": "internaldns.com",
+            "location": "global",
+            "tags": "[resourceGroup().tags]",
+            "properties": {
+              "zoneType": "Private"
+            },
+            "resources": []
         }
     ],
     "outputs": {}
