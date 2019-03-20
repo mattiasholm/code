@@ -45,14 +45,12 @@
         "apiVersion_Network": "2018-05-01",
         "apiVersion_Storage": "2018-11-01",
         "apiVersion_KeyVault": "2018-02-14-preview",
-        "apiVersion_Web": "2018-02-01",
-        //"apiVersion_Web": "2019-01-01",
+        "apiVersion_Web": "2018-11-01",
         "apiVersion_Sql": "2018-06-01-preview",
         "apiVersion_SqlVNetRules": "2015-05-01-preview",
         "Subnets": "ASE",
         "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "StorageSku": "Standard_GRS",
-        "ASE_ILB": 3,
         "SQL_Collation": "Finnish_Swedish_CI_AS"
         
     },
@@ -266,69 +264,72 @@
                 ]
             }
         },
+
+
+
         {
             "apiVersion": "[variables('apiVersion_Network')]",
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[concat(resourceGroup().name,'-VNet01')]",
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[0])]",
+                "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[0])]"
+            ],
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
                         "[parameters('VNet_AddressSpace')]"
                     ]
-                }
-            }
-        },
-        {
-            "apiVersion": "[variables('apiVersion_Network')]",
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "name": "[concat(resourceGroup().name,'-VNet01','/','GatewaySubnet')]",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[concat(resourceGroup().name,'-VNet01')]"
-            ],
-            "properties": {
-                "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.','0','.',split(variables('SubnetRange'),'.')[3])]"
-            }
-        },
-        {
-            "apiVersion": "[variables('apiVersion_Network')]",
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "name": "[concat(resourceGroup().name,'-VNet01','/',split(variables('Subnets'),',')[copyIndex()],'Subnet')]",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "GatewaySubnet",
-                "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[0])]",
-                "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[0])]"
-            ],
-            "properties": {
-                "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.',copyIndex(1),'.',split(variables('SubnetRange'),'.')[3])]",
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[copyIndex()]))]"
                 },
-                "serviceEndpoints": [
+                "copy": [
                     {
-                        "service": "Microsoft.KeyVault"
-                    },
-                    {
-                        "service": "Microsoft.Storage"
-                    },
-                    {
-                        "service": "Microsoft.Sql"
-                    },
-                    {
-                        "service": "Microsoft.AzureActiveDirectory"
+                        "name": "subnets",
+                        "count": "[length(split(variables('Subnets'),','))]",
+                        "input": {
+                            "name": "[concat(split(variables('Subnets'),',')[copyIndex('subnets')],'Subnet')]",
+                            "properties": {
+                                "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.',copyIndex('subnets',1),'.',split(variables('SubnetRange'),'.')[3])]",
+                                "networkSecurityGroup": {
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[copyIndex('subnets')]))]"
+                                },
+                                "serviceEndpoints": [
+                                    {
+                                        "service": "Microsoft.KeyVault"
+                                    },
+                                    {
+                                        "service": "Microsoft.Storage"
+                                    },
+                                    {
+                                        "service": "Microsoft.Sql"
+                                    },
+                                    {
+                                        "service": "Microsoft.AzureActiveDirectory"
+                                    }
+                                ],
+                                "routeTable": {
+                                    "id": "[resourceId('Microsoft.Network/routeTables',concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[copyIndex('subnets')]))]"
+                            }
+                        }
+                        }
                     }
-                ],
-                "routeTable": {
-                    "id": "[resourceId('Microsoft.Network/routeTables',concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[copyIndex()]))]"
-                }
+                ]
             },
-            "copy": {
-                "name": "subnets",
-                "count": "[length(split(variables('Subnets'),','))]"
-            }
+            "resources": [
+                {
+                    "apiVersion": "[variables('apiVersion_Network')]",
+                    "type": "subnets",
+                    "name": "GatewaySubnet",
+                    "location": "[resourceGroup().location]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-VNet01')]"
+                    ],
+                    "properties": {
+                        "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.','0','.',split(variables('SubnetRange'),'.')[3])]"
+                    }
+                }
+            ]
         },
         {
             "apiVersion": "[variables('apiVersion_Storage')]",
@@ -337,7 +338,7 @@
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "subnets"
+                "[concat(resourceGroup().name,'-VNet01')]"
             ],
             "sku": {
                 "name": "[variables('StorageSku')]"
@@ -365,7 +366,7 @@
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "subnets"
+                "[concat(resourceGroup().name,'-VNet01')]"
             ],
             "properties": {
                 "tenantId": "[subscription().tenantId]",
@@ -389,7 +390,7 @@
                     ]
                 }
             }
-        },/*
+        },
         {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/hostingEnvironments",
@@ -397,27 +398,18 @@
             "location": "[parameters('ASE_Location')]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "subnets"
+                "[concat(resourceGroup().name,'-VNet01')]"
             ],
             "kind": "ASEV2",
             "properties": {
                 "name": "[concat(resourceGroup().name,'-ASE01')]",
                 "location": "[parameters('ASE_Location')]",
                 "virtualNetwork": {
-                    "id": "[resourceId('Microsoft.Network/virtualNetworks',concat(resourceGroup().name,'-VNet01'))]",
-                    "subnet": "[concat(split(variables('Subnets'),',')[0],'Subnet')]"
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
                 },
-//                "virtualNetwork": {
-//                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
-//                },
-                "dnsSuffix": "[parameters('ASE_DnsSuffix')]",
-                // EV T ABORT ILB LB MODE??? Verkar inte vara required... Troligtvis 3 som är default-valet, extrakolla!
-                "internalLoadBalancingMode": "[variables('ASE_ILB')]"
-                // workerPools ÄR REQUIRED ENLIGT DOKUMENTATION??? Dock ej med i ref ARM template
-                // 2015-02-01 apiVersion används av ref template!
-                // UDR är med i tmp ref - verkar bara behövas vid force tunneling? Detta eftersom trafik på management 454-455 MÅSTE komma tillbaka från samma VIP (DVS asymmetric routing STÖDS EJ)
+                "dnsSuffix": "[parameters('ASE_DnsSuffix')]"
             }
-        },*/
+        },
 /*        {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/serverfarms",
@@ -429,14 +421,14 @@
             ],
             "properties": {
                 "hostingEnvironmentProfile": {
-                    "id": "[concat(resourceGroup().name,'-ASE01')]"
+                    "id": "[resourceId('Microsoft.Web/hostingEnvironments',concat(resourceGroup().name,'-ASE01'))]"
                 }
             },
             "sku": {
                 "name": "[parameters('ASE_Sku')]",
                 "capacity": "[parameters('ASE_DefaultCapacity')]"
             }
-        },
+        },/*
         {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/sites",
@@ -454,13 +446,6 @@
             }
         },
 */
-
-
-
-
-
-
-
 
 
 
@@ -503,7 +488,7 @@
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
                 "[concat(resourceGroup().name,'-SQL01')]",
-                "subnets"
+                "[concat(resourceGroup().name,'-VNet01')]"
             ],
             "properties": {
                 "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
@@ -519,95 +504,52 @@
               "zoneType": "Public"
             },
             "resources": [
-                // OBS: Här i läggs DNS-records som child resources till DNS-zon!
-/*
                 {
-                    "name": "string",
-                    "type": "Microsoft.Network/dnsZones/A",
-                    "apiVersion": "2018-05-01",
+                    "apiVersion": "[variables('apiVersion_Network')]",
+                    "type": "CNAME",
+                    "name": "helloworld",
+                    "dependsOn": [
+                        "[parameters('ASE_DnsSuffix')]"
+                    ],
                     "properties": {
-                      "metadata": {},
-                      "TTL": "integer",
-                      "targetResource": {
-                        "id": "string"
-                      },
-                      "ARecords": [
-                        {
-                          "ipv4Address": "string"
-                        }
-                      ],
-                      "AAAARecords": [
-                        {
-                          "ipv6Address": "string"
-                        }
-                      ],
-                      "MXRecords": [
-                        {
-                          "preference": "integer",
-                          "exchange": "string"
-                        }
-                      ],
-                      "NSRecords": [
-                        {
-                          "nsdname": "string"
-                        }
-                      ],
-                      "PTRRecords": [
-                        {
-                          "ptrdname": "string"
-                        }
-                      ],
-                      "SRVRecords": [
-                        {
-                          "priority": "integer",
-                          "weight": "integer",
-                          "port": "integer",
-                          "target": "string"
-                        }
-                      ],
-                      "TXTRecords": [
-                        {
-                          "value": [
-                            "string"
-                          ]
-                        }
-                      ],
+                      "TTL": 3600,
                       "CNAMERecord": {
-                        "cname": "string"
-                      },
-                      "SOARecord": {
-                        "host": "string",
-                        "email": "string",
-                        "serialNumber": "integer",
-                        "refreshTime": "integer",
-                        "retryTime": "integer",
-                        "expireTime": "integer",
-                        "minimumTTL": "integer"
-                      },
-                      "caaRecords": [
-                        {
-                          "flags": "integer",
-                          "tag": "string",
-                          "value": "string"
-                        }
-                      ]
+                        "cname": "www.google.se"
+                      }
                     }
                   }
-                  */
             ]
           },
-
-
           {
             "apiVersion": "[variables('apiVersion_Network')]",
             "type": "Microsoft.Network/dnsZones",
-            "name": "internaldns.com",
+            "name": "privatedns.com",
             "location": "global",
             "tags": "[resourceGroup().tags]",
             "properties": {
-              "zoneType": "Private"
+              "zoneType": "Private",
+              "resolutionVirtualNetworks": [
+                {
+                  "id": "[resourceId('Microsoft.Network/virtualNetworks',concat(resourceGroup().name,'-VNet01'))]"
+                }
+              ]
             },
-            "resources": []
+            "resources": [
+                {
+                    "apiVersion": "[variables('apiVersion_Network')]",
+                    "type": "CNAME",
+                    "name": "helloworld",
+                    "dependsOn": [
+                        "privatedns.com"
+                    ],
+                    "properties": {
+                      "TTL": 3600,
+                      "CNAMERecord": {
+                        "cname": "www.google.se"
+                      }
+                    }
+                  }
+            ]
         }
     ],
     "outputs": {}
