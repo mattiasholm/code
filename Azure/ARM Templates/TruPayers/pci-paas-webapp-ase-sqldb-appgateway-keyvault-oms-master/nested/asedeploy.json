@@ -1,0 +1,126 @@
+﻿{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "aseName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the App Service Environment"
+      }
+    },
+    "aseLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Location of the App Service Environment"
+      }
+    },
+    "ipSslAddressCount": {
+      "type": "int",
+      "defaultValue": 0,
+      "metadata": {
+        "description": "Number of IP addresses for the IP-SSL address pool. This value *must* be zero when internalLoadBalancing mode is set to either 1 or 3."
+      }
+    },
+    "existingVnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing Virtual Network."
+      }
+    },
+    "existingVnetResourceId": {
+      "type": "string",
+      "metadata": {
+        "description": "ARM URI reference for the virtual network that will contain the ASE.  Use Microsoft.Network for ARM vnets.  Use Microsoft.ClassicNetwork for older ASM vnets.  /subscriptions/subIDGoesHere/resourceGroups/rgNameGoesHere/providers/Microsoft.Network/virtualNetworks/vnetnamegoeshere"
+      }
+    },
+    "aseSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "ASE Subnet"
+      }
+    },
+    "internalLoadBalancingMode": {
+      "type": "int",
+      "defaultValue": 3,
+      "metadata": {
+        "description": "0 = public VIP only, 1 = only ports 80/443 are mapped to ILB VIP, 2 = only FTP ports are mapped to ILB VIP, 3 = both ports 80/443 and FTP ports are mapped to an ILB VIP."
+      }
+    },
+    "aseSubnetAddressPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "ASE Subnet Address Prefix"
+      }
+    },
+    "customHostName": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide the Custom Host Name."
+      }
+    },
+    "kind":{
+        "type": "string",
+        "metadata": {
+          "description": "Provide the ASE kind property"
+        }
+    },
+    "tagValues": {
+      "type": "object"
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "comments": "recreate the subnet or else the ASE deploy does not complete",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "[concat(parameters('existingVnetName'), '/', parameters('aseSubnetName'))]",
+      "apiVersion": "2016-06-01",
+      "properties": {
+        "addressPrefix": "[parameters('aseSubnetAddressPrefix')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/hostingEnvironments",
+      "kind": "[parameters('kind')]",
+      "name": "[parameters('aseName')]",
+      "apiVersion": "2015-08-01",
+      "location": "[parameters('aseLocation')]",
+      "tags": {
+        "layer": "front-end",
+        "environment": "[parameters('tagValues').environment]",
+        "projectname": "[parameters('tagValues').projectname]",
+        "dataprofile": "[parameters('tagValues').dataprofile]",
+        "department": "[parameters('tagValues').department]",
+        "businessUnit": "[parameters('tagValues').businessUnit]"
+      },
+      "properties": {
+        "name": "[parameters('aseName')]",
+        "location": "[parameters('aseLocation')]",
+        "clusterSettings": [
+          {
+            "name": "DisableTls1.0",
+            "value": "1"
+          },
+          {
+            "name": "DisableTls1.1",
+            "value": "1"
+          }
+        ],
+        "ipSslAddressCount": "[parameters('ipSslAddressCount')]",
+        "internalLoadBalancingMode": "[parameters('internalLoadBalancingMode')]",
+        "dnsSuffix": "[concat('ase.', parameters('customHostName'))]",
+        "VirtualNetwork": {
+          "Id": "[parameters('existingVnetResourceId')]",
+          "type": "Microsoft.Network/virtualNetworks",
+          "Subnet": "[parameters('aseSubnetName')]"
+        }
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', parameters('existingVnetName'), '/subnets/', parameters('aseSubnetName'))]"
+      ]
+    }
+  ],
+  "outputs": {
+  }
+}

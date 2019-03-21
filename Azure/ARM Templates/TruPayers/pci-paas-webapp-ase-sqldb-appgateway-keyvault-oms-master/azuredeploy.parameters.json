@@ -1,0 +1,40 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+
+    "certData": {
+      "value": ""
+    },
+    "certPassword": {
+      "value": ""
+    },
+    "bastionHostAdministratorPassword": {
+      "value": "GEN-PASSWORD"
+    },
+    "sqlAdministratorLoginPassword": {
+      "value": "GEN-PASSWORD"
+    },
+    "sqlThreatDetectionAlertEmailAddress": {
+      "value": "changeme"
+    },
+    "automationAccountName": {
+      "value": "AUTOMATION-PCI-OMS"
+    },
+    "azureAdApplicationClientId": {
+      "value": ""
+    },
+    "azureAdApplicationClientSecret": {
+      "value": "GEN-PASSWORD"
+    },
+    "azureAdApplicationObjectId": {
+      "value": ""
+    },
+    "sqlAdAdminUserName": {
+      "value": "changeme"
+    },
+    "sqlAdAdminUserPassword": {
+      "value": "GEN-PASSWORD"
+    }
+  }
+}
