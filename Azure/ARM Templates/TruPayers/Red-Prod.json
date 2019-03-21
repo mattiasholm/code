@@ -51,6 +51,7 @@
         "Subnets": "ASE",
         "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "StorageSku": "Standard_GRS",
+        "ASE_ILB": 3,
         "SQL_Collation": "Finnish_Swedish_CI_AS"
         
     },
@@ -131,6 +132,7 @@
                             "priority": 1400
                         }
                     },
+                    /*
                     {
                         "name": "Deny_Inbound_All",
                         "properties": {
@@ -143,7 +145,7 @@
                             "protocol": "*",
                             "priority": 4096
                         }
-                    },
+                    },*/
                     {
                         "name": "Allow_Outbound_NTP",
                         "properties": {
@@ -229,7 +231,7 @@
                             "protocol": "Tcp",
                             "priority": 1500
                         }
-                    },
+                    }/*,
                     {
                         "name": "Deny_Outbound_All",
                         "properties": {
@@ -242,7 +244,7 @@
                             "protocol": "*",
                             "priority": 4096
                         }
-                    }
+                    }*/
                 ]
             }
         },
@@ -407,7 +409,8 @@
                 "virtualNetwork": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
                 },
-                "dnsSuffix": "[parameters('ASE_DnsSuffix')]"
+                "dnsSuffix": "[parameters('ASE_DnsSuffix')]",
+                "internalLoadBalancingMode": "[variables('ASE_ILB')]"
             }
         },
 /*        {
@@ -526,6 +529,9 @@
             "name": "privatedns.com",
             "location": "global",
             "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-VNet01')]"
+            ],
             "properties": {
               "zoneType": "Private",
               "resolutionVirtualNetworks": [
