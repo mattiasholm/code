@@ -42,6 +42,38 @@
         },
         "SQL_Sku": {
             "value": "S1"
+        },
+        "ASE_ILB-VIP": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "ASE-ILB-VIP"
+            }
+        },
+        "P2S_AddressPool": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "P2S-AddressPool"
+            }
+        },
+        "P2S_RootCertificateName": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "P2S-RootCertificateName"
+            }
+        },
+        "P2S_RootCertificateData": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "P2S-RootCertificateData"
+            }
         }
     }
 }

@@ -39,6 +39,18 @@
                 "S4",
                 "P1"
             ]
+        },
+        "ASE_ILB-VIP": {
+            "type": "string"
+        },
+        "P2S_AddressPool": {
+            "type": "string"
+        },
+        "P2S_RootCertificateName": {
+            "type": "string"
+        },
+        "P2S_RootCertificateData": {
+            "type": "string"
         }
     },
     "variables": {
@@ -48,263 +60,245 @@
         "apiVersion_Web": "2018-11-01",
         "apiVersion_Sql": "2018-06-01-preview",
         "apiVersion_SqlVNetRules": "2015-05-01-preview",
-        "Subnets": "ASE",
+        "Subnets": "Gateway,ASE",
         "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "StorageSku": "Standard_GRS",
-        "ASE_ILB": 3,
+        "ASE_ILB-Mode": 3,
+        "AppSetting_AlwaysOn": true,
+        "AppSetting_SessionAffinity": false,
+        "AppSetting_HttpsOnly": true,
         "SQL_Collation": "Finnish_Swedish_CI_AS"
-        
     },
     "resources": [
         {
             "apiVersion": "[variables('apiVersion_Network')]",
             "type": "Microsoft.Network/networkSecurityGroups",
-            "name": "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[0])]",
+            "name": "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[1])]",
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "properties": {
                 "securityRules": [
-
-
                     {
-                        "name": "Inbound-management",
+                        "name": "Allow_Inbound_AppServiceManagement",
                         "properties": {
-                            "description": "Used to manage ASE from public VIP",
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "454-455",
+                            "access": "Allow",
+                            "direction": "Inbound",
                             "sourceAddressPrefix": "AppServiceManagement",
+                            "sourcePortRange": "*",
                             "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 100,
-                            "direction": "Inbound"
+                            "destinationPortRange": "454-455",
+                            "protocol": "*",
+                            "priority": 1000
                         }
                     },
                     {
-                        "name": "ASE-internal-inbound",
+                        "name": "Allow_Inbound_ASESubnet",
                         "properties": {
-                            "description": "ASE-internal-inbound",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "*",
-                            "sourceAddressPrefix": "10.0.1.0/24",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 110,
-                            "direction": "Inbound"
+                            "protocol": "*",
+                            "priority": 1100
                         }
                     },
                     {
-                        "name": "Inbound-HTTP",
+                        "name": "Allow_Inbound_HTTP",
                         "properties": {
-                            "description": "Allow HTTP",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "80",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 120,
-                            "direction": "Inbound"
+                            "protocol": "*",
+                            "priority": 1200
                         }
                     },
                     {
-                        "name": "Inbound-HTTPS",
+                        "name": "Allow_Inbound_HTTPS",
                         "properties": {
-                            "description": "Allow HTTPS",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "443",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 130,
-                            "direction": "Inbound"
+                            "protocol": "*",
+                            "priority": 1300
                         }
                     },
                     {
-                        "name": "Inbound-FTP",
+                        "name": "Allow_Inbound_FTP",
                         "properties": {
-                            "description": "Allow FTP over port 21",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "21",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 140,
-                            "direction": "Inbound"
+                            "protocol": "*",
+                            "priority": 1400
                         }
                     },
                     {
-                        "name": "Inbound-FTPS",
+                        "name": "Allow_Inbound_FTPS",
                         "properties": {
-                            "description": "Allow FTPS",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "990",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 150,
-                            "direction": "Inbound"
+                            "protocol": "*",
+                            "priority": 1500
                         }
                     },
                     {
-                        "name": "Inbound-FTP-Data",
+                        "name": "Allow_Inbound_FTP-Data",
                         "properties": {
-                            "description": "RDP",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "10001-10020",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 160,
-                            "direction": "Inbound"
+                            "protocol": "*",
+                            "priority": 1600
                         }
                     },
                     {
-                        "name": "Inbound-Remote-Debugging",
+                        "name": "Allow_Inbound_Remote-Debugging",
                         "properties": {
-                            "description": "Visual Studio remote debugging",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "4016-4022",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 170,
-                            "direction": "Inbound"
+                            "protocol": "*",
+                            "priority": 1700
                         }
                     },
                     {
-                        "name": "Outbound-443",
+                        "name": "Allow_Outbound_HTTPS",
                         "properties": {
-                            "description": "Azure Storage blob",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "443",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 100,
-                            "direction": "Outbound"
+                            "protocol": "*",
+                            "priority": 1000
                         }
                     },
                     {
-                        "name": "Outbound-SMB",
+                        "name": "Allow_Outbound_SMB",
                         "properties": {
-                            "description": "Azure Storage queue",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "445",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 110,
-                            "direction": "Outbound"
+                            "protocol": "*",
+                            "priority": 1100
                         }
                     },
                     {
-                        "name": "Outbound-DB",
+                        "name": "Allow_Outbound_DB",
                         "properties": {
-                            "description": "Database",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "1433",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 120,
-                            "direction": "Outbound"
+                            "protocol": "*",
+                            "priority": 1200
                         }
                     },
                     {
-                        "name": "Outbound-DB2",
+                        "name": "Allow_Outbound_DB2",
                         "properties": {
-                            "description": "Database 2",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "11000-11999",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 130,
-                            "direction": "Outbound"
+                            "protocol": "*",
+                            "priority": 1300
                         }
                     },
                     {
-                        "name": "Outbound-DB3",
+                        "name": "Allow_Outbound_DB3",
                         "properties": {
-                            "description": "Database 3",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "14000-14999",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 140,
-                            "direction": "Outbound"
+                            "protocol": "*",
+                            "priority": 1400
                         }
                     },
                     {
-                        "name": "Outbound-DNS",
+                        "name": "Allow_Outbound_DNS",
                         "properties": {
-                            "description": "DNS",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "53",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 150,
-                            "direction": "Outbound"
+                            "protocol": "*",
+                            "priority": 1500
                         }
                     },
                     {
-                        "name": "ASE-internal-outbound",
+                        "name": "Allow_Outbound_ASESubnet",
                         "properties": {
-                            "description": "Azure Storage queue",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
                             "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "10.0.1.0/24",
-                            "access": "Allow",
-                            "priority": 160,
-                            "direction": "Outbound"
+                            "protocol": "*",
+                            "priority": 1600
                         }
                     },
                     {
-                        "name": "Outbound-80",
+                        "name": "Allow_Outbound_HTTP",
                         "properties": {
-                            "description": "Outbound 80",
-                            "protocol": "*",
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "80",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 170,
-                            "direction": "Outbound"
+                            "protocol": "*",
+                            "priority": 1700
                         }
                     },
                     {
-                        "name": "ASE-to-VNET",
+                        "name": "Allow_Outbound_VNet",
                         "properties": {
-                            "description": "ASE to VNET",
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "10.0.0.0/16",
                             "access": "Allow",
-                            "priority": 180,
-                            "direction": "Outbound"
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "destinationPortRange": "*",
+                            "protocol": "*",
+                            "priority": 1800
                         }
                     }
-
                     /*{
                         "name": "Allow_Inbound_AppServiceManagement",
                         "properties": {
@@ -323,7 +317,7 @@
                         "properties": {
                             "access": "Allow",
                             "direction": "Inbound",
-                            "sourceAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.1.',split(variables('SubnetRange'),'.')[3])]",
+                            "sourceAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*",
                             "destinationPortRange": "*",
@@ -491,7 +485,7 @@
         {
             "apiVersion": "[variables('apiVersion_Network')]",
             "type": "Microsoft.Network/routeTables",
-            "name": "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[0])]",
+            "name": "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[1])]",
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "properties": {
@@ -506,9 +500,6 @@
                 ]
             }
         },
-
-
-
         {
             "apiVersion": "[variables('apiVersion_Network')]",
             "type": "Microsoft.Network/virtualNetworks",
@@ -516,8 +507,8 @@
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[0])]",
-                "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[0])]"
+                "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[1])]",
+                "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[1])]"
             ],
             "properties": {
                 "addressSpace": {
@@ -525,53 +516,42 @@
                         "[parameters('VNet_AddressSpace')]"
                     ]
                 },
-                "copy": [
+                "subnets": [
                     {
-                        "name": "subnets",
-                        "count": "[length(split(variables('Subnets'),','))]",
-                        "input": {
-                            "name": "[concat(split(variables('Subnets'),',')[copyIndex('subnets')],'Subnet')]",
-                            "properties": {
-                                "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.',copyIndex('subnets',1),'.',split(variables('SubnetRange'),'.')[3])]",
-                                "networkSecurityGroup": {
-                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[copyIndex('subnets')]))]"
-                                },
-                                "serviceEndpoints": [
-                                    {
-                                        "service": "Microsoft.KeyVault"
-                                    },
-                                    {
-                                        "service": "Microsoft.Storage"
-                                    },
-                                    {
-                                        "service": "Microsoft.Sql"
-                                    },
-                                    {
-                                        "service": "Microsoft.AzureActiveDirectory"
-                                    }
-                                ],
-                                "routeTable": {
-                                    "id": "[resourceId('Microsoft.Network/routeTables',concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[copyIndex('subnets')]))]"
-                            }
+                        "name": "[concat(split(variables('Subnets'),',')[0],'Subnet')]",
+                        "properties": {
+                            "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.0.',split(variables('SubnetRange'),'.')[3])]"
                         }
+                    },
+                    {
+                        "name": "[concat(split(variables('Subnets'),',')[1],'Subnet')]",
+                        "properties": {
+                            "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[1]))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.KeyVault"
+                                },
+                                {
+                                    "service": "Microsoft.Storage"
+                                },
+                                {
+                                    "service": "Microsoft.Sql"
+                                },
+                                {
+                                    "service": "Microsoft.AzureActiveDirectory"
+                                }
+                            ],
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables',concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[1]))]"
+                            }
                         }
                     }
                 ]
             },
-            "resources": [
-                {
-                    "apiVersion": "[variables('apiVersion_Network')]",
-                    "type": "subnets",
-                    "name": "GatewaySubnet",
-                    "location": "[resourceGroup().location]",
-                    "dependsOn": [
-                        "[concat(resourceGroup().name,'-VNet01')]"
-                    ],
-                    "properties": {
-                        "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[2],'.','0','.',split(variables('SubnetRange'),'.')[3])]"
-                    }
-                }
-            ]
+            "resources": []
         },
         {
             "apiVersion": "[variables('apiVersion_Storage')]",
@@ -593,7 +573,7 @@
                     "ipRules": [],
                     "virtualNetworkRules": [
                         {
-                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]",
+                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[1],'Subnet'))]",
                             "action": "Allow"
                         }
                     ]
@@ -626,7 +606,7 @@
                     "ipRules": [],
                     "virtualNetworkRules": [
                         {
-                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]",
+                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[1],'Subnet'))]",
                             "action": "Allow"
                         }
                     ]
@@ -648,22 +628,26 @@
                 "location": "[parameters('ASE_Location')]",
                 "clusterSettings": [
                     {
-                      "name": "DisableTls1.0",
-                      "value": "1"
+                        "name": "DisableTls1.0",
+                        "value": "1"
                     },
                     {
-                      "name": "DisableTls1.1",
-                      "value": "1"
+                        "name": "DisableTls1.1",
+                        "value": "1"
+                    },
+                    {
+                        "name": "FrontEndSSLCipherSuiteOrder",
+                        "value": "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_P256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_P256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA_P256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA_P256"
                     }
-                  ],
+                ],
                 "virtualNetwork": {
-                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[1],'Subnet'))]"
                 },
                 "dnsSuffix": "[parameters('ASE_DnsSuffix')]",
-                "internalLoadBalancingMode": "[variables('ASE_ILB')]"
+                "internalLoadBalancingMode": "[variables('ASE_ILB-Mode')]"
             }
         },
-/*        {
+        {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/serverfarms",
             "name": "[concat(resourceGroup().name,'-AppPlan01')]",
@@ -681,7 +665,7 @@
                 "name": "[parameters('ASE_Sku')]",
                 "capacity": "[parameters('ASE_DefaultCapacity')]"
             }
-        },/*
+        },
         {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/sites",
@@ -691,20 +675,20 @@
             "dependsOn": [
                 "[concat(resourceGroup().name,'-AppPlan01')]"
             ],
+            "kind": "app",
             "properties": {
                 "serverFarmId": "[concat(resourceGroup().name,'-AppPlan01')]",
                 "hostingEnvironmentProfile": {
-                    "id": "[concat(resourceGroup().name,'-ASE01')]"
-                }
+                    "id": "[resourceId('Microsoft.Web/hostingEnvironments',concat(resourceGroup().name,'-ASE01'))]"
+                },
+                "siteConfig": {
+                    "alwaysOn": "[variables('AppSetting_AlwaysOn')]"
+                },
+                "clientAffinityEnabled": "[variables('AppSetting_SessionAffinity')]",
+                "httpsOnly": "[variables('AppSetting_HttpsOnly')]"
             }
         },
-*/
-
-
-
-
-
-       {
+        {
             "apiVersion": "[variables('apiVersion_Sql')]",
             "type": "Microsoft.Sql/servers",
             "name": "[concat(resourceGroup().name,'-SQL01')]",
@@ -744,7 +728,7 @@
                 "[concat(resourceGroup().name,'-VNet01')]"
             ],
             "properties": {
-                "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
+                "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[1],'Subnet'))]"
             }
         },
         {
@@ -753,60 +737,153 @@
             "name": "[parameters('ASE_DnsSuffix')]",
             "location": "global",
             "tags": "[resourceGroup().tags]",
-            "properties": {
-              "zoneType": "Public"
-            },
-            "resources": [
-                {
-                    "apiVersion": "[variables('apiVersion_Network')]",
-                    "type": "CNAME",
-                    "name": "helloworld",
-                    "dependsOn": [
-                        "[parameters('ASE_DnsSuffix')]"
-                    ],
-                    "properties": {
-                      "TTL": 3600,
-                      "CNAMERecord": {
-                        "cname": "www.google.se"
-                      }
-                    }
-                  }
-            ]
-          },
-          {
-            "apiVersion": "[variables('apiVersion_Network')]",
-            "type": "Microsoft.Network/dnsZones",
-            "name": "privatedns.com",
-            "location": "global",
-            "tags": "[resourceGroup().tags]",
             "dependsOn": [
                 "[concat(resourceGroup().name,'-VNet01')]"
             ],
             "properties": {
-              "zoneType": "Private",
-              "resolutionVirtualNetworks": [
-                {
-                  "id": "[resourceId('Microsoft.Network/virtualNetworks',concat(resourceGroup().name,'-VNet01'))]"
-                }
-              ]
+                "zoneType": "Private",
+                "resolutionVirtualNetworks": [
+                    {
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks',concat(resourceGroup().name,'-VNet01'))]"
+                    }
+                ]
             },
             "resources": [
                 {
                     "apiVersion": "[variables('apiVersion_Network')]",
-                    "type": "CNAME",
-                    "name": "helloworld",
+                    "type": "A",
+                    "name": "*",
                     "dependsOn": [
-                        "privatedns.com"
+                        "[parameters('ASE_DnsSuffix')]"
                     ],
                     "properties": {
-                      "TTL": 3600,
-                      "CNAMERecord": {
-                        "cname": "www.google.se"
-                      }
+                        "TTL": 3600,
+                        "ARecords": [
+                            {
+                                "ipv4Address": "[parameters('ASE_ILB-VIP')]"
+                            }
+                        ]
                     }
-                  }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Network')]",
+                    "type": "A",
+                    "name": "*.scm",
+                    "dependsOn": [
+                        "[parameters('ASE_DnsSuffix')]"
+                    ],
+                    "properties": {
+                        "TTL": 3600,
+                        "ARecords": [
+                            {
+                                "ipv4Address": "[parameters('ASE_ILB-VIP')]"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Network')]",
+                    "type": "A",
+                    "name": "ftp",
+                    "dependsOn": [
+                        "[parameters('ASE_DnsSuffix')]"
+                    ],
+                    "properties": {
+                        "TTL": 3600,
+                        "ARecords": [
+                            {
+                                "ipv4Address": "[parameters('ASE_ILB-VIP')]"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Network')]",
+                    "type": "A",
+                    "name": "publish",
+                    "dependsOn": [
+                        "[parameters('ASE_DnsSuffix')]"
+                    ],
+                    "properties": {
+                        "TTL": 3600,
+                        "ARecords": [
+                            {
+                                "ipv4Address": "[parameters('ASE_ILB-VIP')]"
+                            }
+                        ]
+                    }
+                }
             ]
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[concat(resourceGroup().name,'-PIP-VNGW01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "sku": {
+                "name": "Basic"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "publicIPAddressVersion": "IPv4"
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/virtualNetworkGateways",
+            "name": "[concat(resourceGroup().name,'-VNGW01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-VNet01')]",
+                "[concat(resourceGroup().name,'-PIP-VNGW01')]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "GatewayIpConfig",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(resourceGroup().name,'-PIP-VNGW01'))]"
+                            }
+                        }
+                    }
+                ],
+                "gatewayType": "Vpn",
+                "vpnType": "RouteBased",
+                "sku": {
+                    "name": "Basic",
+                    "tier": "Basic"
+                },
+                "enableBgp": "false",
+                "vpnClientConfiguration": {
+                    "vpnClientAddressPool": {
+                        "addressPrefixes": [
+                            "[parameters('P2S_AddressPool')]"
+                        ]
+                    },
+                    "vpnClientRootCertificates": [
+                        {
+                            "name": "[parameters('P2S_RootCertificateName')]",
+                            "properties": {
+                                "publicCertData": "[parameters('P2S_RootCertificateData')]"
+                            }
+                        }
+                    ],
+                    "vpnClientRevokedCertificates": []
+                }
+            }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "ASE_PublicVIP": {
+            "type": "object",
+            "value": "[reference(concat(resourceGroup().name,'-ASE01'))]"
+        }
+    }
 }
