@@ -33,7 +33,8 @@ $ResourceGroupNames = `
     'Notifications', `
     'OrderManagement', `
     'OrderStatistics', `
-    'Content'
+    'Content', `
+    'TMP'
 
 foreach ($ResourceGroupName in $ResourceGroupNames) {
     New-AzResourceGroup `
@@ -134,6 +135,22 @@ New-AzResourceGroupDeployment `
 # Deploy 'Content'
     
 $Module = $ResourceGroupNames[5]
+$TemplateFileName = "$Module.json"
+$ParameterFileName = "$Module.parameters.json"
+    
+New-AzResourceGroupDeployment `
+    -ResourceGroupname  "$Module-$EnvironmentSuffix" `
+    -TemplateFile (Join-Path -Path $FilePath -ChildPath $TemplateFileName) `
+    -TemplateParameterFile (Join-Path -Path $FilePath -ChildPath $ParameterFileName) `
+    -EnvironmentSuffix $EnvironmentSuffix `
+    -Module $Module `
+    -Mode Incremental
+
+
+
+# Deploy 'TMP'
+    
+$Module = $ResourceGroupNames[6]
 $TemplateFileName = "$Module.json"
 $ParameterFileName = "$Module.parameters.json"
     

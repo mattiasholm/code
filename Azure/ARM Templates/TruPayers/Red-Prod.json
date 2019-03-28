@@ -949,6 +949,13 @@
                             "[parameters('P2S_AddressPool')]"
                         ]
                     },
+                    "vpnClientProtocols": [
+                        "SSTP",
+                        "IKEv2"
+                    ],
+                    /*"vpnClientProtocols": [
+                        "OpenVPN"
+                    ],*/
                     "vpnClientRootCertificates": [
                         {
                             "name": "[parameters('P2S_RootCertificateName')]",
