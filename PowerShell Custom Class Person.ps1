@@ -1,5 +1,8 @@
 Class Person
 {
+
+# LÄGG TILL UNIKT ID SOM AUTOMATISKT SKAPAS BASERAT PÅ CMDLET "New-Guid"
+
 [ValidatePattern('^[0-9]{8}\-[0-9]{4}$')]
 [string]
 $SSN
@@ -84,7 +87,7 @@ function New-Person
     Param (
         #[Parameter(Mandatory = $true)]
         [string]
-        $SSN
+        $SSN,
 
         [string]
         $Sex
@@ -107,6 +110,8 @@ $Person2
 
 
 <# ### METHOD
+TESTA EXEMPELVIS SayName() som finns nedan
+STATIC METHODS???
 
 class MyClass
 {
@@ -120,4 +125,4 @@ class MyClass
 
 
 # # # CHILD CLASSES: http://overpoweredshell.com/Introduction-to-PowerShell-Classes/#this
-
+# # # LÄS HELA OCH TESTA ORDENTLIGT!
