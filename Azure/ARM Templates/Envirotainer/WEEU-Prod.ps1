@@ -1,6 +1,5 @@
 $ErrorActionPreference = 'Stop'
 Login-AzAccount
-# mholm_adm@envirotainer.com
 
 
 

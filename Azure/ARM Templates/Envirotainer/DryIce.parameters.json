@@ -31,6 +31,25 @@
         },
         "Autoscale_MemoryPercentage_Decrease": {
             "value": 40
+        },
+        "SqlSku": {
+            "value": "S1"
+        },
+        "SqlUsername": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/901cac60-5de4-4d34-80a7-13dc59c7d184/resourceGroups/Portal-WEEU-Prod/providers/Microsoft.KeyVault/vaults/Portal-WEEU-Prod-Vault01"
+                },
+                "secretName": "DryIce-SqlUsername"
+            }
+        },
+        "SqlPassword": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/901cac60-5de4-4d34-80a7-13dc59c7d184/resourceGroups/Portal-WEEU-Prod/providers/Microsoft.KeyVault/vaults/Portal-WEEU-Prod-Vault01"
+                },
+                "secretName": "DryIce-SqlPassword"
+            }
         }
     }
 }
