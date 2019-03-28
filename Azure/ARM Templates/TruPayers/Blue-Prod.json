@@ -1,0 +1,231 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "AppService_Sku": {
+            "type": "string",
+            "allowedValues": [
+                "S1",
+                "S2",
+                "S3"
+            ]
+        },
+        "AppService_DefaultCapacity": {
+            "type": "int",
+            "minValue": 1,
+            "maxValue": 10
+        },
+        "SQL_Username": {
+            "type": "string"
+        },
+        "SQL_Password": {
+            "type": "securestring"
+        },
+        "SQL_Sku": {
+            "type": "string",
+            "allowedValues": [
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "P1"
+            ]
+        }
+    },
+    "variables": {
+        "apiVersion_Storage": "2018-11-01",
+        "apiVersion_KeyVault": "2018-02-14-preview",
+        "apiVersion_Web": "2018-11-01",
+        "apiVersion_Sql": "2018-06-01-preview",
+        "apiVersion_Insights": "2018-05-01-preview",
+        "Storage_Sku": "Standard_GRS",
+        "KeyVault_Sku": "Standard",
+        "AppSetting_AlwaysOn": true,
+        "AppSetting_SessionAffinity": false,
+        "AppSetting_HttpsOnly": true,
+        "DeploymentSlot": "Staging",
+        "SQL_Collation": "Finnish_Swedish_CI_AS"
+    },
+    "resources": [
+        {
+            "apiVersion": "[variables('apiVersion_Storage')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[ToLower(replace(concat(resourceGroup().name,'-Storage01'),'-',''))]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "sku": {
+                "name": "[variables('Storage_Sku')]"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": {
+                    "bypass": "None",
+                    "defaultAction": "Deny",
+                    "ipRules": [],
+                    "virtualNetworkRules": []
+                },
+                "supportsHttpsTrafficOnly": true
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_KeyVault')]",
+            "type": "Microsoft.KeyVault/vaults",
+            "name": "[concat(resourceGroup().name,'-Vault01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "properties": {
+                "tenantId": "[subscription().tenantId]",
+                "sku": {
+                    "family": "A",
+                    "name": "[variables('KeyVault_Sku')]"
+                },
+                "accessPolicies": [],
+                "enabledForDeployment": false,
+                "enabledForTemplateDeployment": true,
+                "enableSoftDelete": true,
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "defaultAction": "Deny",
+                    "ipRules": [],
+                    "virtualNetworkRules": []
+                }
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Web')]",
+            "type": "Microsoft.Web/serverfarms",
+            "name": "[concat(resourceGroup().name,'-AppPlan01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "kind": "app",
+            "properties": {},
+            "sku": {
+                "name": "[parameters('AppService_Sku')]",
+                "capacity": "[parameters('AppService_DefaultCapacity')]"
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Web')]",
+            "type": "Microsoft.Web/sites",
+            "name": "[concat(resourceGroup().name,'-App01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-AppPlan01')]"
+            ],
+            "kind": "app",
+            "properties": {
+                "serverFarmId": "[concat(resourceGroup().name,'-AppPlan01')]",
+                "siteConfig": {
+                    "alwaysOn": "[variables('AppSetting_AlwaysOn')]"
+                },
+                "clientAffinityEnabled": "[variables('AppSetting_SessionAffinity')]",
+                "httpsOnly": "[variables('AppSetting_HttpsOnly')]"
+            },
+            "resources": [
+                {
+                    "apiVersion": "[variables('apiVersion_Web')]",
+                    "type": "siteextensions",
+                    "name": "Microsoft.ApplicationInsights.AzureWebSites",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-App01')]"
+                    ]
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Web')]",
+                    "type": "config",
+                    "name": "appsettings",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-App01')]",
+                        "[concat(resourceGroup().name,'-AppInsights01')]",
+                        "Microsoft.ApplicationInsights.AzureWebSites"
+                    ],
+                    "properties": {
+                        "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(concat(resourceGroup().name,'-AppInsights01'),variables('apiVersion_Insights')).InstrumentationKey]"
+                    }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Web')]",
+                    "type": "config",
+                    "name": "connectionstrings",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-App01')]",
+                        "[concat(resourceGroup().name,'-DB01')]"
+                    ],
+                    "properties": {
+                        "Database": {
+                            "type": "SQLAzure",
+                            "value": "[concat('Data Source=tcp:',reference(concat(resourceGroup().name,'-SQL01')).fullyQualifiedDomainName,',1433;Initial Catalog=',concat(resourceGroup().name,'-DB01'),';User Id=',parameters('SQL_Username'),';Password=',parameters('SQL_Password'),';')]"
+                        }
+                    }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Web')]",
+                    "type": "slots",
+                    "name": "[variables('DeploymentSlot')]",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-App01')]"
+                    ],
+                    "kind": "app",
+                    "properties": {
+                        "serverFarmId": "[concat(resourceGroup().name,'-AppPlan01')]",
+                        "httpsOnly": "[variables('AppSetting_HttpsOnly')]"
+                    }
+                }
+            ]
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Insights')]",
+            "type": "Microsoft.Insights/components",
+            "name": "[concat(resourceGroup().name,'-AppInsights01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-App01')]"
+            ],
+            "kind": "web",
+            "properties": {
+                "Application_Type": "web",
+                "applicationId": "[concat(resourceGroup().name,'-App01')]"
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Sql')]",
+            "type": "Microsoft.Sql/servers",
+            "name": "[concat(resourceGroup().name,'-SQL01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "properties": {
+                "administratorLogin": "[parameters('SQL_Username')]",
+                "administratorLoginPassword": "[parameters('SQL_Password')]"
+            },
+            "resources": [
+                {
+                    "apiVersion": "[variables('apiVersion_Sql')]",
+                    "type": "databases",
+                    "name": "[concat(resourceGroup().name,'-DB01')]",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-SQL01')]"
+                    ],
+                    "sku": {
+                        "name": "[parameters('SQL_Sku')]"
+                    },
+                    "properties": {
+                        "collation": "[variables('SQL_Collation')]"
+                    }
+                }
+            ]
+        }
+    ],
+    "outputs": {}
+}

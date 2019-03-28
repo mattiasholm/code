@@ -910,7 +910,7 @@
                 "publicIPAllocationMethod": "Dynamic",
                 "publicIPAddressVersion": "IPv4"
             }
-        }/*,
+        },
         {
             "apiVersion": "[variables('apiVersion_Network')]",
             "type": "Microsoft.Network/virtualNetworkGateways",
@@ -960,12 +960,7 @@
                     "vpnClientRevokedCertificates": []
                 }
             }
-        }*/
-    ],
-    "outputs": {
-        "ASE_PublicVIP": {
-            "type": "object",
-            "value": "[reference(concat(resourceGroup().name,'-ASE01'))]"
         }
-    }
+    ],
+    "outputs": {}
 }

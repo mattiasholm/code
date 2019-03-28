@@ -3,9 +3,9 @@ Login-AzAccount
 
 
 
-$ResourceGroupName = "Red-WE-Prod"
+$ResourceGroupName = "Blue-WE-Prod"
 $Location = 'WestEurope'
-$SubscriptionName = 'TruPayers - Red - Prod'
+$SubscriptionName = 'TruPayers - Blue - Prod'
 $TenantDomain = 'trupayers.onmicrosoft.com'
 
 
@@ -36,7 +36,6 @@ $Customer = 'TruPayers'
 $ArmPath = 'C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates'
 $FilePath = Join-Path -Path $ArmPath -ChildPath $Customer
 $FilePrefix = $ResourceGroupName.Replace("$($ResourceGroupName.Split('-')[1])-", '')
-$ASE_Location = ($Location -creplace '([A-Z\W_]|\d+)(?<![a-z])', ' $&').Trim()
 
 
 
@@ -62,5 +61,4 @@ New-AzResourceGroupDeployment `
     -ResourceGroupname  $ResourceGroupName `
     -TemplateFile (Join-Path -Path $FilePath -ChildPath $TemplateFileName) `
     -TemplateParameterFile (Join-Path -Path $FilePath -ChildPath $ParameterFileName) `
-    -ASE_Location $ASE_Location `
     -Mode Incremental
