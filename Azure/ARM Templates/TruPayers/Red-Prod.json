@@ -8,6 +8,12 @@
         "ASE_Location": {
             "type": "string"
         },
+        "ASE_DefaultCertificateThumbprint": {
+            "type": "string"
+        },
+        "KeyVault_Id": {
+            "type": "string"
+        },
         "ASE_DnsSuffix": {
             "type": "string"
         },
@@ -65,6 +71,7 @@
         "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "Storage_Sku": "Standard_GRS",
         "KeyVault_Sku": "Standard",
+        "KeyVault_MicrosoftWebRP": "b305f741-5faf-4220-a843-2f208ae96d8f",
         "ASE_ILB-Mode": 3,
         "AppSetting_AlwaysOn": true,
         "AppSetting_SessionAffinity": false,
@@ -573,7 +580,7 @@
             "kind": "StorageV2",
             "properties": {
                 "networkAcls": {
-                    "bypass": "None",
+                    "bypass": "AzureServices",
                     "defaultAction": "Deny",
                     "ipRules": [],
                     "virtualNetworkRules": [
@@ -601,7 +608,20 @@
                     "family": "A",
                     "name": "[variables('KeyVault_Sku')]"
                 },
-                "accessPolicies": [],
+                "accessPolicies": [
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "[variables('KeyVault_MicrosoftWebRP')]",
+                        "permissions": {
+                            "keys": [],
+                            "secrets": [
+                                "get"
+                            ],
+                            "certificates": [],
+                            "storage": []
+                        }
+                    }
+                ],
                 "enabledForDeployment": false,
                 "enabledForTemplateDeployment": true,
                 "enableSoftDelete": true,
@@ -620,18 +640,40 @@
         },
         {
             "apiVersion": "[variables('apiVersion_Web')]",
+            "type": "Microsoft.Web/certificates",
+            "name": "ASE-DefaultCertificate",
+            "location": "[parameters('ASE_Location')]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-Vault01')]"
+            ],
+            "properties": {
+                "keyVaultId": "[parameters('KeyVault_Id')]",
+                "keyVaultSecretName": "ASE-DefaultCertificateSecret",
+                "hostingEnvironmentProfile": {
+                    "id": "[resourceId('Microsoft.Web/hostingEnvironments',concat(resourceGroup().name,'-ASE01'))]"
+                }
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/hostingEnvironments",
             "name": "[concat(resourceGroup().name,'-ASE01')]",
             "location": "[parameters('ASE_Location')]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(resourceGroup().name,'-VNet01')]"
+                "[concat(resourceGroup().name,'-VNet01')]",
+                "ASE-DefaultCertificate"
             ],
             "kind": "ASEV2",
             "properties": {
                 "name": "[concat(resourceGroup().name,'-ASE01')]",
                 "location": "[parameters('ASE_Location')]",
                 "clusterSettings": [
+                    {
+                        "name": "DefaultSslCertificateThumbprint",
+                        "value": "[parameters('ASE_DefaultCertificateThumbprint')]"
+                    },
                     {
                         "name": "DisableTls1.0",
                         "value": "1"

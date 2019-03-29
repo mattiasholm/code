@@ -10,6 +10,17 @@
                 "secretName": "VNet-AddressSpace"
             }
         },
+        "ASE_DefaultCertificateThumbprint": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "ASE-DefaultCertificateThumbprint"
+            }
+        },
+        "KeyVault_Id": {
+            "value": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+        },
         "ASE_DnsSuffix": {
             "reference": {
                 "keyVault": {
