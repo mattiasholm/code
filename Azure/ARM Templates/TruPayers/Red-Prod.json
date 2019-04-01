@@ -754,7 +754,7 @@
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
                 "[concat(resourceGroup().name,'-VNet01')]",
-                "ASE-DefaultCertificate"
+                "[concat('DefaultCertificate_',resourceGroup().name,'-ASE01','_InternalLoadBalancingASE')]"
             ],
             "kind": "ASEV2",
             "properties": {
