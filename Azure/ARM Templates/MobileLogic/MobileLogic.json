@@ -1151,6 +1151,20 @@
                                 "enableAutomaticFailover": false,
                                 "enableMultipleWriteLocations": false
                             }
+                        },
+                        {
+                            "apiVersion": "[variables('apiVersion_Storage')]",
+                            "type": "Microsoft.Storage/storageAccounts",
+                            "name": "[toLower(replace(concat(parameters('EnvironmentPrefix'),'storage02'),'-',''))]",
+                            "location": "[resourceGroup().location]",
+                            "tags": {
+                                "Environment": "[variables('Tag_Environment')]"
+                            },
+                            "sku": {
+                                "name": "Standard_LRS"
+                            },
+                            "kind": "StorageV2",
+                            "properties": {}
                         }
                     ]
                 }

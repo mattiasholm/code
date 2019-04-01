@@ -1,6 +1,5 @@
 $ErrorActionPreference = 'Stop'
-Add-AzureRmAccount
-# mattias.holm@mobilelogic.se
+Login-AzAccount
 
 
 
@@ -11,16 +10,16 @@ $TenantDomain = 'mobilelogic.se'
 
 
 
+$TenantId = (Invoke-WebRequest -Uri "https://login.windows.net/$TenantDomain/.well-known/openid-configuration" | ConvertFrom-Json).token_endpoint.Split('/')[3]
+$SubscriptionId = (Get-AzSubscription -TenantId $TenantId | Where-Object {$_.Name -eq $SubscriptionName}).Id
+Select-AzSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
+
 switch ($EnvironmentPrefix.Split('-')[0]) {
     Zoey {$Environment = 'Production'}
     Leo {$Environment = 'Test'}
     LogicCenter {$Environment = 'Shared'}
     default {$Environment = 'Unknown'}
 }
-
-$TenantId = (Invoke-WebRequest -Uri "https://login.windows.net/$TenantDomain/.well-known/openid-configuration" | ConvertFrom-Json).token_endpoint.Split('/')[3]
-$SubscriptionId = (Get-AzureRmSubscription -TenantId $TenantId | Where-Object {$_.Name -eq $SubscriptionName}).Id
-Select-AzureRmSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
 
 
 
@@ -31,7 +30,7 @@ $ResourceGroupNames = `
     'DataServices'
 
 foreach ($ResourceGroupName in $ResourceGroupNames) {
-    New-AzureRmResourceGroup `
+    New-AzResourceGroup `
         -Name "$EnvironmentPrefix-$ResourceGroupName" `
         -Location $Location `
         -Tag @{Environment = $Environment} `
@@ -45,10 +44,11 @@ foreach ($ResourceGroupName in $ResourceGroupNames) {
 $TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-LogicCenter_PreDeploy.json"
 $ParameterFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-$($EnvironmentPrefix).parameters.json"
 
-New-AzureRmResourceGroupDeployment `
+New-AzResourceGroupDeployment `
     -ResourceGroupname  "$EnvironmentPrefix-$($ResourceGroupNames[0])" `
     -TemplateFile $TemplateFilePath `
     -TemplateParameterFile $ParameterFilePath `
+    -EnvironmentPrefix $EnvironmentPrefix `
     -Mode Incremental
 
 
@@ -58,9 +58,9 @@ New-AzureRmResourceGroupDeployment `
 $TemplateFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-LogicCenter_PostDeploy.json"
 $ParameterFilePath = "C:\Users\MattiasHolm\Documents\GitHub\powershell\Azure\ARM Templates\MobileLogic\MobileLogic-$($EnvironmentPrefix).parameters.json"
 
-New-AzureRmResourceGroupDeployment `
+New-AzResourceGroupDeployment `
     -ResourceGroupName  "$EnvironmentPrefix-$($ResourceGroupNames[0])" `
     -TemplateFile $TemplateFilePath `
     -TemplateParameterFile $ParameterFilePath `
-    -EnvironmentSuffix $EnvironmentSuffix `
+    -EnvironmentPrefix $EnvironmentPrefix `
     -Mode Incremental
