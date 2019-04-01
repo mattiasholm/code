@@ -67,7 +67,7 @@
         "apiVersion_Sql": "2018-06-01-preview",
         "apiVersion_SqlVNetRules": "2015-05-01-preview",
         "apiVersion_Insights": "2018-05-01-preview",
-        "Subnets": "Gateway,ASE",
+        "Subnets": "Gateway,ASE,Management",
         "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "Storage_Sku": "Standard_GRS",
         "KeyVault_Sku": "Standard",
@@ -496,6 +496,82 @@
         },
         {
             "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[2])]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Allow_Inbound_RDP",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "[parameters('P2S_AddressPool')]",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "3389",
+                            "protocol": "*",
+                            "priority": 1000
+                        }
+                    },
+                    {
+                        "name": "Deny_Inbound_All",
+                        "properties": {
+                            "access": "Deny",
+                            "direction": "Inbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "*",
+                            "protocol": "*",
+                            "priority": 4096
+                        }
+                    },
+                    {
+                        "name": "Allow_Outbound_HTTP",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
+                            "destinationPortRange": "80",
+                            "protocol": "*",
+                            "priority": 1000
+                        }
+                    },
+                    {
+                        "name": "Allow_Outbound_HTTPS",
+                        "properties": {
+                            "access": "Allow",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
+                            "destinationPortRange": "443",
+                            "protocol": "*",
+                            "priority": 1100
+                        }
+                    },
+                    {
+                        "name": "Deny_Outbound_All",
+                        "properties": {
+                            "access": "Deny",
+                            "direction": "Outbound",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "*",
+                            "protocol": "*",
+                            "priority": 4096
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Network')]",
             "type": "Microsoft.Network/routeTables",
             "name": "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[1])]",
             "location": "[resourceGroup().location]",
@@ -519,8 +595,9 @@
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
+                "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[1])]",
                 "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[1])]",
-                "[concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[1])]"
+                "[concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[2])]"
             ],
             "properties": {
                 "addressSpace": {
@@ -532,7 +609,10 @@
                     {
                         "name": "[concat(split(variables('Subnets'),',')[0],'Subnet')]",
                         "properties": {
-                            "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.0.',split(variables('SubnetRange'),'.')[3])]"
+                            "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.0.',split(variables('SubnetRange'),'.')[3])]",
+                            "networkSecurityGroup": {},
+                            "serviceEndpoints": [],
+                            "routeTable": {}
                         }
                     },
                     {
@@ -559,6 +639,17 @@
                             "routeTable": {
                                 "id": "[resourceId('Microsoft.Network/routeTables',concat(resourceGroup().name,'-UDR-',split(variables('Subnets'),',')[1]))]"
                             }
+                        }
+                    },
+                    {
+                        "name": "[concat(split(variables('Subnets'),',')[2],'Subnet')]",
+                        "properties": {
+                            "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.2.',split(variables('SubnetRange'),'.')[3])]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[2]))]"
+                            },
+                            "serviceEndpoints": [],
+                            "routeTable": {}
                         }
                     }
                 ]
@@ -641,7 +732,7 @@
         {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/certificates",
-            "name": "ASE-DefaultCertificate",
+            "name": "[concat('DefaultCertificate_',resourceGroup().name,'-ASE01','_InternalLoadBalancingASE')]",
             "location": "[parameters('ASE_Location')]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
@@ -893,38 +984,6 @@
                     "apiVersion": "[variables('apiVersion_Network')]",
                     "type": "A",
                     "name": "*.scm",
-                    "dependsOn": [
-                        "[parameters('ASE_DnsSuffix')]"
-                    ],
-                    "properties": {
-                        "TTL": 3600,
-                        "ARecords": [
-                            {
-                                "ipv4Address": "[parameters('ASE_ILB-VIP')]"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "apiVersion": "[variables('apiVersion_Network')]",
-                    "type": "A",
-                    "name": "ftp",
-                    "dependsOn": [
-                        "[parameters('ASE_DnsSuffix')]"
-                    ],
-                    "properties": {
-                        "TTL": 3600,
-                        "ARecords": [
-                            {
-                                "ipv4Address": "[parameters('ASE_ILB-VIP')]"
-                            }
-                        ]
-                    }
-                },
-                {
-                    "apiVersion": "[variables('apiVersion_Network')]",
-                    "type": "A",
-                    "name": "publish",
                     "dependsOn": [
                         "[parameters('ASE_DnsSuffix')]"
                     ],
