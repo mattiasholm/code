@@ -85,6 +85,25 @@
                 },
                 "secretName": "P2S-RootCertificateData"
             }
+        },
+        "VM_Sku": {
+            "value": "Standard_A2_v2"
+        },
+        "VM_Username": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "VM-Username"
+            }
+        },
+        "VM_Password": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "VM-Password"
+            }
         }
     }
 }

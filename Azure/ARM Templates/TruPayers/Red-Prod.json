@@ -57,6 +57,22 @@
         },
         "P2S_RootCertificateData": {
             "type": "string"
+        },
+        "VM_Sku": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_A2_v2",
+                "Standard_A4_v2",
+                "Standard_A8_v2",
+                "Standard_A2m_v2",
+                "Standard_A4m_v2"
+            ]
+        },
+        "VM_Username": {
+            "type": "string"
+        },
+        "VM_Password": {
+            "type": "securestring"
         }
     },
     "variables": {
@@ -67,6 +83,7 @@
         "apiVersion_Sql": "2018-06-01-preview",
         "apiVersion_SqlVNetRules": "2015-05-01-preview",
         "apiVersion_Insights": "2018-05-01-preview",
+        "apiVersion_Compute": "2019-03-01",
         "Subnets": "Gateway,ASE,Management",
         "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "Storage_Sku": "Standard_GRS",
@@ -820,6 +837,9 @@
                 "clientAffinityEnabled": "[variables('AppSetting_SessionAffinity')]",
                 "httpsOnly": "[variables('AppSetting_HttpsOnly')]"
             },
+            "identity": {
+                "type": "SystemAssigned"
+            },
             "resources": [
                 {
                     "apiVersion": "[variables('apiVersion_Web')]",
@@ -879,6 +899,9 @@
                             "id": "[resourceId('Microsoft.Web/hostingEnvironments',concat(resourceGroup().name,'-ASE01'))]"
                         },
                         "httpsOnly": "[variables('AppSetting_HttpsOnly')]"
+                    },
+                    "identity": {
+                        "type": "SystemAssigned"
                     }
                 }
             ]
@@ -952,7 +975,7 @@
             ],
             "properties": {
                 "zoneType": "Private",
-                "resolutionVirtualNetworks": [
+                "registrationVirtualNetworks": [
                     {
                         "id": "[resourceId('Microsoft.Network/virtualNetworks',concat(resourceGroup().name,'-VNet01'))]"
                     }
@@ -996,7 +1019,7 @@
         {
             "apiVersion": "[variables('apiVersion_Network')]",
             "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[concat(resourceGroup().name,'-PIP-VNGW01')]",
+            "name": "[concat(resourceGroup().name,'-VNGW01-PIP')]",
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "sku": {
@@ -1015,19 +1038,19 @@
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
                 "[concat(resourceGroup().name,'-VNet01')]",
-                "[concat(resourceGroup().name,'-PIP-VNGW01')]"
+                "[concat(resourceGroup().name,'-VNGW01-PIP')]"
             ],
             "properties": {
                 "ipConfigurations": [
                     {
-                        "name": "GatewayIpConfig",
+                        "name": "IpConfig01",
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[0],'Subnet'))]"
                             },
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(resourceGroup().name,'-PIP-VNGW01'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(resourceGroup().name,'-VNGW01-PIP'))]"
                             }
                         }
                     }
@@ -1060,6 +1083,118 @@
                     "vpnClientRevokedCertificates": []
                 }
             }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Network')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(resourceGroup().name,'-S01-NIC01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-VNet01')]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "IpConfig01",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            /*"privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.2.','100')]",*/
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[2],'Subnet'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Compute')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[concat(resourceGroup().name,'-S01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-S01-NIC01')]",
+                "[ToLower(replace(concat(resourceGroup().name,'-Storage01'),'-',''))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('VM_Sku')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        /*                  "encryptionSettings": {
+                    "diskEncryptionKey": {
+                      "secretUrl": "string",
+                      "sourceVault": {
+                        "id": "string"
+                      }
+                    },
+                    "keyEncryptionKey": {
+                      "keyUrl": "string",
+                      "sourceVault": {
+                        "id": "string"
+                      }
+                    },
+                    "enabled": boolean
+                  },*/
+                        "name": "[concat(resourceGroup().name,'-S01-OsDisk')]",
+                        "caching": "None",
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Standard_LRS"
+                        }
+                    }
+                },
+                "osProfile": {
+                    "computerName": "[concat(resourceGroup().name,'-S01')]",
+                    "adminUsername": "[parameters('VM_Username')]",
+                    "adminPassword": "[parameters('VM_Password')]",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true,
+                        "timeZone": "W. Europe Standard Time",
+                    }, /*
+                "secrets": [
+                  {
+                    "sourceVault": {
+                      "id": "string"
+                    },
+                    "vaultCertificates": [
+                      {
+                        "certificateUrl": "string",
+                        "certificateStore": "string"
+                      }
+                    ]
+                  }
+                ],*/
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(resourceGroup().name,'-S01-NIC01'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/',ToLower(replace(concat(resourceGroup().name,'-Storage01'),'-','')))).primaryEndpoints.blob]"
+                    }
+                }
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "resources": []
         }
     ],
     "outputs": {}
