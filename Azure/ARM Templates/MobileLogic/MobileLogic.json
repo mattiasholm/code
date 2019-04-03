@@ -49,7 +49,7 @@
         "apiVersion_CosmosDB": "2016-03-31",
         "Tag_Environment": "[if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'Zoey'),'Production',if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'Leo'),'Test',if(equals(split(parameters('EnvironmentPrefix'),'-')[0],'LogicCenter'),'Shared','Unknown')))]",
         "LB_Id": "[resourceId('Microsoft.Network/loadBalancers',concat(parameters('EnvironmentPrefix'),'-LB'))]",
-        "SF_MobileLogicPorts": "1810,1811,1812,1813,1814,1901,1902,1903,1904,2001,2002,2003,2101,2102,2103",
+        "SF_MobileLogicPorts": "1810,1811,1812,1813,1814,1901,1902,1903,1904,2001,2002,2003,2004,2101,2102,2103",
         "SF_TcpPort": 19000,
         "SF_HttpPort": 19080,
         "SF_ApplicationPortStart": 20000,
@@ -655,6 +655,25 @@
                             "idleTimeoutInMinutes": 5,
                             "probe": {
                                 "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-2003')))]"
+                            },
+                            "protocol": "Tcp"
+                        }
+                    },
+                    {
+                        "name": "[concat(parameters('EnvironmentPrefix'),'-LB-Rule-2004')]",
+                        "properties": {
+                            "backendAddressPool": {
+                                "id": "[concat(variables('LB_Id'),concat('/backendAddressPools/',concat(parameters('EnvironmentPrefix'),'-LB-BackendPool')))]"
+                            },
+                            "backendPort": 2004,
+                            "enableFloatingIP": false,
+                            "frontendIPConfiguration": {
+                                "id": "[concat(variables('LB_Id'),concat('/frontendIPConfigurations/',concat(parameters('EnvironmentPrefix'),'-LB-PIP04')))]"
+                            },
+                            "frontendPort": 2004,
+                            "idleTimeoutInMinutes": 5,
+                            "probe": {
+                                "id": "[concat(variables('LB_Id'),concat('/probes/',concat(parameters('EnvironmentPrefix'),'-LB-Probe-2004')))]"
                             },
                             "protocol": "Tcp"
                         }
