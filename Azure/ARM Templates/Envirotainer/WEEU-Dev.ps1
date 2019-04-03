@@ -3,11 +3,11 @@ Login-AzAccount
 
 
 
-$EnvironmentSuffix = 'WEEU-Prod'
+$EnvironmentSuffix = 'WEEU-Dev'
 $Location = 'WestEurope'
-$SubscriptionName = 'Envirotainer Portal - Prod'
+$SubscriptionName = 'Envirotainer Portal - Dev'
 # # # TEMP # # #
-$SubscriptionName = 'MyEnvirotainer'
+$SubscriptionName = 'MyEnvirotainer Dev/Test'
 # # # TEMP # # # 
 $TenantDomain = 'envirotainer.com'
 

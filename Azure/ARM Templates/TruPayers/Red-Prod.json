@@ -609,10 +609,7 @@
                     {
                         "name": "[concat(split(variables('Subnets'),',')[0],'Subnet')]",
                         "properties": {
-                            "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.0.',split(variables('SubnetRange'),'.')[3])]",
-                            "networkSecurityGroup": {},
-                            "serviceEndpoints": [],
-                            "routeTable": {}
+                            "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.0.',split(variables('SubnetRange'),'.')[3])]"
                         }
                     },
                     {
@@ -647,9 +644,7 @@
                             "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.2.',split(variables('SubnetRange'),'.')[3])]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[2]))]"
-                            },
-                            "serviceEndpoints": [],
-                            "routeTable": {}
+                            }
                         }
                     }
                 ]

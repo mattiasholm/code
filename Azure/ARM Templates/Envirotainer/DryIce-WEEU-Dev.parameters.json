@@ -38,7 +38,7 @@
         "SqlUsername": {
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/901cac60-5de4-4d34-80a7-13dc59c7d184/resourceGroups/Portal-WEEU-Prod/providers/Microsoft.KeyVault/vaults/Portal-WEEU-Prod-Vault01"
+                    "id": "/subscriptions/91fc2f3e-b646-4351-b2eb-f7259e02eb72/resourceGroups/Portal-WEEU-Dev/providers/Microsoft.KeyVault/vaults/Portal-WEEU-Dev-Vault01"
                 },
                 "secretName": "DryIce-SqlUsername"
             }
@@ -46,7 +46,7 @@
         "SqlPassword": {
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/901cac60-5de4-4d34-80a7-13dc59c7d184/resourceGroups/Portal-WEEU-Prod/providers/Microsoft.KeyVault/vaults/Portal-WEEU-Prod-Vault01"
+                    "id": "/subscriptions/91fc2f3e-b646-4351-b2eb-f7259e02eb72/resourceGroups/Portal-WEEU-Dev/providers/Microsoft.KeyVault/vaults/Portal-WEEU-Dev-Vault01"
                 },
                 "secretName": "DryIce-SqlPassword"
             }
