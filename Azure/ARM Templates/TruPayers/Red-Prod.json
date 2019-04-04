@@ -697,6 +697,26 @@
             }
         },
         {
+            "apiVersion": "[variables('apiVersion_Storage')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[ToLower(replace(concat(resourceGroup().name,'-Storage02'),'-',''))]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "sku": {
+                "name": "[variables('Storage_Sku')]"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "defaultAction": "Allow",
+                    "ipRules": [],
+                    "virtualNetworkRules": []
+                },
+                "supportsHttpsTrafficOnly": true
+            }
+        },
+        {
             "apiVersion": "[variables('apiVersion_KeyVault')]",
             "type": "Microsoft.KeyVault/vaults",
             "name": "[concat(resourceGroup().name,'-Vault01')]",
@@ -1115,7 +1135,7 @@
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
                 "[concat(resourceGroup().name,'-S01-NIC01')]",
-                "[ToLower(replace(concat(resourceGroup().name,'-Storage01'),'-',''))]"
+                "[ToLower(replace(concat(resourceGroup().name,'-Storage02'),'-',''))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -1185,7 +1205,7 @@
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
                         "enabled": true,
-                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/',ToLower(replace(concat(resourceGroup().name,'-Storage01'),'-','')))).primaryEndpoints.blob]"
+                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/',ToLower(replace(concat(resourceGroup().name,'-Storage02'),'-','')))).primaryEndpoints.blob]"
                     }
                 }
             },

@@ -10,35 +10,9 @@
         }
     },
     "variables": {
-        "apiVersion_Storage": "2018-11-01",
-        "apiVersion_KeyVault": "2018-02-14-preview",
-        "Storage_Sku": "Standard_GRS"
+        "apiVersion_KeyVault": "2018-02-14-preview"
     },
     "resources": [
-        {
-            "apiVersion": "[variables('apiVersion_Storage')]",
-            "type": "Microsoft.Storage/storageAccounts",
-            "name": "[ToLower(replace(concat(resourceGroup().name,'-Storage01'),'-',''))]",
-            "location": "[resourceGroup().location]",
-            "tags": "[resourceGroup().tags]",
-            "sku": {
-                "name": "[variables('Storage_Sku')]"
-            },
-            "kind": "StorageV2",
-            "properties": {
-                "networkAcls": {
-                    "bypass": "AzureServices",
-                    "defaultAction": "Deny",
-                    "ipRules": [
-                        {
-                            "value": "[parameters('Admin_IP')]"
-                        }
-                    ],
-                    "virtualNetworkRules": []
-                },
-                "supportsHttpsTrafficOnly": true
-            }
-        },
         {
             "apiVersion": "[variables('apiVersion_KeyVault')]",
             "type": "Microsoft.KeyVault/vaults",
