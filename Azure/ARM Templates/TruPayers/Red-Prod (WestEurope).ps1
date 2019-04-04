@@ -49,7 +49,7 @@ New-AzResourceGroupDeployment `
     -ResourceGroupname  $ResourceGroupName `
     -TemplateFile (Join-Path -Path $FilePath -ChildPath $TemplateFileName) `
     -TemplateParameterFile (Join-Path -Path $FilePath -ChildPath $ParameterFileName) `
-    -Mode Incremental
+    -Mode Complete -Force
 
 
 
@@ -63,4 +63,4 @@ New-AzResourceGroupDeployment `
     -TemplateFile (Join-Path -Path $FilePath -ChildPath $TemplateFileName) `
     -TemplateParameterFile (Join-Path -Path $FilePath -ChildPath $ParameterFileName) `
     -ASE_Location $ASE_Location `
-    -Mode Incremental
+    -Mode Complete -Force

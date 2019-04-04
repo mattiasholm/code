@@ -21,9 +21,6 @@
         "ASE_DefaultCertificateSecret": {
             "value": "https://red-we-prod-vault01.vault.azure.net/secrets/ASE-DefaultCertificateSecret/7617e75f6e1d4920964c911a06512633"
         },
-        "KeyVault_Id": {
-            "value": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
-        },
         "ASE_DnsSuffix": {
             "reference": {
                 "keyVault": {
@@ -91,9 +88,6 @@
         },
         "VM_Sku": {
             "value": "Standard_A2_v2"
-        },
-        "VM_DEK": {
-            "value": "https://red-we-prod-vault01.vault.azure.net/secrets/VM-DEK/4f1d8e291b804cd98ba4d567ef8efdb8"
         },
         "VM_KEK": {
             "value": "https://red-we-prod-vault01.vault.azure.net/keys/VM-KEK/02a9303f731e4201b8af42746a33a371"

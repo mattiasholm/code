@@ -14,9 +14,6 @@
         "ASE_DefaultCertificateSecret": {
             "type": "string"
         },
-        "KeyVault_Id": {
-            "type": "string"
-        },
         "ASE_DnsSuffix": {
             "type": "string"
         },
@@ -27,9 +24,6 @@
                 "I2",
                 "I3"
             ]
-        },
-        "VM_DEK": {
-            "type": "string"
         },
         "VM_KEK": {
             "type": "string"
@@ -98,6 +92,7 @@
         "Storage_Sku": "Standard_GRS",
         "KeyVault_Sku": "Standard",
         "KeyVault_MicrosoftWebRP": "b305f741-5faf-4220-a843-2f208ae96d8f",
+        "KeyVault_Id": "[resourceId('Microsoft.KeyVault/vaults/',concat(resourceGroup().name,'-Vault01'))]",
         "ASE_ILB-Mode": 3,
         "AppSetting_AlwaysOn": true,
         "AppSetting_SessionAffinity": false,
@@ -561,7 +556,8 @@
                             "direction": "Outbound",
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
-                            "destinationAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
+                            //"destinationAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "80",
                             "protocol": "*",
                             "priority": 1000
@@ -574,7 +570,8 @@
                             "direction": "Outbound",
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
-                            "destinationAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
+                            //"destinationAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
+                            "destinationAddressPrefix": "*",
                             "destinationPortRange": "443",
                             "protocol": "*",
                             "priority": 1100
@@ -670,7 +667,21 @@
                             "addressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.2.',split(variables('SubnetRange'),'.')[3])]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups',concat(resourceGroup().name,'-NSG-',split(variables('Subnets'),',')[2]))]"
-                            }
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.KeyVault"
+                                },
+                                {
+                                    "service": "Microsoft.Storage"
+                                },
+                                {
+                                    "service": "Microsoft.Sql"
+                                },
+                                {
+                                    "service": "Microsoft.AzureActiveDirectory"
+                                }
+                            ]
                         }
                     }
                 ]
@@ -698,6 +709,10 @@
                     "virtualNetworkRules": [
                         {
                             "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[1],'Subnet'))]",
+                            "action": "Allow"
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[2],'Subnet'))]",
                             "action": "Allow"
                         }
                     ]
@@ -752,6 +767,68 @@
                             "certificates": [],
                             "storage": []
                         }
+                    },
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "c8758164-4366-4eb6-b260-c8bf90c01b60",
+                        "permissions": {
+                            "keys": [
+                                "get",
+                                "list",
+                                "update",
+                                "create",
+                                "import"
+                            ],
+                            "secrets": [
+                                "get",
+                                "list",
+                                "set"
+                            ],
+                            "certificates": [
+                                "get",
+                                "list",
+                                "update",
+                                "create",
+                                "import",
+                                "managecontacts",
+                                "manageissuers",
+                                "getissuers",
+                                "listissuers",
+                                "setissuers"
+                            ],
+                            "storage": []
+                        }
+                    },
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "5c176b69-66a1-48b2-bb92-c969b5003701",
+                        "permissions": {
+                            "keys": [
+                                "get",
+                                "list",
+                                "update",
+                                "create",
+                                "import"
+                            ],
+                            "secrets": [
+                                "get",
+                                "list",
+                                "set"
+                            ],
+                            "certificates": [
+                                "get",
+                                "list",
+                                "update",
+                                "create",
+                                "import",
+                                "managecontacts",
+                                "manageissuers",
+                                "getissuers",
+                                "listissuers",
+                                "setissuers"
+                            ],
+                            "storage": []
+                        }
                     }
                 ],
                 "enabledForDeployment": true,
@@ -765,6 +842,10 @@
                     "virtualNetworkRules": [
                         {
                             "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[1],'Subnet'))]",
+                            "action": "Allow"
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[2],'Subnet'))]",
                             "action": "Allow"
                         }
                     ]
@@ -781,7 +862,7 @@
                 "[concat(resourceGroup().name,'-Vault01')]"
             ],
             "properties": {
-                "keyVaultId": "[parameters('KeyVault_Id')]",
+                "keyVaultId": "[variables('KeyVault_Id')]",
                 "keyVaultSecretName": "ASE-DefaultCertificateSecret",
                 "hostingEnvironmentProfile": {
                     "id": "[resourceId('Microsoft.Web/hostingEnvironments',concat(resourceGroup().name,'-ASE01'))]"
@@ -983,7 +1064,8 @@
         {
             "apiVersion": "[variables('apiVersion_SqlVNetRules')]",
             "type": "Microsoft.Sql/servers/virtualNetworkRules",
-            "name": "[concat(resourceGroup().name,'-SQL01','/','virtualNetworkRules')]",
+            //            "name": "[concat(resourceGroup().name,'-SQL01','/','virtualNetworkRules')]",
+            "name": "[concat(resourceGroup().name,'-SQL01','/',concat(split(variables('Subnets'),',')[1],'Subnet'))]",
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
@@ -992,6 +1074,21 @@
             ],
             "properties": {
                 "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[1],'Subnet'))]"
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_SqlVNetRules')]",
+            "type": "Microsoft.Sql/servers/virtualNetworkRules",
+            //"name": "[concat(resourceGroup().name,'-SQL01','/','virtualNetworkRules')]",
+            "name": "[concat(resourceGroup().name,'-SQL01','/',concat(split(variables('Subnets'),',')[2],'Subnet'))]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat(resourceGroup().name,'-SQL01')]",
+                "[concat(resourceGroup().name,'-VNet01')]"
+            ],
+            "properties": {
+                "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[2],'Subnet'))]"
             }
         },
         {
@@ -1145,7 +1242,8 @@
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
                 "[concat(resourceGroup().name,'-S01-NIC01')]",
-                "[ToLower(replace(concat(resourceGroup().name,'-Storage02'),'-',''))]"
+                "[ToLower(replace(concat(resourceGroup().name,'-Storage02'),'-',''))]",
+                "[concat(resourceGroup().name,'-Vault01')]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -1158,22 +1256,7 @@
                         "sku": "2019-Datacenter",
                         "version": "latest"
                     },
-                    "osDisk": { /*
-                        "encryptionSettings": {
-                            "diskEncryptionKey": {
-                                "secretUrl": "[parameters('VM_DEK')]",
-                                "sourceVault": {
-                                    "id": "[parameters('KeyVault_Id')]"
-                                }
-                            },
-                            "keyEncryptionKey": {
-                                "keyUrl": "[parameters('VM_KEK')]",
-                                "sourceVault": {
-                                    "id": "[parameters('KeyVault_Id')]"
-                                }
-                            },
-                            "enabled": true
-                        },*/
+                    "osDisk": {
                         "name": "[concat(resourceGroup().name,'-S01-OsDisk')]",
                         "caching": "None",
                         "createOption": "FromImage",
@@ -1194,7 +1277,7 @@
                     "secrets": [
                         {
                             "sourceVault": {
-                                "id": "[parameters('KeyVault_Id')]"
+                                "id": "[variables('KeyVault_Id')]"
                             },
                             "vaultCertificates": [
                                 {
@@ -1222,7 +1305,34 @@
             "identity": {
                 "type": "SystemAssigned"
             },
-            "resources": []
+            "resources": [
+                {
+                    "apiVersion": "[variables('apiVersion_Compute')]",
+                    "type": "extensions",
+                    "name": "AzureDiskEncryption",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-S01')]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Azure.Security",
+                        "type": "AzureDiskEncryption",
+                        "typeHandlerVersion": "2.2",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "EncryptionOperation": "EnableEncryption",
+                            "KeyVaultURL": "[reference(variables('KeyVault_Id'),variables('apiVersion_KeyVault')).vaultUri]",
+                            "KeyVaultResourceId": "[variables('KeyVault_Id')]",
+                            "KeyEncryptionKeyURL": "[parameters('VM_KEK')]",
+                            "KekVaultResourceId": "[variables('KeyVault_Id')]",
+                            "KeyEncryptionAlgorithm": "RSA-OAEP",
+                            "VolumeType": "All",
+                            "ResizeOSDisk": false
+                        }
+                    }
+                }
+            ]
         }
     ],
     "outputs": {}
