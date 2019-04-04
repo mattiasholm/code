@@ -1099,8 +1099,6 @@
                         "name": "IpConfig01",
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
-                            /*"privateIPAllocationMethod": "Static",
-                            "privateIPAddress": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.2.','100')]",*/
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[2],'Subnet'))]"
                             }
@@ -1162,7 +1160,7 @@
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true,
                         "timeZone": "W. Europe Standard Time",
-                    }, /*
+                    }/*, 
                 "secrets": [
                   {
                     "sourceVault": {

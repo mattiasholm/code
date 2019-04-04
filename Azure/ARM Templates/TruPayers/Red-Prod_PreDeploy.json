@@ -2,17 +2,43 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "KeyVault_Admin": {
+        "Admin_ObjectId": {
             "type": "string"
         },
-        "KeyVault_IP": {
+        "Admin_IP": {
             "type": "string"
         }
     },
     "variables": {
-        "apiVersion_KeyVault": "2018-02-14-preview"
+        "apiVersion_Storage": "2018-11-01",
+        "apiVersion_KeyVault": "2018-02-14-preview",
+        "Storage_Sku": "Standard_GRS"
     },
     "resources": [
+        {
+            "apiVersion": "[variables('apiVersion_Storage')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[ToLower(replace(concat(resourceGroup().name,'-Storage01'),'-',''))]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "sku": {
+                "name": "[variables('Storage_Sku')]"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "defaultAction": "Deny",
+                    "ipRules": [
+                        {
+                            "value": "[parameters('Admin_IP')]"
+                        }
+                    ],
+                    "virtualNetworkRules": []
+                },
+                "supportsHttpsTrafficOnly": true
+            }
+        },
         {
             "apiVersion": "[variables('apiVersion_KeyVault')]",
             "type": "Microsoft.KeyVault/vaults",
@@ -28,7 +54,7 @@
                 "accessPolicies": [
                     {
                         "tenantId": "[subscription().tenantId]",
-                        "objectId": "[parameters('KeyVault_Admin')]",
+                        "objectId": "[parameters('Admin_ObjectId')]",
                         "permissions": {
                             "keys": [
                                 "get",
@@ -66,7 +92,7 @@
                     "defaultAction": "Deny",
                     "ipRules": [
                         {
-                            "value": "[parameters('KeyVault_IP')]"
+                            "value": "[parameters('Admin_IP')]"
                         }
                     ],
                     "virtualNetworkRules": []
