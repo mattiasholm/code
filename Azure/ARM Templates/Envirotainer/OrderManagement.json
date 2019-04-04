@@ -142,6 +142,25 @@
                 },
                 {
                     "apiVersion": "[variables('apiVersion_Web')]",
+                    "type": "config",
+                    "name": "connectionstrings",
+                    "location": "[resourceGroup().location]",
+                    "tags": {
+                        "Environment": "[variables('Tag_Environment')]"
+                    },
+                    "dependsOn": [
+                        "[concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-App01')]",
+                        "[toLower(concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-CosmosDB01'))]"
+                    ],
+                    "properties": {
+                        "CosmosDb": {
+                            "type": "Custom",
+                            "value": "[concat('AccountEndpoint=https://',toLower(concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-CosmosDB01')),'.documents.azure.com:443/;AccountKey=',listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts',toLower(concat(parameters('Module'),'-',parameters('EnvironmentSuffix'),'-CosmosDB01'))),variables('apiVersion_CosmosDB')).primaryMasterKey)]"
+                        }
+                    }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Web')]",
                     "type": "slots",
                     "name": "[variables('SlotName')]",
                     "location": "[resourceGroup().location]",
