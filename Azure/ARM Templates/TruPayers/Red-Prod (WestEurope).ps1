@@ -11,13 +11,13 @@ $TenantDomain = 'trupayers.onmicrosoft.com'
 
 
 $TenantId = (Invoke-WebRequest -Uri "https://login.windows.net/$TenantDomain/.well-known/openid-configuration" | ConvertFrom-Json).token_endpoint.Split('/')[3]
-$SubscriptionId = (Get-AzSubscription -TenantId $TenantId | Where-Object {$_.Name -eq $SubscriptionName}).Id
+$SubscriptionId = (Get-AzSubscription -TenantId $TenantId | Where-Object { $_.Name -eq $SubscriptionName }).Id
 Select-AzSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
 
 switch ($ResourceGroupName.Split('-')[2]) {
-    Prod {$Environment = 'Production'}
-    Dev {$Environment = 'Development'}
-    default {$Environment = 'Unknown'}
+    Prod { $Environment = 'Production' }
+    Dev { $Environment = 'Development' }
+    default { $Environment = 'Unknown' }
 }
 
 
@@ -27,7 +27,7 @@ switch ($ResourceGroupName.Split('-')[2]) {
 New-AzResourceGroup `
     -Name $ResourceGroupName `
     -Location $Location `
-    -Tag @{Environment = $Environment; SecurityLevel = $ResourceGroupName.Split('-')[0]} `
+    -Tag @{Environment = $Environment; SecurityLevel = $ResourceGroupName.Split('-')[0] } `
     -Force
 
 

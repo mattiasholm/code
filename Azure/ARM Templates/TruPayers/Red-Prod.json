@@ -11,6 +11,9 @@
         "ASE_DefaultCertificateThumbprint": {
             "type": "string"
         },
+        "ASE_DefaultCertificateSecret": {
+            "type": "string"
+        },
         "KeyVault_Id": {
             "type": "string"
         },
@@ -24,6 +27,12 @@
                 "I2",
                 "I3"
             ]
+        },
+        "VM_DEK": {
+            "type": "string"
+        },
+        "VM_KEK": {
+            "type": "string"
         },
         "ASE_DefaultCapacity": {
             "type": "int",
@@ -745,7 +754,8 @@
                         }
                     }
                 ],
-                "enabledForDeployment": false,
+                "enabledForDeployment": true,
+                "enabledForDiskEncryption": true,
                 "enabledForTemplateDeployment": true,
                 "enableSoftDelete": true,
                 "networkAcls": {
@@ -1148,22 +1158,22 @@
                         "sku": "2019-Datacenter",
                         "version": "latest"
                     },
-                    "osDisk": {
-                        /*                  "encryptionSettings": {
-                    "diskEncryptionKey": {
-                      "secretUrl": "string",
-                      "sourceVault": {
-                        "id": "string"
-                      }
-                    },
-                    "keyEncryptionKey": {
-                      "keyUrl": "string",
-                      "sourceVault": {
-                        "id": "string"
-                      }
-                    },
-                    "enabled": boolean
-                  },*/
+                    "osDisk": { /*
+                        "encryptionSettings": {
+                            "diskEncryptionKey": {
+                                "secretUrl": "[parameters('VM_DEK')]",
+                                "sourceVault": {
+                                    "id": "[parameters('KeyVault_Id')]"
+                                }
+                            },
+                            "keyEncryptionKey": {
+                                "keyUrl": "[parameters('VM_KEK')]",
+                                "sourceVault": {
+                                    "id": "[parameters('KeyVault_Id')]"
+                                }
+                            },
+                            "enabled": true
+                        },*/
                         "name": "[concat(resourceGroup().name,'-S01-OsDisk')]",
                         "caching": "None",
                         "createOption": "FromImage",
@@ -1179,21 +1189,21 @@
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true,
-                        "timeZone": "W. Europe Standard Time",
-                    }/*, 
-                "secrets": [
-                  {
-                    "sourceVault": {
-                      "id": "string"
+                        "timeZone": "W. Europe Standard Time"
                     },
-                    "vaultCertificates": [
-                      {
-                        "certificateUrl": "string",
-                        "certificateStore": "string"
-                      }
+                    "secrets": [
+                        {
+                            "sourceVault": {
+                                "id": "[parameters('KeyVault_Id')]"
+                            },
+                            "vaultCertificates": [
+                                {
+                                    "certificateUrl": "[parameters('ASE_DefaultCertificateSecret')]",
+                                    "certificateStore": "Root"
+                                }
+                            ]
+                        }
                     ]
-                  }
-                ],*/
                 },
                 "networkProfile": {
                     "networkInterfaces": [
