@@ -107,6 +107,38 @@
                 },
                 "secretName": "VM-Password"
             }
+        },
+        "DevOps_AccountName": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "DevOps-AccountName"
+            }
+        },
+        "DevOps_Project": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "DevOps-Project"
+            }
+        },
+        "DevOps_DeploymentGroup": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "DevOps-DeploymentGroup"
+            }
+        },
+        "DevOps_Token": {
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/84b3c707-85c5-41c6-b91d-0cb8df460c1e/resourceGroups/Red-WE-Prod/providers/Microsoft.KeyVault/vaults/Red-WE-Prod-Vault01"
+                },
+                "secretName": "DevOps-Token"
+            }
         }
     }
 }

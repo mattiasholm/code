@@ -1,0 +1,65 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "ASE_Location": {
+            "type": "string"
+        },
+        "ASE_DefaultCertificateThumbprint": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apiVersion_Web": "2018-11-01",
+        "KeyVault_Id": "[resourceId('Microsoft.KeyVault/vaults/',concat(resourceGroup().name,'-Vault01'))]",
+    },
+    "resources": [
+        {
+            "apiVersion": "[variables('apiVersion_Web')]",
+            "type": "Microsoft.Web/certificates",
+            "name": "[concat('DefaultCertificate_',resourceGroup().name,'-ASE01','_InternalLoadBalancingASE')]",
+            "location": "[parameters('ASE_Location')]",
+            "tags": "[resourceGroup().tags]",
+            "properties": {
+                "keyVaultId": "[variables('KeyVault_Id')]",
+                "keyVaultSecretName": "ASE-DefaultCertificateSecret",
+                "hostingEnvironmentProfile": {
+                    "id": "[resourceId('Microsoft.Web/hostingEnvironments',concat(resourceGroup().name,'-ASE01'))]"
+                }
+            }
+        },
+        {
+            "apiVersion": "[variables('apiVersion_Web')]",
+            "type": "Microsoft.Web/hostingEnvironments",
+            "name": "[concat(resourceGroup().name,'-ASE01')]",
+            "location": "[parameters('ASE_Location')]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[concat('DefaultCertificate_',resourceGroup().name,'-ASE01','_InternalLoadBalancingASE')]"
+            ],
+            "properties": {
+                "name": "[concat(resourceGroup().name,'-ASE01')]",
+                "location": "[parameters('ASE_Location')]",
+                "clusterSettings": [
+                    {
+                        "name": "DisableTls1.0",
+                        "value": "1"
+                    },
+                    {
+                        "name": "DisableTls1.1",
+                        "value": "1"
+                    },
+                    {
+                        "name": "DefaultSslCertificateThumbprint",
+                        "value": "[parameters('ASE_DefaultCertificateThumbprint')]"
+                    },
+                    {
+                        "name": "FrontEndSSLCipherSuiteOrder",
+                        "value": "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_P256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_P256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA_P256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA_P256"
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}

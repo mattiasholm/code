@@ -76,6 +76,18 @@
         },
         "VM_Password": {
             "type": "securestring"
+        },
+        "DevOps_AccountName": {
+            "type": "string"
+        },
+        "DevOps_Project": {
+            "type": "string"
+        },
+        "DevOps_DeploymentGroup": {
+            "type": "string"
+        },
+        "DevOps_Token": {
+            "type": "securestring"
         }
     },
     "variables": {
@@ -87,6 +99,7 @@
         "apiVersion_SqlVNetRules": "2015-05-01-preview",
         "apiVersion_Insights": "2018-05-01-preview",
         "apiVersion_Compute": "2019-03-01",
+        "apiVersion_Automation": "2018-06-30",
         "Subnets": "Gateway,ASE,Management",
         "SubnetRange": "[replace(parameters('VNet_AddressSpace'),'/16','/24')]",
         "Storage_Sku": "Standard_GRS",
@@ -100,7 +113,8 @@
         "DeploymentSlot": "Staging",
         "SQL_Collation": "Finnish_Swedish_CI_AS",
         "P2S_Sku": "VpnGw1",
-        "P2S_Type": "RouteBased"
+        "P2S_Type": "RouteBased",
+        "Automation_Sku": "Free"
     },
     "resources": [
         {
@@ -556,7 +570,6 @@
                             "direction": "Outbound",
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
-                            //"destinationAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
                             "destinationAddressPrefix": "*",
                             "destinationPortRange": "80",
                             "protocol": "*",
@@ -570,7 +583,6 @@
                             "direction": "Outbound",
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
-                            //"destinationAddressPrefix": "[concat(split(variables('SubnetRange'),'.')[0],'.',split(variables('SubnetRange'),'.')[1],'.1.',split(variables('SubnetRange'),'.')[3])]",
                             "destinationAddressPrefix": "*",
                             "destinationPortRange": "443",
                             "protocol": "*",
@@ -852,6 +864,7 @@
                 }
             }
         },
+        // EV PLOCKA BORT HELT!
         {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/certificates",
@@ -863,12 +876,13 @@
             ],
             "properties": {
                 "keyVaultId": "[variables('KeyVault_Id')]",
-                "keyVaultSecretName": "ASE-DefaultCertificateSecret",
+                "keyVaultSecretName": "ASE-DefaultCertificateSecret" /*,
                 "hostingEnvironmentProfile": {
                     "id": "[resourceId('Microsoft.Web/hostingEnvironments',concat(resourceGroup().name,'-ASE01'))]"
-                }
+                }*/
             }
         },
+        // EV PLOCKA BORT HELT!
         {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/hostingEnvironments",
@@ -877,17 +891,16 @@
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
                 "[concat(resourceGroup().name,'-VNet01')]",
-                "[concat('DefaultCertificate_',resourceGroup().name,'-ASE01','_InternalLoadBalancingASE')]"
+                // EV PLOCKA BORT HELT!
+                "[concat('DefaultCertificate_',resourceGroup().name,'-ASE01','_InternalLoadBalancingASE')]",
+                // EV PLOCKA BORT HELT!
+                "[parameters('ASE_DnsSuffix')]"
             ],
             "kind": "ASEV2",
             "properties": {
                 "name": "[concat(resourceGroup().name,'-ASE01')]",
                 "location": "[parameters('ASE_Location')]",
                 "clusterSettings": [
-                    {
-                        "name": "DefaultSslCertificateThumbprint",
-                        "value": "[parameters('ASE_DefaultCertificateThumbprint')]"
-                    },
                     {
                         "name": "DisableTls1.0",
                         "value": "1"
@@ -897,9 +910,17 @@
                         "value": "1"
                     },
                     {
+                        // EV PLOCKA BORT HELT!
+                        "name": "DefaultSslCertificateThumbprint",
+                        "value": "[parameters('ASE_DefaultCertificateThumbprint')]"
+                        // EV PLOCKA BORT HELT!
+                    },
+                    // EV PLOCKA BORT HELT!
+                    {
                         "name": "FrontEndSSLCipherSuiteOrder",
                         "value": "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_P256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_P256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA_P256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA_P256"
                     }
+                    // EV PLOCKA BORT HELT!
                 ],
                 "virtualNetwork": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[1],'Subnet'))]"
@@ -1064,7 +1085,6 @@
         {
             "apiVersion": "[variables('apiVersion_SqlVNetRules')]",
             "type": "Microsoft.Sql/servers/virtualNetworkRules",
-            //            "name": "[concat(resourceGroup().name,'-SQL01','/','virtualNetworkRules')]",
             "name": "[concat(resourceGroup().name,'-SQL01','/',concat(split(variables('Subnets'),',')[1],'Subnet'))]",
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
@@ -1079,7 +1099,6 @@
         {
             "apiVersion": "[variables('apiVersion_SqlVNetRules')]",
             "type": "Microsoft.Sql/servers/virtualNetworkRules",
-            //"name": "[concat(resourceGroup().name,'-SQL01','/','virtualNetworkRules')]",
             "name": "[concat(resourceGroup().name,'-SQL01','/',concat(split(variables('Subnets'),',')[2],'Subnet'))]",
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
@@ -1165,7 +1184,8 @@
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
                 "[concat(resourceGroup().name,'-VNet01')]",
-                "[concat(resourceGroup().name,'-VNGW01-PIP')]"
+                "[concat(resourceGroup().name,'-VNGW01-PIP')]",
+                "[parameters('ASE_DnsSuffix')]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -1218,7 +1238,8 @@
             "location": "[resourceGroup().location]",
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
-                "[concat(resourceGroup().name,'-VNet01')]"
+                "[concat(resourceGroup().name,'-VNet01')]",
+                "[parameters('ASE_DnsSuffix')]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -1298,7 +1319,8 @@
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
                         "enabled": true,
-                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/',ToLower(replace(concat(resourceGroup().name,'-Storage02'),'-','')))).primaryEndpoints.blob]"
+                        //"storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/',ToLower(replace(concat(resourceGroup().name,'-Storage02'),'-','')))).primaryEndpoints.blob]"
+                        "storageUri": "[reference(ToLower(replace(concat(resourceGroup().name,'-Storage02'),'-',''))).primaryEndpoints.blob]"
                     }
                 }
             },
@@ -1331,9 +1353,141 @@
                             "ResizeOSDisk": false
                         }
                     }
+                },
+                {
+                    "apiVersion": "[variables('apiVersion_Compute')]",
+                    "type": "extensions",
+                    "name": "TeamServicesAgent",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-S01')]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.VisualStudio.Services",
+                        "type": "TeamServicesAgent",
+                        "typeHandlerVersion": "1.0",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "VSTSAccountName": "[parameters('DevOps_AccountName')]",
+                            "TeamProject": "[parameters('DevOps_Project')]",
+                            "DeploymentGroup": "[parameters('DevOps_DeploymentGroup')]"
+                        },
+                        "protectedSettings": {
+                            "PATToken": "[parameters('DevOps_Token')]"
+                        }
+                    }
+                },
+                /*                {
+                    "apiVersion": "[variables('apiVersion_Compute')]",
+                    "type": "extensions",
+                    "name": "Microsoft.Powershell.DSC",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-S01')]",
+                        "[concat(resourceGroup().name,'-Automation01')]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Powershell",
+                        "type": "DSC",
+                        "typeHandlerVersion": "2.77",
+                        "autoUpgradeMinorVersion": true,
+                        "protectedSettings": {
+                            "items": {
+                                //"registrationKeyPrivate": "[listKeys(resourceId('Microsoft.Automation/automationAccounts/',concat(resourceGroup().name,'-Automation01')),variables('apiVersion_Compute')).Keys[0].Value]"
+                                "registrationKeyPrivate": "[listKeys(concat(resourceGroup().name,'-Automation01'),variables('apiVersion_Compute')).Keys[0].Value]"
+                            }
+                        },
+                        "settings": {
+                            "properties": [
+                                {
+                                    "name": "RegistrationKey",
+                                    "value": {
+                                        "userName": "NOT_USED",
+                                        "password": "PrivateSettingsRef:registrationKeyPrivate"
+                                    },
+                                    "typeName": "System.Management.Automation.PSCredential"
+                                },
+                                {
+                                    "name": "RegistrationUrl",
+                                    "value": "[reference(concat(resourceGroup().name,'-Automation01')).registrationUrl]",
+                                    "typeName": "System.String"
+                                },
+                                {
+                                    "name": "NodeConfigurationName",
+                                    "value": "[concat(resourceGroup().name,'-NodeConfiguration01')]",
+                                    "typeName": "System.String"
+                                }
+                            ]
+                        }
+                    }
+}*/
+                {
+                    "apiVersion": "[variables('apiVersion_Compute')]",
+                    "type": "extensions",
+                    "name": "Microsoft.Powershell.DSC",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-S01')]",
+                        "[concat(resourceGroup().name,'-Automation01')]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Powershell",
+                        "type": "DSC",
+                        "typeHandlerVersion": "2.77",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {
+                            "RegistrationUrl": "[reference(concat(resourceGroup().name,'-Automation01')).registrationUrl]",
+                            "NodeConfigurationName": "[concat(resourceGroup().name,'-NodeConfiguration01')]"
+                        },
+                        "protectedSettings": {
+                            "configurationArguments": {
+                                "RegistrationKey": {
+                                    "userName": "NOT_USED",
+                                    "Password": "[listKeys(concat(resourceGroup().name,'-Automation01'),variables('apiVersion_Compute')).Keys[0].Value]"
+                                }
+                            }
+                        },
+                    }
+                }
+            ]
+        },
+        {
+            "apiVersion": "variables('apiVersion_Automation')",
+            "type": "Microsoft.Automation/automationAccounts",
+            "name": "[concat(resourceGroup().name,'-Automation01')]",
+            "location": "[resourceGroup().location]",
+            "tags": "[resourceGroup().tags]",
+            "properties": {
+                "sku": {
+                    "name": "[variables('Automation_Sku')]"
+                }
+            },
+            "resources": [
+                {
+                    "apiVersion": "variables('apiVersion_Automation')",
+                    "type": "modules",
+                    "name": "???",
+                    "location": "[resourceGroup().location]",
+                    "tags": "[resourceGroup().tags]",
+                    "dependsOn": [
+                        "[concat(resourceGroup().name,'-Automation01')]"
+                    ],
+                    "properties": {
+                        "contentLink": {
+                            "uri": "???"
+                        }
+                    }
                 }
             ]
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "AutomationAccountObj": {
+            "type": "object",
+            "value": "[reference(concat(resourceGroup().name,'-Automation01'))]"
+        }
+    }
 }
