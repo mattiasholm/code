@@ -864,7 +864,6 @@
                 }
             }
         },
-        // EV PLOCKA BORT HELT!
         {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/certificates",
@@ -876,13 +875,12 @@
             ],
             "properties": {
                 "keyVaultId": "[variables('KeyVault_Id')]",
-                "keyVaultSecretName": "ASE-DefaultCertificateSecret" /*,
+                "keyVaultSecretName": "ASE-DefaultCertificateSecret",
                 "hostingEnvironmentProfile": {
                     "id": "[resourceId('Microsoft.Web/hostingEnvironments',concat(resourceGroup().name,'-ASE01'))]"
-                }*/
+                }
             }
         },
-        // EV PLOCKA BORT HELT!
         {
             "apiVersion": "[variables('apiVersion_Web')]",
             "type": "Microsoft.Web/hostingEnvironments",
@@ -891,9 +889,7 @@
             "tags": "[resourceGroup().tags]",
             "dependsOn": [
                 "[concat(resourceGroup().name,'-VNet01')]",
-                // EV PLOCKA BORT HELT!
                 "[concat('DefaultCertificate_',resourceGroup().name,'-ASE01','_InternalLoadBalancingASE')]",
-                // EV PLOCKA BORT HELT!
                 "[parameters('ASE_DnsSuffix')]"
             ],
             "kind": "ASEV2",
@@ -910,17 +906,13 @@
                         "value": "1"
                     },
                     {
-                        // EV PLOCKA BORT HELT!
                         "name": "DefaultSslCertificateThumbprint",
                         "value": "[parameters('ASE_DefaultCertificateThumbprint')]"
-                        // EV PLOCKA BORT HELT!
                     },
-                    // EV PLOCKA BORT HELT!
                     {
                         "name": "FrontEndSSLCipherSuiteOrder",
                         "value": "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_P256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_P256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA_P256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA_P256"
                     }
-                    // EV PLOCKA BORT HELT!
                 ],
                 "virtualNetwork": {
                     "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',concat(resourceGroup().name,'-VNet01'),concat(split(variables('Subnets'),',')[1],'Subnet'))]"
@@ -1416,14 +1408,14 @@
                                 },
                                 {
                                     "name": "NodeConfigurationName",
-                                    "value": "[concat(resourceGroup().name,'-NodeConfiguration01')]",
+                                    "value": "ManagementServer",
                                     "typeName": "System.String"
                                 }
                             ]
                         }
                     }
 }*/
-                {
+                /*                {
                     "apiVersion": "[variables('apiVersion_Compute')]",
                     "type": "extensions",
                     "name": "Microsoft.Powershell.DSC",
@@ -1440,7 +1432,7 @@
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "RegistrationUrl": "[reference(concat(resourceGroup().name,'-Automation01')).registrationUrl]",
-                            "NodeConfigurationName": "[concat(resourceGroup().name,'-NodeConfiguration01')]"
+                            "NodeConfigurationName": "ManagementServer"
                         },
                         "protectedSettings": {
                             "configurationArguments": {
@@ -1449,13 +1441,14 @@
                                     "Password": "[listKeys(concat(resourceGroup().name,'-Automation01'),variables('apiVersion_Compute')).Keys[0].Value]"
                                 }
                             }
-                        },
+                        }
                     }
                 }
             ]
         },
         {
-            "apiVersion": "variables('apiVersion_Automation')",
+            //"apiVersion": "[variables('apiVersion_Automation')]",
+            "apiVersion": "2018-06-30",
             "type": "Microsoft.Automation/automationAccounts",
             "name": "[concat(resourceGroup().name,'-Automation01')]",
             "location": "[resourceGroup().location]",
@@ -1465,9 +1458,9 @@
                     "name": "[variables('Automation_Sku')]"
                 }
             },
-            "resources": [
+            "resources": [ */ /*
                 {
-                    "apiVersion": "variables('apiVersion_Automation')",
+                    "apiVersion": "[variables('apiVersion_Automation')]",
                     "type": "modules",
                     "name": "???",
                     "location": "[resourceGroup().location]",
@@ -1481,13 +1474,18 @@
                         }
                     }
                 }
+            */
             ]
         }
     ],
-    "outputs": {
+    "outputs": { /*
         "AutomationAccountObj": {
             "type": "object",
             "value": "[reference(concat(resourceGroup().name,'-Automation01'))]"
+        },
+        "AutomationKey": {
+            "type": "string",
+            "value": "[listKeys(concat(resourceGroup().name,'-Automation01'),variables('apiVersion_Compute')).Keys[0].Value]"
         }
-    }
+    */}
 }
