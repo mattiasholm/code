@@ -64,3 +64,11 @@ New-AzResourceGroupDeployment `
     -TemplateParameterFile (Join-Path -Path $FilePath -ChildPath $ParameterFileName) `
     -ASE_Location $ASE_Location `
     -Mode Incremental
+
+
+
+<#
+FirstTimeDeploy:
+    Microsoft.Web/certificates                  Bortkommentera resurs fullständigt
+    Microsoft.Web/hostingEnvironments           Bortkommentera referenser till Microsoft.Web/certificates från dependsOn och clusterSettings
+#>
