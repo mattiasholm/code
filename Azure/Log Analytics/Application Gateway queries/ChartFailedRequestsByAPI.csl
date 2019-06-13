@@ -1,0 +1,5 @@
+AzureDiagnostics
+| where ResourceProvider == "MICROSOFT.NETWORK" and Category == "ApplicationGatewayAccessLog"
+| where httpStatus_d >= 400
+| summarize count() by api=extract('^(/[^/]*/)',0,requestUri_s), bin(TimeGenerated, 1m)
+| render timechart
