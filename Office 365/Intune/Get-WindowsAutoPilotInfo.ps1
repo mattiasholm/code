@@ -3,8 +3,8 @@
 
 # Körs sedan från dator ifråga enligt följande:
 
-# Get-WindowsAutoPilotInfo.ps1 -OutputFile C:\Temp\AutoPilot.csv -Append
-# Get-WindowsAutoPilotInfo.ps1 -OutputFile C:\Temp\AutoPilot-Partner.csv -Partner -Append
+# Get-WindowsAutoPilotInfo.ps1 -OutputFile C:\Temp\AutoPilot.csv
+# Get-WindowsAutoPilotInfo.ps1 -OutputFile C:\Temp\AutoPilot-Partner.csv -Partner
 
 
 
