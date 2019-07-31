@@ -1,4 +1,8 @@
+$DiskAlertThresholdHours = 36
+$CloudAlertThresholdHours = 60
 $DpmServerName = "B3CARE-SE-BAC01.ad.b3care.se"
+
+
 
 $Table = @()
 $DataSources = Get-DPMDatasource -DPMServerName $DpmServerName
@@ -38,3 +42,14 @@ foreach ($DataSource in $DataSources) {
 }
 
 $Table
+$Table | Sort-Object -Property HoursSinceSuccessfulBackup -Descending
+
+$Table | Where-Object { $_.Location -eq "Disk" } | Sort-Object -Property HoursSinceSuccessfulBackup -Descending
+$Table | Where-Object { $_.Location -eq "Disk" } | Where-Object { $_.HoursSinceSuccessfulBackup -gt $DiskAlertThresholdHours }
+
+$Table | Where-Object { $_.Location -eq "Cloud" } | Sort-Object -Property HoursSinceSuccessfulBackup -Descending
+$Table | Where-Object { $_.Location -eq "Cloud" } | Where-Object { $_.HoursSinceSuccessfulBackup -gt $CloudAlertThresholdHours }
+
+
+
+$Table | Export-Csv -Path "C:\Temp\DPM_RecoveryPoint_Monitor_$(Get-Date -Format "yyyy-MM-dd_HH-mm-ss").csv" -Delimiter "," -Encoding Unicode -NoTypeInformation
