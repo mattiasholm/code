@@ -42,6 +42,7 @@ foreach ($DataSource in $DataSources) {
 }
 
 $Table
+
 $Table | Sort-Object -Property HoursSinceSuccessfulBackup -Descending
 
 $Table | Where-Object { $_.Location -eq "Disk" } | Sort-Object -Property HoursSinceSuccessfulBackup -Descending
