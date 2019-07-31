@@ -43,14 +43,14 @@ foreach ($DataSource in $DataSources) {
 
 $Table
 
-$Table | Sort-Object -Property HoursSinceSuccessfulBackup -Descending
-
-$Table | Where-Object { $_.Location -eq "Disk" } | Sort-Object -Property HoursSinceSuccessfulBackup -Descending
-$Table | Where-Object { $_.Location -eq "Disk" } | Where-Object { $_.HoursSinceSuccessfulBackup -gt $DiskAlertThresholdHours }
-
-$Table | Where-Object { $_.Location -eq "Cloud" } | Sort-Object -Property HoursSinceSuccessfulBackup -Descending
-$Table | Where-Object { $_.Location -eq "Cloud" } | Where-Object { $_.HoursSinceSuccessfulBackup -gt $CloudAlertThresholdHours }
-
-
-
 $Table | Export-Csv -Path "C:\Temp\DPM_RecoveryPoint_Monitor_$(Get-Date -Format "yyyy-MM-dd_HH-mm-ss").csv" -Delimiter "," -Encoding Unicode -NoTypeInformation
+
+
+
+if ($Table | Where-Object { $_.Location -eq "Disk" } | Where-Object {$_.HoursSinceSuccessfulBackup -gt $DiskAlertThresholdHours}) {
+Write-Host "Pseudo code for disk alert, preferably webhook"
+}
+
+if ($Table | Where-Object { $_.Location -eq "Cloud" } | Where-Object {$_.HoursSinceSuccessfulBackup -gt $CloudAlertThresholdHours}) {
+Write-Host "Pseudo code for cloud alert, preferably webhook"
+}
