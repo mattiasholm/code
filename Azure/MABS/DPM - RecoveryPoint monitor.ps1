@@ -47,10 +47,10 @@ $Table | Export-Csv -Path "C:\Temp\DPM_RecoveryPoint_Monitor_$(Get-Date -Format 
 
 
 
-if ($Table | Where-Object { $_.Location -eq "Disk" } | Where-Object {$_.HoursSinceSuccessfulBackup -gt $DiskAlertThresholdHours}) {
-Write-Host "Pseudo code for disk alert, preferably webhook"
+if ($Table | Where-Object { $_.Location -eq "Disk" } | Where-Object { $_.HoursSinceSuccessfulBackup -gt $DiskAlertThresholdHours }) {
+    Write-Host "Pseudo code for disk alert, preferably webhook"
 }
 
-if ($Table | Where-Object { $_.Location -eq "Cloud" } | Where-Object {$_.HoursSinceSuccessfulBackup -gt $CloudAlertThresholdHours}) {
-Write-Host "Pseudo code for cloud alert, preferably webhook"
+if ($Table | Where-Object { $_.Location -eq "Cloud" } | Where-Object { $_.HoursSinceSuccessfulBackup -gt $CloudAlertThresholdHours }) {
+    Write-Host "Pseudo code for cloud alert, preferably webhook"
 }
