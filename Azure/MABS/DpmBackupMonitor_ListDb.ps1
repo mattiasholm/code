@@ -1,8 +1,8 @@
-$ConfigFile = "C:\B3CARE\DpmBackupMonitor\DpmBackupMonitor.json"
-$SqlConnectionString = Get-Content -Path $ConfigFile | ConvertFrom-Json
+$ConfigFile = ".\DpmBackupMonitor.json"
+$Config = Get-Content -Path $ConfigFile | ConvertFrom-Json
 
 $SqlConnection = New-Object System.Data.SqlClient.SqlConnection
-$SqlConnection.ConnectionString = "Server = $($SqlConnectionString.SqlServer); Database = $($SqlConnectionString.SqlDatabase); Integrated Security = False; User ID = $($SqlConnectionString.SqlUserID); Password = $($SqlConnectionString.SqlPassword);"
+$SqlConnection.ConnectionString = "Server = $($Config.SqlServer); Database = $($Config.SqlDatabase); Integrated Security = False; User ID = $($Config.SqlUserID); Password = $($Config.SqlPassword);"
 $SqlConnection.Open()
 
 $SqlQuery = "SELECT * FROM B3Care_Backup WHERE BackupTypeId = 2 OR BackupTypeId = 3"
