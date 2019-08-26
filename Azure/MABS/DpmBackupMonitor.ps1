@@ -7,8 +7,8 @@ $SqlConnection = New-Object System.Data.SqlClient.SqlConnection
 $SqlConnection.ConnectionString = "Server = $($Config.SqlServer); Database = $($Config.SqlDatabase); Integrated Security = False; User ID = $($Config.SqlUserID); Password = $($Config.SqlPassword);"
 $SqlConnection.Open()
 
-$SqlQuery = "IF EXISTS(SELECT ID FROM B3Care_Backup WHERE (ServerName = @ServerName) AND (BackupName = @BackupName)) `
-            UPDATE B3Care_Backup SET LastBackupSize = @LastBackupSize, LastFullBackupDate = @LastFullBackupDate WHERE (ServerName = @ServerName) AND (BackupName = @BackupName) `
+$SqlQuery = "IF EXISTS(SELECT ID FROM B3Care_Backup WHERE (ServerName = @ServerName) AND (BackupName = @BackupName) AND (BackupTypeID = @BackupTypeID)) `
+            UPDATE B3Care_Backup SET LastBackupSize = @LastBackupSize, LastFullBackupDate = @LastFullBackupDate WHERE (ServerName = @ServerName) AND (BackupName = @BackupName) AND (BackupTypeID = @BackupTypeID) `
             ELSE `
             INSERT INTO B3Care_Backup (BackupTypeID, ServerName, BackupName, LastBackupSize, LastFullBackupDate) VALUES (@BackupTypeID, @ServerName, @BackupName, @LastBackupSize, @LastFullBackupDate)"
 
@@ -40,8 +40,8 @@ foreach ($DataSource in $DataSources) {
     foreach ($RecoveryPoint in $RecoveryPoints) {
 
         switch ($RecoveryPoint.Location) {
-            Disk { $BackupTypeID = 2 }
-            Cloud { $BackupTypeID = 3 }
+            'Disk' { $BackupTypeID = 2 }
+            'Cloud' { $BackupTypeID = 3 }
             default { $BackupTypeID = 999 }
         }
 
