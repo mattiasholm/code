@@ -1,4 +1,4 @@
-$ConfigFile = ".\DpmBackupMonitor.json"
+$ConfigFile = "C:\B3\DpmBackupMonitor\DpmBackupMonitor.json"
 $Config = Get-Content -Path $ConfigFile | ConvertFrom-Json
 
 
