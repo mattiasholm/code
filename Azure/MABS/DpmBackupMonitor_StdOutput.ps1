@@ -34,7 +34,7 @@ foreach ($DataSource in $DataSources) {
             default { $BackupType = $null }
         }
 
-        $RecoveryPointSize = [Math]::Round(($RecoveryPoint.Size) / 1MB,2)
+        $RecoveryPointSize = [Math]::Round(($RecoveryPoint.Size) / 1MB, 2)
                
         $Row = New-Object PSObject
         $Row | Add-Member NoteProperty HoursSinceSuccessfulBackup $TimeSpan
