@@ -1,6 +1,8 @@
 $ConfigFile = ".\DpmBackupMonitor.json"
 $Config = Get-Content -Path $ConfigFile | ConvertFrom-Json
 
+
+
 $SqlConnection = New-Object System.Data.SqlClient.SqlConnection
 $SqlConnection.ConnectionString = "Server = $($Config.SqlServer); Database = $($Config.SqlDatabase); Integrated Security = False; User ID = $($Config.SqlUserID); Password = $($Config.SqlPassword);"
 $SqlConnection.Open()
