@@ -1,4 +1,4 @@
-$Name = 'B3 Göteborg'
+﻿$Name = 'B3 Göteborg'
 $IpAddress = '10.0.60.254'
 $PrinterDriver = 'PCL6 V4 Driver for Universal Print'
 
