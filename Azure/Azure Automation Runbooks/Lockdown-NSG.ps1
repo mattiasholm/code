@@ -62,7 +62,7 @@ $NetworkSecurityGroup = New-AzNetworkSecurityGroup `
 
 
 
-$VirtualNetwork = Get-AzVirtualNetwork -Name $VirtualNetworkName
+$VirtualNetwork = Get-AzVirtualNetwork -Name $VirtualNetworkName -ResourceGroupName $ResourceGroupName
 $Subnet = Get-AzVirtualNetworkSubnetConfig -Name $SubnetName -VirtualNetwork $VirtualNetwork
 $Subnet.NetworkSecurityGroup = $NetworkSecurityGroup
 $VirtualNetwork | Set-AzVirtualNetwork

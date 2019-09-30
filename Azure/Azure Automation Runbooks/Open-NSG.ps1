@@ -37,7 +37,7 @@ $Rule2 = New-AzNetworkSecurityRuleConfig `
     -Priority 1100 `
     -SourceAddressPrefix * `
     -SourcePortRange * `
-    -DestinationApplicationSecurityGroup 'Web' `
+    -DestinationApplicationSecurityGroup (Get-AzApplicationSecurityGroup -Name 'Web' -ResourceGroupName $ResourceGroupName) `
     -DestinationPortRange 443
 
 $Rule3 = New-AzNetworkSecurityRuleConfig `
@@ -117,7 +117,7 @@ $NetworkSecurityGroup = New-AzNetworkSecurityGroup `
 
 
 
-$VirtualNetwork = Get-AzVirtualNetwork -Name $VirtualNetworkName
+$VirtualNetwork = Get-AzVirtualNetwork -Name $VirtualNetworkName -ResourceGroupName $ResourceGroupName
 $Subnet = Get-AzVirtualNetworkSubnetConfig -Name $SubnetName -VirtualNetwork $VirtualNetwork
 $Subnet.NetworkSecurityGroup = $NetworkSecurityGroup
 $VirtualNetwork | Set-AzVirtualNetwork
