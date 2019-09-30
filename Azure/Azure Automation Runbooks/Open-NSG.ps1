@@ -30,6 +30,17 @@ $Rule1 = New-AzNetworkSecurityRuleConfig `
     -DestinationPortRange *
 
 $Rule2 = New-AzNetworkSecurityRuleConfig `
+    -Name 'Allow_HTTPS_Inbound' `
+    -Access Allow `
+    -Protocol Tcp `
+    -Direction Inbound `
+    -Priority 1100 `
+    -SourceAddressPrefix * `
+    -SourcePortRange * `
+    -DestinationApplicationSecurityGroup 'Web' `
+    -DestinationPortRange 443
+
+$Rule3 = New-AzNetworkSecurityRuleConfig `
     -Name 'Deny_All_Inbound' `
     -Access Deny `
     -Protocol * `
@@ -40,7 +51,7 @@ $Rule2 = New-AzNetworkSecurityRuleConfig `
     -DestinationAddressPrefix * `
     -DestinationPortRange *
 
-$Rule3 = New-AzNetworkSecurityRuleConfig `
+$Rule4 = New-AzNetworkSecurityRuleConfig `
     -Name 'Allow_HTTP_Outbound' `
     -Access Allow `
     -Protocol Tcp `
@@ -48,10 +59,10 @@ $Rule3 = New-AzNetworkSecurityRuleConfig `
     -Priority 1000 `
     -SourceAddressPrefix * `
     -SourcePortRange * `
-    -DestinationAddressPrefix 'AppService.WestEurope' `
+    -DestinationAddressPrefix * `
     -DestinationPortRange 80
 
-$Rule4 = New-AzNetworkSecurityRuleConfig `
+$Rule5 = New-AzNetworkSecurityRuleConfig `
     -Name 'Allow_HTTPS_Outbound' `
     -Access Allow `
     -Protocol Tcp `
@@ -59,10 +70,32 @@ $Rule4 = New-AzNetworkSecurityRuleConfig `
     -Priority 1100 `
     -SourceAddressPrefix * `
     -SourcePortRange * `
-    -DestinationAddressPrefix 'AppService.WestEurope' `
+    -DestinationAddressPrefix * `
     -DestinationPortRange 443
 
-$Rule5 = New-AzNetworkSecurityRuleConfig `
+$Rule6 = New-AzNetworkSecurityRuleConfig `
+    -Name 'Allow_DNS_Outbound' `
+    -Access Allow `
+    -Protocol * `
+    -Direction Outbound `
+    -Priority 1200 `
+    -SourceAddressPrefix * `
+    -SourcePortRange * `
+    -DestinationAddressPrefix "8.8.8.8", "8.8.4.4" `
+    -DestinationPortRange 53
+
+$Rule7 = New-AzNetworkSecurityRuleConfig `
+    -Name 'Allow_NTP_Outbound' `
+    -Access Allow `
+    -Protocol * `
+    -Direction Outbound `
+    -Priority 1300 `
+    -SourceAddressPrefix * `
+    -SourcePortRange * `
+    -DestinationAddressPrefix * `
+    -DestinationPortRange 123
+
+$Rule8 = New-AzNetworkSecurityRuleConfig `
     -Name 'Deny_All_Outbound' `
     -Access Deny `
     -Protocol * `
@@ -79,7 +112,7 @@ $NetworkSecurityGroup = New-AzNetworkSecurityGroup `
     -Name $NetworkSecurityGroupName `
     -ResourceGroupName $ResourceGroupName `
     -Location $Location `
-    -SecurityRules $Rule1, $Rule2, $Rule3, $Rule4, $Rule5 `
+    -SecurityRules $Rule1, $Rule2, $Rule3, $Rule4, $Rule5, $Rule6, $Rule7, $Rule8 `
     -Force
 
 
