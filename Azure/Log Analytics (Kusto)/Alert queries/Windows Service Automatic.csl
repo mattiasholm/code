@@ -1,0 +1,6 @@
+ConfigurationChange
+| where SvcStartupType startswith "Automatic" and SvcState != "Running"
+
+
+
+// OBS: Sänk även intervall för ingestion av ChangeTracking från default 30 minuter till 5 minuter!
