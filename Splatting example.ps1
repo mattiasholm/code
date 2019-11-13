@@ -7,13 +7,13 @@ function Get-RandomJsonFile {
         [ValidateRange(0, 10)]
         $Count = 1
     )
-    $Parameters = @{
+    $Arguments = @{
         Path    = 'C:\Users\MattiasHolm\Documents\AzureRepos'
         Recurse = $True
         Filter  = "*.json"
     }
 
-    Get-ChildItem @Parameters | Get-Random -Count $Count | Invoke-Item
+    Get-ChildItem @Arguments | Get-Random -Count $Count | Invoke-Item
 }
 
 Get-RandomJsonFile 10 -WhatIf
