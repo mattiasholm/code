@@ -3,7 +3,7 @@ function Get-RandomJsonFile {
     [cmdletbinding(SupportsShouldProcess = $True)]
     param (
         [parameter(position = 1, Mandatory = $false)]
-        [Int]
+        [int]
         [ValidateRange(0, 10)]
         $Count = 1
     )
