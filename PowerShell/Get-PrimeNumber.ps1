@@ -32,4 +32,4 @@ function Get-PrimeNumber {
     } until ($n -gt $Max)
 }
 
-Get-PrimeNumber -Min 2 -Max 1000
+Get-PrimeNumber -Min 2 -Max 100
