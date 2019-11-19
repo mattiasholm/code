@@ -3,10 +3,15 @@ function Get-PrimeNumber {
         [parameter(position = 1, Mandatory = $false)]
         [ValidateRange(2, 1000)]
         [int]
+        $Min = 2,
+        [parameter(position = 2, Mandatory = $false)]
+        [ValidateRange(2, 1000)]
+        [int]
         $Max = 20
+
     )
     
-    $n = 2
+    $n = $Min
 
     do {
         $i = $n
@@ -27,4 +32,4 @@ function Get-PrimeNumber {
     } until ($n -gt $Max)
 }
 
-Get-PrimeNumber -Max 100
+Get-PrimeNumber -Min 50 -Max 100
