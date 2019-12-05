@@ -2,6 +2,7 @@
 
 brew cask install visual-studio-code
 brew install git
+brew install python
 brew install azure-cli
 brew install kubernetes-cli
 brew cask install powershell
