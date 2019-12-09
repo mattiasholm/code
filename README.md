@@ -1,2 +1,2 @@
 # powershell
-PowerShell scripts to facilitate the daily tasks of an Azure and Office 365 Solution Architect
+PowerShell scripts and other code to facilitate the daily tasks of an Azure Solution Architect!
