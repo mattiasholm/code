@@ -1,0 +1,3 @@
+$Samaccountname = "d100100"
+$Department = ((Get-ADUser $Samaccountname).DistinguishedName).Replace('OU=','') -replace '^CN=.+?,' -replace ',DC=.+'
+$Department

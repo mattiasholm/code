@@ -1,0 +1,1 @@
+New-MailboxImportRequest -IsArchive -FilePath "\\don-ex-mb01\C$\Temp\GbgAdmin_Export_0001.pst" -Mailbox gbg.admin -BadItemLimit 10000

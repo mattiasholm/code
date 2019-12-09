@@ -1,0 +1,124 @@
+v.2 2017:
+
+Veckans PowerShell-cmdlet:
+
+Resolve-DnsName
+# PowerShell-motsvarighet till nslookup, dvs. gör namnuppslag mot DNS-server
+Exempel:
+Resolve-DnsName -Name dgc.se -Type MX -Server 8.8.8.8
+
+
+
+v.3 2017:
+
+Veckans PowerShell-cmdlet:
+
+Test-NetConnection
+# PowerShell-motsvarighet till telnet, dvs. för att testa om en server lyssnar på en viss TCP-port (samt om ev. brandvägg framför servern släpper igenom trafik på porten ifråga)
+Exempel:
+Test-NetConnection -ComputerName www.pornhub.com -Port 443
+
+
+
+v.4 2017:
+
+Veckans PowerShell-cmdlet:
+
+Add-Computer
+# PowerShell-motsvarighet till netdom, dvs. för att lägga till en server i en AD-domän.
+Exempel:
+Add-Computer -DomainName dgc.local -Restart
+
+
+
+v.5 2017:
+
+Veckans PowerShell-cmdlet:
+
+Get-NetIpConfiguration
+# PowerShell-motsvarighet till ipconfig, dvs. för att lista nätverkskonfigation såsom IP-adress, Default Gateway, DNS-server.
+Exempel:
+Get-NetIpConfiguration -InterfaceAlias "Back-End"
+
+
+
+v.6 2017:
+
+Veckans PowerShell-cmdlet:
+
+Restart-Computer
+# PowerShell-motsvarighet till shutdown, dvs. för att starta om dator/server remote.
+Exempel för att starta om Roberts dator:
+Restart-Computer -ComputerName 172.30.1.63 -Credential (Get-Credential) -Force
+
+
+
+v.7 2017:
+
+Veckans PowerShell-cmdlet:
+
+Get-NetTCPConnection
+# PowerShell-motsvarighet till netstat, dvs. för att lista samtliga TCP-anslutningar på en server.
+Exempel:
+Get-NetTCPConnection -State Established -RemotePort 443
+
+
+
+v.8 2017:
+
+Veckans PowerShell-cmdlet:
+
+Get-Command
+# Lista tillgängliga PowerShell-cmdlets.
+Exempel:
+Get-Command -Verb Set -Noun AzureVM*
+
+
+
+v.9 2017:
+
+Veckans PowerShell-cmdlet:
+
+Show-Command
+# Få upp ett cmdlets samtliga parameter i ett enkelt GUI.
+Exempel:
+Show-Command New-FileShare
+
+
+
+v.10 2017:
+
+Veckans PowerShell-cmdlet:
+
+New-SmbShare
+# Skapa en ny SMB-share.
+Exempel:
+New-SmbShare -Path C:\Share\ -Name "Share" -ReadAccess "Authenticated Users" -FullAccess "mattias.holm@dgc.se"
+
+
+
+v.13 2017:
+# Lista alla tillgängliga alias/kortkommandon för PowerShell-cmdlets.
+Get-Alias
+Exempel:
+gci = Get-ChildItem
+% = ForEach-Object
+
+# Går även att skapa egna alias.
+New-Alias
+Exempel:
+New-Alias -Name psp -Value Get-PSProvider
+
+
+
+
+
+
+
+
+
+FRAMTIDA:
+findstr
+Get-PSProvider (Cert:\, HKLM: etc)
+Start-ScheduledTask - fungerar sådär i root-library?! Endast \Microsoft\*
+

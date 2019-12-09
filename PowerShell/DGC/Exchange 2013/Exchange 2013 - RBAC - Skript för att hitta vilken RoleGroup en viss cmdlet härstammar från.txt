@@ -1,0 +1,8 @@
+$RoleEntry = "New-Mailbox"
+$User = "qwe464"
+
+
+
+$Roles = (Get-ManagementRoleEntry "*\$RoleEntry”).Role.Name
+foreach ($Role in $Roles)
+{Get-ManagementRoleAssignment -GetEffectiveUsers -Role $Role | where {$_.EffectiveUserName -eq $User}}

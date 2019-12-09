@@ -1,0 +1,1 @@
+﻿Get-ADUser -SearchBase "OU=Leroy,OU=Hosting,DC=emcat,DC=com" -Filter * -Properties * -SearchScope Subtree | select userprincipalname,ProxyAddresses

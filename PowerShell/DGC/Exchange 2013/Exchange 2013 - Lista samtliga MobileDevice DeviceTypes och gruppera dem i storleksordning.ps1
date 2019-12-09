@@ -1,0 +1,1 @@
+Get-MobileDevice -ResultSize Unlimited | Group-Object -Property DeviceType | Sort-Object -Property Count -Descending | Select-Object Count,Name

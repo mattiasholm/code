@@ -1,0 +1,1 @@
+﻿Get-ADObject -Filter * -Properties * | select -ExpandProperty proxyaddresses | findstr fredrik.viktorin@leroy.se

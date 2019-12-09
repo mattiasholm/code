@@ -1,0 +1,1 @@
+(Get-MailboxStatistics mattias.holm@donator.se).TotalItemSize.Value

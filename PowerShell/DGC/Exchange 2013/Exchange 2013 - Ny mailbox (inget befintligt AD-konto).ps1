@@ -1,0 +1,15 @@
+$Password = "aa55TT"
+$ExDB = "DB10v"
+$OU = "OU=Travelize,OU=Hosting,DC=emcat,DC=com"
+$FirstName = "Test"
+$LastName = "Testsson"
+$SamAccountName = "test.testsson.avalato"
+$UserPrincipalName = "test.testsson@avalato.se"
+$Alias = "test.testsson"
+$Name = "Test Testsson"
+$ABP = "Travelize.ABP"
+$CustomAttribute1 = "avalato.se"
+$Everyone = "Travelize.Everyone"
+$ExchangeAllow = "Travelize.Exchange.Allow"
+
+New-Mailbox -Password (ConvertTo-SecureString -AsPlainText $Password -Force) -Database $ExDB -OrganizationalUnit $OU -FirstName $FirstName -LastName $LastName -SamAccountName $SamAccountName -UserPrincipalName $UserPrincipalName -Alias $Alias -Name $Name -DisplayName $Name -Confirm:$false;sleep 5;Set-Mailbox $UserPrincipalName -AddressBookPolicy $ABP -EmailAddressPolicyEnabled:$True -CustomAttribute1 $CustomAttribute1;Set-ADUSer $SamAccountName -PasswordNeverExpires:$True -Enabled:$True;Add-ADGroupMember $Everyone $SamAccountName;Add-ADGroupMember $ExchangeAllow $SamAccountName
