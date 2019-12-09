@@ -23,7 +23,20 @@ choco install -y 7zip
 choco install -y winscp
 choco install -y vim
 choco install -y greenshot
-choco install -y sql-server-express
 choco install -y filezilla
 choco install -y jabra-direct
 choco install -y microsoft-windows-terminal
+
+
+
+code --install-extension ms-vscode.powershell
+code --install-extension ms-python.python
+code --install-extension foxundermoon.shell-format
+code --install-extension ms-vscode-remote.remote-wsl
+code --install-extension waderyan.gitblame
+code --install-extension ms-mssql.mssql
+code --install-extension redhat.vscode-yaml
+code --install-extension msazurermtools.azurerm-vscode-tools
+code --install-extension bencoleman.armview
+code --install-extension josin.kusto-syntax-highlighting
+code --install-extension yzhang.markdown-all-in-one
