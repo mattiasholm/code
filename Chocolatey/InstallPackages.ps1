@@ -18,7 +18,6 @@ choco install -y vlc
 choco install -y spotify
 choco install -y nestopia
 choco install -y wsl
-choco install -y wsl-ubuntu-1804
 choco install -y 7zip
 choco install -y winscp
 choco install -y vim
