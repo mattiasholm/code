@@ -1,32 +1,29 @@
-choco install -y googlechrome
-choco install -y vlc
-choco install -y 7zip
-choco install -y git
-choco install -y gimp
-choco install -y teamviewer
-choco install -y winscp
 choco install -y vscode
+choco install -y git
+choco install -y python3
+choco install -y powershell-core
+choco install -y azure-cli
+choco install -y kubernetes-cli
+choco install -y azure-data-studio
+choco install -y microsoftazurestorageexplorer
+choco install -y docker-desktop
+choco install -y googlechrome
+choco install -y office365proplus
+choco install -y onenote
+choco install -y microsoft-teams
+choco install -y teamviewer
+choco install -y dropbox
+choco install -y gimp
+choco install -y vlc
+choco install -y spotify
+choco install -y nestopia
+choco install -y wsl
+choco install -y wsl-ubuntu-1804
+choco install -y 7zip
+choco install -y winscp
 choco install -y vim
 choco install -y greenshot
-choco install -y spotify
-choco install -y kubernetes-cli
-choco install -y docker-desktop
-
-
-
-# EJ KLARA, FORTSÄTT VID TILLFÄLLE:
-
-# https://chocolatey.org/packages
-
-# Kolla även appwiz.cpl för att hitta vad som redan är installerad
-
-# Cross-checka mot Homebrew-skript för Mac - bör ha snarlika verktyg även på PC!
-
-# Ordna varje rad i vettig ordning för bättre överskådlighet!
-
-
-<#
-choco install -y office365business
-choco install -y office365proplus
-choco install -y microsoft-teams
-#>
+choco install -y sql-server-express
+choco install -y filezilla
+choco install -y jabra-direct
+choco install -y microsoft-windows-terminal

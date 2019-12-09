@@ -2,10 +2,10 @@
 
 brew cask install visual-studio-code
 brew install git
-brew install python
+brew install python3
+brew cask install powershell
 brew install azure-cli
 brew install kubernetes-cli
-brew cask install powershell
 brew cask install azure-data-studio
 brew cask install microsoft-azure-storage-explorer
 brew cask install docker
