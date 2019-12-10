@@ -8,7 +8,6 @@ function Get-PrimeNumber {
         [ValidateRange(2, 1000)]
         [int]
         $Max = 20
-
     )
     
     $n = $Min
@@ -21,6 +20,8 @@ function Get-PrimeNumber {
             $i--
             if ($n % $i -eq 0) {
                 $IsPrime = $false
+                break
+
             }
         }
 
