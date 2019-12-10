@@ -21,7 +21,6 @@ function Get-PrimeNumber {
             if ($n % $i -eq 0) {
                 $IsPrime = $false
                 break
-
             }
         }
 
