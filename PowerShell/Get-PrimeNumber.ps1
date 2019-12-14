@@ -1,16 +1,23 @@
+#!/usr/bin/env powershell
+
 function Get-PrimeNumber {
     param (
         [parameter(position = 1, Mandatory = $false)]
-        [ValidateRange(2, 1000)]
+        [ValidateRange(0, 1000000)]
         [int]
-        $Min = 2,
+        $Min = 0,
         [parameter(position = 2, Mandatory = $false)]
-        [ValidateRange(2, 1000)]
+        [ValidateRange(0, 1000000)]
         [int]
-        $Max = 20
+        $Max = 50
     )
-    
-    $n = $Min
+
+    if ($Min -lt 2) {
+        $n = 2
+    }
+    else {
+        $n = $Min        
+    }
 
     do {
         $i = $n
@@ -32,4 +39,8 @@ function Get-PrimeNumber {
     } until ($n -gt $Max)
 }
 
-Get-PrimeNumber -Min 2 -Max 100
+function main {
+    Get-PrimeNumber -Min 0 -Max 100
+}
+
+main
