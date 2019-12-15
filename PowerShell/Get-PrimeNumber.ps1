@@ -12,6 +12,8 @@ function Get-PrimeNumber {
         $Max = 30
     )
 
+    $PrimeNumbers = [System.Collections.ArrayList]@()
+
     if ($Min -lt 2) {
         $n = 2
     }
@@ -33,7 +35,7 @@ function Get-PrimeNumber {
         }
 
         if ($IsPrime -eq $True) {
-            $PrimeNumbers += , $n
+            $PrimeNumbers.Add($n)
         }
 
         $n++
@@ -42,7 +44,7 @@ function Get-PrimeNumber {
 }
 
 function main {
-    Get-PrimeNumber -Min 0 -Max 10000
+    Get-PrimeNumber -Min 0 -Max 100
 }
 
 main
