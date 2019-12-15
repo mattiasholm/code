@@ -3,20 +3,20 @@
 function Get-PrimeNumber {
     param (
         [parameter(position = 1, Mandatory = $false)]
-        [ValidateRange(0, 1000000)]
         [int]
         $Min = 0,
         [parameter(position = 2, Mandatory = $false)]
-        [ValidateRange(0, 1000000)]
         [int]
         $Max = 50
     )
+
+    $PrimeNumbers = @()
 
     if ($Min -lt 2) {
         $n = 2
     }
     else {
-        $n = $Min        
+        $n = $Min
     }
 
     do {
@@ -32,15 +32,18 @@ function Get-PrimeNumber {
         }
 
         if ($IsPrime -eq $True) {
-            Write-Host -NoNewline "$n "
+            $PrimeNumbers += $n
         }
 
         $n++
     } until ($n -gt $Max)
+
+    Write-Host $PrimeNumbers
+    Write-Host $PrimeNumbers.GetType()
 }
 
 function main {
-    Get-PrimeNumber -Min 0 -Max 100
+    Get-PrimeNumber -Min 0 -Max 0
 }
 
 main
