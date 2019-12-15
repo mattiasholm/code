@@ -35,7 +35,7 @@ function Get-PrimeNumber {
         }
 
         if ($IsPrime -eq $True) {
-            $PrimeNumbers.Add($n)
+            $PrimeNumbers.Add($n) > $null
         }
 
         $n++
