@@ -26,8 +26,10 @@ function Get-PrimeNumber {
         $IsPrime = $true
 
         while ($i -gt 1) {
+            Write-Host "$n % $i = $($n % $i)"
             if ($n % $i -eq 0) {
                 $IsPrime = $false
+                $PrimeNumbers.Add($n) > $null
                 break
             }
 
@@ -40,6 +42,7 @@ function Get-PrimeNumber {
 
         $n++
     }
+    
     Write-Host $PrimeNumbers
 }
 
