@@ -1,7 +1,18 @@
-# Run
+# Cheat Sheet
 
-## Start a container:
-docker run [image-name] [-flags]
+<br>
+
+## Start a container from image:
+docker run [image-name] [-flags]ls
+
+## Stop a container:
+docker stop [container-ID]
+
+## Start a stopped container
+docker start [container-ID]
+
+## Attach to a container:
+docker attach [container-ID]
 
 <br><br>
 
@@ -26,18 +37,21 @@ docker images
 docker kill [container-ID]
 
 ## Kill all running containers:
-docker container kill $(docker ps -q)
+docker kill $(docker ps -q)
 
 <br><br>
 
 # Delete
 
-## Delete container:
-docker rm
-
-## Delete container image:
-docker rmi
+## Delete specific container:
+docker rm [container-ID]
 
 ## Delete all stopped containers:
 docker container prune
 docker container rm $(docker ps -a -q)
+
+## Delete specific container image:
+docker rmi [image-ID]
+
+## Delete all container images:
+docker rmi $(docker images -q)
