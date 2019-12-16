@@ -3,10 +3,7 @@
 ## Start a container:
 docker run [image-name] [-flags]
 
-
-
-
-
+<br>
 
 # List
 
@@ -21,10 +18,7 @@ docker containers list -a
 ## List local container images:
 docker images
 
-
-
-
-
+<br>
 
 # Kill
 
@@ -34,10 +28,7 @@ docker kill [container-ID]
 ## Kill all running containers:
 docker container kill $(docker ps -q)
 
-
-
-
-
+<br>
 
 # Delete
 
