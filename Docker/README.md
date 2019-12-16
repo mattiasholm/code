@@ -69,3 +69,16 @@ docker build -t [app-name] .
 
 ## Run new image:
 docker run [app-name]
+
+## Tag new image:
+
+docker tag python mattiasholm/python:1.0
+
+## Log in to remote registry:
+docker login --username=mattiasholm
+
+## Push new image to remote registry:
+docker push [remote-registry]/[app-name]:[image-version]
+
+## Pull existing image from remote registry:
+docker pull [remote-registry]/[app-name]:[image-version]
