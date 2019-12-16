@@ -5,7 +5,7 @@
 ## Start a container from image:
 docker run [image-name] [-flags]ls
 
-## Stop a container:
+## Stop a container gracefully:
 docker stop [container-ID]
 
 ## Start a stopped container
@@ -19,10 +19,12 @@ docker attach [container-ID]
 ## List active containers:
 docker ps
 docker container list
+docker container ls
 
 ## List all containers, including killed:
 docker ps -a
 docker containers list -a
+docker container ls -a
 
 ## List local container images:
 docker images
@@ -42,10 +44,23 @@ docker rm [container-ID]
 
 ## Delete all stopped containers:
 docker container prune
-docker container rm $(docker ps -a -q)
+docker rm $(docker ps -a -q)
 
 ## Delete specific container image:
 docker rmi [image-ID]
 
 ## Delete all container images:
 docker rmi $(docker images -q)
+
+<br><br>
+
+## Print logs from specific container:
+docker logs [container-ID]
+
+## Get verbose information about a specific container:
+docker inspect [container-ID]
+
+<br><br>
+
+# Build an image from Dockerfile in pwd:
+docker build .

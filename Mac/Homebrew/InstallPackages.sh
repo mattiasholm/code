@@ -27,6 +27,7 @@ brew cask install transmission
 
 code --install-extension ms-vscode.powershell
 code --install-extension ms-python.python
+code --install-extension ms-azuretools.vscode-docker
 code --install-extension foxundermoon.shell-format
 code --install-extension ms-vscode-remote.remote-wsl
 code --install-extension waderyan.gitblame
