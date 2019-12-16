@@ -64,7 +64,7 @@ docker inspect [container-ID]
 
 <br><br>
 
-## Build an image from Dockerfile in pwd:
+## Build an image from Dockerfile in working directory:
 docker build -t [app-name] .
 
 ## Run new image:
