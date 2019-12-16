@@ -1,5 +1,7 @@
+# Note: Chocolatey needs to be run from an elevated PowerShell prompt - also avoid using PowerShell Core!
+
 choco install -y vscode
-choco install -y git
+choco install -y git ; git config --global user.name "Mattias Holm" ; git config --global user.email "mattias.holm@live.com" ; git config --global credential.helper wincred
 choco install -y python3
 choco install -y powershell-core
 choco install -y azure-cli

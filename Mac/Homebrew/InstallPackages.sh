@@ -1,7 +1,7 @@
 #!/bin/bash
 
 brew cask install visual-studio-code
-brew install git
+brew install git && git config --global user.name "Mattias Holm" && git config --global user.email "mattias.holm@live.com" && git config --global credential.helper osxkeychain
 brew install python3
 brew cask install powershell
 brew install azure-cli
@@ -24,8 +24,6 @@ brew cask install spotify
 brew cask install plex-media-server
 brew cask install openemu
 brew cask install transmission
-
-
 
 code --install-extension ms-vscode.powershell
 code --install-extension ms-python.python
