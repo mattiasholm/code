@@ -28,6 +28,7 @@ docker container ls -a
 
 ## List local container images:
 docker images
+docker image ls
 
 <br><br>
 
@@ -47,6 +48,7 @@ docker container prune
 docker rm $(docker ps -a -q)
 
 ## Delete specific container image:
+docker image rm [image-ID]
 docker rmi [image-ID]
 
 ## Delete all container images:
