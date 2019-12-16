@@ -5,6 +5,9 @@ docker run [image-name] [-flags]
 
 
 
+
+
+
 # List
 
 ## List active containers:
@@ -20,13 +23,19 @@ docker images
 
 
 
+
+
+
 # Kill
 
-## Kill specifik container:
+## Kill specific container:
 docker kill [container-ID]
 
 ## Kill all running containers:
 docker container kill $(docker ps -q)
+
+
+
 
 
 
