@@ -16,8 +16,6 @@ docker attach [container-ID]
 
 <br><br>
 
-# List
-
 ## List active containers:
 docker ps
 docker container list
@@ -31,8 +29,6 @@ docker images
 
 <br><br>
 
-# Kill
-
 ## Kill specific container:
 docker kill [container-ID]
 
@@ -40,8 +36,6 @@ docker kill [container-ID]
 docker kill $(docker ps -q)
 
 <br><br>
-
-# Delete
 
 ## Delete specific container:
 docker rm [container-ID]
