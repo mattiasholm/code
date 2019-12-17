@@ -8,7 +8,7 @@ docker run [image-name] [-flags]ls
 ## Stop a container gracefully:
 docker stop [container-ID]
 
-## Start a stopped container
+## Start a stopped container:
 docker start [container-ID]
 
 ## Attach to a container:
