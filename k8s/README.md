@@ -185,5 +185,5 @@ k taint no [node-name] key=[taint]
 ## List taints on all nodes:
 k describe no | grep Taints
 
-## List pods with matching toleration:
-???
+## List tolerations for pods in all namespaces:
+k get po -A -o yaml | grep tolerations:
