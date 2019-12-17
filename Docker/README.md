@@ -21,6 +21,9 @@ docker ps
 docker container list
 docker container ls
 
+## List active containers and their size:
+docker container ls -s
+
 ## List all containers, including killed:
 docker ps -a
 docker containers list -a
@@ -29,6 +32,9 @@ docker container ls -a
 ## List local container images:
 docker images
 docker image ls
+
+## List your Docker Client and Server versions:
+docker version
 
 <br><br>
 
@@ -61,6 +67,9 @@ docker logs [container-ID]
 
 ## Get verbose information about a specific container:
 docker inspect [container-ID]
+
+## Get verbose information about a specific image:
+docker image inspect [image-ID]
 
 <br><br>
 
