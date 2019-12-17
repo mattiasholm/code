@@ -176,3 +176,14 @@ k cordon [node-name]
 
 ## Unmark node as unschedulable:
 k uncordon [node-name]
+
+<br><br>
+
+# Taint a specific node:
+k taint no [node-name] key=[taint]
+
+## List taints on all nodes:
+k describe no | grep Taints
+
+## List pods with matching toleration:
+???
