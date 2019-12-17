@@ -2,7 +2,7 @@
 
 <br><br>
 
-## Create a alias for kubectl:
+## Create an alias for kubectl:
 alias k=kubectl
 
 ## Change context:
@@ -11,8 +11,11 @@ k config use-context [cluster-name]
 ## View config, such as contexts:
 k config view
 
+## View k8s version:
+k version
+
 ## Display cluster info:
-kubectl cluster-info
+k cluster-info
 
 <br><br>
 
@@ -32,20 +35,22 @@ k get po -n [namespace]
 
 ## List pods in all namespaces:
 k get po -A
+k get po --all-namespaces
 
-## List pods in all namespaces, disply only name:
+## List pods in all namespaces, display only name:
 k get po -A -o name
 
-## List pods in all namespaces, displays IP and node information:
+## List pods in all namespaces, display IP and node information:
 k get po -A -o wide
 
 ## List all pods with a specific label in all namespaces:
 k get po -l [label] -A
+k get po --selector [label] -A
 
 ## List a specific pod:
 k get po [pod-ID] -n [namespace]
 
-## List a specific pod, verbose output as YAML:
+## List a specific pod, verbose output in YAML:
 k get po [pod-ID] -n [namespace] -o yaml
 
 ## Describe a specific pod:
@@ -67,17 +72,23 @@ k scale --replicas [replica-count] rs/[deployment-name] -n [namespace]
 
 <br><br>
 
-## Get namespaces:
+## List namespaces:
 k get ns
 
-## Get nodes:
+## List nodes:
 k get no
 
 ## Describe a specific node:
 k describe no [node-name]
 
-## Get deployments in all namespaces:
+## List deployments in all namespaces:
 k get deploy -A
+
+## List deployments in all namespaces, display containers, images and selector:
+k get deploy -A -o wide
+
+## List all deployment with a specific label in all namespaces:
+k get deploy -l [label] -A
 
 ## Describe a specific deployment:
 k describe deploy [deployment-name] -n [namespace]
@@ -110,10 +121,10 @@ k get all -A
 k get crd -A
 
 ## Get a list of all supported resource types and their shortnames:
-kubectl api-resources
+k api-resources
 
 ## Get a list of all supported resource types, their shortnames and supported verbs:
-kubectl api-resources -o wide
+k api-resources -o wide
 
 <br><br>
 
