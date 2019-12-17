@@ -43,6 +43,12 @@ k get po -A -o name
 ## List pods in all namespaces, display IP and node information:
 k get po -A -o wide
 
+## List pods in all namespaces, sorted by age (descending order):
+k get po --sort-by=.metadata.creationTimestamp -A
+
+## List pods in all namespaces, sorted by age (ascending order):
+k get po --sort-by=.metadata.creationTimestamp -A | tac
+
 ## List all pods with a specific label in all namespaces:
 k get po -l [label] -A
 k get po --selector [label] -A
@@ -113,6 +119,9 @@ k get netpol -A
 
 ## Get all events from all namespaces:
 k get ev -A
+
+## Get all events from a specific namespaces (with watch flag in order to "live tail"):
+k get ev -n [namespace] -w
 
 ## Get all resources from all namespaces (not actually all, but ):
 k get all -A
