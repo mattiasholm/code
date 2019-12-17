@@ -68,6 +68,9 @@ k logs [pod-ID] -n [namespace]
 ## Run command in a specific pod:
 k exec [pod-ID] -n [namespace] -- [command]
 
+## Check translate public IP for a specific pod:
+k exec [pod-ID] -n [namespace] -- curl -s ifconfig.co
+
 <br><br>
 
 ## Scale a deployment interactively:
@@ -123,7 +126,7 @@ k get ev -A
 ## Get all events from a specific namespaces (with watch flag in order to "live tail"):
 k get ev -n [namespace] -w
 
-## Get all resources from all namespaces (not actually all, but ):
+## Get all resources from all namespaces (not actually all, but the most useful: pod, service, daemonset, deployment, replicaset, horizontalpodautoscaler):
 k get all -A
 
 ## Get all CustomResourceDefinitions from all namespaces
