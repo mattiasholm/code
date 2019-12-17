@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt install -y git && git config --global user.name "Mattias Holm" && git config --global user.email "mattias.holm@live.com" && git config --global credential.helper cache
+sudo apt install -y git && git config --global user.name "Mattias Holm" && git config --global user.email "mattiasholm@live.com" && git config --global credential.helper 'cache --timeout=86400'
 
 sudo apt install -y python3
 
