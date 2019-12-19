@@ -14,6 +14,9 @@ docker start [container-ID]
 ## Attach to a container:
 docker attach [container-ID]
 
+## Start an interactive shell in a specific container:
+docker exec -it [container-ID] -- 
+
 <br><br>
 
 ## List active containers:

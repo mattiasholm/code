@@ -65,8 +65,13 @@ k describe po [pod-ID] -n [namespace]
 ## Get logs from a specific pod:
 k logs [pod-ID] -n [namespace]
 
+<br><br>
+
 ## Run command in a specific pod:
 k exec [pod-ID] -n [namespace] -- [command]
+
+## Start an interactive shell in a specific pod:
+k exec -it [pod-ID] -n [namespace] -- /bin/bash
 
 ## Check translate public IP for a specific pod:
 k exec [pod-ID] -n [namespace] -- curl -s ifconfig.co
