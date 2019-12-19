@@ -73,7 +73,7 @@ k exec [pod-ID] -n [namespace] -- [command]
 ## Start an interactive shell in a specific pod:
 k exec -it [pod-ID] -n [namespace] -- /bin/bash
 
-## Check translate public IP for a specific pod:
+## Check public IP used for a specific pod:
 k exec [pod-ID] -n [namespace] -- curl -s ifconfig.co
 
 <br><br>

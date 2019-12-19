@@ -14,8 +14,17 @@ docker start [container-ID]
 ## Attach to a container:
 docker attach [container-ID]
 
-## Start an interactive shell in a specific container:
-docker exec -it [container-ID] -- 
+## Run command in a specific container:
+docker exec [container-ID] [command]
+
+## Start an interactive shell in a specific running container:
+docker exec -it [container-ID] /bin/bash
+
+## Start a new container with interactive shell:
+docker run -it [image-name] /bin/bash
+
+## Check public IP used for a specific container:
+docker exec [container-ID] curl -s ifconfig.co
 
 <br><br>
 
