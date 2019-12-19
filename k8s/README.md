@@ -192,3 +192,17 @@ k describe no | grep Taints
 
 ## List tolerations for pods in all namespaces:
 k get po -A -o yaml | grep tolerations:
+
+<br><br>
+
+## List nodes and show labels:
+k get nodes --show-labels
+
+## List namespaces and show labels:
+k get ns --show-labels
+
+## Label a specific node:
+k label no [node-name] [label]
+
+## Label a specific namespace
+k label ns [node-name] [label]
