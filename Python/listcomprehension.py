@@ -13,9 +13,32 @@ print(matching)
 
 
 
-# Example 1
+# Example 2
 
 list = ["apa", "aceton", "bacon"]
 
 for x in [x for x in list if "ac" in x]:
     print(x)
+
+
+
+# Example 3
+
+list = ["apa", "aceton", "bacon", "bordtennis"]
+
+newlist = [x for x in list if "ac" in x]
+
+print(newlist)
+
+
+
+# Example without list comprehension
+
+list = ["apa", "aceton", "bacon"]
+newlist = []
+
+for x in list:
+    if "ac" in x:
+        newlist.append(x)
+
+print(newlist)
