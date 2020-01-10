@@ -1,12 +1,12 @@
 $Verbose = $false
 
-$OnCallStart = Get-Date '2018-07-12 18:00'
-$OnCallEnd = Get-Date '2018-07-19 07:00'
+$OnCallStart = Get-Date '2020-01-09 17:00'
+$OnCallEnd = Get-Date '2020-01-16 08:00'
 
-$OfficeHoursStart = Get-Date '07:00'
-$OfficeHoursEnd = Get-Date '18:00'
+$OfficeHoursStart = Get-Date '08:00'
+$OfficeHoursEnd = Get-Date '17:00'
 
-$MonthlySalary = 0
+$MonthlySalary = 47000
 
 $Rate1 = $MonthlySalary/1400
 $Rate2 = $MonthlySalary/900
