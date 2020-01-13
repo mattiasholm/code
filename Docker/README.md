@@ -69,6 +69,9 @@ docker rm $(docker ps -a -q)
 docker image rm [image-ID]
 docker rmi [image-ID]
 
+## Delete all dangling images (i.e. layers that have no relationship to any tagged images):
+docker images prune
+
 ## Delete all container images:
 docker rmi $(docker images -q)
 

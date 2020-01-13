@@ -119,3 +119,23 @@ COUNT(*) OVER (PARTITION BY CONVERT(date, IssueDate)) AS AntalPerDatum
 FROM dbo.hdIssues
 LEFT JOIN dbo.hdUsers ON dbo.hdIssues.AssignedToUserID = dbo.hdUsers.UserID
 ORDER BY IssueDate DESC;
+
+
+-- Exempel på SQL Sub query:
+SELECT
+    order_id,
+    order_date,
+    customer_id
+FROM
+    sales.orders
+WHERE
+    customer_id IN (
+        SELECT
+            customer_id
+        FROM
+            sales.customers
+        WHERE
+            city = 'New York'
+    )
+ORDER BY
+    order_date DESC;
