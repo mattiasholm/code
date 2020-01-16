@@ -2,8 +2,6 @@
 
 <br>
 
-| Pattern                       | Description                    |
-| ----------------------------- | ------------------------------ |
 | **General**                   |                                |
 | .                             | any character except newline   |
 | \w \d \s                      | word, digit, whitespace        |
