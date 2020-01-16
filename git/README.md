@@ -2,5 +2,5 @@
 
 <br><br>
 
-## apa
-apa
+## Official documentation:
+https://git-scm.com/docs
