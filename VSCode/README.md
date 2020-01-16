@@ -5,18 +5,18 @@
 # Shortcuts:
 
 ## Format code:
-`Windows` Alt+Shift+F
-
 `Mac` Option+Shift+F
 
-## Markdown preview:
-`Windows` Ctrl+Shift+V
+`Windows` Alt+Shift+F
 
+## Markdown preview:
 `Mac` Command+Shift+V
 
-## View Problems:
-`Windows` Ctrl+Shift+M
+`Windows` Ctrl+Shift+V
 
+## View Problems:
 `Mac` Command+Shift+M
+
+`Windows` Ctrl+Shift+M
 
 ## FLER ??? GOOGLA! Verifiera även att Mac-kommandon är korrekta!
