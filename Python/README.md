@@ -1,6 +1,6 @@
 # Cheat Sheet
 
-<br><br>
+<br>
 
 ## apa
 apa

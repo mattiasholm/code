@@ -1,6 +1,6 @@
 # Cheat Sheet
 
-<br><br>
+<br>
 
 ## Create an alias for kubectl:
 alias k=kubectl

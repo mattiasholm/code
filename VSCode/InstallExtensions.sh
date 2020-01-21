@@ -12,5 +12,6 @@ code --install-extension msazurermtools.azurerm-vscode-tools
 code --install-extension bencoleman.armview
 code --install-extension josin.kusto-syntax-highlighting
 code --install-extension yzhang.markdown-all-in-one
+code --install-extension pustelto.bracketeer
 
 code --list-extensions --show-versions

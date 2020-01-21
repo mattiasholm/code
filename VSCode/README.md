@@ -5,18 +5,23 @@
 # Shortcuts:
 
 ## Format code:
-`Mac` Option+Shift+F
+`Mac` Alt+Shift+F
 
 `Windows` Alt+Shift+F
 
 ## Markdown preview:
-`Mac` Command+Shift+V
+`Mac` Cmd+Shift+V
 
 `Windows` Ctrl+Shift+V
 
 ## View Problems:
-`Mac` Command+Shift+M
+`Mac` Cmd+Shift+M
 
 `Windows` Ctrl+Shift+M
 
-## FLER ??? GOOGLA! Verifiera även att Mac-kommandon är korrekta!
+## Delete matching brackets:
+`Mac` Cmd+Shift+Alt+I
+
+`Windows` Ctrl+Shift+Alt+I
+
+## FLER ??? GOOGLA! Verifiera även att Mac-kommandon är korrekta, minst lika viktigt!
