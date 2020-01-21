@@ -48,6 +48,18 @@ git add -u
 git add --all
 git add --A
 
+## Commit changes in staging area:
+git commit -m "[commit-message]"
+
+## Push locally committed changes to origin:
+git push
+
+## Push changes to a new branch that doesn't exist in origin:
+git push --set-upstream origin [branch-name]
+
+## View log:
+git log
+
 <br><br>
 
 ## Checkout a specific branch or commit ID:
