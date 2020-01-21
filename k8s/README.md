@@ -37,6 +37,9 @@ k get po -n [namespace]
 k get po -A
 k get po --all-namespaces
 
+## Count number of pods in all namespaces:
+k get po -A | wc -l
+
 ## List pods in all namespaces, display only name:
 k get po -A -o name
 
@@ -58,6 +61,18 @@ k get po [pod-ID] -n [namespace]
 
 ## List a specific pod, verbose output in YAML:
 k get po [pod-ID] -n [namespace] -o yaml
+
+## List pods in all namespaces that are not Running:
+k get po -A | grep -v Running
+
+## Count number of pods that are not Running:
+k get po -A | grep -v Running | wc -l
+
+## List pods in all namespaces that are stuck in ContainerCreating:
+k get po -A | grep ContainerCreating
+
+## Count number of pods that are stuck in ContainerCreating:
+k get po -A | grep ContainerCreating | wc -l
 
 ## Describe a specific pod:
 k describe po [pod-ID] -n [namespace]
