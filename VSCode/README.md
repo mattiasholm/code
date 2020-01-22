@@ -9,12 +9,32 @@
 
 `Windows` Alt+Shift+F
 
+## Select language mode:
+`Mac` Cmd+K + M
+
+`Windows` Ctrl+K + M
+
+## Run active file or selected code block in integrated terminal:
+`Mac` Shift+Enter
+
+`Windows` Shift+Enter
+
+## Remove current line (without adding it to clipboard):
+`Mac` Cmd+Shift+K
+
+`Windows` Ctrl+Shift+K
+
+## Comment out current line or selected code block:
+`Mac` Cmd+Shift+7
+
+`Windows` Ctrl+Shift+7
+
 ## Markdown preview:
 `Mac` Cmd+Shift+V
 
 `Windows` Ctrl+Shift+V
 
-## View Problems:
+## View Problems: 
 `Mac` Cmd+Shift+M
 
 `Windows` Ctrl+Shift+M
@@ -24,4 +44,4 @@
 
 `Windows` Ctrl+Shift+Alt+I
 
-## FLER ??? GOOGLA! Verifiera även att Mac-kommandon är korrekta, minst lika viktigt!
+## FLER?
