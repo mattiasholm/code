@@ -14,4 +14,24 @@ python3 --version
 `print("Message")`
 
 ## Assign a variable:
-var = "value"
+`var = "value"`
+
+## Add a single-line comment:
+`#Comment`
+
+## Add a multi-line comment:
+```
+"""
+Multi-line
+Comment
+"""
+```
+
+
+
+## TEST FLAVORED MARKDOWN:
+
+```python
+s = "Python syntax highlighting"
+print s
+```
