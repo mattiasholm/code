@@ -3,15 +3,11 @@
 <br>
 
 ## Python shebang:
-`#!/usr/bin/env python3`
-
 ```bash
 #!/usr/bin/env python3
 ```
 
 ## Check installed Python version:
-`python3 --version`
-
 ```bash
 python3 --version
 ```
@@ -19,10 +15,14 @@ python3 --version
 <br><br>
 
 ## Print to standard output:
-`print("Message")`
+```python
+print("Message")
+```
 
 ## Add a single-line comment:
-`#Comment`
+```python
+#Comment
+```
 
 ## Add a multi-line comment:
 ```python
@@ -33,11 +33,27 @@ Comment
 ```
 
 ## Assign a variable:
-`x = 1`
+```python
+x = 1
+```
 
 ## Assign multiple variables at once:
-`x, y, z = 1, 2, 3`
+```python
+x, y, z = 1, 2, 3
+```
 
 ## Assign the same value to multiple variables:
-`x = y = z = 1`
+```python
+x = y = z = 1
+```
+
+
+
+
+
+
+## PLACEHOLDER
+```python
+PLACEHOLDER
+```
 
