@@ -104,3 +104,4 @@ https://stackoverflow.com/questions/8358035/whats-the-difference-between-git-rev
 pop stash?
 Fler?
 rebase?
+--amend
