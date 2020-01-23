@@ -3,7 +3,7 @@
 <br>
 
 ## Create an alias for kubectl:
-alias k=kubectl
+alias k='kubectl'
 
 ## Change context:
 k config use-context [cluster-name]
