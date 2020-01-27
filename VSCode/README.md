@@ -2,8 +2,6 @@
 
 <br>
 
-# Shortcuts:
-
 ## Format code:
 `Mac` Alt+Shift+F
 
@@ -13,6 +11,11 @@
 `Mac` Cmd+K + M
 
 `Windows` Ctrl+K + M
+
+## Open folder:
+`Mac` Cmd+K+O
+
+`Windows` Ctrl+K+O
 
 ## Run active file or selected code block in integrated terminal:
 `Mac` Shift+Enter
@@ -44,4 +47,4 @@
 
 `Windows` Ctrl+Shift+Alt+I
 
-## FLER?
+## FYLL PÅ!
