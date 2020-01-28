@@ -17,6 +17,7 @@ brew cask install teamviewer
 brew cask install watchguard-mobile-vpn-with-ssl
 brew cask install avg-antivirus
 brew cask install dropbox
+brew cask install google-backup-and-sync
 brew cask install gimp
 brew cask install paintbrush
 brew cask install vlc
