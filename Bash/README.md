@@ -68,4 +68,9 @@ ll
 grep -v substring
 ```
 
+## Create empty file in working directory:
+```bash
+touch
+```
+
 ## FLER??? Eventuellt flytta Curl till en egen cheat sheet?

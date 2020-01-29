@@ -213,22 +213,22 @@ git commit --amend -m "[commit-message]"
 git commit --amend --no-edit
 ```
 
-## Discard modified file in working tree:
+## Discard modified file in working tree (will not touch staging area):
 ```bash
 git restore [file-name]
 ```
 
-## Discard all modified files in working tree:
+## Discard all modified files in working tree (will not touch staging area):
 ```bash
 git restore .
 ```
 
-## Unstage file from staging area:
+## Unstage file for commit:
 ```bash
 git restore --staged [file-name]
 ```
 
-## Unstage all files from staging area:
+## Unstage all files for commit:
 ```bash
 git restore --staged .
 ```
@@ -239,11 +239,11 @@ git clean --force
 git clean -f
 ```
 
-
-
-
-
-
+## Remove all untracked files and directories from working directory:
+```bash
+git clean -d --force
+git clean -d -f
+```
 
 
 

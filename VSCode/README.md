@@ -34,6 +34,11 @@
 
 <br><br>
 
+## Add a new line below and move cursor there (equivalent to vim `o`):
+`Mac` Cmd+Enter
+
+`Windows` Ctrl+Enter
+
 ## Remove current line or selected code block (without adding it to clipboard):
 `Mac` Cmd+Shift+K
 
