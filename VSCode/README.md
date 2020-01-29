@@ -17,6 +17,11 @@
 
 `Windows` Ctrl+K+O
 
+## Show/hide Explorer:
+`Mac` Cmd+B
+
+`Windows` Ctrl+B
+
 ## Run active file or selected code block in integrated terminal:
 `Mac` Shift+Enter
 
