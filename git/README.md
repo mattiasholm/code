@@ -126,22 +126,17 @@ git add --all
 git add -A
 ```
 
+## Add only a specific file to staging area:
+```bash
+git add [file-name]
+```
+
 <br><br>
 
-## Commit changes in staging area:
+## Commit all changes in staging area:
 ```bash
 git commit --message "[commit-message]"
 git commit -m "[commit-message]"
-```
-
-## Amend message of previous commit:
-```bash
-git commit --amend -m "[commit-message]"
-```
-
-## Amend code in previous commit:
-```bash
-git commit --amend --no-edit
 ```
 
 <br><br>
@@ -208,14 +203,14 @@ git branch -d [branch-name]
 
 <br><br>
 
-## Restore modified file in working tree from latest commit:
+## Amend message of previous commit:
 ```bash
-git checkout [file-name] ???
+git commit --amend -m "[commit-message]"
 ```
 
-## Restore all modified files in working tree from latest commit:
+## Amend code in previous commit:
 ```bash
-git checkout .
+git commit --amend --no-edit
 ```
 
 ## Discard modified file in working tree:
@@ -228,12 +223,12 @@ git restore [file-name]
 git restore .
 ```
 
-## Remove modified file from staging area:
+## Unstage file from staging area:
 ```bash
 git restore --staged [file-name]
 ```
 
-## Remove all files from staging area:
+## Unstage all files from staging area:
 ```bash
 git restore --staged .
 ```
@@ -243,6 +238,30 @@ git restore --staged .
 git clean --force
 git clean -f
 ```
+
+
+
+
+
+
+
+
+
+## Restore modified file in working tree from latest commit:
+```bash
+git checkout [file-name]
+```
+
+## Restore all modified files in working tree from latest commit:
+```bash
+git checkout .
+```
+
+
+
+
+
+
 
 <br><br>
 
