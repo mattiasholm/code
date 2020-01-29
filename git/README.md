@@ -213,24 +213,30 @@ git commit --amend -m "[commit-message]"
 git commit --amend --no-edit
 ```
 
-## Discard modified file in working tree (will not touch staging area):
+## Discard changes to a specific file in working tree (will not touch staging area):
 ```bash
 git restore [file-name]
+git checkout [file-name]
 ```
 
-## Discard all modified files in working tree (will not touch staging area):
+## Discard changes to all files in working tree (will not touch staging area):
 ```bash
 git restore .
+git checkout .
 ```
 
 ## Unstage file for commit:
 ```bash
-git restore --staged [file-name]
+git restore [file-name] --staged
+git restore [file-name] -S
+git reset [file-name]
 ```
 
 ## Unstage all files for commit:
 ```bash
-git restore --staged .
+git restore . --staged
+git restore . -S
+git reset .
 ```
 
 ## Remove all untracked files from working directory:
@@ -244,6 +250,8 @@ git clean -f
 git clean -d --force
 git clean -d -f
 ```
+
+
 
 
 
@@ -268,6 +276,8 @@ git checkout .
 ## FLER TIPS OCH TRIX ???
 https://stackoverflow.com/questions/8358035/whats-the-difference-between-git-revert-checkout-and-reset
 
+
+??? reset VS restore VS checkout ???
 pop stash?
 Fler?
 rebase?
