@@ -22,34 +22,43 @@
 
 `Windows` Ctrl+B
 
+## Show/hide Problems: 
+`Mac` Cmd+Shift+M
+
+`Windows` Ctrl+Shift+M
+
 ## Run active file or selected code block in integrated terminal:
 `Mac` Shift+Enter
 
 `Windows` Shift+Enter
 
-## Remove current line (without adding it to clipboard):
+<br><br>
+
+## Remove current line or selected code block (without adding it to clipboard):
 `Mac` Cmd+Shift+K
 
 `Windows` Ctrl+Shift+K
+
+## Move current line or selected code block up or down (without using copy/paste):
+`Mac` Alt+↑ | Alt+↓
+
+`Windows` Alt+↑ | Alt+↓
 
 ## Comment out current line or selected code block:
 `Mac` Cmd+Shift+7
 
 `Windows` Ctrl+Shift+7
 
+<br><br>
+
 ## Markdown preview:
 `Mac` Cmd+Shift+V
 
 `Windows` Ctrl+Shift+V
-
-## View Problems: 
-`Mac` Cmd+Shift+M
-
-`Windows` Ctrl+Shift+M
 
 ## Delete matching brackets:
 `Mac` Cmd+Shift+Alt+I
 
 `Windows` Ctrl+Shift+Alt+I
 
-## FYLL PÅ!
+## FYLL PÅ! GOOGLA, MÅSTE FINNAS JÄTTEMÅNGA ANVÄNDBARA SHORTCUTS!
