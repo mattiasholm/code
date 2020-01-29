@@ -153,9 +153,9 @@ git push --set-upstream origin [branch-name]
 
 <br><br>
 
-## 
+## Display all local commits, not yet pushed to origin:
 ```bash
-git cherry -v master
+git cherry
 ```
 
 ## Display commit history log for currently checked out branch:
