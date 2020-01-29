@@ -153,6 +153,11 @@ git push --set-upstream origin [branch-name]
 
 <br><br>
 
+## 
+```bash
+git cherry -v master
+```
+
 ## Display commit history log for currently checked out branch:
 ```bash
 git log
@@ -219,7 +224,7 @@ git restore [file-name]
 git checkout [file-name]
 ```
 
-## Discard changes to all files in working tree (will not touch staging area):
+## Discard changes to all tracked files in working tree (will not touch staging area):
 ```bash
 git restore .
 git checkout .
@@ -254,16 +259,6 @@ git clean -d -f
 
 
 
-
-## Restore modified file in working tree from latest commit:
-```bash
-git checkout [file-name]
-```
-
-## Restore all modified files in working tree from latest commit:
-```bash
-git checkout .
-```
 
 
 
