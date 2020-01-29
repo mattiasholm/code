@@ -34,25 +34,25 @@
 
 <br><br>
 
-## Add a new line below and move cursor there (equivalent to vim `o`):
-`Mac` Cmd+Enter
-
-`Windows` Ctrl+Enter
-
 ## Remove current line or selected code block (without adding it to clipboard):
 `Mac` Cmd+Shift+K
 
 `Windows` Ctrl+Shift+K
+
+## Comment out current line or selected code block:
+`Mac` Cmd+Shift+7
+
+`Windows` Ctrl+Shift+7
 
 ## Move current line or selected code block up or down (without using copy/paste):
 `Mac` Alt+↑ | Alt+↓
 
 `Windows` Alt+↑ | Alt+↓
 
-## Comment out current line or selected code block:
-`Mac` Cmd+Shift+7
+## Add a new line below and move cursor there (equivalent to vim `o`):
+`Mac` Cmd+Enter
 
-`Windows` Ctrl+Shift+7
+`Windows` Ctrl+Enter
 
 <br><br>
 

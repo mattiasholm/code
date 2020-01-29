@@ -1,8 +1,0 @@
-$Mailbox = "adam.boll@domain.tld"
-$UNCPath = "\\don-ex-mb01\C$\Temp\"
-
-
-
-if ((Get-PSSnapin | where {$_.Name -match "Exchange.Management"}) -eq $null) { Add-PSSnapin Microsoft.Exchange.Management.* }
-
-New-MailboxExportRequest -Mailbox $Mailbox -FilePath "$UNCPath\$Mailbox.pst" -BadItemLimit 100000

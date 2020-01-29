@@ -1,1 +1,0 @@
-Get-Mailbox tore.tallsaft | Search-Mailbox -SearchDumpsterOnly -DeleteContent

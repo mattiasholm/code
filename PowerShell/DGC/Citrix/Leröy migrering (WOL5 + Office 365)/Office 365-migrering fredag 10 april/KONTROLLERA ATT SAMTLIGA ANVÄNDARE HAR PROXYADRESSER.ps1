@@ -1,1 +1,0 @@
-﻿Get-ADUser -SearchBase "OU=Leroy,OU=Customers,OU=Hosting2,DC=emcat,DC=com" -Filter * -Properties * | select userprincipalname,ProxyAddresses | findstr "{}"

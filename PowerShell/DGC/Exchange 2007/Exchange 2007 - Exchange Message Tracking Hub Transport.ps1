@@ -1,1 +1,0 @@
-Get-MessageTrackingLog -Server "MSX-HT10" -Sender "sofia.lorentzon@donator.se" -Start "10/26/2012 11:00:00" -End "10/26/2012 12:00:00"

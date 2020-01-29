@@ -1,8 +1,0 @@
-$EmailAddress = "gemensam@domain.tld"
-$Deligate = "adam.boll@domain.tld"
-
-
-
-if ((Get-PSSnapin | where {$_.Name -match "Exchange.Management"}) -eq $null) { Add-PSSnapin Microsoft.Exchange.Management.* }
-
-Set-Mailbox $EmailAddress -GrantSendOnBehalfTo @{remove=$Deligate}

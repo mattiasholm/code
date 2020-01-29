@@ -1,1 +1,0 @@
-Get-Mailbox -OrganizationalUnit "Vulkanresor" -ResultSize 5 | Move-Mailbox -TargetDatabase "EX-MB1\PRB-26931" -WhatIf

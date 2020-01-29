@@ -1,1 +1,0 @@
-Get-DistributionGroupMember allusers@leroy.se | foreach {Get-Mailbox -Identity $_.Name} | foreach {Add-DistributionGroupMember -Identity allusers2@leroy.se -Member $_.Identity}

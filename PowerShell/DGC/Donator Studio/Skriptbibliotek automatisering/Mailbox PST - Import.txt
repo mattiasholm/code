@@ -1,8 +1,0 @@
-$UserPrincipalName = "nisse.hult@nissehult.se"
-$FilePath = "\\don-ex-mb01\C$\Temp\mikael.fredriksson@swelube.se.pst"
-
-
-
-if ((Get-PSSnapin | where {$_.Name -match "Exchange.Management"}) -eq $null) { Add-PSSnapin Microsoft.Exchange.Management.* }
-
-New-MailboxImportRequest -Mailbox $UserPrincipalName -FilePath $FilePath -BadItemLimit 100000
