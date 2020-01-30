@@ -181,9 +181,14 @@ git rev-parse HEAD
 
 <br><br>
 
-## List all branches:
+## List all local branches (currently checked out branch is highlighted):
 ```bash
 git branch
+```
+
+## List all remote branches:
+```bash
+git branch -r
 ```
 
 ## Create a new branch based on current HEAD:
@@ -201,10 +206,27 @@ git checkout [branch-name | commit-ID]
 git checkout -b [branch-name]
 ```
 
-## Delete a branch:
+## Rename currently checked out branch (not yet pushed to origin):
+```bash
+git branch --move [new-name]
+git branch -m [new-name]
+```
+
+## Rename a specific branch (not yet pushed to origin):
+```bash
+git branch --move [branch-name] [new-name]
+git branch -m [branch-name] [new-name]
+```
+
+## Delete a fully merged branch:
 ```bash
 git branch --delete [branch-name]
 git branch -d [branch-name]
+```
+
+## Delete branch, even if not merged:
+```bash
+git branch -D [branch-name]
 ```
 
 <br><br>
@@ -257,13 +279,36 @@ git clean -d --force
 git clean -d -f
 ```
 
+## Discard all local commits and revert back to origin's latest commit
+```bash
+
+```
+
+<br><br>
+
+## Compare working directory to current HEAD:
+```bash
+git diff
+```
+
+## Compare working directory to another branch or commit:
+```bash
+git diff [branch-name | commit-ID]
+```
+
+<br><br>
+
+## Merge a specific branch or commit into currently checked out branch:
+git merge [branch-name | commit-ID]
 
 
 
 
 
+## 
+```bash
 
-
+```
 
 
 
@@ -273,10 +318,11 @@ git clean -d -f
 https://stackoverflow.com/questions/8358035/whats-the-difference-between-git-revert-checkout-and-reset
 
 
+!!! git tag - versions
 ??? reset VS restore VS checkout ???
 pop stash?
 Fler?
 rebase?
-reflog
+??? HEAD@{2}:
 
 ## Also, since you're a Git beginner, I highly recommend you read the Pro Git book,"
