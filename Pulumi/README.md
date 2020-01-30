@@ -2,6 +2,11 @@
 
 <br>
 
+## Official docs:
+https://www.pulumi.com/docs/reference/cli/
+
+<br><br>
+
 ## Contextual syntax help:
 ```bash
 pulumi [subcommand] --help
@@ -34,19 +39,31 @@ pulumi logout
 
 <br><br>
 
-## Create new Pulumi project:
+## Create new Pulumi project in working directory, accept default values:
 ```bash
-pulumi new [project-name]
+pulumi new [template] --yes
+pulumi new [template] -y
 ```
 
 <br><br>
 
-## Deploy stack:
+## Deploy current stack:
 ```bash
 pulumi up
 ```
 
-## Destroy stack:
+## Deploy current stack, skip confirmation prompt:
+```bash
+pulumi up --yes
+pulumi up --y
+```
+
+## Previw deploy and list any changes:
+```bash
+pulumi preview
+```
+
+## Destroy current stack:
 ```bash
 pulumi destroy
 ```
@@ -107,18 +124,18 @@ pulumi config refresh
 
 <br><br>
 
-## Compares the current stack's resource state with the state known to exist in the actual cloud provider:
+## Compares the current stack's resource state with the state known to exist in the actual cloud provider and modifies the stack's state accordingly:
 ```bash
 pulumi refresh
 ```
 
 <br><br>
 
-## List history of updates to a stack:
+## List history of all updates to a stack:
 ```bash
 pulumi history
 ```
 
 <br><br>
 
-## TESTKÖR SAMTLIGA OVANSTÅENDE + FYLL PÅ MED FLER!
+## TESTKÖR SAMTLIGA OVANSTÅENDE + FYLL PÅ MED FLER FRÅN DOCS!

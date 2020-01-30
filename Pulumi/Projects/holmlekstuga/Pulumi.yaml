@@ -1,0 +1,3 @@
+name: holmlekstuga
+runtime: python
+description: A minimal Azure Python Pulumi program

@@ -2,7 +2,7 @@
 
 <br>
 
-## Official documentation:
+## Official docs:
 https://git-scm.com/docs
 
 ## Oh Shit, Git!?!:
