@@ -302,9 +302,14 @@ git clean -d --force
 git clean -d -f
 ```
 
-## Discard all local commits and revert back to origin's latest commit
+## Discard all local commits and revert back to latest commit in origin:
 ```bash
 git reset --hard origin/master
+```
+
+## Discard all local commits and revert back to a specific branch or commit:
+```bash
+git reset --hard [commit-ID]
 ```
 
 <br><br>
