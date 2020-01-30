@@ -148,6 +148,11 @@ pulumi config get [key-name]
 pulumi config set [key-name] [value]
 ```
 
+## Set value of a specific configuration key and mark it as secret (as opposed to being stored as plain text):
+```shell
+pulumi config set [key-name] [value] --secret
+```
+
 ## Remove a specific configuration key:
 ```shell
 pulumi config rm [key-name]
