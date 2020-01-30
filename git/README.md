@@ -302,14 +302,29 @@ git clean -d --force
 git clean -d -f
 ```
 
-## Discard all local commits and revert back to latest commit in origin:
+## Discard all local commits and revert back to latest commit in remote master:
 ```bash
 git reset --hard origin/master
 ```
 
-## Discard all local commits and revert back to a specific branch or commit:
+## Discard all local commits and revert back to a specific local branch or commit:
 ```bash
-git reset --hard [commit-ID]
+git reset --hard [branch-name | commit-ID]
+```
+
+## Revert changes made in latest commit:
+```bash
+git revert HEAD
+```
+
+## Revert changes made in the `n` latest commits:
+```bash
+git revert HEAD~[number-of-commits]
+```
+
+## Revert changes made in a specific commit:
+```bash
+git revert [commit-ID]
 ```
 
 <br><br>
@@ -319,27 +334,25 @@ git reset --hard [commit-ID]
 git diff
 ```
 
-## Compare working directory to another branch or commit:
+## Compare all files in working directory to another branch or commit:
 ```bash
 git diff [branch-name | commit-ID]
 ```
 
-## Compare a specific branch or commit to another branch or commit:
+## Compare all files a specific branch or commit to another branch or commit:
 ```bash
 git diff [branch-name | commit-ID] [branch-name | commit-ID]
+```
+
+## Compare a specific directory or file in working directory to another branch or commit:
+```bash
+git diff [branch-name | commit-ID] [directory-name | file-name]
 ```
 
 <br><br>
 
 ## Merge a specific branch or commit into currently checked out branch:
 git merge [branch-name | commit-ID]
-
-## 
-```bash
-
-```
-
-
 
 <br><br>
 
@@ -348,10 +361,8 @@ https://stackoverflow.com/questions/8358035/whats-the-difference-between-git-rev
 
 
 !!! git tag - versions
-??? reset VS restore VS checkout ???
 pop stash?
-Fler?
 rebase?
-??? HEAD@{2}:
+??? HUR ANVÄNDA ??? HEAD@{2}:
 
 ## Also, since you're a Git beginner, I highly recommend you read the Pro Git book,"
