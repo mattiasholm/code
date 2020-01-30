@@ -181,9 +181,25 @@ git rev-parse HEAD
 
 <br><br>
 
-## List all branches:
+## List all local branches:
 ```bash
 git branch
+```
+
+## List all remote branches:
+```bash
+git branch -r
+```
+
+## List both local and remote branches:
+```bash
+git branch --all
+git branch -a
+```
+
+## List currently checked out branch:
+```bash
+git branch --show-current
 ```
 
 ## Create a new branch based on current HEAD:
@@ -201,10 +217,39 @@ git checkout [branch-name | commit-ID]
 git checkout -b [branch-name]
 ```
 
-## Delete a branch:
+## Rename currently checked out local branch:
+```bash
+git branch --move [new-name]
+git branch -m [new-name]
+```
+
+## Rename a specific local branch:
+```bash
+git branch --move [branch-name] [new-name]
+git branch -m [branch-name] [new-name]
+```
+
+## Copy currently checked out local branch:
+```bash
+git branch --copy [new-name]
+git branch -c [new-name]
+```
+
+## Copy a specific local branch:
+```bash
+git branch --copy [branch-name] [new-name]
+git branch -c [branch-name] [new-name]
+```
+
+## Delete a fully merged branch:
 ```bash
 git branch --delete [branch-name]
 git branch -d [branch-name]
+```
+
+## Delete branch, even if not merged:
+```bash
+git branch -D [branch-name]
 ```
 
 <br><br>
@@ -257,13 +302,41 @@ git clean -d --force
 git clean -d -f
 ```
 
+## Discard all local commits and revert back to origin's latest commit
+```bash
+git reset --hard origin/master
+```
+
+<br><br>
+
+## Compare working directory to current HEAD:
+```bash
+git diff
+```
+
+## Compare working directory to another branch or commit:
+```bash
+git diff [branch-name | commit-ID]
+```
+
+## Compare a specific branch or commit to another branch or commit:
+```bash
+git diff [branch-name | commit-ID] [branch-name | commit-ID]
+```
+
+<br><br>
+
+## Merge a specific branch or commit into currently checked out branch:
+git merge [branch-name | commit-ID]
 
 
 
 
 
+## 
+```bash
 
-
+```
 
 
 
@@ -273,10 +346,11 @@ git clean -d -f
 https://stackoverflow.com/questions/8358035/whats-the-difference-between-git-revert-checkout-and-reset
 
 
+!!! git tag - versions
 ??? reset VS restore VS checkout ???
 pop stash?
 Fler?
 rebase?
-reflog
+??? HEAD@{2}:
 
 ## Also, since you're a Git beginner, I highly recommend you read the Pro Git book,"
