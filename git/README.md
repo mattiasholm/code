@@ -181,6 +181,11 @@ git rev-parse HEAD
 
 <br><br>
 
+## List currently checked out branch:
+```bash
+git branch --show-current
+```
+
 ## List all local branches:
 ```bash
 git branch
@@ -195,11 +200,6 @@ git branch -r
 ```bash
 git branch --all
 git branch -a
-```
-
-## List currently checked out branch:
-```bash
-git branch --show-current
 ```
 
 ## Create a new branch based on current HEAD:
@@ -259,7 +259,7 @@ git branch -D [branch-name]
 git commit --amend -m "[commit-message]"
 ```
 
-## Amend code in previous commit:
+## Amend code in previous commit (only safe to do on commits not yet pushed to origin):
 ```bash
 git commit --amend --no-edit
 ```
@@ -328,10 +328,6 @@ git diff [branch-name | commit-ID] [branch-name | commit-ID]
 
 ## Merge a specific branch or commit into currently checked out branch:
 git merge [branch-name | commit-ID]
-
-
-
-
 
 ## 
 ```bash
