@@ -3,17 +3,17 @@
 <br>
 
 ## Python shebang:
-```bash
+```shell
 #!/usr/bin/env python3
 ```
 
 ## Check installed Python version:
-```bash
+```shell
 python3 --version
 ```
 
 ## Run Python:
-```bash
+```shell
 python3
 ```
 

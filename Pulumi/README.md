@@ -8,134 +8,166 @@ https://www.pulumi.com/docs/reference/cli/
 <br><br>
 
 ## Contextual syntax help:
-```bash
+```shell
 pulumi [subcommand] --help
 pulumi [subcommand] -h
+```
+
+## Create an alias for pulumi:
+```shell
+alias p='pulumi'
+```
+
+## Show version:
+```shell
+pulumi version
 ```
 
 <br><br>
 
 ## Log in to managed Pulumi service backend:
-```bash
+```shell
 pulumi login
 ```
 
 ## Log in to self-managed backend locally:
-```bash
+```shell
 pulumi login --local
 pulumi login -l
 ```
 
 ## Log in to self-managed backend in cloud storage:
-```bash
+```shell
 pulumi login --cloud-url
 pulumi login --c
 ```
 
+## Display currently logged in user:
+```shell
+pulumi whoami
+```
+
 ## Log out:
-```bash
+```shell
 pulumi logout
 ```
 
 <br><br>
 
-## Create new Pulumi project in working directory, accept default values:
-```bash
+## Create new Pulumi project in working directory based on the specified template, accept default values:
+```shell
 pulumi new [template] --yes
 pulumi new [template] -y
+```
+
+## Prerequisites:
+
+### `Python`:
+
+#### First-time installation of virtual environment:
+```shell
+virtualenv -p python3 venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+```
+
+#### Activate virtual environment after reopening shell:
+```shell
+source venv/bin/activate
 ```
 
 <br><br>
 
 ## Deploy current stack:
-```bash
+```shell
 pulumi up
 ```
 
 ## Deploy current stack, skip confirmation prompt:
-```bash
+```shell
 pulumi up --yes
 pulumi up --y
 ```
 
-## Previw deploy and list any changes:
-```bash
+## Previw changes before deploying:
+```shell
 pulumi preview
 ```
 
 ## Destroy current stack:
-```bash
+```shell
 pulumi destroy
 ```
 
 <br><br>
 
-## List stacks:
-```bash
+## List current stack:
+```shell
+pulumi stack
+```
+
+## List all stacks:
+```shell
 pulumi stack ls
 ```
 
 ## Switch the current workspace to a specific stack:
-```bash
+```shell
 pulumi stack select [stack-name]
 ```
 
 ## Create an empty stack:
-```bash
+```shell
 pulumi stack init [stack-name]
 ```
 
 ## Rename an existing stack:
-```bash
+```shell
 pulumi stack rename [new-name]
 ```
 
 ## Remove an existing stack:
-```bash
+```shell
 pulumi stack rm [stack-name]
 ```
 
 <br><br>
 
 ## List configuration values for a specific stack:
-```bash
+```shell
 pulumi config
 ```
 
 ## List value of a specific configuration key for a specific stack:
-```bash
+```shell
 pulumi config get [key-name]
 ```
 
 ## Set value of a specific configuration key:
-```bash
+```shell
 pulumi config set [key-name] [value]
 ```
 
 ## Remove a specific configuration key:
-```bash
+```shell
 pulumi config rm [key-name]
 ```
 
 ## Update the local configuration based on the most recent deployment of the stack:
-```bash
+```shell
 pulumi config refresh
 ```
 
 <br><br>
 
 ## Compares the current stack's resource state with the state known to exist in the actual cloud provider and modifies the stack's state accordingly:
-```bash
+```shell
 pulumi refresh
 ```
 
 <br><br>
 
 ## List history of all updates to a stack:
-```bash
+```shell
 pulumi history
 ```
-
-<br><br>
-
-## TESTKÖR SAMTLIGA OVANSTÅENDE + FYLL PÅ MED FLER FRÅN DOCS!
