@@ -90,18 +90,18 @@ git pull
 
 <br><br>
 
-## Display currently checked out branch and status of working tree and staging area:
+## Show currently checked out branch and status of working tree and staging area:
 ```bash
 git status
 ```
 
-## Display status of working tree in short format:
+## Show status of working tree in short format:
 ```bash
 git status --short
 git status -s
 ```
 
-## Display status of working tree, exclude any untracked files:
+## Show status of working tree, exclude any untracked files:
 ```bash
 git status --untracked-files=no
 git status --u=no
@@ -153,23 +153,23 @@ git push --set-upstream origin [branch-name]
 
 <br><br>
 
-## Display all local commits, not yet pushed to origin:
+## Show all local commits, not yet pushed to origin:
 ```bash
 git cherry --verbose
 git cherry --v
 ```
 
-## Display commit history (both local and remote) in currently checked out branch:
+## Show commit history (both local and remote) in currently checked out branch:
 ```bash
 git log
 ```
 
-## Display commit history (both local and remote) in all branches:
+## Show commit history (both local and remote) in all branches:
 ```bash
 git log --all
 ```
 
-## Display reference log (basically undo history):
+## Show reference log (basically undo history):
 ```bash
 git reflog
 ```
@@ -177,6 +177,12 @@ git reflog
 ## Get commit ID of current HEAD:
 ```bash
 git rev-parse HEAD
+cat .git/refs/heads/master
+```
+
+## Show author and commit ID for each line of a file:
+```bash
+git blame [file-name]
 ```
 
 <br><br>
@@ -184,6 +190,7 @@ git rev-parse HEAD
 ## List currently checked out branch:
 ```bash
 git branch --show-current
+cat .git/HEAD
 ```
 
 ## List all local branches:
@@ -317,9 +324,9 @@ git reset --hard [branch-name | commit-ID]
 git revert HEAD
 ```
 
-## Revert changes made in the `n` latest commits:
+## Revert changes made in the second latest commit:
 ```bash
-git revert HEAD~[number-of-commits]
+git revert HEAD~1
 ```
 
 ## Revert changes made in a specific commit:
@@ -354,15 +361,21 @@ git diff [branch-name | commit-ID] [directory-name | file-name]
 ## Merge a specific branch or commit into currently checked out branch:
 git merge [branch-name | commit-ID]
 
+## Abort an ongoing merge:
+git merge --abort
+
+<br><br>
+
 <br><br>
 
 ## FLER TIPS OCH TRIX ???
 https://stackoverflow.com/questions/8358035/whats-the-difference-between-git-revert-checkout-and-reset
 
+https://ohshitgit.com/
 
-!!! git tag - versions
-pop stash?
-rebase?
+!!! git tag - named versions for applications! TESTA! git tag --list (git tag -h)
+!!! pop stash?
+??? rebase ???
 ??? HUR ANVÄNDA ??? HEAD@{2}:
 
-## Also, since you're a Git beginner, I highly recommend you read the Pro Git book,"
+ "Also, since you're a Git beginner, I highly recommend you read the Pro Git book,""
