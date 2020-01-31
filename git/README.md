@@ -497,8 +497,6 @@ git reset --hard origin/<branch-name>
 ## Revert changes made in latest commit (will create a new commit):
 ```shell
 git revert HEAD
-git revert --mainline 1
-git revert -m 1
 ```
 
 ## Revert changes made in the second latest commit (will create a new commit):
@@ -559,7 +557,11 @@ git merge --abort
 
 <br><br>
 
+FLER TIPS ATT SAXA HÄRIFÅRN???
 https://ohshitgit.com/
 
 
-??? rebase ???
+REVERT MERGE???
+git revert --mainline 1
+git revert -m 1
+TESTA INNAN LÄGGER TILL!
