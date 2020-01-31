@@ -212,6 +212,28 @@ git push --set-upstream origin [branch-name]
 
 <br><br>
 
+## List all tags:
+```shell
+git tag
+```
+
+## List what commit ID a specific tag references to:
+```shell
+cat .git/refs/tags/[tag-name]
+```
+
+## Create a new tag that will reference the currently checked out branch or commit:
+```shell
+git tag [tag-name]
+```
+
+## Delete a tag:
+```shell
+git tag -d [tag-name]
+```
+
+<br><br>
+
 ## Show all local commits, not yet pushed to origin:
 ```shell
 git cherry --verbose
@@ -287,15 +309,21 @@ git branch -a
 git branch [branch-name]
 ```
 
+## Check out a specific branch:
+```shell
+git switch [branch-name]
+```
+
 ## Check out a specific branch or commit:
 ```shell
 git checkout [branch-name | commit-ID]
-git switch [branch-name | commit-ID]
 ```
 
 ## Create and check out a new branch in a single command:
 ```shell
 git checkout -b [branch-name]
+git switch --create [branch-name]
+git switch -c [branch-name]
 ```
 
 ## Rename currently checked out local branch:
@@ -476,9 +504,6 @@ git merge --abort
 
 https://ohshitgit.com/
 
-!!! git tag - named versions for applications! TESTA! git tag --list (git tag -h)
 !!! pop stash?
 ??? rebase ???
 ??? HUR ANVÄNDA ??? HEAD@{2}:
-
- "Also, since you're a Git beginner, I highly recommend you read the Pro Git book,""
