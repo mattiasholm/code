@@ -103,7 +103,7 @@ git pull
 
 <br><br>
 
-## Show currently checked out branch and status of working tree and staging area (index):
+## Show currently checked out branch and status of working tree and index (staging area):
 ```shell
 git status
 ```
@@ -122,45 +122,45 @@ git status --u=no
 
 <br><br>
 
-## Add all modified and untracked files to staging area:
+## Stage all modified and untracked files to index (staging area):
 ```shell
 git add .
 ```
 
-## Add only files already tracked to staging area:
+## Stage only files already tracked to index (staging area):
 ```shell
 git add --update
 git add -u
 ```
 
-## Add all modified, untracked and removed files to staging area:
+## Stage all modified, untracked and removed files to index (staging area):
 ```shell
 git add --all
 git add -A
 ```
 
-## Add only a specific file to staging area:
+## Stage only a specific file to index (staging area):
 ```shell
 git add [file-name]
 ```
 
 <br><br>
 
-## Remove a file from working tree and staging area:
+## Remove a file from working tree and index (staging area):
 ```shell
 git rm [file-name]
 ```
 
 <br><br>
 
-## Rename/move a file in working tree and staging area:
+## Rename/move a file in working tree and index (staging area):
 ```shell
 git mv [file-name] [new-name | destination-path]
 ```
 
 <br><br>
 
-## Commit all changes in staging area:
+## Commit all changes in index (staging area):
 ```shell
 git commit --message "[commit-message]"
 git commit -m "[commit-message]"
@@ -186,12 +186,12 @@ git cherry --verbose
 git cherry --v
 ```
 
-## Show commit history (both local and remote) in currently checked out branch:
+## Show commit history (both local and remote) for currently checked out branch:
 ```shell
 git log
 ```
 
-## Show commit history (both local and remote) in all branches:
+## Show commit history (both local and remote) for all branches:
 ```shell
 git log --all
 ```
@@ -281,7 +281,7 @@ git branch --delete [branch-name]
 git branch -d [branch-name]
 ```
 
-## Delete branch, even if not merged:
+## Force delete branch, even if not merged:
 ```shell
 git branch -D [branch-name]
 ```
@@ -310,14 +310,14 @@ git restore .
 git checkout .
 ```
 
-## Unstage file for commit:
+## Unstage a specific file in index (staging area):
 ```shell
 git restore [file-name] --staged
 git restore [file-name] -S
 git reset [file-name]
 ```
 
-## Unstage all files for commit:
+## Unstage all files in index (staging area):
 ```shell
 git restore . --staged
 git restore . -S
@@ -363,9 +363,14 @@ git revert [commit-ID]
 
 <br><br>
 
-## Compare working directory to current HEAD:
+## Compare all files in working directory to current HEAD:
 ```shell
 git diff
+```
+
+## Compare a specific directory or file in working directory to current HEAD:
+```shell
+git diff [directory-name | file-name]
 ```
 
 ## Compare all files in working directory to another branch or commit:
@@ -373,14 +378,19 @@ git diff
 git diff [branch-name | commit-ID]
 ```
 
-## Compare all files a specific branch or commit to another branch or commit:
+## Compare a specific directory or file in working directory to another branch or commit:
+```shell
+git diff [branch-name | commit-ID] [directory-name | file-name]
+```
+
+## Compare all files in a specific branch or commit to another branch or commit:
 ```shell
 git diff [branch-name | commit-ID] [branch-name | commit-ID]
 ```
 
-## Compare a specific directory or file in working directory to another branch or commit:
+## Compare a specific directory or file in a specific branch or commit to another branch or commit:
 ```shell
-git diff [branch-name | commit-ID] [directory-name | file-name]
+git diff [branch-name | commit-ID] [branch-name | commit-ID] [directory-name | file-name]
 ```
 
 <br><br>
