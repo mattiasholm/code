@@ -12,13 +12,13 @@ https://ohshitgit.com/
 
 ## Contextual manual:
 ```shell
-git [subcommand] --help
-git help [subcommand]
+git <subcommand> --help
+git help <subcommand>
 ```
 
 ## Contextual syntax help:
 ```shell
-git [subcommand] -h
+git <subcommand> -h
 ```
 
 ## List the most common subcommands, grouped by category:
@@ -35,8 +35,8 @@ git help -a
 
 ## Dry run a command:
 ```shell
-git [subcommand] --dry-run
-git [subcommand] -n
+git <subcommand> --dry-run
+git <subcommand> -n
 ```
 
 <br><br>
@@ -86,7 +86,7 @@ git init
 
 ## Clone remote repository to working directory:
 ```shell
-git clone [URL]
+git clone <URL>
 ```
 
 ## Exclude a file pattern from source control:
@@ -130,37 +130,43 @@ git status --u=no
 ## Stage all modified and untracked files to index (staging area):
 ```shell
 git add .
+git stage .
 ```
 
 ## Stage only files already tracked to index (staging area):
 ```shell
 git add --update
 git add -u
+git stage --update
+git stage -u
 ```
 
 ## Stage all modified, untracked and removed files to index (staging area):
 ```shell
 git add --all
 git add -A
+git stage --all
+git stage -A
 ```
 
 ## Stage only a specific file to index (staging area):
 ```shell
-git add [file-name]
+git add <file-name>
+git stage <file-name>
 ```
 
 <br><br>
 
 ## Remove a file from working tree and index (staging area):
 ```shell
-git rm [file-name]
+git rm <file-name>
 ```
 
 <br><br>
 
 ## Rename/move a file in working tree and index (staging area):
 ```shell
-git mv [file-name] [new-name | destination-path]
+git mv <file-name> <new-name | destination-path>
 ```
 
 <br><br>
@@ -194,8 +200,8 @@ git ls-files -o
 
 ## Commit all changes in index (staging area):
 ```shell
-git commit --message "[commit-message]"
-git commit -m "[commit-message]"
+git commit --message "<commit-message>"
+git commit -m "<commit-message>"
 ```
 
 <br><br>
@@ -207,7 +213,7 @@ git push
 
 ## Push changes to a new branch that doesn't exist in origin:
 ```shell
-git push --set-upstream origin [branch-name]
+git push --set-upstream origin <branch-name>
 ```
 
 <br><br>
@@ -217,19 +223,24 @@ git push --set-upstream origin [branch-name]
 git tag
 ```
 
-## List what commit ID a specific tag references to:
+## List the commit ID that a specific tag references to:
 ```shell
-cat .git/refs/tags/[tag-name]
+cat .git/refs/tags/<tag-name>
 ```
 
 ## Create a new tag that will reference the currently checked out branch or commit:
 ```shell
-git tag [tag-name]
+git tag <tag-name>
+```
+
+## Create a new tag that will reference a specific branch, commit or even another tag:
+```shell
+git tag <tag-name> <branch-name | commit-ID>
 ```
 
 ## Delete a tag:
 ```shell
-git tag -d [tag-name]
+git tag -d <tag-name>
 ```
 
 <br><br>
@@ -249,7 +260,7 @@ git show
 
 ## Show changes in a specific commit:
 ```shell
-git show [commit-ID]
+git show <commit-ID>
 ```
 
 <br><br>
@@ -264,6 +275,17 @@ git log
 git log --all
 ```
 
+## Show commit history in one-line-per-commit format:
+```shell
+git log --pretty=oneline
+```
+
+## Count total number of commits:
+```shell
+git log --pretty=oneline | wc -l
+```
+
+
 ## Show reference log (basically undo history):
 ```shell
 git reflog
@@ -277,7 +299,7 @@ cat .git/refs/heads/master
 
 ## Show author and commit ID for each line of a file:
 ```shell
-git blame [file-name]
+git blame <file-name>
 ```
 
 <br><br>
@@ -306,66 +328,77 @@ git branch -a
 
 ## Create a new branch based on current HEAD:
 ```shell
-git branch [branch-name]
+git branch <branch-name>
+```
+
+## Create a new branch based on a specific branch or commit:
+```shell
+git branch <branch-name>
 ```
 
 ## Check out a specific branch:
 ```shell
-git switch [branch-name]
+git switch <branch-name>
 ```
 
 ## Check out a specific branch or commit:
 ```shell
-git checkout [branch-name | commit-ID]
+git checkout <branch-name | commit-ID>
+```
+
+## Switch back to the previously checked out branch or commit:
+```shell
+git checkout -
+git switch -
 ```
 
 ## Create and check out a new branch in a single command:
 ```shell
-git checkout -b [branch-name]
-git switch --create [branch-name]
-git switch -c [branch-name]
+git checkout -b <branch-name>
+git switch --create <branch-name>
+git switch -c <branch-name>
 ```
 
 ## Rename currently checked out local branch:
 ```shell
-git branch --move [new-name]
-git branch -m [new-name]
+git branch --move <new-name>
+git branch -m <new-name>
 ```
 
 ## Rename a specific local branch:
 ```shell
-git branch --move [branch-name] [new-name]
-git branch -m [branch-name] [new-name]
+git branch --move <branch-name> <new-name>
+git branch -m <branch-name> <new-name>
 ```
 
 ## Copy currently checked out local branch:
 ```shell
-git branch --copy [new-name]
-git branch -c [new-name]
+git branch --copy <new-name>
+git branch -c <new-name>
 ```
 
 ## Copy a specific local branch:
 ```shell
-git branch --copy [branch-name] [new-name]
-git branch -c [branch-name] [new-name]
+git branch --copy <branch-name> <new-name>
+git branch -c <branch-name> <new-name>
 ```
 
 ## Delete a fully merged branch:
 ```shell
-git branch --delete [branch-name]
-git branch -d [branch-name]
+git branch --delete <branch-name>
+git branch -d <branch-name>
 ```
 
 ## Force delete branch, even if not merged:
 ```shell
-git branch -D [branch-name]
+git branch -D <branch-name>
 ```
 
 <br><br>
 
 ## Amend message of previous commit:
 ```shell
-git commit --amend -m "[commit-message]"
+git commit --amend -m "<commit-message>"
 ```
 
 ## Amend code in previous commit (only safe to do on commits not yet pushed to origin):
@@ -377,8 +410,8 @@ git commit --amend --no-edit
 
 ## Discard changes to a specific file in working tree (will not touch staging area):
 ```shell
-git restore [file-name]
-git checkout [file-name]
+git restore <file-name>
+git checkout <file-name>
 ```
 
 ## Discard changes to all tracked files in working tree (will not touch staging area):
@@ -389,9 +422,9 @@ git checkout .
 
 ## Unstage a specific file in index (staging area):
 ```shell
-git restore [file-name] --staged
-git restore [file-name] -S
-git reset [file-name]
+git restore <file-name> --staged
+git restore <file-name> -S
+git reset <file-name>
 ```
 
 ## Unstage all files in index (staging area):
@@ -429,12 +462,12 @@ git reset --hard HEAD~2
 
 ## Reset HEAD, index and working tree to a specific local commit and discard all newer commits:
 ```shell
-git reset --hard [commit-ID]
+git reset --hard <commit-ID>
 ```
 
 ## Reset HEAD, index and working tree to latest commit in origin and discard all local commits:
 ```shell
-git reset --hard origin/[branch-name]
+git reset --hard origin/<branch-name>
 ```
 
 <br><br>
@@ -451,7 +484,7 @@ git revert HEAD~1
 
 ## Revert changes made in a specific commit (will create a new commit):
 ```shell
-git revert [commit-ID]
+git revert <commit-ID>
 ```
 
 <br><br>
@@ -463,34 +496,34 @@ git diff
 
 ## Compare a specific directory or file in working directory to current HEAD:
 ```shell
-git diff [directory-name | file-name]
+git diff <directory-name | file-name>
 ```
 
 ## Compare all files in working directory to another branch or commit:
 ```shell
-git diff [branch-name | commit-ID]
+git diff <branch-name | commit-ID
 ```
 
 ## Compare a specific directory or file in working directory to another branch or commit:
 ```shell
-git diff [branch-name | commit-ID] [directory-name | file-name]
+git diff <branch-name | commit-ID> <directory-name | file-name>
 ```
 
 ## Compare all files in a specific branch or commit to another branch or commit:
 ```shell
-git diff [branch-name | commit-ID] [branch-name | commit-ID]
+git diff <branch-name | commit-ID> <branch-name | commit-ID>
 ```
 
 ## Compare a specific directory or file in a specific branch or commit to another branch or commit:
 ```shell
-git diff [branch-name | commit-ID] [branch-name | commit-ID] [directory-name | file-name]
+git diff <branch-name | commit-ID> <branch-name | commit-ID> <directory-name | file-name>
 ```
 
 <br><br>
 
 ## Merge a specific branch or commit into currently checked out branch:
 ```shell
-git merge [branch-name | commit-ID]
+git merge <branch-name | commit-ID>
 ```
 
 ## Abort an ongoing merge:
