@@ -21,13 +21,13 @@ git help [subcommand]
 git [subcommand] -h
 ```
 
-## List all available subcommands:
+## List the most common subcommands, grouped by category:
 ```shell
-git help --all
-git help -a
+git help --man
+git help -m
 ```
 
-## List all available subcommands:
+## List all available subcommands, sorted alphabetically:
 ```shell
 git help --all
 git help -a
@@ -87,6 +87,11 @@ git init
 ## Clone remote repository to working directory:
 ```shell
 git clone [URL]
+```
+
+## Exclude a file pattern from source control:
+```shell
+vim .gitignore
 ```
 
 <br><br>
@@ -156,6 +161,33 @@ git rm [file-name]
 ## Rename/move a file in working tree and index (staging area):
 ```shell
 git mv [file-name] [new-name | destination-path]
+```
+
+<br><br>
+
+## List all tracked files in repository:
+```shell
+git ls-files
+```
+
+## List all tracked files in repository that match a specific file pattern:
+```shell
+git ls-files | grep .json
+```
+
+## List all tracked files that have been modified:
+```shell
+git ls-files -m
+```
+
+## List all tracked files that have been deleted:
+```shell
+git ls-files -d
+```
+
+## List all untracked files (useful for verifying .gitignore):
+```shell
+git ls-files -o
 ```
 
 <br><br>
@@ -258,6 +290,7 @@ git branch [branch-name]
 ## Check out a specific branch or commit:
 ```shell
 git checkout [branch-name | commit-ID]
+git switch [branch-name | commit-ID]
 ```
 
 ## Create and check out a new branch in a single command:
@@ -441,9 +474,6 @@ git merge --abort
 
 <br><br>
 
-## FLER TIPS OCH TRIX ???
-https://stackoverflow.com/questions/8358035/whats-the-difference-between-git-revert-checkout-and-reset
-
 https://ohshitgit.com/
 
 !!! git tag - named versions for applications! TESTA! git tag --list (git tag -h)
@@ -452,10 +482,3 @@ https://ohshitgit.com/
 ??? HUR ANVÄNDA ??? HEAD@{2}:
 
  "Also, since you're a Git beginner, I highly recommend you read the Pro Git book,""
-
- git add
-git commit
-git ls-files
-git status
-git mv
-git rm

@@ -19,6 +19,11 @@ code .
 
 `Windows` Ctrl+K + M
 
+## Select current line, regardless of cursor position (simply repeat `L` to select multiple lines):
+`Mac` Cmd+L
+
+`Windows` Ctrl+L
+
 ## Open folder:
 `Mac` Cmd+K+O
 
