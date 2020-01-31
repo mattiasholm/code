@@ -69,12 +69,12 @@ git config --system --unset credential.helper
 
 ## Configure global username:
 ```shell
-git config --global user.name "Mattias Holm"
+git config --global user.name "<name>"
 ```
 
 ## Configure global email address:
 ```shell
-git config --global user.email "mattias.holm@live.com"
+git config --global user.email "<email>"
 ```
 
 <br><br>
@@ -200,8 +200,8 @@ git ls-files -o
 
 ## Commit all changes in index (staging area):
 ```shell
-git commit --message "<commit-message>"
-git commit -m "<commit-message>"
+git commit --message "<message>"
+git commit -m "<message>"
 ```
 
 <br><br>
