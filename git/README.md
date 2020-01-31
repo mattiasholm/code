@@ -312,6 +312,8 @@ git commit --amend -m "[commit-message]"
 git commit --amend --no-edit
 ```
 
+<br><br>
+
 ## Discard changes to a specific file in working tree (will not touch staging area):
 ```shell
 git restore [file-name]
@@ -338,6 +340,8 @@ git restore . -S
 git reset .
 ```
 
+<br><br>
+
 ## Remove all untracked files from working directory:
 ```shell
 git clean --force
@@ -350,27 +354,36 @@ git clean -d --force
 git clean -d -f
 ```
 
-## Discard all local commits and revert HEAD, index and working tree back to a specific local commit:
+<br><br>
+
+# Reset HEAD, index and working tree to the second latest local commit (effectively discarding the latest commit):
+```shell
+git reset --hard HEAD~1
+```
+
+# Reset HEAD, index and working tree to a specific local commit and discard all newer commits:
 ```shell
 git reset --hard [commit-ID]
 ```
 
-## Discard all local commits and revert HEAD, index and working tree back to latest commit in origin:
+## Reset HEAD, index and working tree to latest commit in origin and discard all local commits:
 ```shell
 git reset --hard origin/[branch-name]
 ```
 
-## Revert changes made in latest commit:
+<br><br>
+
+## Revert changes made in latest commit (will create a new commit):
 ```shell
 git revert HEAD
 ```
 
-## Revert changes made in the second latest commit:
+## Revert changes made in the second latest commit (will create a new commit):
 ```shell
 git revert HEAD~1
 ```
 
-## Revert changes made in a specific commit:
+## Revert changes made in a specific commit (will create a new commit):
 ```shell
 git revert [commit-ID]
 ```
