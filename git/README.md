@@ -186,10 +186,19 @@ git cherry --verbose
 git cherry --v
 ```
 
+<br><br>
+
+## Show changes in latest commit:
+```shell
+git show
+```
+
 ## Show changes in a specific commit:
 ```shell
 git show [commit-ID]
 ```
+
+<br><br>
 
 ## Show commit history (both local and remote) for currently checked out branch:
 ```shell
@@ -341,14 +350,14 @@ git clean -d --force
 git clean -d -f
 ```
 
-## Discard all local commits and revert back to latest commit in origin:
+## Discard all local commits and revert HEAD, index and working tree back to a specific local commit:
 ```shell
-git reset --hard origin/[branch-name]
+git reset --hard [commit-ID]
 ```
 
-## Discard all local commits and revert back to a specific local branch or commit:
+## Discard all local commits and revert HEAD, index and working tree back to latest commit in origin:
 ```shell
-git reset --hard [branch-name | commit-ID]
+git reset --hard origin/[branch-name]
 ```
 
 ## Revert changes made in latest commit:
