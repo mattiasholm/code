@@ -356,9 +356,14 @@ git clean -d -f
 
 <br><br>
 
-# Reset HEAD, index and working tree to the second latest local commit (effectively discarding the latest commit):
+# Reset HEAD, index and working tree to the second latest local commit, effectively discarding the latest commit (only safe to do on commits not yet pushed to origin):
 ```shell
 git reset --hard HEAD~1
+```
+
+# Reset HEAD, index and working tree to the third latest local commit, effectively discarding the two latest commits (only safe to do on commits not yet pushed to origin):
+```shell
+git reset --hard HEAD~2
 ```
 
 # Reset HEAD, index and working tree to a specific local commit and discard all newer commits:
