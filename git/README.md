@@ -333,7 +333,7 @@ git branch <branch-name>
 
 ## Create a new branch based on a specific branch or commit:
 ```shell
-git branch <branch-name>
+git branch <branch-name> <base-branch>
 ```
 
 ## Check out a specific branch:
@@ -354,9 +354,9 @@ git switch -
 
 ## Create and check out a new branch in a single command:
 ```shell
-git checkout -b <branch-name>
-git switch --create <branch-name>
-git switch -c <branch-name>
+git checkout -b <branch-name> [<base-branch>]
+git switch --create <branch-name> [<base-branch>]
+git switch -c <branch-name> [<base-branch>]
 ```
 
 ## Rename currently checked out local branch:
