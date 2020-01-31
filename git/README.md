@@ -218,6 +218,28 @@ git push --set-upstream origin <branch-name>
 
 <br><br>
 
+## Stash changes in working directory away, in order to get a clean working tree:
+```shell
+git stash
+```
+
+## Pop back changes stashed away:
+```shell
+git stash pop
+```
+
+## List all stashes:
+```shell
+git stash list
+```
+
+## Show changes in stash:
+```shell
+git stash show
+```
+
+<br><br>
+
 ## List all tags:
 ```shell
 git tag
@@ -436,13 +458,13 @@ git reset .
 
 <br><br>
 
-## Remove all untracked files from working directory:
+## Remove all untracked files from working tree:
 ```shell
 git clean --force
 git clean -f
 ```
 
-## Remove all untracked files and directories from working directory:
+## Remove all untracked files and directories from working tree:
 ```shell
 git clean -d --force
 git clean -d -f
@@ -460,7 +482,7 @@ git reset --hard HEAD~1
 git reset --hard HEAD~2
 ```
 
-## Reset HEAD, index and working tree to a specific local commit and discard all newer commits:
+## Reset HEAD, index and working tree to a specific local commit and discard all newer commits (only safe to do on commits not yet pushed to origin):
 ```shell
 git reset --hard <commit-ID>
 ```
@@ -475,6 +497,8 @@ git reset --hard origin/<branch-name>
 ## Revert changes made in latest commit (will create a new commit):
 ```shell
 git revert HEAD
+git revert --mainline 1
+git revert -m 1
 ```
 
 ## Revert changes made in the second latest commit (will create a new commit):
@@ -537,6 +561,5 @@ git merge --abort
 
 https://ohshitgit.com/
 
-!!! pop stash?
+
 ??? rebase ???
-??? HUR ANVÄNDA ??? HEAD@{2}:
