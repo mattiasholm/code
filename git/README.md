@@ -186,6 +186,11 @@ git cherry --verbose
 git cherry --v
 ```
 
+## Show changes in a specific commit:
+```shell
+git show [commit-ID]
+```
+
 ## Show commit history (both local and remote) for currently checked out branch:
 ```shell
 git log
@@ -396,10 +401,14 @@ git diff [branch-name | commit-ID] [branch-name | commit-ID] [directory-name | f
 <br><br>
 
 ## Merge a specific branch or commit into currently checked out branch:
+```shell
 git merge [branch-name | commit-ID]
+```
 
 ## Abort an ongoing merge:
+```shell
 git merge --abort
+```
 
 <br><br>
 
