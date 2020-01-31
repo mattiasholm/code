@@ -21,7 +21,13 @@ git help [subcommand]
 git [subcommand] -h
 ```
 
-## List all available subcommands
+## List all available subcommands:
+```shell
+git help --all
+git help -a
+```
+
+## List all available subcommands:
 ```shell
 git help --all
 git help -a
@@ -97,7 +103,7 @@ git pull
 
 <br><br>
 
-## Show currently checked out branch and status of working tree and staging area:
+## Show currently checked out branch and status of working tree and staging area (index):
 ```shell
 git status
 ```
@@ -136,6 +142,20 @@ git add -A
 ## Add only a specific file to staging area:
 ```shell
 git add [file-name]
+```
+
+<br><br>
+
+## Remove a file from working tree and staging area:
+```shell
+git rm [file-name]
+```
+
+<br><br>
+
+## Rename/move a file in working tree and staging area:
+```shell
+git mv [file-name] [new-name | destination-path]
 ```
 
 <br><br>
@@ -386,3 +406,10 @@ https://ohshitgit.com/
 ??? HUR ANVÄNDA ??? HEAD@{2}:
 
  "Also, since you're a Git beginner, I highly recommend you read the Pro Git book,""
+
+ git add
+git commit
+git ls-files
+git status
+git mv
+git rm
