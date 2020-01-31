@@ -6,7 +6,7 @@ $OnCallEnd = Get-Date '2020-01-16 08:00'
 $OfficeHoursStart = Get-Date '08:00'
 $OfficeHoursEnd = Get-Date '17:00'
 
-$MonthlySalary = 49000
+$MonthlySalary = 0
 
 $Rate1 = $MonthlySalary/1400
 $Rate2 = $MonthlySalary/900

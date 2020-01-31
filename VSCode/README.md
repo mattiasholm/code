@@ -2,6 +2,13 @@
 
 <br>
 
+## Open VSCode from shell in working directory:
+```shell
+code .
+```
+
+<br><br>
+
 ## Format code:
 `Mac` Alt+Shift+F
 

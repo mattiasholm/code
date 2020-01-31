@@ -13,11 +13,18 @@ https://ohshitgit.com/
 ## Contextual manual:
 ```shell
 git [subcommand] --help
+git help [subcommand]
 ```
 
 ## Contextual syntax help:
 ```shell
 git [subcommand] -h
+```
+
+## List all available subcommands
+```shell
+git help --all
+git help -a
 ```
 
 ## Dry run a command:
