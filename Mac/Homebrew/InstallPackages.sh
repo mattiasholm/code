@@ -23,6 +23,5 @@ brew cask install paintbrush
 brew cask install vlc
 brew cask install spotify
 brew cask install plex-media-server
-brew cask install plex
 brew cask install openemu
 brew cask install transmission
