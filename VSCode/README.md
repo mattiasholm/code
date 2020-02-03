@@ -2,6 +2,13 @@
 
 <br>
 
+## Open VSCode from shell in working directory:
+```shell
+code .
+```
+
+<br><br>
+
 ## Format code:
 `Mac` Alt+Shift+F
 
@@ -11,6 +18,11 @@
 `Mac` Cmd+K + M
 
 `Windows` Ctrl+K + M
+
+## Select current line, regardless of cursor position (simply repeat `L` to select multiple lines):
+`Mac` Cmd+L
+
+`Windows` Ctrl+L
 
 ## Open folder:
 `Mac` Cmd+K+O

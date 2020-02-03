@@ -3,76 +3,75 @@
 <br>
 
 ## SSH via a jumphost:
-```bash
+```shell
 ssh -J [host1] [host2]
 ```
 
 ## Update hosts file:
-```bash
+```shell
 vim /etc/hosts
 ```
 
 ## Create alias:
-```bash
+```shell
 alias a='cmd'
 ```
 
 <br><br>
 
 ## Curl request that returns your public IP:
-```bash
+```shell
 curl -s ifconfig.co
 ```
 
 ## Curl request with custom Host header:
-```bash
+```shell
 curl --header "Host: example.com" https://example.azurewebsites.net/
 ```
 
 ## Curl request that overrides DNS with a hard-coded IP address and ignores any certificate errors:
-```bash
+```shell
 curl --resolve example.com:443:51.141.12.112 https://example.com --insecure
 ```
 
 ## Curl request that overrides DNS with a hard-coded hostname and ignores any certificate errors:
-```bash
+```shell
 curl --connect-to example.com:443:example.azurewebsites.net:443 https://example.com/ --insecure
 ```
 
 <br><br>
 
 ## Count number of lines:
-```bash
+```shell
 wc -l
 ```
 
 ## Count number of characters:
-```bash
+```shell
 wc -m
 ```
 
 ## Count number of words:
-```bash
+```shell
 wc -w
 ```
 
 <br><br>
 
 ## Alias to `ls -la`:
-```bash
+```shell
 ll
 ```
 
 ## Grep inverted match:
-```bash
+```shell
 grep -v substring
 ```
 
 ## Create empty file in working directory:
-```bash
+```shell
 touch
 ```
 
-<br><br>
-
-## FLER??? Eventuellt flytta Curl till en egen cheat sheet?
+## FLER??? Flytta Curl till en egen cheat sheet, mer logiskt?!
+# Eventuellt även flytta https://ifconfig.co/ till egen README - finns fler än endast publik IP!

@@ -1,6 +1,7 @@
 urls=(
     "https://github.com/mattiasholm/mattiasholm.git"
     "https://github.com/hi3g-access/tre-se-deployment.git"
+    "https://github.com/hi3g-access/tre-se-infra.git"
 )
 
 path=~/repos

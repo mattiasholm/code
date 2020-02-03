@@ -2,222 +2,227 @@
 
 <br>
 
+## Official docs:
+https://kubernetes.io/docs/reference/kubectl/
+
+<br><br>
+
 ## Create an alias for kubectl:
 alias k='kubectl'
 
 ## Change context:
-k config use-context [cluster-name]
+kubectl config use-context [cluster-name]
 
 ## View config, such as contexts:
-k config view
+kubectl config view
 
 ## View k8s version:
-k version
+kubectl version
 
 ## Display cluster info:
-k cluster-info
+kubectl cluster-info
 
 <br><br>
 
 ## Apply a k8s manifest:
-k apply -f [file-name]
+kubectl apply -f [file-name]
 
 ## Delete a k8s manifest:
-k delete -f [file-name]
+kubectl delete -f [file-name]
 
 <br><br>
 
 ## List pods in the default namespace:
-k get po
+kubectl get po
 
 ## List pods in a specific namespace:
-k get po -n [namespace]
+kubectl get po -n [namespace]
 
 ## List pods in all namespaces:
-k get po -A
-k get po --all-namespaces
+kubectl get po -A
+kubectl get po --all-namespaces
 
 ## Count number of pods in all namespaces:
-k get po -A | wc -l
+kubectl get po -A | wc -l
 
 ## List pods in all namespaces, display only name:
-k get po -A -o name
+kubectl get po -A -o name
 
 ## List pods in all namespaces, display IP and node information:
-k get po -A -o wide
+kubectl get po -A -o wide
 
 ## List pods in all namespaces, sorted by age (descending order):
-k get po --sort-by=.metadata.creationTimestamp -A
+kubectl get po --sort-by=.metadata.creationTimestamp -A
 
 ## List pods in all namespaces, sorted by age (ascending order):
-k get po --sort-by=.metadata.creationTimestamp -A | tac
+kubectl get po --sort-by=.metadata.creationTimestamp -A | tac
 
 ## List all pods with a specific label in all namespaces:
-k get po -l [label] -A
-k get po --selector [label] -A
+kubectl get po -l [label] -A
+kubectl get po --selector [label] -A
 
 ## List a specific pod:
-k get po [pod-ID] -n [namespace]
+kubectl get po [pod-ID] -n [namespace]
 
 ## List a specific pod, verbose output in YAML:
-k get po [pod-ID] -n [namespace] -o yaml
+kubectl get po [pod-ID] -n [namespace] -o yaml
 
 ## List pods in all namespaces that are not Running:
-k get po -A | grep -v Running
+kubectl get po -A | grep -v Running
 
 ## Count number of pods that are not Running:
-k get po -A | grep -v Running | wc -l
+kubectl get po -A | grep -v Running | wc -l
 
 ## List pods in all namespaces that are stuck in ContainerCreating:
-k get po -A | grep ContainerCreating
+kubectl get po -A | grep ContainerCreating
 
 ## Count number of pods that are stuck in ContainerCreating:
-k get po -A | grep ContainerCreating | wc -l
+kubectl get po -A | grep ContainerCreating | wc -l
 
 ## Describe a specific pod:
-k describe po [pod-ID] -n [namespace]
+kubectl describe po [pod-ID] -n [namespace]
 
 ## Get logs from a specific pod:
-k logs [pod-ID] -n [namespace]
+kubectl logs [pod-ID] -n [namespace]
 
 <br><br>
 
 ## Run command in a specific pod:
-k exec [pod-ID] -n [namespace] -- [command]
+kubectl exec [pod-ID] -n [namespace] -- [command]
 
 ## Start an interactive shell in a specific pod:
-k exec -it [pod-ID] -n [namespace] -- /bin/bash
+kubectl exec -it [pod-ID] -n [namespace] -- /bin/bash
 
 ## Check public IP used for a specific pod:
-k exec [pod-ID] -n [namespace] -- curl -s ifconfig.co
+kubectl exec [pod-ID] -n [namespace] -- curl -s ifconfig.co
 
 <br><br>
 
 ## Scale a deployment interactively:
-k scale --replicas [replica-count] deploy/[deployment-name] -n [namespace]
+kubectl scale --replicas [replica-count] deploy/[deployment-name] -n [namespace]
 
 ## Scale a ReplicaSet interactively:
-k scale --replicas [replica-count] rs/[deployment-name] -n [namespace]
+kubectl scale --replicas [replica-count] rs/[deployment-name] -n [namespace]
 
 <br><br>
 
 ## List namespaces:
-k get ns
+kubectl get ns
 
 ## List nodes:
-k get no
+kubectl get no
 
 ## Describe a specific node:
-k describe no [node-name]
+kubectl describe no [node-name]
 
 ## List deployments in all namespaces:
-k get deploy -A
+kubectl get deploy -A
 
 ## List deployments in all namespaces, display containers, images and selector:
-k get deploy -A -o wide
+kubectl get deploy -A -o wide
 
 ## List all deployment with a specific label in all namespaces:
-k get deploy -l [label] -A
+kubectl get deploy -l [label] -A
 
 ## Describe a specific deployment:
-k describe deploy [deployment-name] -n [namespace]
+kubectl describe deploy [deployment-name] -n [namespace]
 
 ## Get ReplicaSets in all namespaces:
-k get rs -A
+kubectl get rs -A
 
 ## Get DaemonSets in all namespaces:
-k get ds -A
+kubectl get ds -A
 
 ## Get Ingresses in all namespaces:
-k get ing -A
+kubectl get ing -A
 
 ## Get Services in all namespaces:
-k get svc -A
+kubectl get svc -A
 
 ## Get Endpoints in all namespaces:
-k get ep -A
+kubectl get ep -A
 
 ## Get NetworkPolicies in all namespaces:
-k get netpol -A
+kubectl get netpol -A
 
 ## Get all events from all namespaces:
-k get ev -A
+kubectl get ev -A
 
 ## Get all events from a specific namespaces (with watch flag in order to "live tail"):
-k get ev -n [namespace] -w
+kubectl get ev -n [namespace] -w
 
 ## Get all resources from all namespaces (not actually all, but the most useful: pod, service, daemonset, deployment, replicaset, horizontalpodautoscaler):
-k get all -A
+kubectl get all -A
 
 ## Get all CustomResourceDefinitions from all namespaces
-k get crd -A
+kubectl get crd -A
 
 ## Get a list of all supported resource types and their shortnames:
-k api-resources
+kubectl api-resources
 
 ## Get a list of all supported resource types, their shortnames and supported verbs:
-k api-resources -o wide
+kubectl api-resources -o wide
 
 <br><br>
 
 ## Get metrics for all nodes:
-k top no
+kubectl top no
 
 ## Get metrics for all pods in all namespaces:
-k top po -A
+kubectl top po -A
 
 ## Get metrics for all pods with a specific label in all namespaces:
-k top po -l [label] -A
+kubectl top po -l [label] -A
 
 <br><br>
 
 ## Verify status of a specific deployment rollout:
-k rollout status deploy/[deployment-name] -n [namespace]
+kubectl rollout status deploy/[deployment-name] -n [namespace]
 
 ## Check rollout history for a specific deployment:
-k rollout history deploy/[deployment-name] -n [namespace]
+kubectl rollout history deploy/[deployment-name] -n [namespace]
 
 ## Undo a rolled out deployment:
-k rollout undo deploy/[deployment-name] -n [namespace]
+kubectl rollout undo deploy/[deployment-name] -n [namespace]
 
 <br><br>
 
 ## Delete a specific pod:
-k delete [pod-ID] -n [namespace]
+kubectl delete [pod-ID] -n [namespace]
 
 ## Delete all pods with a specific label in all namespaces:
-k delete -l [label] -A
+kubectl delete -l [label] -A
 
 ## Drain node and mark as unschedulable:
-k drain [node-name]
+kubectl drain [node-name]
 
 ## Mark node as unschedulable:
-k cordon [node-name]
+kubectl cordon [node-name]
 
 ## Unmark node as unschedulable:
-k uncordon [node-name]
+kubectl uncordon [node-name]
 
 <br><br>
 
 # Taint a specific node:
-k taint no [node-name] key=[taint]
+kubectl taint no [node-name] key=[taint]
 
 ## List taints on all nodes:
-k describe no | grep Taints
+kubectl describe no | grep Taints
 
 ## List tolerations for pods in all namespaces:
-k get po -A -o yaml | grep tolerations:
+kubectl get po -A -o yaml | grep tolerations:
 
 <br><br>
 
 ## List nodes and show labels:
-k get nodes --show-labels
+kubectl get nodes --show-labels
 
 ## List namespaces and show labels:
-k get ns --show-labels
+kubectl get ns --show-labels
 
 ## Label a specific node:
-k label no [node-name] [label]
+kubectl label no [node-name] [label]
 
 ## Label a specific namespace
-k label ns [node-name] [label]
+kubectl label ns [node-name] [label]
