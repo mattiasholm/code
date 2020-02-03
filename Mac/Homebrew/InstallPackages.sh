@@ -6,6 +6,7 @@ brew install python3
 brew cask install powershell
 brew install azure-cli && az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
 brew install kubernetes-cli
+brew install pulumi
 brew cask install azure-data-studio
 brew cask install microsoft-azure-storage-explorer
 brew cask install docker

@@ -379,3 +379,6 @@ https://ohshitgit.com/
 ??? HUR ANVÄNDA ??? HEAD@{2}:
 
  "Also, since you're a Git beginner, I highly recommend you read the Pro Git book,""
+
+ GOOLGLA GIT CHEAT SHEET OCH SNO IDÉER?
+ Dock ingen idé att kopiera saker rakt av - vill bara ha med saker jag faktiskt har testkört och känner att jag kommer att ha användning av!

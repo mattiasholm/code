@@ -73,4 +73,6 @@ grep -v substring
 touch
 ```
 
+<br><br>
+
 ## FLER??? Eventuellt flytta Curl till en egen cheat sheet?
