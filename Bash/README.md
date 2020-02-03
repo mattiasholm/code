@@ -73,4 +73,5 @@ grep -v substring
 touch
 ```
 
-## FLER??? Eventuellt flytta Curl till en egen cheat sheet?
+## FLER??? Flytta Curl till en egen cheat sheet, mer logiskt?!
+# Eventuellt även flytta https://ifconfig.co/ till egen README - finns fler än endast publik IP!
