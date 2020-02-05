@@ -89,6 +89,11 @@ git init
 git clone <URL>
 ```
 
+## Show the remote URL for the current repository:
+```shell
+git remote -v
+```
+
 ## Exclude a file pattern from source control:
 ```shell
 vim .gitignore
@@ -557,15 +562,17 @@ git merge --abort
 
 <br><br>
 
+
+
+
+
 FLER TIPS ATT SAXA HÄRIFRÅN???
 https://ohshitgit.com/
 
+GOOLGLA GIT CHEAT SHEET OCH SNO IDÉER?
+Dock ingen idé att kopiera saker rakt av - vill bara ha med saker jag faktiskt har testkört och känner att jag kommer att ha användning av!
 
- "Also, since you're a Git beginner, I highly recommend you read the Pro Git book,""
-
- GOOLGLA GIT CHEAT SHEET OCH SNO IDÉER?
- Dock ingen idé att kopiera saker rakt av - vill bara ha med saker jag faktiskt har testkört och känner att jag kommer att ha användning av!
 REVERT MERGE???
 git revert --mainline 1
 git revert -m 1
-TESTA INNAN LÄGGER TILL!
+TESTA DOCK INNAN LÄGGER TILL!
