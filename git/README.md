@@ -521,6 +521,11 @@ git revert <commit-ID>
 git diff
 ```
 
+## Compare all files in working directory to latest commit in origin:
+```shell
+git diff origin
+```
+
 ## Compare a specific directory or file in working directory to current HEAD:
 ```shell
 git diff <directory-name | file-name>
