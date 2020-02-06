@@ -318,10 +318,20 @@ git log --pretty=oneline | wc -l
 git reflog
 ```
 
-## Get commit ID of current HEAD:
+## List commit ID of current HEAD:
 ```shell
 git rev-parse HEAD
 cat .git/refs/heads/master
+```
+
+## List commit ID of HEAD for all branches (both local and remote):
+```shell
+git show-ref
+```
+
+## List commit ID of current HEAD and for all branches (both local and remote):
+```shell
+git show-ref --heads
 ```
 
 ## Show author and commit ID for each line of a file:
