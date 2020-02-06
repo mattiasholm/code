@@ -94,6 +94,11 @@ git clone <URL>
 git remote -v
 ```
 
+## Show root directory of the current repository:
+```shell
+git rev-parse --show-toplevel
+```
+
 ## Exclude a file pattern from source control:
 ```shell
 vim .gitignore
