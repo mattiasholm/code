@@ -334,6 +334,8 @@ git blame <file-name>
 ## List currently checked out branch:
 ```shell
 git branch --show-current
+git rev-parse --abbrev-ref HEAD
+git symbolic-ref --short -q HEAD
 cat .git/HEAD
 ```
 
