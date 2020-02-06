@@ -2,6 +2,17 @@
 
 <br>
 
+## Logic for running commands conditionally (basically try-catch-finally):
+
+| Operator | Behavior                                     |
+| -------- | -------------------------------------------- |
+| A; B     | Run A and then B, regardless of success of A |
+| A && B   | Run B if and only if A succeeded             |
+| A \|\| B | Run B if and only if A failed                |
+| A &      | Run A in background                          |
+
+<br><br>
+
 ## SSH via a jumphost:
 ```shell
 ssh -J [host1] [host2]
