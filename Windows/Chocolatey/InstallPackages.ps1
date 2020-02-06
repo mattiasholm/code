@@ -5,6 +5,7 @@ choco install -y git ; git config --global user.name "Mattias Holm" ; git config
 choco install -y python3
 choco install -y powershell-core
 choco install -y azure-cli ; az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
+choco install -y jq
 choco install -y kubernetes-cli
 choco install -y pulumi
 choco install -y azure-data-studio
