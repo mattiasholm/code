@@ -555,7 +555,8 @@ git diff <branch-name | commit-ID> <branch-name | commit-ID> <directory-name | f
 
 ## Merge a specific branch or commit into currently checked out branch:
 ```shell
-git merge <branch-name | commit-ID>
+git merge <branch-name | commit-ID> --message "<message>"
+git merge <branch-name | commit-ID> -m "<message>"
 ```
 
 ## Abort an ongoing merge:
