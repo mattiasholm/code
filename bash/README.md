@@ -15,7 +15,7 @@
 
 ## SSH via a jumphost:
 ```shell
-ssh -J [host1] [host2]
+ssh -J <host1> <host2>
 ```
 
 ## Update hosts file:
@@ -76,13 +76,20 @@ ll
 
 ## Grep inverted match:
 ```shell
-grep -v substring
+grep -v <substring>
+```
+
+## Grep illegal characters (`--` is a delimiter between command options and positional parameters):
+```shell
+grep -- <substring>
 ```
 
 ## Create empty file in working directory:
 ```shell
-touch
+touch <file-name>
 ```
+
+<br>
 
 ## FLER??? Flytta Curl till en egen cheat sheet, mer logiskt?!
 # Eventuellt även flytta https://ifconfig.co/ till egen README - finns fler än endast publik IP!
