@@ -224,6 +224,7 @@ git push
 ## Push changes to a new branch that doesn't exist in origin:
 ```shell
 git push --set-upstream origin <branch-name>
+git push -u origin <branch-name>
 ```
 
 <br><br>
