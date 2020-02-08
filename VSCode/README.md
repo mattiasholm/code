@@ -78,4 +78,8 @@ code .
 
 `Windows` Ctrl+Shift+Alt+I
 
-## FYLL PÅ! GOOGLA, MÅSTE FINNAS JÄTTEMÅNGA ANVÄNDBARA SHORTCUTS!
+<br>
+
+<!--
+## FYLL PÅ! GOOGLA EFTER FLER ANVÄNDBARA SHORTCUTS!
+-->

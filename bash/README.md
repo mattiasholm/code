@@ -28,26 +28,21 @@ vim /etc/hosts
 alias a='cmd'
 ```
 
+## Create persistent alias:
+```shell
+vim ~/.bashrc
+```
+
 <br><br>
 
-## Curl request that returns your public IP:
+## Change directory to the previous working directory (basically `Alt+Tab` in shell):
 ```shell
-curl -s ifconfig.co
+cd -
 ```
 
-## Curl request with custom Host header:
+## Change directory to HOME (`~`):
 ```shell
-curl --header "Host: example.com" https://example.azurewebsites.net/
-```
-
-## Curl request that overrides DNS with a hard-coded IP address and ignores any certificate errors:
-```shell
-curl --resolve example.com:443:51.141.12.112 https://example.com --insecure
-```
-
-## Curl request that overrides DNS with a hard-coded hostname and ignores any certificate errors:
-```shell
-curl --connect-to example.com:443:example.azurewebsites.net:443 https://example.com/ --insecure
+cd
 ```
 
 <br><br>
@@ -89,7 +84,16 @@ grep -- <substring>
 touch <file-name>
 ```
 
+## Use process substitution to make list act like a file (command substitution would not work):
+```shell
+. <(echo key=value)
+
+. /dev/stdin <<<"$(echo key=value)"
+```
+
 <br>
 
+<!-- 
 ## FLER??? Flytta Curl till en egen cheat sheet, mer logiskt?!
 # Eventuellt även flytta https://ifconfig.co/ till egen README - finns fler än endast publik IP!
+-->

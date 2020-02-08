@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""sum.py - a simple Python program that generates a random number between 1 and 10!"""
+"""random.py - a simple Python program that generates a random number between 1 and 10!"""
 
 import random
 

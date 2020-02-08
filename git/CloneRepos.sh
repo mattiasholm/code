@@ -1,31 +1,31 @@
-urls=(
-    "https://github.com/mattiasholm/mattiasholm.git"
-    "https://github.com/hi3g-access/tre-se-deployment.git"
-    "https://github.com/hi3g-access/tre-se-infra.git"
-)
+#!/bin/bash
 
-path=~/repos
+function CloneRepos() {
+    . ./$(basename -- $0 .sh).env
 
+    mkdir -p $path && cd $path
+    echo -e ""
 
+    for url in ${urls[@]}; do
 
-mkdir -p $path && cd $path
+        name=$(basename $url | sed "s/.git$//")
 
-for url in ${urls[@]}
-do
+        if [[ ! -d "$path/$name" ]]; then
+            echo -e "Want to clone $url? (y/n)\n"
+            read confirm
 
-name=$(basename $url | sed "s/.git$//")
+            if [[ $confirm == "y" ]]; then
+                echo -e "Cloning $name\n"
+                git clone $url
+            fi
+        else
+            echo -e "Git repo $name already exists, skipping\n"
+        fi
+    done
+}
 
-if [[ ! -d "$path/$name" ]]
-then
-echo "Want to clone $url? (y/n)"
-read confirm
+function Main() {
+    CloneRepos
+}
 
-if [ $confirm == "y" ]
-then
-    echo -e "Cloning $name\n"
-    git clone $url
-fi
-else
-echo -e "Git repo $name already exists, skipping\n"
-fi
-done
+Main

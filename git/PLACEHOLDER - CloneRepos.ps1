@@ -1,1 +1,0 @@
-# PLACEHOLDER - Skapa ekvivalent pwsh skript för Windows!

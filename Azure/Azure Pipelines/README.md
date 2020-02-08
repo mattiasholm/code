@@ -1,5 +1,3 @@
 # Cheat Sheet
 
-<br>
-
 ## PLACEHOLDER

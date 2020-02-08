@@ -8,4 +8,8 @@ az group deployment watch --resource-group [rg-name]
 ## List available extensions:
 az extension list-available
 
+<br>
+
+<!-- 
 ## FYLL PÅ! Kolla igenom om fler vettiga extensions! az aks användbara! Även allt som rör deploy!
+-->

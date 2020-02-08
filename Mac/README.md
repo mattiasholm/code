@@ -1,49 +1,52 @@
-# Cheat Sheet
+# Cheat Sheet - Mac
 
 <br>
+
+>## **GUI**
 
 ## Go to folder:
+```
 Cmd+Shift+G
+```
 
 ## Go to Home (~):
+```
 Cmd+Shift+H
+```
 
 ## Force quit applications:
-Cmd+Alt+Esc 
+```
+Cmd+Alt+Esc
+```
 
-## FYLL PÅ!
+<br><br>
 
+>## **Terminal**
 
-
-<br>
-
-# OBS: RENSKRIV NEDAN, ÄR SAXAT RAKT FRÅN ONENOTE!
-
-
-# Öppna pwd i Finder från Terminal
+## Open working directory in Finder:
+```shell
 open .
+```
 
-
-
-# Öppna specifik fil från Terminal
+## Open a specific file from Terminal:
+```shell
 open template.json
+```
 
+<br><br>
 
-
-# Hoppa fram och tillbaka mellan senaste pwd (ALT-TAB för Terminal, grymt smidigt vid cp eller mv!)
-cd -
-
-
-
-<br>
-<br>
-<br>
-
-# Enable tab-completion
-
+## Enable tab-completion:
+```shell
 vim ~/.inputrc
 
 set completion-ignore-case on
 set show-all-if-ambiguous on
 TAB: menu-complete
+```
 
+<br><br>
+
+## Source `.bashrc` from `.bash_profile` to mimic Linux (WARNING: Will overwrite existing profile!):
+```shell
+echo ". ~/.bashrc" > ~/.bash_profile
+```
