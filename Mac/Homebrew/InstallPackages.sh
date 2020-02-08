@@ -1,5 +1,6 @@
 #!/bin/bash
 
+brew install bash
 brew cask install visual-studio-code
 brew install git && git config --global user.name "Mattias Holm" && git config --global user.email "mattias.holm@live.com" && git config --global credential.helper osxkeychain
 brew install python3

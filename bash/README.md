@@ -93,7 +93,28 @@ touch <file-name>
 
 <br>
 
-<!-- 
-## FLER??? Flytta Curl till en egen cheat sheet, mer logiskt?!
-# Eventuellt även flytta https://ifconfig.co/ till egen README - finns fler än endast publik IP!
--->
+## Change prompt to include current git branch:
+```shell
+vim ~/.bashrc
+
+# Add the following:
+export PS1="\u@\h \W\[\033[32m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
+
+```
+
+## Source `.bashrc` to make change take effect right away, without having to restart shell:
+```shell
+. ~/.bashrc
+```
+
+## Show bash version:
+```shell
+bash --version
+
+echo $BASH_VERSION
+```
+
+## Show bash history:
+```shell
+cat ~/.bash_history
+```
