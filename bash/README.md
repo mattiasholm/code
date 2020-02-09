@@ -13,6 +13,45 @@
 
 <br><br>
 
+## Print text with different colors:
+```shell
+echo -e "\033[32mText \033[39mwith \033[35mdifferent \033[31mcolors\033[39m"
+```
+
+| _FormatCode_ | Description      |
+| ------------ | ---------------- |
+| 1            | Bold             |
+| 2            | Dim              |
+| 4            | Underline        |
+| 5            | Blink            |
+| 8            | Hidden           |
+| 0            | Reset all        |
+| 21           | Reset bold       |
+| 22           | Reset dim        |
+| 24           | Reset underline  |
+| 25           | Reset blink      |
+| 28           | Reset hidden     |
+| 39           | Default color    |
+| 30           | Black            |
+| 31           | Red              |
+| 32           | Green            |
+| 33           | Yellow           |
+| 34           | Blue             |
+| 35           | Magenta          |
+| 36           | Cyan             |
+| 97           | White            |
+| 49           | Default bg color |
+| 40           | Black bg         |
+| 41           | Red bg           |
+| 42           | Green bg         |
+| 43           | Yellow bg        |
+| 44           | Blue bg          |
+| 45           | Magenta bg       |
+| 46           | Cyan bg          |
+| 107          | White bg         |
+
+<br><br>
+
 ## SSH via a jumphost:
 ```shell
 ssh -J <host1> <host2>

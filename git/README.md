@@ -45,7 +45,15 @@ git <subcommand> -n
 
 <br><br>
 
-## Enable credential helper to save/cache credentials:
+## List global configuration (all repositores):
+git config --global --list
+git config --global -l
+
+## List local configuration (only current repository):
+git config --local --list
+git config --local -l
+
+## Enable credential helper to save/cache credentials globally:
 
 ### `Mac`:
 ```shell
@@ -71,12 +79,12 @@ git config --system --unset credential.helper
 
 <br><br>
 
-## Configure global username:
+## Configure username globally:
 ```shell
 git config --global user.name "<name>"
 ```
 
-## Configure global email address:
+## Configure email address globally:
 ```shell
 git config --global user.email "<email>"
 ```

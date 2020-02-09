@@ -1,18 +1,16 @@
 #!/bin/bash
 
-if [[ -f ~/.bash_profile ]]; then
-    cp ~/.bash_profile ~/.bash_profile.bak
-    echo ". ~/.bashrc" >~/.bash_profile
-fi
+function cpbak() {
+    if [[ -f "$2" ]]; then
+        mv "$2" "$2.bak"
+    fi
 
-cp ~/.bashrc ~/.bashrc.bak
-echo "alias ll='ls -la'" >~/.bashrc
-echo "alias k='kubectl'" >>~/.bashrc
-echo "alias g='git'" >>~/.bashrc
-echo "alias t='terraform'" >>~/.bashrc
-echo "alias p='pulumi'" >>~/.bashrc
-echo "export PS1=\"\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\\\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ \"" >>~/.bashrc
+    cp "$1" "$2"
+}
 
-echo "" >>~/.bashrc
+function main() {
+    cpbak $(git rev-parse --show-toplevel)/Mac/.bash_profile ~/.bash_profile
+    cpbak $(git rev-parse --show-toplevel)/bash/.bashrc ~/.bashrc
+}
 
-cat ~/.bashrc
+main
