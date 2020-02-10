@@ -1,7 +1,0 @@
-let varComputer = "";
-let varObjectName = "Processor";
-let varCounterName = "% Processor Time";
-let varInstanceName = "_Total";
-Perf 
-| where Computer == varComputer and ObjectName == varObjectName and CounterName == varCounterName and InstanceName == varInstanceName
-| summarize AggregatedValue = avg(CounterValue) by bin(TimeGenerated, 1m)

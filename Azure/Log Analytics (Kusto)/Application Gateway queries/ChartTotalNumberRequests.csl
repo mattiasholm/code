@@ -1,5 +1,0 @@
-AzureDiagnostics
-| where ResourceProvider == "MICROSOFT.NETWORK" and Category == "ApplicationGatewayAccessLog"
-| where httpStatus_d >= 200
-| summarize count() by bin(TimeGenerated, 1m)
-| render timechart

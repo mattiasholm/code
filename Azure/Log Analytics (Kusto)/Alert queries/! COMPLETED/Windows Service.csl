@@ -1,9 +1,0 @@
-let varComputer = "";
-let varService = "";
-ConfigurationChange
-| where Computer == varComputer and SvcName == varService and SvcChangeType == "State"
-| top 1 by TimeGenerated desc
-| where SvcState != "Running"
-
-// Sänk även intervall för ingestion av ChangeTracking från default 30 minuter till 1 minut:
-// Automation Account -> Change Tracking -> Edit Settings -> Windows Services -> Collection Frequency

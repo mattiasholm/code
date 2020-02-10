@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<Parameters>
-    <CsvFilePath>.\Servers.csv</CsvFilePath>
-    <TestFilePath>C:\Temp</TestFilePath>
-</Parameters>
