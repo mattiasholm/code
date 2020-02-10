@@ -45,14 +45,6 @@ git <subcommand> -n
 
 <br><br>
 
-## List global configuration (all repositores):
-git config --global --list
-git config --global -l
-
-## List local configuration (only current repository):
-git config --local --list
-git config --local -l
-
 ## Enable credential helper to save/cache credentials globally:
 
 ### `Mac`:
@@ -89,9 +81,33 @@ git config --global user.name "<name>"
 git config --global user.email "<email>"
 ```
 
-## Enable case-sensitivity globally:
+## Force case-sensitivity globally:
 ```shell
-git config --global core.ignorecase false
+git config --global --unset-all core.ignorecase && git config --global core.ignorecase false
+```
+
+## Remove a specific configuration key globally:
+```shell
+git config --global --unset-all <key>
+```
+
+## List global configuration (all repositores):
+```shell
+git config --global --list
+
+git config --global -l
+```
+
+## List local configuration (only current repository):
+```shell
+git config --local --list
+
+git config --local -l
+```
+
+## Edit the global config directly in `vim`:
+```shell
+git config --global --edit
 ```
 
 <br><br>
