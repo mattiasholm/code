@@ -52,6 +52,17 @@ echo -e "\033[32mText \033[39mwith \033[35mdifferent \033[31mcolors\033[39m"
 
 <br><br>
 
+## Change Internal Field Separator (IFS), i.e. delimiter used in `for` loops:
+```shell
+IFS='<delimeter>'
+```
+
+## Unset a variable:
+```shell
+unset <variable-name>
+```
+
+
 ## SSH via a jumphost:
 ```shell
 ssh -J <host1> <host2>
