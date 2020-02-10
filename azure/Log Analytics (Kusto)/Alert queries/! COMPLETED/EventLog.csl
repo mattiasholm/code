@@ -1,0 +1,7 @@
+let varComputer = "";
+let varEventLog = "";
+let varSource = "";
+let varEventID = "";
+
+Event
+| where Computer == varComputer and where EventLog == varEventLog and where Source == varSource and where EventID == varEventID

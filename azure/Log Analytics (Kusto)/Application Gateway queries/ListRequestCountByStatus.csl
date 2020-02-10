@@ -1,0 +1,4 @@
+AzureDiagnostics
+| where ResourceProvider == "MICROSOFT.NETWORK" and Category == "ApplicationGatewayAccessLog"
+| summarize count() by httpStatus_d
+| order by count_ desc nulls last
