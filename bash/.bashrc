@@ -5,6 +5,8 @@ alias k='kubectl'
 alias t='terraform'
 alias p='pulumi'
 alias cdgit='cd $(git rev-parse --show-toplevel)'
+alias codegit='code $(git rev-parse --show-toplevel)'
+alias opengit='open $(git rev-parse --show-toplevel)'
 alias cx='chmod +x'
 
 alias ..='cd ..'
