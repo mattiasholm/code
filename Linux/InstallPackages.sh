@@ -6,7 +6,7 @@ sudo apt install -y git && . $(git rev-parse --show-toplevel)/git/gitconfig.env 
 
 sudo apt install -y python3
 
-wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb && sudo dpkg -i packages-microsoft-prod.deb && sudo apt-get update && sudo add-apt-repository universe && sudo apt-get install -y powershell && rm -rf packages-microsoft-prod.deb
+wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb && sudo dpkg -i packages-microsoft-prod.deb && sudo apt-get update && sudo add-apt-repository universe && sudo apt-get install -y powershell && rm -rf packages-microsoft-prod.deb ### &&
 
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 

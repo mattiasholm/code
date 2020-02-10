@@ -4,7 +4,7 @@ brew install bash && chmod +x $(git rev-parse --show-toplevel)/bash/bashrc.sh &&
 brew cask install visual-studio-code
 brew install git && . $(git rev-parse --show-toplevel)/git/gitconfig.env && git config --global user.name "$userName" && git config --global user.email "$userEmail" && git config --global credential.helper osxkeychain
 brew install python3
-brew cask install powershell
+brew cask install powershell ### &&
 brew install azure-cli && az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
 brew install terraform
 brew install pulumi

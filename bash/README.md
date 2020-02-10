@@ -62,6 +62,12 @@ IFS='<delimeter>'
 unset <variable-name>
 ```
 
+## Identify the location of executables:
+```shell
+which python3
+
+which pwsh
+```
 
 ## SSH via a jumphost:
 ```shell
