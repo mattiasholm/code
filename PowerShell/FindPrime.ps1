@@ -1,4 +1,4 @@
-#!/usr/bin/env powershell
+#!/usr/bin/env pwsh
 
 function Get-PrimeNumber {
     param (
@@ -44,7 +44,7 @@ function Get-PrimeNumber {
     Write-Host $PrimeNumbers
 }
 
-function main {
+function main() {
     Get-PrimeNumber -Min 0 -Max 100
 }
 

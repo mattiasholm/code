@@ -1,3 +1,5 @@
+#!/usr/bin/env pwsh
+
 $Port = 22
 $NetworkPrefix = '10.0.30.'
 $FirstIp = "1"

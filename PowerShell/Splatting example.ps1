@@ -1,3 +1,5 @@
+#!/usr/bin/env pwsh
+
 function Get-RandomJsonFile {
     [alias("grjf")]
     [cmdletbinding(SupportsShouldProcess = $True)]

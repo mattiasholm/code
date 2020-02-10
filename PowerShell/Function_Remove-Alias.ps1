@@ -1,5 +1,6 @@
-function Remove-Alias
-{
+#!/usr/bin/env pwsh
+
+function Remove-Alias {
     Param (
         [Parameter(Mandatory = $true)]
         [String]$Name
@@ -12,3 +13,7 @@ function Remove-Alias
         Throw "Alias $Name does not exist."
     }
 }
+
+New-Alias -Name foo -Value bar
+
+Remove-Alias -Name foo

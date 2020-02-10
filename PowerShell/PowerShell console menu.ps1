@@ -1,3 +1,5 @@
+#!/usr/bin/env pwsh
+
 ### Favorite color example:
 
 $red = New-Object System.Management.Automation.Host.ChoiceDescription '&Red', 'Favorite color: Red'
@@ -18,10 +20,7 @@ switch ($result) {
 
 
 
-
-
 ### More advanced example:
-
 
 $MenuOptions = "Email statistics", "Mailbox size", "Delegated access"
 

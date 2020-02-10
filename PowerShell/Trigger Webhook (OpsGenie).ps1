@@ -1,3 +1,5 @@
+#!/usr/bin/env pwsh
+
 <#
 .SYNOPSIS
   <Overview of script>
@@ -36,7 +38,7 @@ $WebhookUrl = "https://api.opsgenie.com/v1/json/azure?apiKey=d9df92f1-a024-4bb9-
 
 $body = @{
   condition_window_size = "5"
-  condition_threshold = "1"
+  condition_threshold   = "1"
 }
 
 ConvertTo-Json $body

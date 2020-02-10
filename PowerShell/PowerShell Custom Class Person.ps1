@@ -1,55 +1,54 @@
-Class Person
-{
+#!/usr/bin/env pwsh
 
-# LÄGG TILL UNIKT ID SOM AUTOMATISKT SKAPAS BASERAT PÅ CMDLET "New-Guid"
+Class Person {
 
-[ValidatePattern('^[0-9]{8}\-[0-9]{4}$')]
-[string]
-$SSN
+    # LÄGG TILL UNIKT ID SOM AUTOMATISKT SKAPAS BASERAT PÅ CMDLET "New-Guid"
 
-[ValidateSet('Man','Woman')]
-[string]
-$Sex
+    [ValidatePattern('^[0-9]{8}\-[0-9]{4}$')]
+    [string]
+    $SSN
 
-[ValidateNotNullOrEmpty()]
-[string]
-$FirstName
+    [ValidateSet('Man', 'Woman')]
+    [string]
+    $Sex
 
-[ValidateNotNullOrEmpty()]
-[string]
-$LastName
+    [ValidateNotNullOrEmpty()]
+    [string]
+    $FirstName
 
-[ValidateRange(30,300)]
-[int]
-$Height
+    [ValidateNotNullOrEmpty()]
+    [string]
+    $LastName
 
-[ValidateRange(30,300)]
-[int]
-$Weight
+    [ValidateRange(30, 300)]
+    [int]
+    $Height
 
-[ValidateLength(3,3)]
-[string]
-$Nationality
+    [ValidateRange(30, 300)]
+    [int]
+    $Weight
 
-static
-[int]
-$NumberOfArms = 2
+    [ValidateLength(3, 3)]
+    [string]
+    $Nationality
 
-Person ()
-{
+    static
+    [int]
+    $NumberOfArms = 2
 
-}
+    Person () {
 
-Person ($SSN,$Sex,$FirstName,$LastName,$Height,$Weight,$Nationality)
-{
-    $this.SSN = $SSN;
-    $this.Sex = $Sex;
-    $this.FirstName = $FirstName;
-    $this.LastName = $LastName;
-    $this.Height = $Height;
-    $this.Weight = $Weight;
-    $this.Nationality = $Nationality
-}
+    }
+
+    Person ($SSN, $Sex, $FirstName, $LastName, $Height, $Weight, $Nationality) {
+        $this.SSN = $SSN;
+        $this.Sex = $Sex;
+        $this.FirstName = $FirstName;
+        $this.LastName = $LastName;
+        $this.Height = $Height;
+        $this.Weight = $Weight;
+        $this.Nationality = $Nationality
+    }
 
 }
 
@@ -76,14 +75,13 @@ $Person1
 
 
 
-$Person2 = [Person]::new("19910324-1111","Man","Mattias","Holm","178","75","SWE")
+$Person2 = [Person]::new("19910324-1111", "Man", "Mattias", "Holm", "178", "75", "SWE")
 
 $Person2
 
 
 
-function New-Person
-{
+function New-Person {
     Param (
         #[Parameter(Mandatory = $true)]
         [string]
@@ -93,7 +91,7 @@ function New-Person
         $Sex
         
     )
-[Person]::new()
+    [Person]::new()
 }
 
 $Person2 = New-Person -SSN "1991032453391" #FEL INDATA ON PURPOSE!

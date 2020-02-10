@@ -1,6 +1,8 @@
+#!/usr/bin/env pwsh
+
 $SqlServer = "b3studiotest.database.windows.net"
 $SqlDBName = "B3StudioTest"
-$UserName ="sqladmin"
+$UserName = "sqladmin"
 $Password = Read-Host -Prompt 'Password' -AsSecureString
 
 

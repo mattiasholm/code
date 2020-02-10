@@ -1,33 +1,35 @@
+#!/usr/bin/env pwsh
+
 $DogClass = New-Object PSObject -Property @{
     Color = $null
-    Name = $null
-    Size = $null
- }
+    Name  = $null
+    Size  = $null
+}
 
- $DogClass
+$DogClass
 
- $Dog1 = $DogClass
+$Dog1 = $DogClass
 
- $Dog1.Color = "Brown"
- $Dog1.Name = "Daisy"
- $Dog1.Size = "Large"
+$Dog1.Color = "Brown"
+$Dog1.Name = "Daisy"
+$Dog1.Size = "Large"
 
- $Dog1
+$Dog1
 
 
- #########################
+#########################
 
 function New-Dog {
     param(
-          [Parameter(Mandatory=$true)]
-          [String]$name,
+        [Parameter(Mandatory = $true)]
+        [String]$name,
 
-          [Parameter(Mandatory=$false)]
-          [string]$color,
+        [Parameter(Mandatory = $false)]
+        [string]$color,
 
-          [Parameter(Mandatory=$false)]
-          [ValidateSet('Small','Medium','Large')]
-          [String]$size
+        [Parameter(Mandatory = $false)]
+        [ValidateSet('Small', 'Medium', 'Large')]
+        [String]$size
     )
     $dog = $DogClass.PSObject.Copy()
     $dog.Name = $name
@@ -61,24 +63,24 @@ $dog1.Pee()
 
 function New-Dog {
     param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$Name,
-        [Parameter(Mandatory=$false)]
-        [ValidateSet('small', 'medium','large', $null)]
+        [Parameter(Mandatory = $false)]
+        [ValidateSet('small', 'medium', 'large', $null)]
         [string]$size,
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [string]$color
     )
     New-Object psobject -property @{
-        Name = $Name
-        Size = $Size
+        Name  = $Name
+        Size  = $Size
         Color = $color
     }
 }
 
 function Invoke-Pee {
     param(
-        [Parameter(Mandatory=$true, Position=0, ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyName = $true)]
         [String]$Name
     )
     PROCESS {

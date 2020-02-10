@@ -1,5 +1,6 @@
+#!/usr/bin/env pwsh
+
 $Uri = 'https://login.b3care.se'
-#$Uri = 'https://ftp.donator.se/foobar'
 $LogPath = 'C:\Temp\MonitorHttpEndpoint_login_b3care_se.log'
 $IntervalSeconds = 5
 $TraceTimeout = 60
