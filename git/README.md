@@ -89,6 +89,11 @@ git config --global user.name "<name>"
 git config --global user.email "<email>"
 ```
 
+## Enable case-sensitivity globally:
+```shell
+git config --global core.ignorecase false
+```
+
 <br><br>
 
 ## Create a new repository in working directory:
