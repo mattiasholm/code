@@ -69,6 +69,11 @@ which python3
 which pwsh
 ```
 
+## Locate a file:
+```shell
+locate <file-name>
+```
+
 ## SSH via a jumphost:
 ```shell
 ssh -J <host1> <host2>

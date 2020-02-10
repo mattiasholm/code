@@ -18,7 +18,3 @@ foreach ($Endpoint in $Endpoints)
         }
     }
 }
-
-
-
-# FORTSÄTT JOBBA MED SKRIPT OCH SNYGGA TILL DET VID TILLFÄLLE!!!

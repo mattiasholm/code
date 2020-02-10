@@ -1,7 +1,7 @@
 #!/bin/bash
 
-function CloneRepos() {
-    . ./$(basename -- $0 .sh).env
+function cloneRepos() {
+    . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}" | sed 's/[.].*$/.\env/')"
 
     mkdir -p $path && cd $path
     echo -e ""
@@ -24,8 +24,8 @@ function CloneRepos() {
     done
 }
 
-function Main() {
-    CloneRepos
+function main() {
+    cloneRepos
 }
 
-Main
+main
