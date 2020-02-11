@@ -69,9 +69,14 @@ which python3
 which pwsh
 ```
 
-## Locate a file:
+## Locate a specific file:
 ```shell
 locate <file-name>
+```
+
+## Recursively find all files that match a specific wildcard pattern:
+```shell
+find <path> -type <f | d> -name "<pattern>"
 ```
 
 ## SSH via a jumphost:
