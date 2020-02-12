@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Start and expose container on random port
 docker run -Pd nginxdemos/hello

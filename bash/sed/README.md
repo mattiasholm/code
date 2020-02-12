@@ -2,6 +2,13 @@
 
 <br>
 
+## Shebang for `bash` that works on both macOS and Linux:
+```shell
+#!/usr/bin/env bash
+```
+
+<br><br>
+
 ## Remove a specific pattern:
 ```shell
 sed 's/<pattern>//g'

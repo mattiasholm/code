@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 brew cask install iterm2
 brew install bash && chmod +x "$(git rev-parse --show-toplevel)/bash/bashrc.sh" && "$(git rev-parse --show-toplevel)/bash/bashrc.sh"

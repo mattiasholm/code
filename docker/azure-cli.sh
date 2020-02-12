@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 docker run -it mcr.microsoft.com/azure-cli
 

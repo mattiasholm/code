@@ -24,6 +24,11 @@ code .
 
 `Windows` Ctrl+L
 
+## Select entire word, regardless of cursor position:
+`Mac` Cmd+D
+
+`Windows` Ctrl+D
+
 ## Open folder:
 `Mac` Cmd+K+O
 

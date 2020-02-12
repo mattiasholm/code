@@ -79,8 +79,13 @@ locate <file-name>
 find <path> -type <f | d> -name "<pattern>"
 ```
 
-## SSH via a jumphost:
+## Recursively find all files that match a specific wildcard pattern and use `grep` to look for a specific pattern in each file's content:
 ```shell
+find <path> -type <f | d> -name "<pattern>" -exec grep -- <pattern> {} +
+```
+
+## SSH via a jumphost:
+```shellßß
 ssh -J <host1> <host2>
 ```
 

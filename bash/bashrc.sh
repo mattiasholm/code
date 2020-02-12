@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function cpbak() {
     if [[ -f "$2" ]]; then

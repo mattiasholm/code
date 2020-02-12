@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 chmod +x $(git rev-parse --show-toplevel)/bash/bashrc.sh && $(git rev-parse --show-toplevel)/bash/bashrc.sh
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 code --install-extension ms-vscode.powershell
 code --install-extension ms-python.python
