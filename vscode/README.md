@@ -71,6 +71,11 @@ code .
 
 `Windows` Ctrl+Enter
 
+## Copy current line and paste it beneath:
+`Mac` Alt+Shift+↓
+
+`Windows` Alt+Shift+↓
+
 <br><br>
 
 ## Markdown preview:

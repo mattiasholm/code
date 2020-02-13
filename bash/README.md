@@ -62,11 +62,22 @@ IFS='<delimeter>'
 unset <variable-name>
 ```
 
-## Identify the location of executables:
+## Identify the location of executables (list only first one, i.e. default):
 ```shell
+which bash
+
 which python3
 
 which pwsh
+```
+
+## Identify the location of executables (lists all available):
+```shell
+which -a bash
+
+which -a python3
+
+which -a pwsh
 ```
 
 ## Locate a specific file:
@@ -91,7 +102,7 @@ ssh -J <host1> <host2>
 
 ## Update hosts file:
 ```shell
-vim /etc/hosts
+sudo vim /etc/hosts
 ```
 
 ## Create alias:
@@ -99,7 +110,7 @@ vim /etc/hosts
 alias a='cmd'
 ```
 
-## Create persistent alias:
+## Create persistent alias by adding it to `.bashrc`:
 ```shell
 vim ~/.bashrc
 ```

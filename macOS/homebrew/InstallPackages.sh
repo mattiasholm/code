@@ -8,6 +8,11 @@ brew cask install iterm2
 brew install bash &&
     chmod +x "$(git rev-parse --show-toplevel)/bash/bashrc.sh" &&
     "$(git rev-parse --show-toplevel)/bash/bashrc.sh"
+if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/bash)" ]]; then
+    echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
+fi
+chsh -s /usr/local/bin/bash
+sudo chsh -s /usr/local/bin/bash
 
 brew cask install visual-studio-code
 
