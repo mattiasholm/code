@@ -154,7 +154,7 @@ git pull
 
 <br><br>
 
-## Show currently checked out branch and status of working tree and index (staging area):
+## Show currently checked out branch and status of working tree and index (branch-specific staging area):
 ```shell
 git status
 ```
@@ -175,14 +175,14 @@ git status --u=no
 
 <br><br>
 
-## Stage all modified and untracked files to index (staging area):
+## Stage all modified and untracked files to index (branch-specific staging area):
 ```shell
 git add .
 
 git stage .
 ```
 
-## Stage only files already tracked to index (staging area):
+## Stage only files already tracked to index (branch-specific staging area):
 ```shell
 git add --update
 
@@ -193,7 +193,7 @@ git stage --update
 git stage -u
 ```
 
-## Stage all modified, untracked and removed files to index (staging area):
+## Stage all modified, untracked and removed files to index (branch-specific staging area):
 ```shell
 git add --all
 
@@ -204,7 +204,7 @@ git stage --all
 git stage -A
 ```
 
-## Stage only a specific file to index (staging area):
+## Stage only a specific file to index (branch-specific staging area):
 ```shell
 git add <file-name>
 
@@ -213,14 +213,14 @@ git stage <file-name>
 
 <br><br>
 
-## Remove a file from working tree and index (staging area):
+## Remove a file from working tree and index (branch-specific staging area):
 ```shell
 git rm <file-name>
 ```
 
 <br><br>
 
-## Rename/move a file in working tree and index (staging area):
+## Rename/move a file in working tree and index (branch-specific staging area):
 ```shell
 git mv <file-name> <new-name | destination-path>
 ```
@@ -254,7 +254,7 @@ git ls-files -o
 
 <br><br>
 
-## Commit all changes in index (staging area):
+## Commit all changes in index (branch-specific staging area):
 ```shell
 git commit --message "<message>"
 
@@ -503,12 +503,12 @@ git branch -D <branch-name>
 
 <br><br>
 
-## Amend message of previous commit:
+## Amend message of latest commit:
 ```shell
 git commit --amend -m "<commit-message>"
 ```
 
-## Amend code in previous commit (only safe to do on commits not yet pushed to origin):
+## Amend code in latest commit (only safe to do on commits not yet pushed to origin):
 ```shell
 git commit --amend --no-edit
 ```
@@ -529,7 +529,7 @@ git restore .
 git checkout .
 ```
 
-## Unstage a specific file in index (staging area):
+## Unstage a specific file in index (branch-specific staging area):
 ```shell
 git restore <file-name> --staged
 
@@ -538,7 +538,7 @@ git restore <file-name> -S
 git reset <file-name>
 ```
 
-## Unstage all files in index (staging area):
+## Unstage all files in index (branch-specific staging area):
 ```shell
 git restore . --staged
 
@@ -587,19 +587,24 @@ git reset --hard origin/<branch-name>
 
 <br><br>
 
-## Revert changes made in latest commit (will create a new commit):
+## Revert changes made in latest commit (will make a new commit):
 ```shell
 git revert HEAD
 ```
 
-## Revert changes made in the second latest commit (will create a new commit):
+## Revert changes made in the second latest commit (will make a new commit):
 ```shell
 git revert HEAD~1
 ```
 
-## Revert changes made in a specific commit (will create a new commit):
+## Revert changes made in a specific commit (will make a new commit):
 ```shell
 git revert <commit-ID>
+```
+
+## Revert changes made in a specific commit, without automatically making a new commit:
+```shell
+git revert <commit-ID> --no-commit
 ```
 
 <br><br>
@@ -641,56 +646,94 @@ git diff <branch-name | commit-ID> <branch-name | commit-ID> <directory-name | f
 
 <br><br>
 
-## Merge a specific branch or commit into currently checked out branch (will perform a commit automatically by default):
+## Merge a specific branch or commit into currently checked out branch (will make a merge commit automatically):
 ```shell
 git merge <branch-name | commit-ID> --message "<message>"
 
 git merge <branch-name | commit-ID> -m "<message>"
 ```
 
-## Abort an ongoing merge:
+## Merge a specific branch or commit into currently checked out branch, without automatically making a merge commit:
 ```shell
-git merge --abort
+git merge <branch-name | commit-ID> --message "<message>" --no-commit
 ```
 
-## Continue the current in-progress merge:
+## Merge a specific branch or commit into currently checked out branch, but abort if fast-forward is not possible, i.e. if merge conflicts cannot be resolved automatically:
 ```shell
-git merge --continue
+git merge <branch-name | commit-ID> --message "<message>" --ff-only
+```
+
+## Make a squash merge, i.e. merge changes into working tree, without touching HEAD (a manual commit is then made to consolidate multiple commits into a single commit):
+```shell
+git merge <branch-name | commit-ID> --squash
+
+git commit --message  --message "<message>"
 ```
 
 <br><br>
 
-VARIANTER:
-
-## Merge ???, but abort if fast-forward is not possible:
+## Abort an ongoing merge (for example if there's a merge conflict that you cannot solve:
 ```shell
-git merge PLACEHOLDER --ff-only
+git merge --abort
 ```
 
-## Make a squash merge, i.e. a single commit instead of doing a merge
+# Fix a merge conflict that cannot be automatically solved:
 ```shell
-git merge PLACEHOLDER --squash
+vim <conflicting-file>
+
+# Accept current (ours), incoming (theirs) or both changes by removing the conflict markers and updating the file accordingly:
+# <<<<<<< HEAD
+# <current-change>
+# =======
+# <incoming-change>
+# >>>>>>> <other-branch>
+
+git add .
+
+git commit --message "<message>"
+
+# If you need the other branch to include the changes, you need to make a merge in the opposite direction too:
+
+git checkout <other-branch>
+
+git merge <first-branch>
 ```
 
-<br>
+## Revert changes made in a specific merge (keep parent side of the merge, i.e. the branch we merged into):
+```shell
+git revert <merge-commit-ID> --mainline 1
+git revert <merge-commit-ID> -m 1
+```
 
-<!--
+## Revert changes made in a specific merge (keep child side of the merge, i.e. the branch we merged from):
+```shell
+git revert <merge-commit-ID> --mainline 2
+git revert <merge-commit-ID> -m 2
+```
+
 ## TO-DO:
+<!--
 
+SKRIV MED ETT REBASE exempel i git README åtminstone!
+OBS: Rebase verkar göras mot tracking branch, dvs. origin?! Känns farligt...
+Kanske bättre med squash merges som är halvvägs?
+
+GIT FORK!
+Både initial clone + hur man mergar VS rebasar från upstream!
+
+
+git reset HEAD only, index only, working tree only OSV!
+Kan vara användbart om man inte vill slänga changes i working directory?
+Å andra sidan kan man använda git stash då...
 
 ## PLACEHOLDER, force overwrite of local branch
 git pull --force
 git pull -f
-
 --prune ???
 
-??? REVERT MERGE:
-git revert --mainline 1
-git revert -m 1
-TESTA DOCK INNAN LÄGGER TILL!
 
+Hur ta bort en branch även remote? räcker git branch -d origin/???
 
-SKRIV MED ETT REBASE exempel i git README åtminstone!
 
 
 <br>
