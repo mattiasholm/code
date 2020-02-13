@@ -83,7 +83,8 @@ git config --global user.email "<email>"
 
 ## Force case-sensitivity globally:
 ```shell
-git config --global --unset-all core.ignorecase && git config --global core.ignorecase false
+git config --global --unset-all core.ignorecase &&
+    git config --global core.ignorecase false
 ```
 
 ## Remove a specific configuration key globally:

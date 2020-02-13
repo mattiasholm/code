@@ -11,7 +11,9 @@ function SetVariables() {
 }
 
 function CloneRepos() {
-    mkdir -p "${path}" && cd "${path}"
+    mkdir -p "${path}" &&
+        cd "${path}"
+
     echo -e ""
 
     for url in "${urls[@]}"; do
@@ -19,7 +21,7 @@ function CloneRepos() {
         name=$(basename "${url}" | sed "s/.git$//")
 
         if [[ ! -d "${path}/${name}" ]]; then
-            echo -e "Want to clone ${url}? (y/n)\n"
+            echo -e "Want to clone ${url}? (y/n)"
             read confirm
 
             if [[ ${confirm} == "y" ]]; then

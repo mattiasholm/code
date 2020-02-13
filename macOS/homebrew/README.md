@@ -39,7 +39,10 @@ brew pin [formula]
 brew unpin [formula]
 
 # Upgrade all formulae
-brew update && brew upgrade
+```shell
+brew update &&
+    brew upgrade
+```
 
 # Link something manually installed to Homebrew
 brew link --overwrite [Formulae]
