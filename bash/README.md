@@ -182,10 +182,15 @@ export PS1="\u@\h \W\[\033[32m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -
 ```shell
 bash --version
 
-echo $BASH_VERSION
+echo ${BASH_VERSION}
 ```
 
 ## Show bash history:
 ```shell
 cat ~/.bash_history
+```
+
+## Source .env file in the same path as script:
+```shell
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}" | sed 's/[.].*$/.\env/')"
 ```

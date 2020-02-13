@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+userName="Mattias Holm"
+userEmail="mattias.holm@live.com"
+
 brew cask install iterm2
 brew install bash && chmod +x "$(git rev-parse --show-toplevel)/bash/bashrc.sh" && "$(git rev-parse --show-toplevel)/bash/bashrc.sh"
 brew cask install visual-studio-code
-brew install git && . $(git rev-parse --show-toplevel)/git/gitconfig.env && git config --global user.name "$userName" && git config --global user.email "$userEmail" && git config --global credential.helper osxkeychain && git config --global --unset-all core.ignorecase && git config --global core.ignorecase false && chmod +x "$(git rev-parse --show-toplevel)/git/cloneRepos.sh" && "$(git rev-parse --show-toplevel)/git/cloneRepos.sh"
+brew install git && git config --global user.name "${userName}" && git config --global user.email "${userEmail}" && git config --global credential.helper osxkeychain && git config --global --unset-all core.ignorecase && git config --global core.ignorecase false && chmod +x "$(git rev-parse --show-toplevel)/git/CloneRepos.sh" && "$(git rev-parse --show-toplevel)/git/CloneRepos.sh"
 brew install python3
 brew cask install powershell
 brew install azure-cli && az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl

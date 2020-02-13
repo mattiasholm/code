@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 for ext in $(code --list-extensions); do
-    code --install-extension "${ext}"
+    code --uninstall-extension "${ext}"
 done

@@ -2,8 +2,11 @@
 
 # Note: Chocolatey needs to be run from an elevated PowerShell prompt (powershell.exe, not pwsh.exe)!
 
+$userName = "Mattias Holm"
+$userEmail = "mattias.holm@live.com"
+
 choco install -y vscode
-choco install -y git ; git config --global user.name "Mattias Holm" ; git config --global user.email "mattias.holm@live.com" ; git config --global credential.helper wincred ; git config --global --unset-all core.ignorecase ; git config --global core.ignorecase false
+choco install -y git ; git config --global user.name $userName ; git config --global user.email $userEmail ; git config --global credential.helper wincred ; git config --global --unset-all core.ignorecase ; git config --global core.ignorecase false
 choco install -y python3
 choco install -y powershell-core ; pwsh "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"
 powershell "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"

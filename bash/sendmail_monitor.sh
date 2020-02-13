@@ -5,7 +5,7 @@ if ps -e | grep -q sendmail-mta
    else result="false"
 fi
 
-case "$result" in
+case "${result}" in
 "true")
    echo "$(date)\tINFORMATION: Service sendmail is running" | sudo tee -a /var/log/sendmail.log
 ;;

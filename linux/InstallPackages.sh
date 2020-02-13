@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+userName="Mattias Holm"
+userEmail="mattias.holm@live.com"
+
 chmod +x $(git rev-parse --show-toplevel)/bash/bashrc.sh && $(git rev-parse --show-toplevel)/bash/bashrc.sh
 
-sudo apt install -y git && . $(git rev-parse --show-toplevel)/git/gitconfig.env && git config --global user.name "$userName" && git config --global user.email "$userEmail" && git config --global credential.helper 'cache --timeout=86400' && git config --global --unset-all core.ignorecase && git config --global core.ignorecase false && chmod +x "$(git rev-parse --show-toplevel)/git/cloneRepos.sh" && "$(git rev-parse --show-toplevel)/git/cloneRepos.sh"
+sudo apt install -y git && git config --global user.name "${userName}" && git config --global user.email "${userEmail}" && git config --global credential.helper 'cache --timeout=86400' && git config --global --unset-all core.ignorecase && git config --global core.ignorecase false && chmod +x "$(git rev-parse --show-toplevel)/git/CloneRepos.sh" && "$(git rev-parse --show-toplevel)/git/CloneRepos.sh"
 
 sudo apt install -y python3
 
