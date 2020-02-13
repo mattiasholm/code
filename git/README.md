@@ -641,7 +641,7 @@ git diff <branch-name | commit-ID> <branch-name | commit-ID> <directory-name | f
 
 <br><br>
 
-## Merge a specific branch or commit into currently checked out branch:
+## Merge a specific branch or commit into currently checked out branch (will perform a commit automatically by default):
 ```shell
 git merge <branch-name | commit-ID> --message "<message>"
 
@@ -653,16 +653,45 @@ git merge <branch-name | commit-ID> -m "<message>"
 git merge --abort
 ```
 
+## Continue the current in-progress merge:
+```shell
+git merge --continue
+```
+
+<br><br>
+
+VARIANTER:
+
+## Merge ???, but abort if fast-forward is not possible:
+```shell
+git merge PLACEHOLDER --ff-only
+```
+
+## Make a squash merge, i.e. a single commit instead of doing a merge
+```shell
+git merge PLACEHOLDER --squash
+```
+
 <br>
 
 <!--
-
 ## TO-DO:
+
+
+## PLACEHOLDER, force overwrite of local branch
+git pull --force
+git pull -f
+
+--prune ???
 
 ??? REVERT MERGE:
 git revert --mainline 1
 git revert -m 1
 TESTA DOCK INNAN LÄGGER TILL!
+
+
+SKRIV MED ETT REBASE exempel i git README åtminstone!
+
 
 <br>
 
@@ -671,6 +700,6 @@ https://ohshitgit.com/
 
 <br>
 
-GOOLGLA GIT CHEAT SHEET FÖR IDÈER - dock ingen idé att kopiera saker rakt av utan att testa ordentligt - vill bara ha med saker jag faktiskt känner att jag kommer att ha användning av!
+GOOLGLA ANDRAS GIT CHEAT SHEET FÖR IDÈER - dock ingen idé att kopiera saker rakt av utan att testa ordentligt - vill bara ha med saker jag faktiskt känner att jag kommer att ha användning av!
 
 -->
