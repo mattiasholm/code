@@ -3,8 +3,6 @@
 userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
 
-# PLACEHOLDER bash 5.0!
-
 chmod +x $(git rev-parse --show-toplevel)/bash/bashrc.sh &&
     $(git rev-parse --show-toplevel)/bash/bashrc.sh
 
