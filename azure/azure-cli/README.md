@@ -1,4 +1,4 @@
-# Cheat Sheet
+# Cheat Sheet - Azure CLI
 
 <br>
 

@@ -1,3 +1,3 @@
-# Cheat Sheet
+# Cheat Sheet - Azure Pipelines
 
 ## PLACEHOLDER

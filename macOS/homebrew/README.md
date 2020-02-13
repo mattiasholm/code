@@ -1,6 +1,4 @@
-# Cheat Sheet
 # Cheat Sheet - Homebrew
-# VILKET ALT SNYGGAST PÅ GITHUB?
 
 <br>
 

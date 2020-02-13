@@ -1,6 +1,13 @@
-# Cheat Sheet
+# Cheat Sheet - bash
 
 <br>
+
+## Portable shebang for `bash`:
+```shell
+#!/usr/bin/env bash
+```
+
+<br><br>
 
 ## Logic for running commands conditionally (basically try-catch-finally):
 

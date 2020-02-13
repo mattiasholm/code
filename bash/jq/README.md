@@ -29,3 +29,5 @@ cat <json-file> | jq ".[\"<key-name>\"]" | jq -r 'to_entries|map("\(.key)=\"\(.v
 ```shell
 jq -r <...>
 ```
+
+<!-- Skapa tabell liknande den för regex med syntax och alla vanliga växlar! -->
