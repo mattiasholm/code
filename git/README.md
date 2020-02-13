@@ -142,12 +142,12 @@ vim .gitignore
 
 <br><br>
 
-## Fetch metadata from origin (without touching your current HEAD):
+## Fetch metadata from origin (without touching your working tree or current HEAD):
 ```shell
 git fetch
 ```
 
-## Pull changes from origin (will integrate remote changes into your current HEAD):
+## Pull changes from origin (will integrate remote changes into your working tree and current HEAD):
 ```shell
 git pull
 ```
@@ -585,6 +585,21 @@ git reset --hard <commit-ID>
 git reset --hard origin/<branch-name>
 ```
 
+## Reset only HEAD:
+```shell
+git reset --soft origin/<branch-name>
+```
+
+## Reset HEAD and index:
+```shell
+git reset --mixed origin/<branch-name>
+```
+
+## Reset HEAD, but keep local changes:
+```shell
+git reset --keep origin/<branch-name>
+```
+
 <br><br>
 
 ## Revert changes made in latest commit (will make a new commit):
@@ -718,22 +733,41 @@ SKRIV MED ETT REBASE exempel i git README åtminstone!
 OBS: Rebase verkar göras mot tracking branch, dvs. origin?! Känns farligt...
 Kanske bättre med squash merges som är halvvägs?
 
+# Rebase feature branch onto master (moves entire feature branch onto the tip of the master branch, effectively incorporating all of the new commits in master)
+# Instead of using a merge commit, rebasing rewrites the project history by creating brand new commits for each commit in the original branch!
+git checkout feature
+git rebase master
+
+TESTKÖR I ANNAT REPO ÄN mattiasholm!
+Testa förslagsvis B3CAF, separat privat repo på GitHub under mitt konto!
+
+
+
 GIT FORK!
 Både initial clone + hur man mergar VS rebasar från upstream!
+Testa förslagsvis B3CAF, separat privat repo på GitHub under mitt konto!
+
+# PSEUDO CODE
+git clone ???
+git remote add upstream ???
+git pull upstream master
 
 
-git reset HEAD only, index only, working tree only OSV!
-Kan vara användbart om man inte vill slänga changes i working directory?
-Å andra sidan kan man använda git stash då...
 
 ## PLACEHOLDER, force overwrite of local branch
 git pull --force
 git pull -f
 --prune ???
+git push --force ??? UNDVIK - skriver om historia i ett publik repo, aldrig bra (commits skrivs om, dvs. får nya SHA1 hashes/commit IDs! Kan användas om man har råkat pusha ett privat repo publikt och vill städa bort!
+
 
 
 Hur ta bort en branch även remote? räcker git branch -d origin/???
+RESEARCHA!
 
+# Hur ta bort en fil/katalog och all dess historik från ett repo?
+Har gjort detta tidigare, när jag städade ARM-templates, så vet att det går utan att förstöra resten av repot!
+!!! git filter-branch ???
 
 
 <br>
