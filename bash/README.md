@@ -110,6 +110,8 @@ ssh -J <host1> <host2>
 ## Update hosts file:
 ```shell
 sudo vim /etc/hosts
+
+<ip-address> <host-name>
 ```
 
 ## Create alias:
@@ -182,16 +184,16 @@ touch <file-name>
 
 <br>
 
-## Change prompt to include current git branch:
+## Customize prompt to include current git branch:
 ```shell
 vim ~/.bashrc
 
-# Add the following:
+# Add the following line:
 export PS1="\u@\h \W\[\033[32m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
 
 ```
 
-## Source `.bashrc` to make change take effect right away, without having to restart shell:
+## Source `.bashrc` to make changes take effect right away, without having to restart the shell:
 ```shell
 . ~/.bashrc
 ```
