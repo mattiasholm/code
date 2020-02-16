@@ -137,7 +137,11 @@ git rev-parse --show-toplevel
 
 ## Exclude a file pattern from source control:
 ```shell
+cd "$(git rev-parse --show-toplevel)"
+
 vim .gitignore
+
+<pattern>
 ```
 
 <br><br>
@@ -232,11 +236,6 @@ git mv <file-name> <new-name | destination-path>
 git ls-files
 ```
 
-## List all tracked files in repository that match a specific file pattern:
-```shell
-git ls-files | grep .json
-```
-
 ## List all tracked files that have been modified:
 ```shell
 git ls-files -m
@@ -250,6 +249,11 @@ git ls-files -d
 ## List all untracked files (useful for verifying .gitignore):
 ```shell
 git ls-files -o
+```
+
+## List all tracked files that match a specific file pattern:
+```shell
+git ls-files | grep <pattern>
 ```
 
 <br><br>
