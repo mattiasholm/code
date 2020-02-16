@@ -116,6 +116,7 @@ x = int(1E3)
 ## Generate a random number:
 ```python
 import random
+
 print(random.randrange(1,10))
 ```
 
@@ -142,11 +143,10 @@ if __name__ == "__main__":
 	main()
 ```
 
+<!--
 <br><br>
 
-# OBS: Eventuellt bättre att göra allt i tabellform, så man slipper allt scrollande? Tänk mer som ett lexikon, bättre att skapa exempelskript för att visa mer exakt hur något används!
-
-
+# OBS: Eventuellt bättre att göra allt i tabellform, så man slipper allt scrollande? Tänk README.md mer som ett lexikon - bättre att skapa exempelskript för att visa mer exakt hur något används!
 
 <br><br>
 
@@ -178,3 +178,5 @@ if __name__ == "__main__":
 
 # FORTSÄTT HÄR:
 https://www.w3schools.com/python/python_strings.asp
+
+-->

@@ -14,7 +14,7 @@ az version
 
 ## Watch current ARM deployments in a specific resource group:
 ```shell
-az group deployment watch --resource-group [rg-name]
+az group deployment watch --resource-group <rg-name>
 ```
 
 ## List available extensions:

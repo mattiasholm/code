@@ -13,7 +13,6 @@ https://ohshitgit.com/
 ## Contextual manual:
 ```shell
 git <subcommand> --help
-
 git help <subcommand>
 ```
 
@@ -25,21 +24,18 @@ git <subcommand> -h
 ## List the most common subcommands, grouped by category:
 ```shell
 git help --man
-
 git help -m
 ```
 
 ## List all available subcommands, sorted alphabetically:
 ```shell
 git help --all
-
 git help -a
 ```
 
 ## Dry run a command:
 ```shell
 git <subcommand> --dry-run
-
 git <subcommand> -n
 ```
 
@@ -95,14 +91,12 @@ git config --global --unset-all <key>
 ## List global configuration (all repositores):
 ```shell
 git config --global --list
-
 git config --global -l
 ```
 
 ## List local configuration (only current repository):
 ```shell
 git config --local --list
-
 git config --local -l
 ```
 
@@ -126,7 +120,6 @@ git clone <URL>
 ## Show the remote URL for the current repository:
 ```shell
 git remote --verbose
-
 git remote -v
 ```
 
@@ -166,14 +159,12 @@ git status
 ## Show status of working tree in short format:
 ```shell
 git status --short
-
 git status -s
 ```
 
 ## Show status of working tree, exclude any untracked files:
 ```shell
 git status --untracked-files=no
-
 git status --u=no
 ```
 
@@ -182,36 +173,28 @@ git status --u=no
 ## Stage all modified and untracked files to index (branch-specific staging area):
 ```shell
 git add .
-
 git stage .
 ```
 
 ## Stage only files already tracked to index (branch-specific staging area):
 ```shell
 git add --update
-
 git add -u
-
 git stage --update
-
 git stage -u
 ```
 
 ## Stage all modified, untracked and removed files to index (branch-specific staging area):
 ```shell
 git add --all
-
 git add -A
-
 git stage --all
-
 git stage -A
 ```
 
 ## Stage only a specific file to index (branch-specific staging area):
 ```shell
 git add <file-name>
-
 git stage <file-name>
 ```
 
@@ -261,7 +244,6 @@ git ls-files | grep <pattern>
 ## Commit all changes in index (branch-specific staging area):
 ```shell
 git commit --message "<message>"
-
 git commit -m "<message>"
 ```
 
@@ -275,7 +257,6 @@ git push
 ## Push changes to a new branch that doesn't exist in origin:
 ```shell
 git push --set-upstream origin <branch-name>
-
 git push -u origin <branch-name>
 ```
 
@@ -333,8 +314,7 @@ git tag -d <tag-name>
 ## Show all local commits, not yet pushed to origin:
 ```shell
 git cherry --verbose
-
-git cherry --v
+git cherry -v
 ```
 
 <br><br>
@@ -380,7 +360,6 @@ git reflog
 ## List commit ID of current HEAD:
 ```shell
 git rev-parse HEAD
-
 cat .git/refs/heads/master
 ```
 
@@ -404,11 +383,8 @@ git blame <file-name>
 ## List currently checked out branch:
 ```shell
 git branch --show-current
-
 git rev-parse --abbrev-ref HEAD
-
 git symbolic-ref --short -q HEAD
-
 cat .git/HEAD
 ```
 
@@ -425,7 +401,6 @@ git branch -r
 ## List both local and remote branches:
 ```shell
 git branch --all
-
 git branch -a
 ```
 
@@ -452,51 +427,43 @@ git checkout <branch-name | commit-ID>
 ## Switch back to the previously checked out branch or commit:
 ```shell
 git checkout -
-
 git switch -
 ```
 
 ## Create and check out a new branch in a single command:
 ```shell
 git checkout -b <branch-name> [<base-branch>]
-
 git switch --create <branch-name> [<base-branch>]
-
 git switch -c <branch-name> [<base-branch>]
 ```
 
 ## Rename currently checked out local branch:
 ```shell
 git branch --move <new-name>
-
 git branch -m <new-name>
 ```
 
 ## Rename a specific local branch:
 ```shell
 git branch --move <branch-name> <new-name>
-
 git branch -m <branch-name> <new-name>
 ```
 
 ## Copy currently checked out local branch:
 ```shell
 git branch --copy <new-name>
-
 git branch -c <new-name>
 ```
 
 ## Copy a specific local branch:
 ```shell
 git branch --copy <branch-name> <new-name>
-
 git branch -c <branch-name> <new-name>
 ```
 
 ## Delete a fully merged branch:
 ```shell
 git branch --delete <branch-name>
-
 git branch -d <branch-name>
 ```
 
@@ -522,32 +489,26 @@ git commit --amend --no-edit
 ## Discard changes to a specific file in working tree (will not touch staging area):
 ```shell
 git restore <file-name>
-
 git checkout <file-name>
 ```
 
 ## Discard changes to all tracked files in working tree (will not touch staging area):
 ```shell
 git restore .
-
 git checkout .
 ```
 
 ## Unstage a specific file in index (branch-specific staging area):
 ```shell
 git restore <file-name> --staged
-
 git restore <file-name> -S
-
 git reset <file-name>
 ```
 
 ## Unstage all files in index (branch-specific staging area):
 ```shell
 git restore . --staged
-
 git restore . -S
-
 git reset .
 ```
 
@@ -556,14 +517,12 @@ git reset .
 ## Remove all untracked files from working tree:
 ```shell
 git clean --force
-
 git clean -f
 ```
 
 ## Remove all untracked files and directories from working tree:
 ```shell
 git clean -d --force
-
 git clean -d -f
 ```
 
@@ -599,7 +558,7 @@ git reset --soft origin/<branch-name>
 git reset --mixed origin/<branch-name>
 ```
 
-## Reset HEAD, but keep local changes:
+## Reset HEAD, but keep local changes in working tree:
 ```shell
 git reset --keep origin/<branch-name>
 ```
@@ -668,7 +627,6 @@ git diff <branch-name | commit-ID> <branch-name | commit-ID> <directory-name | f
 ## Merge a specific branch or commit into currently checked out branch (will make a merge commit automatically):
 ```shell
 git merge <branch-name | commit-ID> --message "<message>"
-
 git merge <branch-name | commit-ID> -m "<message>"
 ```
 
@@ -703,6 +661,7 @@ git status
 vim <conflicting-file>
 
 # Accept current (ours), incoming (theirs) or both changes by removing the conflict markers and updating the file accordingly:
+
 <<<<<<< HEAD
 <current-change>
 =======

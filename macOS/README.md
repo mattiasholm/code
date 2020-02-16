@@ -39,6 +39,7 @@ open template.json
 ```shell
 vim ~/.inputrc
 
+# Add the following lines:
 set completion-ignore-case on
 set show-all-if-ambiguous on
 TAB: menu-complete

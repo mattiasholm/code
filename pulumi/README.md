@@ -9,13 +9,8 @@ https://www.pulumi.com/docs/reference/cli/
 
 ## Contextual syntax help:
 ```shell
-pulumi [subcommand] --help
-pulumi [subcommand] -h
-```
-
-## Create an alias for pulumi:
-```shell
-alias p='pulumi'
+pulumi <subcommand> --help
+pulumi <subcommand> -h
 ```
 
 ## Show version:
@@ -56,8 +51,8 @@ pulumi logout
 
 ## Create new Pulumi project in working directory based on the specified template, accept default values:
 ```shell
-pulumi new [template] --yes
-pulumi new [template] -y
+pulumi new <template> --yes
+pulumi new <template> -y
 ```
 
 ## Prerequisites:
@@ -67,7 +62,9 @@ pulumi new [template] -y
 #### First-time installation of virtual environment:
 ```shell
 virtualenv -p python3 venv
+
 source venv/bin/activate
+
 pip3 install -r requirements.txt
 ```
 
@@ -113,22 +110,22 @@ pulumi stack ls
 
 ## Switch the current workspace to a specific stack:
 ```shell
-pulumi stack select [stack-name]
+pulumi stack select <stack-name>
 ```
 
 ## Create an empty stack:
 ```shell
-pulumi stack init [stack-name]
+pulumi stack init <stack-name>
 ```
 
 ## Rename an existing stack:
 ```shell
-pulumi stack rename [new-name]
+pulumi stack rename <new-name>
 ```
 
 ## Remove an existing stack:
 ```shell
-pulumi stack rm [stack-name]
+pulumi stack rm <stack-name>
 ```
 
 <br><br>
@@ -140,22 +137,22 @@ pulumi config
 
 ## List value of a specific configuration key for a specific stack:
 ```shell
-pulumi config get [key-name]
+pulumi config get <key-name>
 ```
 
 ## Set value of a specific configuration key:
 ```shell
-pulumi config set [key-name] [value]
+pulumi config set <key-name> <value>
 ```
 
 ## Set value of a specific configuration key and mark it as secret (as opposed to being stored as plain text):
 ```shell
-pulumi config set [key-name] [value] --secret
+pulumi config set <key-name> <value> --secret
 ```
 
 ## Remove a specific configuration key:
 ```shell
-pulumi config rm [key-name]
+pulumi config rm <key-name>
 ```
 
 ## Update the local configuration based on the most recent deployment of the stack:

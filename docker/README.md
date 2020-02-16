@@ -2,107 +2,191 @@
 
 <br>
 
+## List your Docker Client and Server versions:
+```shell
+docker version
+```
+
+<br><br>
+
 ## Start a container from image:
-docker run [image-name] [-flags]ls
+```shell
+docker run <image-name>
+```
+
+## Start a container from image and run it interactively:
+```shell
+docker run --interactive --tty <image-name>
+docker run -it <image-name>
+```
+
+## Start a container from image on random port and run it in background:
+```shell
+docker run --publish-all --detach <image-name>
+docker run -Pd <image-name>
+```
+
+## Start a container from image on a specific port and run it in background:
+```shell
+docker run --publish <port>:<port> --detach <image-name>
+docker run -p <port>:<port> d <image-name>
+```
+
+<br<br>>
 
 ## Stop a container gracefully:
-docker stop [container-ID]
+```shell
+docker stop <container-id>
+```
 
 ## Start a stopped container:
-docker start [container-ID]
+```shell
+docker start <container-id>
+```
+
+<br<br>>
 
 ## Attach to a container:
-docker attach [container-ID]
+```shell
+docker attach <container-id>
+```
 
 ## Run command in a specific container:
-docker exec [container-ID] [command]
+```shell
+docker exec <container-id> <command>
+```
 
 ## Start an interactive shell in a specific running container:
-docker exec -it [container-ID] /bin/bash
+```shell
+docker exec -it <container-id> /bin/bash
+```
 
 ## Start a new container with interactive shell:
-docker run -it [image-name] /bin/bash
+```shell
+docker run -it <image-name> /bin/bash
+```
 
 ## Check public IP used for a specific container:
-docker exec [container-ID] curl -s ifconfig.co
+```shell
+docker exec <container-id> curl -s ifconfig.co
+```
 
 <br><br>
 
 ## List active containers:
+```shell
 docker ps
 docker container list
 docker container ls
+```
 
 ## List active containers and their size:
+```shell
 docker container ls -s
+```
 
 ## List all containers, including killed:
+```shell
 docker ps -a
 docker containers list -a
 docker container ls -a
+```
 
 ## List local container images:
+```shell
 docker images
 docker image ls
-
-## List your Docker Client and Server versions:
-docker version
+```
 
 <br><br>
 
 ## Kill specific container:
-docker kill [container-ID]
+```shell
+docker kill <container-id>
+```
 
 ## Kill all running containers:
+```shell
 docker kill $(docker ps -q)
+```
 
 <br><br>
 
 ## Delete specific container:
-docker rm [container-ID]
+```shell
+docker rm <container-id>
+```
 
 ## Delete all stopped containers:
+```shell
 docker container prune
 docker rm $(docker ps -a -q)
+```
 
 ## Delete specific container image:
-docker image rm [image-ID]
-docker rmi [image-ID]
+```shell
+docker image rm <image-ID>
+docker rmi <image-ID>
+```
 
 ## Delete all dangling images (i.e. layers that have no relationship to any tagged images):
+```shell
 docker images prune
+```
 
 ## Delete all container images:
+```shell
 docker rmi $(docker images -q)
+```
 
 <br><br>
 
 ## Print logs from specific container:
-docker logs [container-ID]
+```shell
+docker logs <container-id>
+```
 
 ## Get verbose information about a specific container:
-docker inspect [container-ID]
+```shell
+docker inspect <container-id>
+```
 
 ## Get verbose information about a specific image:
-docker image inspect [image-ID]
+```shell
+docker image inspect <image-ID>
+```
 
 <br><br>
 
 ## Build an image from Dockerfile in working directory:
-docker build -t [app-name] .
+```shell
+docker build -t <app-name> .
+```
 
 ## Run new image:
-docker run [app-name]
+```shell
+docker run <app-name>
+```
 
 ## Tag new image:
 
+```shell
 docker tag python mattiasholm/python:1.0
+```
+
+<br><br>
 
 ## Log in to remote registry:
+```shell
 docker login --username=mattiasholm
+```
 
 ## Push new image to remote registry:
-docker push [remote-registry]/[app-name]:[image-version]
+```shell
+docker push <remote-registry>/<app-name>:<image-version>
+```
 
 ## Pull existing image from remote registry:
-docker pull [remote-registry]/[app-name]:[image-version]
+```shell
+docker pull <remote-registry>/<app-name>:<image-version>
+```

@@ -17,7 +17,6 @@ man <command>
 <br><br>
 
 ## Logic for running commands conditionally (basically try-catch-finally):
-
 | Operator | Behavior                                     |
 | -------- | -------------------------------------------- |
 | A; B     | Run A and then B, regardless of success of A |
@@ -195,7 +194,6 @@ touch <file-name>
 ## Use process substitution to make list act like a file (command substitution would not work):
 ```shell
 . <(echo key=value)
-
 . /dev/stdin <<<"$(echo key=value)"
 ```
 
@@ -224,10 +222,33 @@ echo ${BASH_VERSION}
 
 ## Show bash history:
 ```shell
+history
 cat ~/.bash_history
 ```
+
+## Run the most previous command again:
+```shell
+!!
+!-1
+```
+
+## Run the second most previous command again:
+```shell
+!!
+!-2
+```
+
+## Run a specific command from history again:
+```shell
+history
+
+!<number>
+```
+
 
 ## Source .env file in the same path as script:
 ```shell
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}" | sed 's/[.].*$/.\env/')"
 ```
+
+<!-- Städa upp och kategorisera bättre här vid tillfälle! -->

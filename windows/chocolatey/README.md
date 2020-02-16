@@ -12,17 +12,17 @@ https://chocolatey.org/packages
 
 ## Install package:
 ```powershell
-choco install [package-name]
+choco install <package-name>
 ```
 
 ## Uninstall package:
 ```powershell
-choco uninstall [package-name]
+choco uninstall <package-name>
 ```
 
 ## Reinstall package:
 ```powershell
-choco install --force [package-name]
+choco install --force <package-name>
 ```
 
 ## List installed packages:
@@ -34,7 +34,7 @@ choco list --localonly
 
 ## Upgrade a specific package:
 ```powershell
-choco upgrade [package-name]
+choco upgrade <package-name>
 ```
 
 ## Upgrade all installed packages:
@@ -46,5 +46,5 @@ choco upgrade all
 
 ## Suppress upgrades for a specific package:
 ```powershell
-choco pin [package-name]
+choco pin <package-name>
 ```
