@@ -694,6 +694,8 @@ git merge --abort
 
 # Fix a merge conflict that cannot be automatically solved:
 ```shell
+git status
+
 vim <conflicting-file>
 
 # Accept current (ours), incoming (theirs) or both changes by removing the conflict markers and updating the file accordingly:
@@ -707,7 +709,7 @@ git add .
 
 git commit --message "<message>"
 
-# If you need the other branch to include the changes, you need to make a merge in the opposite direction too:
+# If you want the other branch to include the changes, you also need to make a merge in the opposite direction:
 
 git checkout <other-branch>
 
@@ -726,8 +728,8 @@ git revert <merge-commit-ID> --mainline 2
 git revert <merge-commit-ID> -m 2
 ```
 
-## TO-DO:
 <!--
+TO-DO:
 
 SKRIV MED ETT REBASE exempel i git README åtminstone!
 OBS: Rebase verkar göras mot tracking branch, dvs. origin?! Känns farligt...
