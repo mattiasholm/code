@@ -699,17 +699,17 @@ git status
 vim <conflicting-file>
 
 # Accept current (ours), incoming (theirs) or both changes by removing the conflict markers and updating the file accordingly:
-# <<<<<<< HEAD
-# <current-change>
-# =======
-# <incoming-change>
-# >>>>>>> <other-branch>
+<<<<<<< HEAD
+<current-change>
+=======
+<incoming-change>
+>>>>>>> <other-branch>
 
 git add .
 
 git commit --message "<message>"
 
-# If you want the other branch to include the changes, you also need to make a merge in the opposite direction:
+# Finally, if you want the other branch to include the changes, you also need to make a merge in the opposite direction:
 
 git checkout <other-branch>
 
