@@ -2,6 +2,13 @@
 
 <br>
 
+## Open BSD General Commands Manual:
+```shell
+man <command>
+```
+
+<br><br>
+
 ## Portable shebang for `bash`:
 ```shell
 #!/usr/bin/env bash
@@ -114,14 +121,24 @@ sudo vim /etc/hosts
 <ip-address> <host-name>
 ```
 
-## Create alias:
+## List all aliases:
 ```shell
-alias a='cmd'
+alias
 ```
 
-## Create persistent alias by adding it to `.bashrc`:
+## Create alias:
+```shell
+alias <name>='<command>'
+```
+
+## Create persistent alias by adding it to `.bashrc` (Bash Run Commands):
 ```shell
 vim ~/.bashrc
+```
+
+## Remove alias
+```shell
+unalias <alias-name>
 ```
 
 <br><br>

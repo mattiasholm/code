@@ -1,12 +1,21 @@
-alias ls='ls -GFh'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+alias ls='ls -FGh'
+alias l='ls'
+alias la='ls -A'
 alias ll='ls -la'
+
 alias g='git'
 alias k='kubectl'
 alias t='terraform'
 alias p='pulumi'
+
 alias cdgit='cd $(git rev-parse --show-toplevel)'
 alias codegit='code $(git rev-parse --show-toplevel)'
 alias opengit='open $(git rev-parse --show-toplevel)'
+
 alias cx='chmod +x'
 
 alias ..='cd ..'
