@@ -51,6 +51,10 @@ sed 's/^<pattern>$//'
 ```shell
 sed '/<pattern>/d'
 ```
+## Remove file extension from filename:
+```shell
+sed 's/\.[^.]*$//'
+```
 
 <!-- Skapa tabell liknande den för regex med syntax och alla vanliga växlar! -->
 
