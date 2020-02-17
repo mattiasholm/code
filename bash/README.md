@@ -245,10 +245,14 @@ history
 !<number>
 ```
 
-
 ## Source .env file in the same path as script:
 ```shell
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}" | sed 's/[.].*$/.\env/')"
+```
+
+## Reference a variable by another variable's value:
+```shell
+"${!<other-variable>}"
 ```
 
 <!-- Städa upp och kategorisera bättre här vid tillfälle! -->
