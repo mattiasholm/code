@@ -295,20 +295,26 @@ git rev-parse <tag-name>
 cat .git/refs/tags/<tag-name>
 ```
 
-## Create a new tag that will reference the currently checked out branch or commit:
+## Create an unannotated tag that will reference the currently checked out branch:
 ```shell
 git tag <tag-name>
 ```
 
-## Create a new tag that will reference a specific branch, commit or even another tag:
+## Create an unannotated tag that will reference a specific branch, commit or even another tag:
 ```shell
 git tag <tag-name> <branch-name | commit-id | tag-name>
 ```
 
-## Create an annotated tag:
+## Create an annotated tag that will reference the currently checked out branch:
 ```shell
 git tag --annotate <tag-name> --message <message>
 git tag -a <tag-name> -m <message>
+```
+
+## Create an annotated tag that will reference a specific branch, commit or even another tag:
+```shell
+git tag --annotate <tag-name> --message <message> <branch-name | commit-id | tag-name>
+git tag -a <tag-name> -m <message> <branch-name | commit-id | tag-name>
 ```
 
 ## Delete a tag:
