@@ -310,6 +310,11 @@ git tag <tag-name> <branch-name | commit-ID>
 git tag -d <tag-name>
 ```
 
+## Push tags to origin:
+```shell
+git push origin <tag-name>
+```
+
 <br><br>
 
 ## Show all local commits, not yet pushed to origin:
