@@ -302,7 +302,7 @@ git tag <tag-name>
 
 ## Create a new tag that will reference a specific branch, commit or even another tag:
 ```shell
-git tag <tag-name> <branch-name | commit-ID>
+git tag <tag-name> <branch-name | commit-id | tag-name>
 ```
 
 ## Create an annotated tag:
@@ -341,9 +341,9 @@ git cherry -v
 git show
 ```
 
-## Show changes in a specific commit:
+## Show changes in a specific branch, commit or tag:
 ```shell
-git show <commit-ID>
+git show <branch-name | commit-id | tag-name>
 ```
 
 <br><br>
@@ -438,7 +438,7 @@ git switch <branch-name>
 
 ## Check out a specific branch, commit or tag:
 ```shell
-git checkout <branch-name | commit-ID | tag-name>
+git checkout <branch-name | commit-id | tag-name>
 ```
 
 ## Switch back to the previously checked out branch or commit:
@@ -557,7 +557,7 @@ git reset --hard HEAD~2
 
 ## Reset HEAD, index and working tree to a specific local commit and discard all newer commits (only safe to do on commits not yet pushed to origin):
 ```shell
-git reset --hard <commit-ID>
+git reset --hard <commit-id>
 ```
 
 ## Reset HEAD, index and working tree to latest commit in origin and discard all local commits:
@@ -594,12 +594,12 @@ git revert HEAD~1
 
 ## Revert changes made in a specific commit (will make a new commit):
 ```shell
-git revert <commit-ID>
+git revert <commit-id>
 ```
 
 ## Revert changes made in a specific commit, without automatically making a new commit:
 ```shell
-git revert <commit-ID> --no-commit
+git revert <commit-id> --no-commit
 ```
 
 <br><br>
@@ -619,47 +619,47 @@ git diff origin
 git diff <directory-name | file-name>
 ```
 
-## Compare all files in working directory to another branch or commit:
+## Compare all files in working directory to another branch, commit or tag:
 ```shell
-git diff <branch-name | commit-ID
+git diff <branch-name | commit-id | tag-name>
 ```
 
-## Compare a specific directory or file in working directory to another branch or commit:
+## Compare a specific directory or file in working directory to another branch, commit or tag:
 ```shell
-git diff <branch-name | commit-ID> <directory-name | file-name>
+git diff <branch-name | commit-id | tag-name> <directory-name | file-name>
 ```
 
-## Compare all files in a specific branch or commit to another branch or commit:
+## Compare all files in a specific branch, commit or tag to another branch, commit or tag:
 ```shell
-git diff <branch-name | commit-ID> <branch-name | commit-ID>
+git diff <branch-name | commit-id | tag-name> <branch-name | commit-id | tag-name>
 ```
 
-## Compare a specific directory or file in a specific branch or commit to another branch or commit:
+## Compare a specific directory or file in a specific branch, commit or tag to another branch, commit or tag:
 ```shell
-git diff <branch-name | commit-ID> <branch-name | commit-ID> <directory-name | file-name>
+git diff <branch-name | commit-id | tag-name> <branch-name | commit-id | tag-name> <directory-name | file-name>
 ```
 
 <br><br>
 
-## Merge a specific branch or commit into currently checked out branch (will make a merge commit automatically):
+## Merge a specific branch, commit or tag into currently checked out branch (will make a merge commit automatically):
 ```shell
-git merge <branch-name | commit-ID> --message "<message>"
-git merge <branch-name | commit-ID> -m "<message>"
+git merge <branch-name | commit-id | tag-name> --message "<message>"
+git merge <branch-name | commit-id | tag-name> -m "<message>"
 ```
 
-## Merge a specific branch or commit into currently checked out branch, without automatically making a merge commit:
+## Merge a specific branch, commit or tag into currently checked out branch, without automatically making a merge commit:
 ```shell
-git merge <branch-name | commit-ID> --message "<message>" --no-commit
+git merge <branch-name | commit-id | tag-name> --message "<message>" --no-commit
 ```
 
-## Merge a specific branch or commit into currently checked out branch, but abort if fast-forward is not possible, i.e. if merge conflicts cannot be resolved automatically:
+## Merge a specific branch, commit or tag into currently checked out branch, but abort if fast-forward is not possible, i.e. if merge conflicts cannot be resolved automatically:
 ```shell
-git merge <branch-name | commit-ID> --message "<message>" --ff-only
+git merge <branch-name | commit-id | tag-name> --message "<message>" --ff-only
 ```
 
 ## Make a squash merge, i.e. merge changes into working tree, without touching HEAD (a manual commit is then made to consolidate multiple commits into a single commit):
 ```shell
-git merge <branch-name | commit-ID> --squash
+git merge <branch-name | commit-id | tag-name> --squash
 
 git commit --message  --message "<message>"
 ```
@@ -698,14 +698,14 @@ git merge <first-branch>
 
 ## Revert changes made in a specific merge (keep parent side of the merge, i.e. the branch we merged into):
 ```shell
-git revert <merge-commit-ID> --mainline 1
-git revert <merge-commit-ID> -m 1
+git revert <merge-commit-id> --mainline 1
+git revert <merge-commit-id> -m 1
 ```
 
 ## Revert changes made in a specific merge (keep child side of the merge, i.e. the branch we merged from):
 ```shell
-git revert <merge-commit-ID> --mainline 2
-git revert <merge-commit-ID> -m 2
+git revert <merge-commit-id> --mainline 2
+git revert <merge-commit-id> -m 2
 ```
 
 <!--
