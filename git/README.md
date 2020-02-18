@@ -305,14 +305,25 @@ git tag <tag-name>
 git tag <tag-name> <branch-name | commit-ID>
 ```
 
+## Create an annotated tag:
+```shell
+git tag --annotate <tag-name> --message <message>
+git tag -a <tag-name> -m <message>
+```
+
 ## Delete a tag:
 ```shell
 git tag -d <tag-name>
 ```
 
-## Push tags to origin:
+## Push an unannotated tag to origin:
 ```shell
 git push origin <tag-name>
+```
+
+## Push all annotated tags to origin:
+```shell
+git push --follow-tags
 ```
 
 <br><br>
