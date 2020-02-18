@@ -291,6 +291,7 @@ git tag
 
 ## List the commit ID that a specific tag references to:
 ```shell
+git rev-parse <tag-name>
 cat .git/refs/tags/<tag-name>
 ```
 
