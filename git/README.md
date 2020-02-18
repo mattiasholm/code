@@ -425,9 +425,9 @@ git branch <branch-name> <base-branch>
 git switch <branch-name>
 ```
 
-## Check out a specific branch or commit:
+## Check out a specific branch, commit or tag:
 ```shell
-git checkout <branch-name | commit-ID>
+git checkout <branch-name | commit-ID | tag-name>
 ```
 
 ## Switch back to the previously checked out branch or commit:
