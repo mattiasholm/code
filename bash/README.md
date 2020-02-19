@@ -26,6 +26,16 @@ man <command>
 
 <br><br>
 
+## Print text with escape characters:
+```shell
+echo -e "\n<text>\n"
+```
+
+## Print text without a new line:
+```shell
+echo -n "<text>"
+```
+
 ## Print text with different colors:
 ```shell
 echo -e "\033[32mText \033[39mwith \033[35mdifferent \033[31mcolors\033[39m"
@@ -178,6 +188,7 @@ ll
 
 ## Grep inverted match:
 ```shell
+grep --invert-match <substring>
 grep -v <substring>
 ```
 
@@ -253,6 +264,11 @@ history
 ## Reference a variable by another variable's value:
 ```shell
 "${!<other-variable>}"
+```
+
+## Print output in reversed order:
+```shell
+tail -r
 ```
 
 <!-- Städa upp och kategorisera bättre här vid tillfälle! -->

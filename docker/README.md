@@ -58,11 +58,14 @@ docker exec <container-id> <command>
 
 ## Start an interactive shell in a specific running container:
 ```shell
+
+docker exec --interactive --tty <container-id> /bin/bash
 docker exec -it <container-id> /bin/bash
 ```
 
 ## Start a new container with interactive shell:
 ```shell
+docker run --interactive --tty <image-name> /bin/bash
 docker run -it <image-name> /bin/bash
 ```
 
@@ -82,14 +85,18 @@ docker container ls
 
 ## List active containers and their size:
 ```shell
+docker container ls --silent
 docker container ls -s
 ```
 
 ## List all containers, including killed:
 ```shell
+docker ps --all
 docker ps -a
-docker containers list -a
+docker container list --all
+docker container list -a
 docker container ls -a
+docker container ls --all
 ```
 
 ## List local container images:
@@ -107,6 +114,7 @@ docker kill <container-id>
 
 ## Kill all running containers:
 ```shell
+docker kill $(docker ps --quiet)
 docker kill $(docker ps -q)
 ```
 
@@ -120,6 +128,7 @@ docker rm <container-id>
 ## Delete all stopped containers:
 ```shell
 docker container prune
+docker rm $(docker ps --all --quiet)
 docker rm $(docker ps -a -q)
 ```
 
@@ -136,6 +145,7 @@ docker images prune
 
 ## Delete all container images:
 ```shell
+docker rmi $(docker images --quiet)
 docker rmi $(docker images -q)
 ```
 
@@ -160,6 +170,7 @@ docker image inspect <image-ID>
 
 ## Build an image from Dockerfile in working directory:
 ```shell
+docker build --tag <app-name> .
 docker build -t <app-name> .
 ```
 
@@ -169,16 +180,16 @@ docker run <app-name>
 ```
 
 ## Tag new image:
-
 ```shell
-docker tag python mattiasholm/python:1.0
+docker tag python <remote-registry>/<app-name>:<image-version>
 ```
 
 <br><br>
 
 ## Log in to remote registry:
 ```shell
-docker login --username=mattiasholm
+docker login -u=<username>
+docker login --username=<username>
 ```
 
 ## Push new image to remote registry:
