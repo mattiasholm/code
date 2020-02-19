@@ -38,6 +38,7 @@ alias gamend='git commit --amend --no-edit'
 alias greset='git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
 
 alias cx='chmod +x'
+alias .b='. ~/.bashrc'
 
 alias ..='cd ..'
 alias ...='cd ../..'
