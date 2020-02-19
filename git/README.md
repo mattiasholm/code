@@ -149,6 +149,18 @@ git fetch
 git pull
 ```
 
+## Pull changes from origin, force overwrite of local branch:
+```shell
+git pull --force
+git pull -f
+```
+
+## Pull changes from origin, prune remote-tracking branches no longer on remote:
+```shell
+git pull --prune
+git pull -p
+```
+
 <br><br>
 
 ## Show currently checked out branch and status of working tree and index (branch-specific staging area):
@@ -742,16 +754,11 @@ git pull upstream master
 
 
 
-## PLACEHOLDER, force overwrite of local branch
-git pull --force
-git pull -f
---prune ???
-git push --force ??? UNDVIK - skriver om historia i ett publik repo, aldrig bra (commits skrivs om, dvs. får nya SHA1 hashes/commit IDs! Kan användas om man har råkat pusha ett privat repo publikt och vill städa bort!
-
-
 
 Hur ta bort en branch även remote? räcker git branch -d origin/???
 RESEARCHA!
+
+
 
 # Hur ta bort en fil/katalog och all dess historik från ett repo?
 Har gjort detta tidigare, när jag städade ARM-templates, så vet att det går utan att förstöra resten av repot!

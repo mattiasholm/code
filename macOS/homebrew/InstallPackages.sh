@@ -14,7 +14,7 @@ fi
 chsh -s /usr/local/bin/bash
 sudo chsh -s /usr/local/bin/bash
 
-brew cask install visual-studio-code
+brew install coreutils
 
 brew install git &&
     git config --global user.name "${userName}" &&
@@ -23,6 +23,8 @@ brew install git &&
     git config --global --unset-all core.ignorecase &&
     git config --global core.ignorecase false && chmod +x "$(git rev-parse --show-toplevel)/git/CloneRepos.sh" &&
     "$(git rev-parse --show-toplevel)/git/CloneRepos.sh"
+
+brew cask install visual-studio-code
 
 brew install python3
 brew cask install powershell
