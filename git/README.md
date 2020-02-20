@@ -117,11 +117,26 @@ git init
 git clone <URL>
 ```
 
-## Show the remote URL for the current repository:
+## Show the name of all remotes:
+```shell
+git remote
+```
+
+## Show the name and URL of all remotes:
 ```shell
 git remote --verbose
 git remote -v
 ```
+
+## Show the URL of origin:
+```shell
+git remote get-url origin
+````
+
+## Show the URL of a specific remote:
+```shell
+git remote get-url <remote-name>
+````
 
 ## Show root directory of the current repository:
 ```shell
@@ -743,8 +758,8 @@ Testa förslagsvis B3CAF, separat privat repo på GitHub under mitt konto!
 
 
 
-GIT FORK!
-Både initial clone + hur man mergar VS rebasar från upstream!
+EGET SEGMENT GIT FORK!
+Både initial clone + hur man listar URL, diffar, showar, mergar VS rebasar etc från upstream!
 Testa förslagsvis B3CAF, separat privat repo på GitHub under mitt konto!
 
 # PSEUDO CODE
