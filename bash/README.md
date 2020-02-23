@@ -256,6 +256,11 @@ history
 !<number>
 ```
 
+## Show user login history:
+```shell
+last
+```
+
 ## Source .env file in the same path as script:
 ```shell
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}" | sed 's/[.].*$/.\env/')"
