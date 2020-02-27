@@ -25,3 +25,17 @@ curl --resolve example.com:443:51.141.12.112 https://example.com -k
 curl --connect-to example.com:443:example.azurewebsites.net:443 https://example.com/ --insecure
 curl --connect-to example.com:443:example.azurewebsites.net:443 https://example.com/ -k
 ```
+
+## Curl request that downloads a file to working directory:
+```shell
+curl https://raw.githubusercontent.com/mattiasholm/mattiasholm/master/git/CloneRepos.sh --output CloneRepos.sh
+```
+
+
+
+<!---
+Eventuellt ange placeholder argument <APA> istället för nuvarande exempel? Mer enhetligt med övriga READMEs!
+OBS: Skapa tabell a la REGEX med alla standardväxlar!
+-->
+
+https://raw.githubusercontent.com/mattiasholm/mattiasholm/master/git/CloneRepos.sh
