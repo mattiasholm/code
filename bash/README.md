@@ -276,4 +276,11 @@ last
 tail -r
 ```
 
+## Run a shell script directly from a public URL, without having to download it locally (use with caution!):
+```shell
+bash <(curl -s <url>)
+```
+
+
+
 <!-- Städa upp och kategorisera bättre här vid tillfälle! -->

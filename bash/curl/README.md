@@ -37,5 +37,3 @@ curl https://raw.githubusercontent.com/mattiasholm/mattiasholm/master/git/CloneR
 Eventuellt ange placeholder argument <APA> istället för nuvarande exempel? Mer enhetligt med övriga READMEs!
 OBS: Skapa tabell a la REGEX med alla standardväxlar!
 -->
-
-https://raw.githubusercontent.com/mattiasholm/mattiasholm/master/git/CloneRepos.sh
