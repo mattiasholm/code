@@ -445,6 +445,7 @@ git branch
 
 ## List all remote branches:
 ```shell
+git branch --remote
 git branch -r
 ```
 
