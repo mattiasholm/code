@@ -281,6 +281,9 @@ tail -r
 bash <(curl -s <url>)
 ```
 
-
+## Test a TCP connection to a specific host and port:
+```shell
+nc -z <host> <port>
+```
 
 <!-- Städa upp och kategorisera bättre här vid tillfälle! -->
