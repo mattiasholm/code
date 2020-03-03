@@ -13,5 +13,6 @@ code --install-extension bencoleman.armview
 code --install-extension josin.kusto-syntax-highlighting
 code --install-extension yzhang.markdown-all-in-one
 code --install-extension pustelto.bracketeer
+code --install-extension vscode-icons-team.vscode-icons
 
 code --list-extensions --show-versions

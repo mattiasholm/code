@@ -10,6 +10,13 @@ https://ohshitgit.com/
 
 <br><br>
 
+## Check Git version:
+```shell
+git --version
+```
+
+<br><br>
+
 ## Contextual manual:
 ```shell
 git <subcommand> --help

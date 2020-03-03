@@ -1,12 +1,15 @@
-#!/usr/bin/env pwsh
-
-# Note: Chocolatey needs to be run from an elevated PowerShell prompt (powershell.exe, not pwsh.exe)!
-
 $userName = "Mattias Holm"
 $userEmail = "mattias.holm@live.com"
 
+
+
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+
 choco install -y vscode
-choco install -y git ; git config --global user.name $userName ; git config --global user.email $userEmail ; git config --global credential.helper wincred ; git config --global --unset-all core.ignorecase ; git config --global core.ignorecase false
+choco install -y git ; git config --global user.name $userName ; git config --global user.email $userEmail ; git config --global credential.helper wincred
 choco install -y python3
 choco install -y powershell-core ; pwsh "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"
 powershell "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"

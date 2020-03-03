@@ -10,8 +10,6 @@ sudo apt install -y git &&
     git config --global user.name "${userName}" &&
     git config --global user.email "${userEmail}" &&
     git config --global credential.helper 'cache --timeout=86400' &&
-    git config --global --unset-all core.ignorecase &&
-    git config --global core.ignorecase false &&
     chmod +x "$(git rev-parse --show-toplevel)/git/CloneRepos.sh" &&
     "$(git rev-parse --show-toplevel)/git/CloneRepos.sh"
 

@@ -20,8 +20,7 @@ brew install git &&
     git config --global user.name "${userName}" &&
     git config --global user.email "${userEmail}" &&
     git config --global credential.helper osxkeychain &&
-    git config --global --unset-all core.ignorecase &&
-    git config --global core.ignorecase false && chmod +x "$(git rev-parse --show-toplevel)/git/CloneRepos.sh" &&
+    chmod +x "$(git rev-parse --show-toplevel)/git/CloneRepos.sh" &&
     "$(git rev-parse --show-toplevel)/git/CloneRepos.sh"
 
 brew cask install visual-studio-code
