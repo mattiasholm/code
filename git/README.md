@@ -475,6 +475,11 @@ git switch <branch-name>
 git checkout <branch-name | commit-id | tag-name>
 ```
 
+## Check out a specific file or directory from another branch, commit or tag (effectively discarding the versions in current branch):
+```shell
+git checkout <branch-name | commit-id | tag-name> <file-name | directory-name>
+```
+
 ## Switch back to the previously checked out branch or commit:
 ```shell
 git checkout -
