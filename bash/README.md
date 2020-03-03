@@ -108,6 +108,11 @@ which -a pwsh
 locate <file-name>
 ```
 
+## Recursively find all directories that are empty:
+```shell
+find <path> -type d -empty
+```
+
 ## Recursively find all files that match a specific wildcard pattern:
 ```shell
 find <path> -type <f | d> -name "<pattern>"

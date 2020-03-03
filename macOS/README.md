@@ -45,6 +45,11 @@ set show-all-if-ambiguous on
 TAB: menu-complete
 ```
 
+## List all volumes, such as external hard drives:
+```shell
+ls /Volumes/
+```
+
 <br><br>
 
 ## Source `.bashrc` from `.bash_profile` to mimic Linux (WARNING: Will overwrite existing profile!):
