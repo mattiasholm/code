@@ -68,8 +68,7 @@ function gquick() {
         message="$1"
     fi
 
-    cd $(git rev-parse --show-toplevel)
-    git add .
+    git add $(git rev-parse --show-toplevel)
     git commit --message "${message}"
     git push
 }
