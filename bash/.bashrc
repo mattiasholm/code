@@ -71,6 +71,7 @@ function gquick() {
     cd $(git rev-parse --show-toplevel)
     git add .
     git commit --message "${message}"
+    git push
 }
 
 export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
