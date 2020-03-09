@@ -7,9 +7,14 @@ https://kubernetes.io/docs/reference/kubectl/
 
 <br><br>
 
-## Change context:
+## Change context globally:
 ```shell
 kubectl config use-context <cluster-name>
+```
+
+## Change context for a single command:
+```shell
+kubectl <subcommand> --context <cluster-name>
 ```
 
 ## View config, such as contexts:
