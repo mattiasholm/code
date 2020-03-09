@@ -757,6 +757,10 @@ git revert <merge-commit-id> -m 2
 <!--
 TO-DO:
 
+
+https://www.haykranen.nl/2011/07/18/git-merging-specific-files-from-another-branch/ + https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository + https://gist.github.com/katylava/564416 + https://stackoverflow.com/questions/449541/how-to-selectively-merge-or-pick-changes-from-another-branch-in-git
+
+
 SKRIV MED ETT REBASE exempel i git README åtminstone!
 OBS: Rebase verkar göras mot tracking branch, dvs. origin?! Känns farligt...
 Kanske bättre med squash merges som är halvvägs?
