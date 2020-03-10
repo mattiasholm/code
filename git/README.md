@@ -124,6 +124,11 @@ git init
 git clone <URL>
 ```
 
+## Add a new remote:
+```shell
+git remote add <name> <url>
+```
+
 ## Show the name of all remotes:
 ```shell
 git remote
