@@ -124,9 +124,19 @@ git init
 git clone <URL>
 ```
 
-## Add a new remote:
+## Add a new remote (e.g. `origin` when initiating a new repo or `upstream` when in a fork):
 ```shell
 git remote add <name> <url>
+```
+
+## Rename a remote:
+```shell
+git remote rename <old-name> <new-name>
+```
+
+## Remove a remote:
+```shell
+git remote remove <name>
 ```
 
 ## Show the name of all remotes:
@@ -389,6 +399,12 @@ git show
 ## Show changes in a specific branch, commit or tag:
 ```shell
 git show <branch-name | commit-id | tag-name>
+```
+
+## Show log entry for a specific specific branch, commit or tag:
+```shell
+git show <branch-name | commit-id | tag-name> --quiet
+git show <branch-name | commit-id | tag-name> -q
 ```
 
 <br><br>
