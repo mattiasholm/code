@@ -108,4 +108,7 @@ brew list --help
 
 <br>
 
+
+BREW TAP !!! Third-party repos, t.ex. Jabra Direct-installation!
+
 -->
