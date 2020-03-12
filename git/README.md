@@ -471,6 +471,12 @@ cat .git/HEAD
 git branch
 ```
 
+## List all local branches and their respective HEAD:
+```shell
+git branch --verbose
+git branch -v
+```
+
 ## List all remote branches:
 ```shell
 git branch --remote
