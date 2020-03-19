@@ -124,7 +124,7 @@ git init
 git clone <URL>
 ```
 
-## Add a new remote (e.g. `origin` when initiating a new repo or `upstream` when in a fork):
+## Add a new remote (e.g. `origin` when initiating a new repo or `upstream` when using the forking workflow):
 ```shell
 git remote add <name> <url>
 ```
@@ -150,7 +150,7 @@ git remote --verbose
 git remote -v
 ```
 
-## Show the URL of origin:
+## Show the URL of `origin`:
 ```shell
 git remote get-url origin
 ````
@@ -176,26 +176,59 @@ vim .gitignore
 
 <br><br>
 
-## Fetch metadata from origin (without touching your working tree or current HEAD):
+## Fetch metadata from `origin` (will not touch your working tree or current `HEAD`):
 ```shell
 git fetch
+git fetch origin
 ```
 
-## Pull changes from origin (will integrate remote changes into your working tree and current HEAD):
+## Fetch metadata from branch `master` in remote `upstream` when using the forking workflow (will not touch your working tree or current `HEAD`):
+```shell
+git fetch upstream master
+```
+
+## Fetch metadata from all remotes (will not touch your working tree or current `HEAD`):
+```shell
+git fetch --all
+```
+
+## Pull changes from `origin` (will integrate remote changes into your working tree and current `HEAD`):
 ```shell
 git pull
+git pull origin
 ```
 
-## Pull changes from origin, force overwrite of local branch:
+## Pull changes from branch `master`in remote `upstream` when using the forking workflow (will integrate remote changes into your working tree and current `HEAD`):
+```shell
+git pull upstream master
+```
+
+## Pull changes from all remotes (will integrate remote changes into your working tree and current `HEAD`):
+```shell
+git pull --all
+```
+
+## Pull changes from `origin`, but abort if the fast-forward strategy is not possible and decide for yourself if you want to merge or rebase:
+```shell
+git pull --ff-only
+```
+
+## Pull changes from `origin`, force overwrite of local branch:
 ```shell
 git pull --force
 git pull -f
 ```
 
-## Pull changes from origin, prune remote-tracking branches no longer on remote:
+## Pull changes from `origin`, prune remote-tracking branches no longer on remote:
 ```shell
 git pull --prune
 git pull -p
+```
+
+## Pull all tags from `origin`:
+```shell
+git pull --tags
+git pull -t
 ```
 
 <br><br>
@@ -298,12 +331,12 @@ git commit -m "<message>"
 
 <br><br>
 
-## Push locally committed changes to origin:
+## Push locally committed changes to `origin`:
 ```shell
 git push
 ```
 
-## Push changes to a new branch that doesn't exist in origin:
+## Push changes to a new branch that doesn't exist in `origin`:
 ```shell
 git push --set-upstream origin <branch-name>
 git push -u origin <branch-name>
@@ -371,19 +404,19 @@ git tag -a <tag-name> -m <message> <branch-name | commit-id | tag-name>
 git tag -d <tag-name>
 ```
 
-## Push an unannotated tag to origin:
+## Push an unannotated tag to `origin`:
 ```shell
 git push origin <tag-name>
 ```
 
-## Push all annotated tags to origin:
+## Push all annotated tags to `origin`:
 ```shell
 git push --follow-tags
 ```
 
 <br><br>
 
-## Show all local commits, not yet pushed to origin:
+## Show all local commits, not yet pushed to `origin`:
 ```shell
 git cherry --verbose
 git cherry -v
@@ -419,34 +452,51 @@ git log
 git log --all
 ```
 
-## Show commit history in one-line-per-commit format:
+## Show commit history in one-line-per-commit format, with full commit IDs:
 ```shell
 git log --pretty=oneline
 ```
 
+## Show commit history in one-line-per-commit format, with commit IDs in short format:
+```shell
+git log --oneline
+```
+
+## Show commit history with a graphical representation of the branch structure:
+```shell
+git log --graph
+```
+
+## Show commit history, with full reference names (including prefix):
+```shell
+git log --decorate=full
+```
+
 ## Count total number of commits:
 ```shell
+git log --oneline | wc -l
 git log --pretty=oneline | wc -l
 ```
 
+<br><br>
 
 ## Show reference log (basically undo history):
 ```shell
 git reflog
 ```
 
-## List commit ID of current HEAD:
+## List commit ID of current `HEAD`:
 ```shell
 git rev-parse HEAD
 cat .git/refs/heads/master
 ```
 
-## List commit ID of HEAD for all branches (both local and remote):
+## List commit ID of `HEAD` for all branches (both local and remote):
 ```shell
 git show-ref
 ```
 
-## List commit ID of current HEAD and for all branches (both local and remote):
+## List commit ID of current `HEAD` and for all branches (both local and remote):
 ```shell
 git show-ref --heads
 ```
@@ -471,7 +521,7 @@ cat .git/HEAD
 git branch
 ```
 
-## List all local branches and their respective HEAD:
+## List all local branches and their respective `HEAD`:
 ```shell
 git branch --verbose
 git branch -v
@@ -489,7 +539,7 @@ git branch --all
 git branch -a
 ```
 
-## Create a new branch based on current HEAD:
+## Create a new branch based on current `HEAD`:
 ```shell
 git branch <branch-name>
 ```
@@ -559,7 +609,13 @@ git branch -d <branch-name>
 
 ## Force delete branch, even if not merged:
 ```shell
+git branch --delete --force <branch-name>
 git branch -D <branch-name>
+```
+
+## Delete a remote branch in a specific remote:
+```shell
+git push <remote-name> --delete <branch-name>
 ```
 
 <br><br>
@@ -569,7 +625,7 @@ git branch -D <branch-name>
 git commit --amend -m "<commit-message>"
 ```
 
-## Amend code in latest commit (only safe to do on commits not yet pushed to origin):
+## Amend code in latest commit (only safe to do on commits not yet pushed to `origin`):
 ```shell
 git commit --amend --no-edit
 ```
@@ -618,37 +674,37 @@ git clean -d -f
 
 <br><br>
 
-## Reset HEAD, index and working tree to the second latest local commit, effectively discarding the latest commit (only safe to do on commits not yet pushed to origin):
+## Reset `HEAD`, index and working tree to the second latest local commit, effectively discarding the latest commit (only safe to do on commits not yet pushed to `origin`):
 ```shell
 git reset --hard HEAD~1
 ```
 
-## Reset HEAD, index and working tree to the third latest local commit, effectively discarding the two latest commits (only safe to do on commits not yet pushed to origin):
+## Reset `HEAD`, index and working tree to the third latest local commit, effectively discarding the two latest commits (only safe to do on commits not yet pushed to `origin`):
 ```shell
 git reset --hard HEAD~2
 ```
 
-## Reset HEAD, index and working tree to a specific local commit and discard all newer commits (only safe to do on commits not yet pushed to origin):
+## Reset `HEAD`, index and working tree to a specific local commit and discard all newer commits (only safe to do on commits not yet pushed to origin):
 ```shell
 git reset --hard <commit-id>
 ```
 
-## Reset HEAD, index and working tree to latest commit in origin and discard all local commits:
+## Reset `HEAD`, index and working tree to latest commit in `origin` and discard all local commits:
 ```shell
 git reset --hard origin/<branch-name>
 ```
 
-## Reset only HEAD:
+## Reset only `HEAD`:
 ```shell
 git reset --soft origin/<branch-name>
 ```
 
-## Reset HEAD and index:
+## Reset `HEAD` and index:
 ```shell
 git reset --mixed origin/<branch-name>
 ```
 
-## Reset HEAD, but keep local changes in working tree:
+## Reset `HEAD`, but keep local changes in working tree:
 ```shell
 git reset --keep origin/<branch-name>
 ```
@@ -677,17 +733,18 @@ git revert <commit-id> --no-commit
 
 <br><br>
 
-## Compare all files in working directory to current HEAD:
+## Compare all files in working directory to current `HEAD`:
 ```shell
 git diff
+git diff HEAD
 ```
 
-## Compare all files in working directory to latest commit in origin:
+## Compare all files in working directory to latest commit in `origin`:
 ```shell
 git diff origin
 ```
 
-## Compare a specific directory or file in working directory to current HEAD:
+## Compare a specific directory or file in working directory to current `HEAD`:
 ```shell
 git diff <directory-name | file-name>
 ```
@@ -725,12 +782,17 @@ git merge <branch-name | commit-id | tag-name> -m "<message>"
 git merge <branch-name | commit-id | tag-name> --message "<message>" --no-commit
 ```
 
-## Merge a specific branch, commit or tag into currently checked out branch, but abort if fast-forward is not possible, i.e. if merge conflicts cannot be resolved automatically:
+## Merge a specific branch, commit or tag into currently checked out branch, without allowing the fast-forward strategy (i.e. a merge commit will always be created):
+```shell
+git merge <branch-name | commit-id | tag-name> --message "<message>" --no-ff
+```
+
+## Merge a specific branch, commit or tag into currently checked out branch, but abort if the fast-forward strategy is not possible, e.g. if merge conflicts cannot be resolved automatically:
 ```shell
 git merge <branch-name | commit-id | tag-name> --message "<message>" --ff-only
 ```
 
-## Make a squash merge, i.e. merge changes into working tree, without touching HEAD (a manual commit is then made to consolidate multiple commits into a single commit):
+## Make a squash merge, i.e. merge changes into working tree, without touching `HEAD` (a manual commit is then made to consolidate multiple commits into a single commit):
 ```shell
 git merge <branch-name | commit-id | tag-name> --squash
 
@@ -784,8 +846,9 @@ git revert <merge-commit-id> -m 2
 <!--
 TO-DO:
 
-
+Selective merging? Användbart för B3CAf när vi endast vill merga in specifika filer, framförallt exkludera allt i variables mappen!
 https://www.haykranen.nl/2011/07/18/git-merging-specific-files-from-another-branch/ + https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository + https://gist.github.com/katylava/564416 + https://stackoverflow.com/questions/449541/how-to-selectively-merge-or-pick-changes-from-another-branch-in-git
+
 
 
 SKRIV MED ETT REBASE exempel i git README åtminstone!
@@ -797,40 +860,8 @@ Kanske bättre med squash merges som är halvvägs?
 git checkout feature
 git rebase master
 
-TESTKÖR I ANNAT REPO ÄN mattiasholm!
-Testa förslagsvis B3CAF, separat privat repo på GitHub under mitt konto!
 
-
-
-EGET SEGMENT GIT FORK!
-Både initial clone + hur man listar URL, diffar, showar, mergar VS rebasar etc från upstream!
-Testa förslagsvis B3CAF, separat privat repo på GitHub under mitt konto!
-
-# PSEUDO CODE
-git clone ???
-git remote add upstream ???
-git pull upstream master
-
-
-
-
-Hur ta bort en branch även remote? räcker git branch -d origin/???
-RESEARCHA!
-
-
-
-# Hur ta bort en fil/katalog och all dess historik från ett repo?
-Har gjort detta tidigare, när jag städade ARM-templates, så vet att det går utan att förstöra resten av repot!
-!!! git filter-branch ???
-
-
-<br>
 
 FLER TIPS ATT SAXA HÄRIFRÅN?
 https://ohshitgit.com/
-
-<br>
-
-GOOLGLA ANDRAS GIT CHEAT SHEET FÖR IDÈER - dock ingen idé att kopiera saker rakt av utan att testa ordentligt - vill bara ha med saker jag faktiskt känner att jag kommer att ha användning av!
-
 -->
