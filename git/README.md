@@ -826,6 +826,11 @@ git clean -d -f
 
 <br><br>
 
+## Reset `HEAD`, index and working tree to the latest local commit, effectively discarding index and working directory:
+```shell
+git reset --hard HEAD
+```
+
 ## Reset `HEAD`, index and working tree to the second latest local commit, effectively discarding the latest commit (only safe to do on commits not yet pushed to `origin`):
 ```shell
 git reset --hard HEAD~1
