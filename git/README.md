@@ -422,6 +422,12 @@ git cherry --verbose
 git cherry -v
 ```
 
+## Cherry-pick a commit from another branch and add it to currently checked out branch:
+```shell
+git cherry-pick <branch-name>
+```
+
+
 <br><br>
 
 ## Show actual changes in latest commit:
