@@ -846,15 +846,15 @@ git reset --hard origin/<branch-name>
 git reset --hard <branch-name | commit-id | tag-name>
 ```
 
-## Reset only `HEAD` (i.e. undo commit, but leave the changes in index/staging area):
-```shell
-git reset --soft <branch-name | commit-id | tag-name>
-```
-
 ## Reset `HEAD` and index, but leaves the changes in working tree (this is the default action):
 ```shell
 git reset --mixed <branch-name | commit-id | tag-name>
 git reset <branch-name | commit-id | tag-name>
+```
+
+## Reset only `HEAD` (i.e. undo commit, but leave the changes in index/staging area):
+```shell
+git reset --soft <branch-name | commit-id | tag-name>
 ```
 
 <br><br>
