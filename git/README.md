@@ -751,7 +751,7 @@ git push <remote-name> --delete <branch-name>
 
 ## Amend message of latest commit:
 ```shell
-git commit --amend -m "<commit-message>"
+git commit --amend --message "<commit-message>"
 ```
 
 ## Amend code in latest commit (only safe to do on commits not yet pushed to `origin`):
