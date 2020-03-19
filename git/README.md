@@ -422,11 +422,10 @@ git cherry --verbose
 git cherry -v
 ```
 
-## Cherry-pick a commit from another branch and add it to currently checked out branch:
+## Cherry-pick a commit from another branch and commit it to currently checked out branch (for example if accidentally committed to wrong branch):
 ```shell
 git cherry-pick <branch-name>
 ```
-
 
 <br><br>
 
@@ -829,7 +828,7 @@ git reset --hard <commit-id>
 git reset --hard origin/<branch-name>
 ```
 
-## Reset only `HEAD`:
+## Reset only `HEAD` (i.e. undo commit, but leave the changes available):
 ```shell
 git reset --soft origin/<branch-name>
 ```
