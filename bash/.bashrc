@@ -27,6 +27,7 @@ alias gcm='git checkout master'
 alias gb='git branch'
 alias gl='git log --oneline --graph'
 alias gla='git log --oneline --graph --all'
+alias gsl='git shortlog --summary'
 alias gch='git cherry --verbose'
 alias gd='git diff'
 alias gdo='git diff origin'
@@ -72,6 +73,31 @@ function gquick() {
     git add $(git rev-parse --show-toplevel)
     git commit --message "${message}"
     git push
+}
+
+function gab() {
+    case "$#" in
+    1)
+        referenceBranch="master"
+        ;;
+    2)
+        referenceBranch="$2"
+        ;;
+    *)
+        echo -e "usage: gab <branch-name> [<reference-branch>]"
+        return
+        ;;
+    esac
+
+    echo -e "\nAHEAD: \t$(git log --oneline ${referenceBranch}.."$1" | wc -l)"
+    echo -e "BEHIND: $(git log --oneline "$1"..${referenceBranch} | wc -l)"
+
+    echo -e "\nCOMMITS AHEAD:"
+    git log --oneline ${referenceBranch}.."$1"
+
+    echo -e "\nCOMMITS BEHIND:"
+    git log --oneline "$1"..${referenceBranch}
+    echo -e "\n"
 }
 
 export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "

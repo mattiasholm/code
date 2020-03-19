@@ -202,6 +202,21 @@ grep -v <substring>
 grep -- <substring>
 ```
 
+## Grep and show `n` number of lines before match:
+```shell
+grep -B <n>
+```
+
+## Grep and show `n` number of lines before match:
+```shell
+grep -A <n>
+```
+
+## Grep and show `n` number of lines before and after match:
+```shell
+grep -C <n>
+```
+
 ## Create empty file in working directory:
 ```shell
 touch <file-name>

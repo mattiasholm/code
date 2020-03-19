@@ -424,20 +424,22 @@ git cherry -v
 
 <br><br>
 
-## Show changes in latest commit:
+## Show actual changes in latest commit:
 ```shell
 git show
 ```
 
-## Show changes in a specific branch, commit or tag:
+## Show actual changes in a specific branch, commit or tag:
 ```shell
 git show <branch-name | commit-id | tag-name>
 ```
 
-## Show log entry for a specific specific branch, commit or tag:
+## Show only log entry for a specific specific branch, commit or tag (i.e. omit displaying actual changes):
 ```shell
 git show <branch-name | commit-id | tag-name> --quiet
 git show <branch-name | commit-id | tag-name> -q
+git show <branch-name | commit-id | tag-name> --no-patch
+git show <branch-name | commit-id | tag-name> -s
 ```
 
 <br><br>
@@ -462,7 +464,7 @@ git log --pretty=oneline
 git log --oneline
 ```
 
-## Show commit history with a graphical representation of the branch structure:
+## Show commit history, with a graphical representation of the branch structure:
 ```shell
 git log --graph
 ```
@@ -472,10 +474,137 @@ git log --graph
 git log --decorate=full
 ```
 
-## Count total number of commits:
+## Show commit history, display insertion/deletion statistics for each commit:
+```shell
+git log --stat
+```
+
+## Show commit history, display actual changes for each commit (basically executes `git show` iteratively):
+```shell
+git log --patch
+git log -p
+git log -u
+```
+
+## Show commit history, display both statistics and actual changes for each commit:
+```shell
+git log --patch-with-stat
+git log --patch --stat
+```
+
+## Show commit history, include only merge commits:
+```shell
+git log --merges
+git log --min-parents=2
+```
+
+## Show commit history, exclude merge commits:
+```shell
+git log --no-merges
+git log --max-parents=1
+```
+
+## Show commit history, include `n` latest commits:
+```shell
+git log -<n>
+```
+
+## Show commit history for a specific author:
+```shell
+git log --author "<author-name>"
+```
+
+## Show commit history for a specific file:
+```shell
+git log -- <file-name>
+```
+
+## Show commit history, include only commits with a message that match a specific pattern:
+```shell
+git log --grep="<pattern>"
+```
+
+## Show commit history, include only commits that introduce or remove a particular line of code:
+```shell
+git log -S "<pattern>"
+```
+
+## Show commit history, before or after 1 month ago:
+```shell
+git log [--before | --after] "1 month ago"
+```
+
+## Show commit history, before or after 1 week ago:
+```shell
+git log [--before | --after] "1 week ago"
+```
+
+## Show commit history, before or after yesterday (i.e. 1 day ago):
+```shell
+git log [--before | --after] "yesterday"
+```
+
+## Show commit history, before or after a specific date:
+```shell
+git log [--before | --after] "<YYYY-MM-DD>"
+```
+
+## Show commit history, before or after a specific date/time:
+```shell
+git log [--before | --after] "<YYYY-MM-DD HH:MM:SS>"
+```
+
+## Show commit history, include all commits between two specific branches or commits (useful for getting ahead/behind stats between `master` and a feature branch):
+```shell
+git log <branch-name | commit-id>..<branch-name | commit-id>
+```
+
+<br><br>
+
+## Show commits in currently checked out branch, grouped by author:
+```shell
+git shortlog
+```
+
+## Show commits in all branches, grouped by author:
+```shell
+git shortlog --all
+```
+
+## Show commits in currently checked out branch, grouped by author (display email):
+```shell
+git shortlog --email
+git shortlog -e
+```
+
+## Show commits in all branches, grouped by author (display email):
+```shell
+git shortlog --email --all
+git shortlog -e --all
+```
+
+## Count number of commits in currently checked out branch, grouped by author:
+```shell
+git shortlog --summary
+git shortlog -s
+```
+
+## Count number of commits in all branches, grouped by author:
+```shell
+git shortlog --summary --all
+git shortlog -s --all
+```
+
+## Count total number of commits in currently checked out branch:
 ```shell
 git log --oneline | wc -l
 git log --pretty=oneline | wc -l
+```
+
+## Count total number of commits in all branches:
+```shell
+git log --oneline --all | wc -l
+git log --pretty=oneline --all | wc -l
 ```
 
 <br><br>
@@ -546,7 +675,7 @@ git branch <branch-name>
 
 ## Create a new branch based on a specific branch or commit:
 ```shell
-git branch <branch-name> <base-branch>
+git branch <branch-name> <base-branch | base-commit>
 ```
 
 ## Check out a specific branch:
