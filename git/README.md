@@ -836,12 +836,7 @@ git reset --hard HEAD
 git reset --hard HEAD~1
 ```
 
-## Reset `HEAD`, index and working tree to the third latest local commit, effectively discarding the two latest commits (only safe to do on commits not yet pushed to `origin`):
-```shell
-git reset --hard HEAD~2
-```
-
-## Reset `HEAD`, index and working tree to latest commit in `origin` and discard all local commits (useful if local branch is FUBAR and you want to start over from a known good state):
+## Reset `HEAD`, index and working tree to latest commit in `origin`, effectively discarding all local commits (useful if local branch is FUBAR and you want to start over from a known good state):
 ```shell
 git reset --hard origin/<branch-name>
 ```
