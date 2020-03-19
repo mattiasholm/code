@@ -836,29 +836,25 @@ git reset --hard HEAD~1
 git reset --hard HEAD~2
 ```
 
-## Reset `HEAD`, index and working tree to a specific local commit and discard all newer commits (only safe to do on commits not yet pushed to origin):
-```shell
-git reset --hard <commit-id>
-```
-
 ## Reset `HEAD`, index and working tree to latest commit in `origin` and discard all local commits (useful if local branch is FUBAR and you want to start over from a known good state):
 ```shell
 git reset --hard origin/<branch-name>
 ```
 
-## Reset only `HEAD` (i.e. undo commit, but leave the changes available):
+## Reset `HEAD`, index and working tree to a specific branch, commit or tag and discard all newer commits (only safe to do on commits not yet pushed to origin):
 ```shell
-git reset --soft origin/<branch-name>
+git reset --hard <branch-name | commit-id | tag-name>
 ```
 
-## Reset `HEAD` and index:
+## Reset only `HEAD` (i.e. undo commit, but leave the changes in index/staging area):
 ```shell
-git reset --mixed origin/<branch-name>
+git reset --soft <branch-name | commit-id | tag-name>
 ```
 
-## Reset `HEAD`, but keep local changes in working tree:
+## Reset `HEAD` and index, but leaves the changes in working tree (this is the default action):
 ```shell
-git reset --keep origin/<branch-name>
+git reset --mixed <branch-name | commit-id | tag-name>
+git reset <branch-name | commit-id | tag-name>
 ```
 
 <br><br>
