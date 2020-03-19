@@ -427,6 +427,11 @@ git cherry -v
 git cherry-pick <branch-name>
 ```
 
+## Abort an ongoing cherry-pick:
+```shell
+git cherry-pick --abort
+```
+
 <br><br>
 
 ## Show actual changes in latest commit:
