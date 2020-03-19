@@ -913,6 +913,12 @@ git diff <branch-name | commit-id | tag-name> <branch-name | commit-id | tag-nam
 git diff <branch-name | commit-id | tag-name> <branch-name | commit-id | tag-name> <directory-name | file-name>
 ```
 
+## Compare files added to index:
+```shell
+git diff --staged
+git diff --cached
+```
+
 <br><br>
 
 ## Merge a specific branch, commit or tag into currently checked out branch (will make a merge commit automatically):
