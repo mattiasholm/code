@@ -422,7 +422,7 @@ git cherry --verbose
 git cherry -v
 ```
 
-## Cherry-pick a commit from another branch and commit it to currently checked out branch (for example if accidentally committed to wrong branch):
+## Cherry-pick a commit from another branch and commit it to currently checked out branch (for example if accidentally committed to wrong branch, such as `master` where branch policies are in place):
 ```shell
 git cherry-pick <branch-name>
 ```
