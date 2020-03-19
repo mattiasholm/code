@@ -422,7 +422,7 @@ git cherry --verbose
 git cherry -v
 ```
 
-## Cherry-pick a specific commit from another branch and commit it to currently checked out branch, for example if accidentally committed to wrong branch, such as `master` where branch policies are in place:
+## Cherry-pick a specific commit from another branch and commit it to currently checked out branch, for example if accidentally committed to wrong branch, such as `master` where branch policies are in place (note that the cherry-picked commit will not have the same commit ID as the original commit):
 ```shell
 git cherry-pick <commit-id>
 ```
@@ -870,7 +870,7 @@ git revert HEAD~1
 git revert <commit-id>
 ```
 
-## Revert changes made in a specific commit, without automatically making a new commit:
+## Revert changes made in a specific commit, without automatically making a commit:
 ```shell
 git revert <commit-id> --no-commit
 ```
@@ -927,7 +927,7 @@ git merge <branch-name | commit-id | tag-name> --message "<message>"
 git merge <branch-name | commit-id | tag-name> -m "<message>"
 ```
 
-## Merge a specific branch, commit or tag into currently checked out branch, without automatically making a merge commit:
+## Merge a specific branch, commit or tag into currently checked out branch, without automatically making a commit:
 ```shell
 git merge <branch-name | commit-id | tag-name> --message "<message>" --no-commit
 ```
