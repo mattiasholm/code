@@ -5,9 +5,6 @@
 ## Official docs:
 https://git-scm.com/docs
 
-## Oh Shit, Git!?!:
-https://ohshitgit.com/
-
 <br><br>
 
 ## Check Git version:
@@ -121,7 +118,18 @@ git init
 
 ## Clone remote repository to working directory:
 ```shell
-git clone <URL>
+git clone <url>
+```
+
+## Clone remote repository to a specific directory:
+```shell
+git clone <url> <path>
+```
+
+## Clone a specific branch form a remote repository:
+```shell
+git clone --branch <branch-name> <url>
+git clone -b <branch-name> <url>
 ```
 
 ## Add a new remote (e.g. `origin` when initiating a new repo or `upstream` when using the forking workflow):
@@ -833,7 +841,7 @@ git reset --hard HEAD~2
 git reset --hard <commit-id>
 ```
 
-## Reset `HEAD`, index and working tree to latest commit in `origin` and discard all local commits:
+## Reset `HEAD`, index and working tree to latest commit in `origin` and discard all local commits (useful if local branch is FUBAR and you want to start over from a known good state):
 ```shell
 git reset --hard origin/<branch-name>
 ```
@@ -994,10 +1002,10 @@ git revert <merge-commit-id> -m 2
 ```
 
 <!--
+
 TO-DO:
 
 Selective merging? Användbart för B3CAf när vi endast vill merga in specifika filer, framförallt exkludera allt i variables mappen!
-https://www.haykranen.nl/2011/07/18/git-merging-specific-files-from-another-branch/ + https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository + https://gist.github.com/katylava/564416 + https://stackoverflow.com/questions/449541/how-to-selectively-merge-or-pick-changes-from-another-branch-in-git
 
 
 
@@ -1010,8 +1018,4 @@ Kanske bättre med squash merges som är halvvägs?
 git checkout feature
 git rebase master
 
-
-
-FLER TIPS ATT SAXA HÄRIFRÅN?
-https://ohshitgit.com/
 -->
