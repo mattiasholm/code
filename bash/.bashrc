@@ -79,26 +79,34 @@ function gquick() {
 
 function gab() {
     case "$#" in
+    0)
+        firstBranch="$(git rev-parse --abbrev-ref HEAD)"
+        secondBranch="master"
+        ;;
     1)
-        referenceBranch="master"
+        firstBranch="$(git rev-parse --abbrev-ref HEAD)"
+        secondBranch="$1"
         ;;
     2)
-        referenceBranch="$2"
+        firstBranch="$1"
+        secondBranch="$2"
         ;;
     *)
-        echo -e "usage: gab <branch-name> [<reference-branch>]"
+        echo -e "usage: gab [<second-branch> | <first-branch> <second-branch>]"
         return
         ;;
     esac
 
-    echo -e "\nAHEAD: \t$(git log --oneline ${referenceBranch}.."$1" | wc -l)"
-    echo -e "BEHIND: $(git log --oneline "$1"..${referenceBranch} | wc -l)"
+    echo -e "\nComparing branch \"${firstBranch}\" to branch \"${secondBranch}\":\n"
+
+    echo -e "AHEAD: \t$(git log --oneline "${secondBranch}".."${firstBranch}" | wc -l)"
+    echo -e "BEHIND: $(git log --oneline "${firstBranch}".."${secondBranch}" | wc -l)"
 
     echo -e "\nCOMMITS AHEAD:"
-    git log --oneline ${referenceBranch}.."$1"
+    git log --oneline "${secondBranch}".."${firstBranch}"
 
     echo -e "\nCOMMITS BEHIND:"
-    git log --oneline "$1"..${referenceBranch}
+    git log --oneline "${firstBranch}".."${secondBranch}"
     echo -e "\n"
 }
 
