@@ -174,14 +174,19 @@ cd
 wc -l
 ```
 
+## Count number of words:
+```shell
+wc -w
+```
+
 ## Count number of characters:
 ```shell
 wc -m
 ```
 
-## Count number of words:
+## Count number of bytes:
 ```shell
-wc -w
+wc -c
 ```
 
 <br><br>
@@ -324,6 +329,32 @@ array=("a" "b" "c")
 echo "${array[RANDOM%${#array[@]}]}"
 ```
 
+## Create an MD5 hash from the content of a file (useful for verifying data integrity):
+```shell
+cat <file-name> | md5
+```
+
+<br><br>
+
+## Addition in bash:
+```shell
+expr <int> + <int>
+```
+
+## Subtraction in bash:
+```shell
+expr <int> - <int>
+```
+
+## Multiplication in bash:
+```shell
+expr <int> \* <int>
+```
+
+## Integer division in bash:
+```shell
+expr <int> / <int>
+```
 
 <!-- Städa upp och kategorisera bättre här vid tillfälle!
 

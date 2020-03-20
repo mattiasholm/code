@@ -80,9 +80,25 @@ function pw() {
         ;;
     esac
 
-    ### OBS: Byt ut till annan algoritm för att generera lösenord - blir för många tecken nu?!
-    openssl rand -base64 $passwordLength | pbcopy
-    echo -e "A random password with ${passwordLength} character is now in clipboard"
+    if [[ ${passwordLength} -lt 8 ]]; then
+        echo -e "Password cannot be shorter than 8 characters"
+        return
+    fi
+
+    chars='@#$%&_+='
+    {
+        LC_ALL=C grep </dev/urandom -ao '[A-Za-z0-9]' |
+            head -n $(expr $passwordLength - 4)
+        echo ${chars:$((RANDOM % ${#chars})):1}
+        echo ${chars:$((RANDOM % ${#chars})):1}
+        echo ${chars:$((RANDOM % ${#chars})):1}
+        echo ${chars:$((RANDOM % ${#chars})):1}
+    } |
+        shuf |
+        tr -d '\n' |
+        pbcopy
+
+    echo -e "A random password with ${passwordLength} characters is now in clipboard"
 }
 
 function gquick() {
