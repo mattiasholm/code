@@ -1,6 +1,5 @@
 $ErrorActionPreference = 'Stop'
 Add-AzAccount
-# admin.mattias.holm@b3.se
 
 
 

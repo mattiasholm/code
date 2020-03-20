@@ -27,7 +27,7 @@ az extension list-available
 az <subcommand> list --query [].<property>
 ```
 
-## Show only a specific property when listing:
+## Make a custom REST API call to Azure Resource Manager (ARM):
 ```shell
 az rest --method <method> --uri <uri> --body <body>
 

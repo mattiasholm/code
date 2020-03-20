@@ -191,6 +191,12 @@ wc -w
 ll
 ```
 
+## Grep case insensitive match:
+```shell
+grep --ignore-case <substring>
+grep -i <substring>
+```
+
 ## Grep inverted match:
 ```shell
 grep --invert-match <substring>
@@ -306,4 +312,7 @@ bash <(curl -s <url>)
 nc -z <host> <port>
 ```
 
-<!-- Städa upp och kategorisera bättre här vid tillfälle! -->
+<!-- Städa upp och kategorisera bättre här vid tillfälle!
+
+Ev bryta loss grep till egen README.md???
+-->
