@@ -91,5 +91,5 @@ code .
 <br>
 
 <!--
-## FYLL PÅ! GOOGLA EFTER FLER ANVÄNDBARA SHORTCUTS!
+## FYLL PÅ! GOOGLA EFTER FLER ANVÄNDBARA SHORTCUTS! Underlättar vardagen enormt!
 -->

@@ -312,7 +312,20 @@ bash <(curl -s <url>)
 nc -z <host> <port>
 ```
 
+## Make all files with a specific file extension in working directory executable:
+```shell
+chmod +x *.<file-extension>
+```
+
+## Print a random element from an array:
+```shell
+array=("a" "b" "c")
+
+echo "${array[RANDOM%${#array[@]}]}"
+```
+
+
 <!-- Städa upp och kategorisera bättre här vid tillfälle!
 
-Ev bryta loss grep till egen README.md???
+Ev bryta loss grep till egen README.md??? FLER?
 -->

@@ -1,114 +1,167 @@
 ## Cheat Sheet - Homebrew
 
-<!-- TO-DO: 
-
-## RENSKRIV NEDAN, ÄR SAXAT RAKT FRÅN ONENOTE!
-
 <br>
 
-Official docs?
+## Official docs:
+https://docs.brew.sh/
 
-## On the web:
+## Formulae:
 https://formulae.brew.sh/formula/
+
+## Casks:
 https://formulae.brew.sh/cask/
 
-<br>
+<br><br>
 
-## Install Homebrew (macOS package manager, aka "formulae")
+## Check Homebrew version:
+```shell
+brew --version
+```
+
+<br><br>
+
+## Contextual help:
+```shell
+brew [<subcommand>] --help
+brew [<subcommand>] -h
+```
+
+<br><br>
+
+## Install Homebrew:
 ```shell
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-## Update Homebrew
+<br><br>
+
+## Update Homebrew:
 ```shell
 brew update
 ```
 
-## Install CLI tools
+<br><br>
+
+## Install formula:
 ```shell
-brew install <formula>
+brew install <formula-name>
 ```
 
-## Install GUI applications
+## Install cask:
 ```shell
-brew cask install <formula>
+brew cask install <cask-name>
 ```
 
-## Upgrade CLI tools
+<br><br>
+
+## Upgrade formula:
 ```shell
-brew upgrade <formula>
+brew upgrade <formula-name>
 ```
 
-## Upgrade GUI applications
+## Upgrade cask:
 ```shell
-brew cask upgrade <formula>
+brew cask upgrade <cask-name>
 ```
 
-## Uninstall CLI tools
+<br><br>
+
+## Uninstall formula:
 ```shell
-brew uninstall <formula>
+brew uninstall <formula-name>
 ```
 
-## Uninstall GUI applications
+## Uninstall cask:
 ```shell
-brew cask uninstall <formula>
+brew cask uninstall <cask-name>
 ```
 
-## Suppress upgrades for a formulae
+<br><br>
+
+## Reinstall a formula:
 ```shell
-brew pin <formula>
+brew reinstall <formula-name>
 ```
 
-## Disable upgrade suppression for a formulae
+## Reinstall a cask:
 ```shell
-brew unpin <formula>
+brew reinstall <cask-name>
 ```
 
-## Upgrade all formulae
+<br><br>
+
+## Suppress upgrades for a formula:
+```shell
+brew pin <formula-name>
+```
+
+## Enable upgrades for a formula:
+```shell
+brew unpin <formula-name>
+```
+
+<br><br>
+
+## Upgrade all formulae:
 ```shell
 brew update &&
     brew upgrade
 ```
 
-## Link something manually installed to Homebrew
+## Upgrade all casks:
 ```shell
-brew link --overwrite <Formulae>
+brew update &&
+    brew cask upgrade
 ```
 
-## Reinstall with Homebrew
+<br><br>
+
+## Link a manually installed formula to Homebrew:
 ```shell
-brew reinstall <Formulae>
+brew link --overwrite <formula-name>
 ```
 
-## Clean up old versions of formulae
+## Clean up old versions of formulae and casks:
 ```shell
 brew cleanup
 ```
 
-## Search for formulas
+<br><br>
+
+## List all available formulae:
 ```shell
 brew search
-brew search azure
 ```
 
-## List installed formulae
+## Search for a specific formula:
+```shell
+brew search <formula-name>
+```
+
+<br><br>
+
+## List installed formulae:
 ```shell
 brew list
 ```
 
-## List installed Casks
+## List installed casks:
 ```shell
 brew cask list
 ```
 
-## Display contextual help
+<br><br>
+
+## List tapped repositories:
 ```shell
-brew list --help
+brew tap
 ```
 
-<br>
+## Tap a formula repository:
+```shell
+brew tap <github-account>/<github-repo>
+```
 
-
-BREW TAP !!! Third-party repos, t.ex. Jabra Direct-installation!
-
--->
+## Untap a formula respository:
+```
+brew untap <github-account>/<github-repo>

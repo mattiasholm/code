@@ -7,6 +7,7 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
+alias b='brew'
 alias g='git'
 alias k='kubectl'
 alias p='pulumi'
@@ -63,6 +64,25 @@ function cpbak() {
     fi
 
     cp "$1" "$2"
+}
+
+function pw() {
+    case "$#" in
+    0)
+        passwordLength=16
+        ;;
+    1)
+        passwordLength="$1"
+        ;;
+    *)
+        echo -e "usage: genpass [<password-length>]"
+        return
+        ;;
+    esac
+
+    ### OBS: Byt ut till annan algoritm för att generera lösenord - blir för många tecken nu?!
+    openssl rand -base64 $passwordLength | pbcopy
+    echo -e "A random password with ${passwordLength} character is now in clipboard"
 }
 
 function gquick() {

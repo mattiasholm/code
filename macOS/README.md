@@ -19,9 +19,20 @@ Cmd+Shift+H
 Cmd+Alt+Esc
 ```
 
+## Take a screenshot of entire screen:
+```
+Cmd+Shift+3
+```
+
+## Take a screenshot of selection:
+```
+Cmd+Shift+4
+```
+
+<br><br>
 <br><br>
 
->## **Terminal**
+>## **TERMINAL**
 
 ## Open working directory in Finder:
 ```shell
@@ -30,7 +41,7 @@ open .
 
 ## Open a specific file from Terminal:
 ```shell
-open template.json
+open <file-name>
 ```
 
 <br><br>
@@ -52,7 +63,7 @@ ls /Volumes/
 
 <br><br>
 
-## Source `.bashrc` from `.bash_profile` to mimic Linux (WARNING: Will overwrite existing profile!):
+## Source `.bashrc` from `.bash_profile` to mimic Linux (will overwrite existing profile):
 ```shell
 echo ". ~/.bashrc" > ~/.bash_profile
 ```

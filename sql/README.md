@@ -1,7 +1,9 @@
 # Cheat Sheet - SQL
 
-<!--
-<br>
+```sql
+SELECT * FROM myTable
+```
 
-## PLACEHOLDER
+<!--
+Flytta in Lathund.sql hit istället!
 -->

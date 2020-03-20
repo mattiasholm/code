@@ -9,8 +9,8 @@ https://www.pulumi.com/docs/reference/cli/
 
 ## Contextual syntax help:
 ```shell
-pulumi <subcommand> --help
-pulumi <subcommand> -h
+pulumi [<subcommand>] --help
+pulumi [<subcommand>] -h
 ```
 
 ## Show version:

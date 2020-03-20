@@ -7,12 +7,27 @@ https://kubernetes.io/docs/reference/kubectl/
 
 <br><br>
 
+## Check Kubernetes version:
+```shell
+kubectl version
+```
+
+<br><br>
+
+## Contextual help:
+```shell
+kubectl --help
+kubectl -h
+```
+
+<br><br>
+
 ## Change context globally:
 ```shell
 kubectl config use-context <cluster-name>
 ```
 
-## Change context for a single command:
+## Change context only for a single command:
 ```shell
 kubectl <subcommand> --context <cluster-name>
 ```
@@ -20,11 +35,6 @@ kubectl <subcommand> --context <cluster-name>
 ## View config, such as contexts:
 ```shell
 kubectl config view
-```
-
-## View Kubernetes version:
-```shell
-kubectl version
 ```
 
 ## Display cluster info:

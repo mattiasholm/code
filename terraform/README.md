@@ -1,8 +1,6 @@
 # Cheat Sheet - Terraform
 
 <!--
-<br>
-
-## Terraform example from Simon Gottschlag, Xenit:
+## Terraform example from Simon på Xenit - testkör vid tillfälle!
 https://github.com/XenitAB/azure-terraform-example
 -->

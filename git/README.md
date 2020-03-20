@@ -1,4 +1,4 @@
-# Cheat Sheet - git
+# Cheat Sheet - Git
 
 <br>
 
@@ -16,13 +16,13 @@ git --version
 
 ## Contextual manual:
 ```shell
-git <subcommand> --help
-git help <subcommand>
+git [<subcommand>] --help
+git help [<subcommand>]
 ```
 
 ## Contextual syntax help:
 ```shell
-git <subcommand> -h
+git [<subcommand>] -h
 ```
 
 ## List the most common subcommands, grouped by category:
