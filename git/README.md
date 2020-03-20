@@ -1005,26 +1005,21 @@ git revert <merge-commit-id> -m 2
 
 <br><br>
 
-## Patch a specific file or directory in currently checked out branch, by interactively selecting what hunks of changes to insert or discard from another branch, commit or tag:
+## Patch a specific file or directory in currently checked out branch, by interactively selecting what hunks of changes to insert or discard from another branch, commit or tag (selected changes will be staged automatically, but need to be committed manually):
 ```shell
 git checkout --patch <branch-name | commit-id | tag-name> <file-name | directory-name>
 ```
 
-## Patch all files and directories in currently checked out branch, by interactively selecting what hunks of changes to insert or discard from another branch, commit or tag:
+## Patch all files and directories in currently checked out branch, by interactively selecting what hunks of changes to insert or discard from another branch, commit or tag (selected changes will be staged automatically, but need to be committed manually):
 ```shell
 git checkout --patch <branch-name | commit-id | tag-name> "$(git rev-parse --show-toplevel)"
 ```
 
 
 
-
 <!--
 
 TO-DO:
-
-Selective merging? Användbart för B3CAf när vi endast vill merga in specifika filer, framförallt exkludera allt i variables mappen!
-
-
 
 SKRIV MED ETT REBASE exempel i git README åtminstone!
 OBS: Rebase verkar göras mot tracking branch, dvs. origin?! Känns farligt...
