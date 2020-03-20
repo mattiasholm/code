@@ -161,12 +161,12 @@ git remote -v
 ## Show the URL of `origin`:
 ```shell
 git remote get-url origin
-````
+```
 
 ## Show the URL of a specific remote:
 ```shell
 git remote get-url <remote-name>
-````
+```
 
 ## Show root directory of the current repository:
 ```shell
@@ -1005,16 +1005,14 @@ git revert <merge-commit-id> -m 2
 
 <br><br>
 
-## Patch a specific file or directory in currently checked out branch, by interactively selecting what changes to insert or discard from another branch, commit or tag:
-
-## Check out a specific file or directory from another branch, commit or tag and interactively select what changes to insert or discard into currently checked out branch (so called patching):
+## Patch a specific file or directory in currently checked out branch, by interactively selecting what hunks of changes to insert or discard from another branch, commit or tag:
 ```shell
 git checkout --patch <branch-name | commit-id | tag-name> <file-name | directory-name>
 ```
 
-## Check out all files and directories from another branch, commit or tag and interactively select what hunks to insert or discard into currently checked out branch (so called patching):
+## Patch all files and directories in currently checked out branch, by interactively selecting what hunks of changes to insert or discard from another branch, commit or tag:
 ```shell
-git checkout --patch <branch-name | commit-id | tag-name> .
+git checkout --patch <branch-name | commit-id | tag-name> "$(git rev-parse --show-toplevel)"
 ```
 
 
