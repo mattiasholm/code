@@ -337,6 +337,12 @@ git commit --message "<message>"
 git commit -m "<message>"
 ```
 
+## Commit all changes in working tree, without having to stage them to index first (will not include untracked files, thus equivalent to running `git add --update`):
+```shell
+git commit --all
+git commit -a
+```
+
 <br><br>
 
 ## Push locally committed changes to `origin`:
