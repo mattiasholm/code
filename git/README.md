@@ -450,6 +450,12 @@ git cherry-pick --abort
 ## Show actual changes in latest commit:
 ```shell
 git show
+git show HEAD
+```
+
+## Show actual changes in second latest commit:
+```shell
+git show HEAD~1
 ```
 
 ## Show actual changes in a specific branch, commit or tag:
@@ -996,6 +1002,23 @@ git revert <merge-commit-id> -m 1
 git revert <merge-commit-id> --mainline 2
 git revert <merge-commit-id> -m 2
 ```
+
+<br><br>
+
+## Patch a specific file or directory in currently checked out branch, by interactively selecting what changes to insert or discard from another branch, commit or tag:
+
+## Check out a specific file or directory from another branch, commit or tag and interactively select what changes to insert or discard into currently checked out branch (so called patching):
+```shell
+git checkout --patch <branch-name | commit-id | tag-name> <file-name | directory-name>
+```
+
+## Check out all files and directories from another branch, commit or tag and interactively select what hunks to insert or discard into currently checked out branch (so called patching):
+```shell
+git checkout --patch <branch-name | commit-id | tag-name> .
+```
+
+
+
 
 <!--
 
