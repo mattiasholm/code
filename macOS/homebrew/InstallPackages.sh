@@ -41,7 +41,6 @@ brew cask install docker
 brew cask install google-chrome
 brew cask install microsoft-office
 brew cask install microsoft-teams
-brew cask install skype-for-business
 brew cask install teamviewer
 brew cask install watchguard-mobile-vpn-with-ssl
 brew cask install avg-antivirus
