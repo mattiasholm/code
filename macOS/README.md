@@ -29,6 +29,11 @@ Cmd+Shift+3
 Cmd+Shift+4
 ```
 
+## Empty recycle bin:
+```
+Cmd+Alt+Shift+Del
+```
+
 <br><br>
 <br><br>
 
