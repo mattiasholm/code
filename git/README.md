@@ -440,6 +440,11 @@ git cherry-pick <commit-id>
 git cherry-pick <commit-id> --no-commit
 ```
 
+## Continue an ongoing cherry-pick:
+```shell
+git cherry-pick --continue
+```
+
 ## Abort an ongoing cherry-pick:
 ```shell
 git cherry-pick --abort
@@ -837,7 +842,7 @@ git clean -d -f
 git reset --hard HEAD
 ```
 
-## Reset `HEAD`, index and working tree to the second latest local commit, effectively discarding the latest commit (only safe to do on commits not yet pushed to `origin`):
+## Reset `HEAD`, index and working tree to the second latest local commit, effectively discarding the latest commit:
 ```shell
 git reset --hard HEAD~1
 ```
@@ -896,6 +901,7 @@ git diff HEAD
 ## Compare all files in working directory to latest commit in `origin`:
 ```shell
 git diff origin
+git diff origin/<branch-name>
 ```
 
 ## Compare a specific directory or file in working directory to current `HEAD`:
@@ -931,7 +937,13 @@ git diff --cached
 
 <br><br>
 
-## Merge a specific branch, commit or tag into currently checked out branch (will make a merge commit automatically):
+## Merge a specific branch, commit or tag into currently checked out branch (will attempt to make a merge commit automatically):
+```shell
+git merge <branch-name | commit-id | tag-name>
+git merge <branch-name | commit-id | tag-name>
+```
+
+## Merge a specific branch, commit or tag into currently checked out branch, with a custom commit message (will attempt to make a merge commit automatically):
 ```shell
 git merge <branch-name | commit-id | tag-name> --message "<message>"
 git merge <branch-name | commit-id | tag-name> -m "<message>"
@@ -939,27 +951,30 @@ git merge <branch-name | commit-id | tag-name> -m "<message>"
 
 ## Merge a specific branch, commit or tag into currently checked out branch, without automatically making a commit:
 ```shell
-git merge <branch-name | commit-id | tag-name> --message "<message>" --no-commit
+git merge <branch-name | commit-id | tag-name> --no-commit
 ```
 
 ## Merge a specific branch, commit or tag into currently checked out branch, without allowing the fast-forward strategy (i.e. a merge commit will always be created):
 ```shell
-git merge <branch-name | commit-id | tag-name> --message "<message>" --no-ff
+git merge <branch-name | commit-id | tag-name> --no-ff
 ```
 
 ## Merge a specific branch, commit or tag into currently checked out branch, but abort if the fast-forward strategy is not possible, e.g. if merge conflicts cannot be resolved automatically:
 ```shell
-git merge <branch-name | commit-id | tag-name> --message "<message>" --ff-only
+git merge <branch-name | commit-id | tag-name> --ff-only
 ```
 
-## Make a squash merge, i.e. merge changes into working tree, without touching `HEAD` (a manual commit is then made to consolidate multiple commits into a single commit):
+## Make a squash merge, i.e. merge changes into working tree and index, without updating `HEAD` (a manual commit is then made to consolidate multiple commits into a single commit):
 ```shell
 git merge <branch-name | commit-id | tag-name> --squash
-
-git commit --message  --message "<message>"
 ```
 
 <br><br>
+
+## Continue an ongoing merge (for example after manually fixing a merge conflict):
+```shell
+git merge --continue
+```
 
 ## Abort an ongoing merge (for example if there's a merge conflict that you cannot solve:
 ```shell
@@ -982,7 +997,7 @@ vim <conflicting-file>
 
 git add .
 
-git commit --message "<message>"
+git merge --continue
 
 # Finally, if you want the other branch to include the changes, you also need to make a merge in the opposite direction:
 
@@ -990,6 +1005,8 @@ git checkout <other-branch>
 
 git merge <first-branch>
 ```
+
+<br><br>
 
 ## Revert changes made in a specific merge (keep parent side of the merge, i.e. the branch we merged into):
 ```shell
@@ -1015,19 +1032,19 @@ git checkout --patch <branch-name | commit-id | tag-name> <file-name | directory
 git checkout --patch <branch-name | commit-id | tag-name> "$(git rev-parse --show-toplevel)"
 ```
 
+<br><br>
 
+## Rebase currently checked out branch from another branch by taking all commits from the other branch and replaying them to the current branch as new commits with new commit IDs, effectively rewriting history (not safe to do on public branches)
+```shell
+git rebase <branch-name>
+```
 
-<!--
+## Continue an ongoing rebase (for example after manually fixing a merge conflict):
+```shell
+git rebase --continue
+```
 
-TO-DO:
-
-SKRIV MED ETT REBASE exempel i git README åtminstone!
-OBS: Rebase verkar göras mot tracking branch, dvs. origin?! Känns farligt...
-Kanske bättre med squash merges som är halvvägs?
-
-# Rebase feature branch onto master (moves entire feature branch onto the tip of the master branch, effectively incorporating all of the new commits in master)
-# Instead of using a merge commit, rebasing rewrites the project history by creating brand new commits for each commit in the original branch!
-git checkout feature
-git rebase master
-
--->
+## Abort an ongoing rebase (for example if there's a merge conflict that you cannot solve:
+```shell
+git rebase --abort
+```

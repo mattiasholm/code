@@ -32,7 +32,7 @@ alias gsl='git shortlog --summary'
 alias gch='git cherry --verbose'
 alias gchp='git cherry-pick'
 alias gd='git diff'
-alias gdo='git diff origin'
+alias gdo='git diff origin/$(git rev-parse --abbrev-ref HEAD)'
 alias gdm='git diff master'
 alias gsh='git show'
 alias gr='git rev-parse'
@@ -77,7 +77,7 @@ function gquick() {
     git push
 }
 
-function gab() {
+function gba() {
     case "$#" in
     0)
         firstBranch="$(git rev-parse --abbrev-ref HEAD)"
@@ -92,22 +92,22 @@ function gab() {
         secondBranch="$2"
         ;;
     *)
-        echo -e "usage: gab [<second-branch> | <first-branch> <second-branch>]"
+        echo -e "usage: gba [<second-branch> | <first-branch> <second-branch>]"
         return
         ;;
     esac
 
     echo -e "\nComparing branch \"${firstBranch}\" to branch \"${secondBranch}\":\n"
 
-    echo -e "AHEAD: \t$(git log --oneline "${secondBranch}".."${firstBranch}" | wc -l)"
     echo -e "BEHIND: $(git log --oneline "${firstBranch}".."${secondBranch}" | wc -l)"
-
-    echo -e "\nCOMMITS AHEAD:"
-    git log --oneline "${secondBranch}".."${firstBranch}"
+    echo -e "AHEAD: \t$(git log --oneline "${secondBranch}".."${firstBranch}" | wc -l)"
 
     echo -e "\nCOMMITS BEHIND:"
     git log --oneline "${firstBranch}".."${secondBranch}"
-    echo -e "\n"
+
+    echo -e "\nCOMMITS AHEAD:"
+    git log --oneline "${secondBranch}".."${firstBranch}"
+    echo -e ""
 }
 
 export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
