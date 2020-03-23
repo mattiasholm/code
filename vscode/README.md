@@ -9,6 +9,11 @@ code .
 
 <br><br>
 
+## Go to line:
+`Mac` Ctrl+G
+
+`Windows` Ctrl+G
+
 ## Format code:
 `Mac` Alt+Shift+F
 
