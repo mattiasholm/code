@@ -329,6 +329,11 @@ array=("a" "b" "c")
 echo "${array[RANDOM%${#array[@]}]}"
 ```
 
+## Replace lower-case letters with upper-case:
+```shell
+tr a-z A-Z
+```
+
 ## Create an MD5 hash from the content of a file (useful for verifying data integrity):
 ```shell
 cat <file-name> | md5
