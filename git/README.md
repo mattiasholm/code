@@ -378,6 +378,11 @@ git stash list
 git stash show
 ```
 
+## Drop changes in stash:
+```shell
+git stash drop
+```
+
 <br><br>
 
 ## List all tags:
