@@ -2,32 +2,46 @@
 
 <br>
 
-## Parse file as is just to get syntax highlighting:
+## Parse a JSON file as is in order to get syntax highlighting:
 ```shell
 cat <json-file> | jq
 ```
 
-## Get all JSON object under a specific key (1 level down):
+## Get all JSON objects under a specific key at the top level:
 ```shell
-cat <json-file> | jq ".[\"<key-name>\"]"
+cat <json-file> | jq .<key-name>
 ```
 
-
-## Use `jq` recursively to get JSON objects of a sub-key (2 levels down):
+## Get all JSON objects under a specific key one level down:
 ```shell
-cat <json-file> | jq ".[\"<key-name>\"]" | jq ".[\"<sub-key>\"]"
+cat <json-file> | jq .<key-name>.<sub-key>
+cat <json-file> | jq .<key-name> | jq .<sub-key>
 ```
 
-## Convert JSON objects to key-value pairs (e.g. before sourcing them in a shell script):
+## Reference a key that contains spaces or dots:
 ```shell
-cat <json-file> | jq ".[\"<key-name>\"]" | jq -r 'to_entries|map("\(.key)=\"\(.value|tostring)\"")|.[]'
+cat <json-file> | jq '."<key-name>"'
+cat <json-file> | jq ".\"<key-name>\""
+```
+
+## Convert JSON objects under a specific key to key-value pairs (for example before sourcing them in a shell script):
+```shell
+cat <json-file> | jq .<key-name> | jq -r 'to_entries|map("\(.key)=\"\(.value|tostring)\"")|.[]'
 ```
 
 <br><br>
 
-## Output raw strings, instead of JSON:
+## Output in compact format, instead of pretty-printed format:
 ```shell
-jq -r <...>
+jq -c
 ```
 
-<!-- Skapa tabell liknande den för regex med syntax och alla vanliga växlar! -->
+## Output values as raw strings rather than JSON (useful to remove quotes from output):
+```shell
+jq -r
+```
+
+## Use tabs instead of spaces for indentation:
+```shell
+jq --tab
+```
