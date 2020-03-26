@@ -38,7 +38,7 @@ echo -n "<text>"
 
 ## Print text with different colors:
 ```shell
-echo -e "\033[32mText \033[39mwith \033[35mdifferent \033[31mcolors\033[39m"
+echo -e "\033[32mText \033[39mwith \033[35;1mdifferent \033[0;31mcolors\033[39m"
 ```
 
 | _FormatCode_ | Description      |
