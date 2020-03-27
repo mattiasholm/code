@@ -2,3 +2,6 @@
 .vscode
 __pycache__/
 venv
+python/stereo2mono/input
+python/stereo2mono/tmp
+python/stereo2mono/output
