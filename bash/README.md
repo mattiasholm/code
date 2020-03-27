@@ -38,7 +38,7 @@ echo -n "<text>"
 
 ## Print text with different colors:
 ```shell
-echo -e "\033[32mText \033[39mwith \033[35;1mdifferent \033[0;31mcolors\033[39m"
+echo -e "\033[32mText \033[39mwith \033[35;1mdifferent \033[0;31mcolors\033[0m"
 ```
 
 | _FormatCode_ | Description      |
@@ -320,6 +320,13 @@ nc -z <host> <port>
 ## Make all files with a specific file extension in working directory executable:
 ```shell
 chmod +x *.<file-extension>
+```
+
+## Print something only temporarily by using cursor movement (basically placing the cursor at the beginning of the line, effectively overwriting the old text with spaces)
+```shell
+printf "<temporary-text>" && printf '\r\033[1B'
+sleep 1
+echo "                "
 ```
 
 ## Print a random element from an array:
