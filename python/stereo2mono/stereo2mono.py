@@ -5,7 +5,7 @@ from pydub import AudioSegment
 import soundfile as sf
 
 inputDir = "./input/"
-tmpDir = "./tmp/"
+tmpDir = "./.tmp/"
 outputDir = "./output/"
 
 os.system("mkdir -p " + inputDir)
