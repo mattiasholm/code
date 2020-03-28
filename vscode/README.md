@@ -93,6 +93,17 @@ code .
 
 `Windows` Ctrl+Shift+Alt+I
 
+## Replace tabs with spaces:
+`Mac` Ctrl+T+U + Enter
+
+`Windows` Ctrl+T+U + Enter
+
+## Replace spaces with tabs:
+`Mac` Ctrl+T+T + Enter
+
+`Windows` Ctrl+T+T + Enter
+
+
 <br>
 
 <!--
