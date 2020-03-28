@@ -77,9 +77,9 @@ code .
 `Windows` Ctrl+Enter
 
 ## Copy current line and paste it beneath:
-`Mac` Alt+Shift+↓
+`Mac` Shift+Alt+↓
 
-`Windows` Alt+Shift+↓
+`Windows` Shift+Alt+↓
 
 <br><br>
 
