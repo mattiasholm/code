@@ -179,4 +179,8 @@ if __name__ == "__main__":
 # FORTSÄTT HÄR:
 https://www.w3schools.com/python/python_strings.asp
 
+
+
+Lägg även till lathund för pip3 CLI för att installera Python-moduler!
+
 -->
