@@ -15,5 +15,6 @@ code --install-extension yzhang.markdown-all-in-one
 code --install-extension pustelto.bracketeer
 code --install-extension vscode-icons-team.vscode-icons
 code --install-extension mechatroner.rainbow-csv
+code --install-extension ilich8086.untabify
 
 code --list-extensions --show-versions
