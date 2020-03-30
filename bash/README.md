@@ -87,20 +87,14 @@ unset <variable-name>
 
 ## Identify the location of executables (list only first one, i.e. default):
 ```shell
-which bash
-
-which python3
-
-which pwsh
+which <executable-name>
+type <executable-name>
+command -v <executable-name>
 ```
 
 ## Identify the location of executables (lists all available):
 ```shell
-which -a bash
-
-which -a python3
-
-which -a pwsh
+which -a <executable-name>
 ```
 
 ## Locate a specific file:
