@@ -346,6 +346,11 @@ tr a-z A-Z
 cat <file-name> | md5
 ```
 
+## Check if a command is installed:
+```shell
+if [[ -x "$(command -v ${prereq})" ]]
+```
+
 <br><br>
 
 ## Addition in bash:
