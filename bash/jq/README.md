@@ -18,7 +18,7 @@ cat <json-file> | jq .<key-name>.<sub-key>
 cat <json-file> | jq .<key-name> | jq .<sub-key>
 ```
 
-## Reference a key that contains spaces or dots:
+## Reference a key that contains spaces, dots or variables:
 ```shell
 cat <json-file> | jq '."<key-name>"'
 cat <json-file> | jq ".\"<key-name>\""
