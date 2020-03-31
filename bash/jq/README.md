@@ -29,16 +29,33 @@ cat <json-file> | jq ".\"<key-name>\""
 cat <json-file> | jq .<key-name> | jq -r 'to_entries|map("\(.key)=\"\(.value|tostring)\"")|.[]'
 ```
 
+## Get all elements of an array;
+```shell
+cat <json-file> | jq ".<key-name> | .[]"
+cat <json-file> | jq .<key-name> | jq .[]
+```
+
+## Get element `n` of an array:
+```shell
+cat <json-file> | jq ".<key-name> | .[<n>]"
+cat <json-file> | jq .<key-name> | jq .[<n>]
+```
+
+## Get a specific array element, based on the value of another subelement:
+```shell
+cat <json-file> | jq -r ".<key-name>[] | select(.<first-subelement> == <value>) | .<second-subelement>"
+```
+
 <br><br>
+
+## Output values as raw strings rather than JSON (useful to remove quotes from output, instead of using `sed`):
+```shell
+jq -r
+```
 
 ## Output in compact format, instead of pretty-printed format:
 ```shell
 jq -c
-```
-
-## Output values as raw strings rather than JSON (useful to remove quotes from output):
-```shell
-jq -r
 ```
 
 ## Use tabs instead of spaces for indentation:
