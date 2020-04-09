@@ -11,7 +11,7 @@ if [[ $1 != "--verbose" ]]; then
 fi
 
 for file in ${inputDir}/*.wav; do
-    basename="$(basename -- ${file})"
+    basename="$(basename -- "${file}")"
     bitDepth="$(soxi -b "${file}")"
     sampleRate="$(soxi -r "${file}")"
     channels="$(soxi -c "${file}")"
