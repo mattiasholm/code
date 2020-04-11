@@ -13,9 +13,10 @@ for file in ${inputDir}/*.wav; do
     channels="$(soxi -c "${file}")"
 
     if [[ "${bitDepth}" == "24" && "${sampleRate}" == "44100" && "${channels}" == "1" ]]; then
-        echo -e "Skipping ${basename}..."
+        echo -e "\033[33mSkipping conversion of ${basename}, copying the file to 'output' as is...\033[0m"
+        cp "${file}" "${outputDir}/${basename}"
     else
-        echo -e "Converting ${basename}..."
+        echo -e "\033[32mConverting ${basename} and creating new file in 'output'...\033[0m"
         sox "${file}" "${outputDir}/${basename}" channels 1
     fi
 done
