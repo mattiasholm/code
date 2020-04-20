@@ -7,7 +7,8 @@ function SetVariables() {
         "https://github.com/mattiasholm/lyrics.git"
         "https://github.com/hi3g-access/tre-se-deployment.git"
         "https://github.com/hi3g-access/tre-se-infra.git"
-        "https://B3Cloud@dev.azure.com/B3Cloud/B3CAF/_git/B3Cloud-B3CAF-Infrastructure"
+        "https://B3Cloud@dev.azure.com/B3Cloud/B3CAF/_git/B3CAF-ARM-Governance"
+        "https://B3Cloud@dev.azure.com/B3Cloud/B3CAF/_git/B3CAF-ARM-Library"
     )
 }
 
