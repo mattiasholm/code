@@ -36,7 +36,10 @@ brew install sox
 brew cask install powershell
 
 brew install azure-cli &&
-    az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
+    (
+        az extension add --name azure-devops
+        az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
+    )
 
 brew install terraform
 brew install pulumi
