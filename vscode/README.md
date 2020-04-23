@@ -59,12 +59,12 @@ code .
 ## Remove current line or selected code block (without adding it to clipboard):
 `Mac` Cmd+Shift+K
 
-`Windows` Ctrl+Shift+K
+`Windows` Ctrl+L
 
 ## Comment out current line or selected code block:
 `Mac` Cmd+Shift+7
 
-`Windows` Ctrl+Shift+7
+`Windows` Ctrl+K
 
 ## Move current line or selected code block up or down (without using copy/paste):
 `Mac` Alt+↑ | Alt+↓
