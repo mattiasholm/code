@@ -5,10 +5,11 @@ function SetVariables() {
     urls=(
         "https://github.com/mattiasholm/mattiasholm.git"
         "https://github.com/mattiasholm/lyrics.git"
-        "https://github.com/hi3g-access/tre-se-deployment.git"
-        "https://github.com/hi3g-access/tre-se-infra.git"
         "https://B3Cloud@dev.azure.com/B3Cloud/B3CAF/_git/B3CAF-ARM-Governance"
         "https://B3Cloud@dev.azure.com/B3Cloud/B3CAF/_git/B3CAF-ARM-Library"
+        "https://github.com/hi3g-access/tre-se-deployment.git"
+        "https://github.com/hi3g-access/tre-se-infra.git"
+        "https://DevOpsAlmi@dev.azure.com/DevOpsAlmi/Infrastructure/_git/Almi-Infrastructure-Governance"
     )
 }
 
