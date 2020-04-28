@@ -8,6 +8,7 @@ code --install-extension ms-vscode-remote.remote-wsl
 code --install-extension waderyan.gitblame
 code --install-extension ms-mssql.mssql
 code --install-extension redhat.vscode-yaml
+code --install-extension dotjoshjohnson.xml
 code --install-extension msazurermtools.azurerm-vscode-tools
 code --install-extension bencoleman.armview
 code --install-extension josin.kusto-syntax-highlighting
