@@ -9,6 +9,11 @@ code .
 
 <br><br>
 
+## Toggle word wrap:
+`Mac` Alt+Z
+
+`Windows` Alt+Z
+
 ## Go to line:
 `Mac` Ctrl+G
 
