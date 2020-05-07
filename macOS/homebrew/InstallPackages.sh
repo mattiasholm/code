@@ -52,7 +52,6 @@ brew cask install google-chrome
 brew cask install microsoft-office
 brew cask install microsoft-teams
 brew cask install teamviewer
-brew cask install zoomus
 brew cask install watchguard-mobile-vpn-with-ssl
 brew cask install avg-antivirus
 brew cask install dropbox
