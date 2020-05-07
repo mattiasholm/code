@@ -4,6 +4,11 @@
 
 >## **GUI**
 
+## Show hidden files in Finder:
+```
+Cmd+Shift+.
+```
+
 ## Go to folder:
 ```
 Cmd+Shift+G
