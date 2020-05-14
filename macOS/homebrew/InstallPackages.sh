@@ -26,12 +26,12 @@ brew install git &&
 brew cask install visual-studio-code
 
 brew install python3
-
 brew install ffmpeg
+brew install sox
 pip3 install pydub
 pip3 install soundfile
 pip3 install numpy
-brew install sox
+pip3 install mssql-cli
 
 brew cask install powershell
 

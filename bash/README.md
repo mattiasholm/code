@@ -90,6 +90,7 @@ unset <variable-name>
 which <executable-name>
 type <executable-name>
 command -v <executable-name>
+whereis <executable-name>
 ```
 
 ## Identify the location of executables (lists all available):
@@ -370,4 +371,5 @@ expr <int> / <int>
 <!-- Städa upp och kategorisera bättre här vid tillfälle!
 
 Ev bryta loss grep till egen README.md??? FLER?
+
 -->
