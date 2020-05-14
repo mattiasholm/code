@@ -142,4 +142,4 @@ WHERE database_id > 4;
 
 
 
--- More examples - Relations table, JOIN example, VARIABLES, CASE, IF
+-- Add more examples - Relations table, JOIN example, VARIABLES, CASE, IF
