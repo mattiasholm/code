@@ -4,8 +4,17 @@
 
 ## Curl request that returns your public IP:
 ```shell
-curl --silent ifconfig.co
-curl -s ifconfig.co
+curl ifconfig.io
+```
+
+## Curl request that returns information on your public IP:
+```shell
+curl ipinfo.io
+```
+
+## Curl request that returns information on a specific public IP:
+```shell
+curl ipinfo.io/<ip-address>
 ```
 
 ## Curl request with custom Host header:
@@ -30,8 +39,6 @@ curl --connect-to example.com:443:example.azurewebsites.net:443 https://example.
 ```shell
 curl https://raw.githubusercontent.com/mattiasholm/mattiasholm/master/git/CloneRepos.sh --output CloneRepos.sh
 ```
-
-
 
 <!---
 Eventuellt ange placeholder argument <APA> istället för nuvarande exempel? Mer enhetligt med övriga READMEs!
