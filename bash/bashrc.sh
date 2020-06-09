@@ -11,6 +11,7 @@ function cpbak() {
 function main() {
     cpbak $(git rev-parse --show-toplevel)/macOS/.bash_profile ~/.bash_profile
     cpbak $(git rev-parse --show-toplevel)/bash/.bashrc ~/.bashrc
+    cpbak $(git rev-parse --show-toplevel)/bash/.inputrc ~/.inputrc
 }
 
 main

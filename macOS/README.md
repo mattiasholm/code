@@ -56,16 +56,6 @@ open <file-name>
 
 <br><br>
 
-## Enable tab-completion:
-```shell
-vim ~/.inputrc
-
-# Add the following lines:
-set completion-ignore-case on
-set show-all-if-ambiguous on
-TAB: menu-complete
-```
-
 ## List all volumes, such as external hard drives:
 ```shell
 ls /Volumes/
