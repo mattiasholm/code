@@ -86,5 +86,5 @@ do {
     $OnCallHour = $OnCallHour.AddHours(1)
 } until ($OnCallHour -eq $OnCallEnd)
 
-Write-Host "`nBeredskapsersättning blir:"
+Write-Host "`nBeredskapsersättning:"
 Write-Host -ForegroundColor Green "$([Math]::Round($TotalPay,2)) SEK"
