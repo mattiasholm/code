@@ -42,9 +42,23 @@ brew update
 
 <br><br>
 
+## Display information about a formula:
+```shell
+brew info <formula-name>
+```
+
 ## Install formula:
 ```shell
 brew install <formula-name>
+```
+
+## Install an old version of a formula:
+```shell
+brew tap-new $USER/local-tap
+
+brew extract <formula-name> --version=<version> $USER/local-tap
+
+brew install <formula-name>@<version>
 ```
 
 ## Install cask:
@@ -62,6 +76,13 @@ brew upgrade <formula-name>
 ## Upgrade cask:
 ```shell
 brew cask upgrade <cask-name>
+```
+
+<br><br>
+
+## Activate a previously installed version of a formula:
+```shell
+brew switch <formula-name> <version>
 ```
 
 <br><br>
@@ -163,5 +184,11 @@ brew tap <github-account>/<github-repo>
 ```
 
 ## Untap a formula respository:
-```
+```shell
 brew untap <github-account>/<github-repo>
+```
+
+## Create a new tap:
+```shell
+brew new-tap <user>/<repo>
+```
