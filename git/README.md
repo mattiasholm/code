@@ -158,6 +158,11 @@ git remote --verbose
 git remote -v
 ```
 
+# Show details about a remote:
+```shell
+git remote show <name>
+```
+
 ## Show the URL of `origin`:
 ```shell
 git remote get-url origin
