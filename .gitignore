@@ -2,8 +2,3 @@
 .vscode
 __pycache__/
 venv
-python/stereo2mono/input
-python/stereo2mono/.tmp
-python/stereo2mono/output
-bash/sox/stereo2mono/input
-bash/sox/stereo2mono/output

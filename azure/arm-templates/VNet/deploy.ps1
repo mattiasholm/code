@@ -11,7 +11,7 @@ $TenantDomain = 'b3.se'
 
 
 $TenantId = (Invoke-WebRequest -Uri "https://login.windows.net/$TenantDomain/.well-known/openid-configuration" | ConvertFrom-Json).token_endpoint.Split('/')[3]
-$SubscriptionId = (Get-AzSubscription -TenantId $TenantId | Where-Object {$_.Name -eq $SubscriptionName}).Id
+$SubscriptionId = (Get-AzSubscription -TenantId $TenantId | Where-Object { $_.Name -eq $SubscriptionName }).Id
 Select-AzSubscription -SubscriptionId $SubscriptionId -TenantId $TenantId
 
 
@@ -42,4 +42,4 @@ New-AzResourceGroupDeployment `
     -ResourceGroupname  "$EnvironmentPrefix-$($ResourceGroupNames[0])" `
     -TemplateFile $TemplateFilePath `
     -TemplateParameterFile $ParameterFilePath `
-    -Mode Incremental #-Verbose
+    -Mode Incremental
