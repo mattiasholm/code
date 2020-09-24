@@ -119,7 +119,7 @@ find <path> -type <f | d> -name "<pattern>" -exec grep -- <pattern> {} +
 ```
 
 ## SSH via a jumphost:
-```shellßß
+```shell
 ssh -J <host1> <host2>
 ```
 
@@ -128,6 +128,18 @@ ssh -J <host1> <host2>
 sudo vim /etc/hosts
 
 <ip-address> <host-name>
+```
+
+## Update NTP configuration:
+```shell
+sudo vim /etc/ntp.conf
+
+server <ntp-server>
+```
+
+## Check current user's group membership:
+```shell
+id
 ```
 
 ## List all aliases:
