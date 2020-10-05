@@ -201,3 +201,20 @@ docker push <remote-registry>/<app-name>:<image-version>
 ```shell
 docker pull <remote-registry>/<app-name>:<image-version>
 ```
+
+<br><br>
+
+## List all Docker contexts:
+```shell
+docker context ls
+```
+
+## Inspect a specific Docker context:
+```shell
+docker context inspect <name>
+```
+
+## Switch Docker context:
+```shell
+docker context use <name>
+```
