@@ -81,10 +81,10 @@ code .
 
 `Windows` Ctrl+Enter
 
-## Copy current line and paste it beneath:
-`Mac` Shift+Alt+↓
+## Copy current line and paste it above or below without adding to clipboard:
+`Mac` Alt+Shift+↑ | Alt+Shift+↓
 
-`Windows` Shift+Alt+↓
+`Windows` Alt+Shift+↑ | Alt+Shift+↓
 
 <br><br>
 
@@ -109,7 +109,46 @@ code .
 `Windows` Ctrl+T+T + Enter
 
 
-<br>
+<br><br>
+
+## Add next occurrence to selection:
+`Mac` Cmd+D
+
+`Windows` Ctrl+D
+
+## Add all occurrences to selection:
+`Mac` Cmd+Shift+L
+
+`Windows` Ctrl+Shift+L
+
+## Add cursor above:
+`Mac` Cmd+Alt+↑
+
+`Windows` Ctrl+Alt+↑
+
+## Add additional cursor below:
+`Mac` Cmd+Alt+↓
+
+`Windows` Ctrl+Alt+↓
+
+## Add additional cursor to line ends:
+`Mac` Alt+Shift+I
+
+`Windows` Alt+Shift+I
+
+## Add additional cursor where mouse is:
+`Mac` Alt+LeftMouseClick
+
+`Windows` Alt+LeftMouseClick
+
+
+
+
+
+
+
+
+
 
 <!--
 ## FYLL PÅ! GOOGLA EFTER FLER ANVÄNDBARA SHORTCUTS! Underlättar vardagen enormt!
