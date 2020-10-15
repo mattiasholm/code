@@ -46,6 +46,7 @@ brew install pulumi
 brew install jq
 brew install kubernetes-cli
 brew install p7zip
+brew cask install owasp-zap
 brew cask install azure-data-studio
 brew cask install microsoft-azure-storage-explorer
 brew cask install docker
