@@ -2,14 +2,19 @@
 
 <br>
 
-## List all required endpoints for Azure Cloud:
-```shell
-az cloud show --query endpoints
-```
-
 ## Show version of Azure CLI:
 ```shell
 az version
+```
+
+## Show examples of a specific subcommand:
+```shell
+az find "az <subcommand>"
+```
+
+## List all required endpoints for Azure Cloud:
+```shell
+az cloud show --query endpoints
 ```
 
 ## Watch current ARM deployments in a specific resource group:
