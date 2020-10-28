@@ -75,7 +75,7 @@ brew upgrade <formula-name>
 
 ## Upgrade cask:
 ```shell
-brew cask upgrade <cask-name>
+brew upgrade --cask <cask-name>
 ```
 
 <br><br>
@@ -132,7 +132,7 @@ brew update &&
 ## Upgrade all casks:
 ```shell
 brew update &&
-    brew cask upgrade
+    brew upgrade --cask
 ```
 
 <br><br>
