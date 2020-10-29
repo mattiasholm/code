@@ -44,5 +44,5 @@ bicep build <file-name>
 
 ## Build all templates in working directory:
 ```shell
-bicep build ./*.bicep
+bicep build *.bicep
 ```

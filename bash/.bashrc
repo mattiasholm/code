@@ -7,7 +7,7 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-alias b='brew'
+alias b='bicep'
 alias g='git'
 alias k='kubectl'
 alias p='pulumi'

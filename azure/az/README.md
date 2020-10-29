@@ -22,6 +22,16 @@ az cloud show --query endpoints
 az group deployment watch --resource-group <rg-name>
 ```
 
+## Display inner errors occuring during template validation procedure (PreflightValidationCheckFailed):
+```shell
+az monitor activity-log list --correlation-id <tracking-id>
+```
+
+## Run a what-if operation that compares a specific ARM template to the actual current state in Azure:
+```shell
+az deployment group what-if --resource-group <rg-name> --template-file <file-name>
+```
+
 ## List available extensions:
 ```shell
 az extension list-available
