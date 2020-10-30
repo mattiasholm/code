@@ -5,6 +5,9 @@
 ## GitHub repository:
 https://github.com/Azure/bicep
 
+## Real-time online compiler (Bicep Playground):
+https://bicepdemo.z22.web.core.windows.net/
+
 ## Install Azure Bicep on macOS:
 ```shell
 brew tap azure/bicep https://github.com/azure/bicep
