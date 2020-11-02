@@ -1,4 +1,4 @@
-$Uri = "https://s2events.azure-automation.net/webhooks?token=UO55k3VKisnTUNwQDUIC2%2f1E1RiOnhLcAdY0%2fNavzQA%3d"
+$Uri = ""
 
 
 

@@ -1,0 +1,43 @@
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+      - .gitignore
+      - CHANGELOG.md
+      - README.md
+  batch: "true"
+
+pool:
+  vmImage: ubuntu-20.04
+
+stages:
+  - stage: test
+    variables:
+      - group: test
+    jobs:
+      - job: Deploy
+        steps:
+          - bash: |
+              chmod +x entrypoint.sh
+              ./entrypoint.sh $(System.StageName) --pipeline
+            workingDirectory: scripts
+            failOnStderr: "false"
+            env:
+              SP_APPID: $(SP_APPID)
+              SP_PASSWORD: $(SP_PASSWORD)
+  - stage: prod
+    variables:
+      - group: prod
+    jobs:
+      - job: Deploy
+        steps:
+          - bash: |
+              chmod +x entrypoint.sh
+              ./entrypoint.sh $(System.StageName) --pipeline
+            workingDirectory: scripts
+            failOnStderr: "false"
+            env:
+              SP_APPID: $(SP_APPID)
+              SP_PASSWORD: $(SP_PASSWORD)
