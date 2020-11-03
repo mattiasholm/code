@@ -1,0 +1,17 @@
+Resources
+| order by name asc
+| project name, type, resourceGroup, location
+| limit 100
+
+
+
+Resources
+| top 5 by name desc
+| project-away id, tenantId, subscriptionId
+
+
+
+Resources
+| sort by name asc
+| project-rename Name = name, Type = type, ['Resource Group'] = resourceGroup, Location = location
+| take 100

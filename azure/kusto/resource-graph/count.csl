@@ -1,0 +1,14 @@
+Resources
+| count
+
+
+
+Resources
+| where type =~ 'Microsoft.KeyVault/vaults'
+| count
+
+
+
+Resources
+| distinct type
+| count

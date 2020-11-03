@@ -1,0 +1,4 @@
+Resources
+| where tags.Environment=~'Production'
+| order by resourceGroup asc, name asc
+| project name, type, resourceGroup, location

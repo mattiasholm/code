@@ -69,7 +69,7 @@ code .
 ## Comment out current line or selected code block:
 `Mac` Cmd+Shift+7
 
-`Windows` Ctrl+K
+`Windows` Shift+Alt+A 
 
 ## Move current line or selected code block up or down (without using copy/paste):
 `Mac` Alt+↑ | Alt+↓

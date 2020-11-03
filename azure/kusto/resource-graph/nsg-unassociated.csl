@@ -1,0 +1,4 @@
+Resources
+| where type =~ "Microsoft.Network/networkSecurityGroups" and isnull(properties.networkInterfaces) and isnull(properties.subnets)
+| order by resourceGroup asc, name asc
+| project name, resourceGroup

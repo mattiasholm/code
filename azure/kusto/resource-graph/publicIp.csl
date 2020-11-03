@@ -1,0 +1,5 @@
+Resources
+| where type =~ 'Microsoft.Network/publicIPAddresses' and isnotempty(properties.ipAddress)
+| order by resourceGroup asc, name asc
+| extend publicIp = properties.ipAddress
+| project publicIp, name, resourceGroup
