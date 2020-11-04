@@ -57,7 +57,6 @@ sed 's/\.[^.]*$//'
 ```
 
 <!-- Skapa tabell liknande den för regex med syntax och alla vanliga växlar! -->
-
 <!-- g -->
 <!-- d -->
 <!-- s -->

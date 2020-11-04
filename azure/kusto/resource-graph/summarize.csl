@@ -1,4 +1,4 @@
 Resources
 | summarize count() by type
 | order by count_ desc
-| project-rename ['Resource type'] = type, ['Number of resources'] = count_
+| project-rename count = count_

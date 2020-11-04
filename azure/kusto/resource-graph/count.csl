@@ -12,3 +12,9 @@ Resources
 Resources
 | distinct type
 | count
+
+
+
+Resources
+| summarize by type
+| count

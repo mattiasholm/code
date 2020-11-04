@@ -1,0 +1,4 @@
+ResourceContainers
+| where type =~ 'Microsoft.Resources/subscriptions'
+| order by name asc
+| project subscriptionName = name, subscriptionId

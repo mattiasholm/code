@@ -12,6 +12,6 @@ Resources
 
 
 Resources
-| sort by name asc
-| project-rename Name = name, Type = type, ['Resource Group'] = resourceGroup, Location = location
+| order by name asc
+| project Name = name, Type = type, ['Resource Group'] = resourceGroup, Location = location
 | take 100

@@ -1,0 +1,6 @@
+ResourceContainers
+| where type =~ 'Microsoft.Resources/subscriptions/resourceGroups'
+| join kind=leftouter (ResourceContainers | where type=~'Microsoft.Resources/subscriptions' | project subscription=name, subscriptionId) on subscriptionId
+| extend environment = tags.Environment
+| order by name asc
+| project resourceGroup = name, location, subscription, environment

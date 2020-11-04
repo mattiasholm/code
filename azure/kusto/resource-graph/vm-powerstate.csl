@@ -1,0 +1,5 @@
+Resources
+| where type =~ 'Microsoft.Compute/virtualMachines'
+| extend PowerState = replace('^PowerState/', '', tostring(properties.extended.instanceView.powerState.code))
+| summarize count() by PowerState
+| project-rename ['Number of VMs'] = count_
