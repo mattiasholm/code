@@ -18,7 +18,6 @@ switch ($Clipboard) {
     true {
         $apiVersion = ((Get-AzResourceProvider -ProviderNamespace $ProviderNamespace).ResourceTypes | Where-Object ResourceTypeName -eq $ResourceTypeName).ApiVersions -notlike '*-preview' | Select-Object -First $ResultSize
         Set-Clipboard -Value $apiVersion
-        return "Latest apiVersion copied to clipboard!"
+        return "Latest stable apiVersion copied to clipboard!"
     }
 }
-
