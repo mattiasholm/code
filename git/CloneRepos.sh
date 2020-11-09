@@ -11,7 +11,7 @@ function SetVariables() {
 
 function CloneRepos() {
     mkdir -p "${path}" &&
-        cd "${path}"
+        cd "$_"
 
     echo -e ""
 

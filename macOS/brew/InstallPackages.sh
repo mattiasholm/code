@@ -23,7 +23,9 @@ brew install git &&
     chmod +x "$(git rev-parse --show-toplevel)/git/CloneRepos.sh" &&
     "$(git rev-parse --show-toplevel)/git/CloneRepos.sh"
 
-brew cask install visual-studio-code
+brew cask install visual-studio-code &&
+    chmod +x "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh" &&
+    "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh"
 
 brew install python3
 brew install ffmpeg
@@ -43,9 +45,6 @@ brew install azure-cli &&
 
 brew tap azure/bicep https://github.com/azure/bicep
 brew install azure/bicep/bicep
-curl -Lo vscode-bicep.vsix https://github.com/Azure/bicep/releases/latest/download/vscode-bicep.vsix
-code --install-extension vscode-bicep.vsix
-rm vscode-bicep.vsix
 
 brew install terraform
 brew install pulumi

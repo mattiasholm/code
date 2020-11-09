@@ -24,7 +24,7 @@ code --install-extension vscode-bicep.vsix
 rm vscode-bicep.vsix
 ```
 
-<br>
+<br><br>
 
 ## Show version:
 ```shell

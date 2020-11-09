@@ -18,6 +18,7 @@ alias cdg='cd $(git rev-parse --show-toplevel)'
 alias codeg='code $(git rev-parse --show-toplevel)'
 alias openg='open $(git rev-parse --show-toplevel)'
 
+alias azl='az account list --output table'
 alias azlog='az monitor activity-log list --correlation-id'
 alias gs='git status'
 alias gf='git fetch'

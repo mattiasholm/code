@@ -17,5 +17,10 @@ code --install-extension pustelto.bracketeer
 code --install-extension vscode-icons-team.vscode-icons
 code --install-extension mechatroner.rainbow-csv
 code --install-extension ilich8086.untabify
+code --install-extension hashicorp.terraform
+
+curl -Lo vscode-bicep.vsix https://github.com/Azure/bicep/releases/latest/download/vscode-bicep.vsix
+code --install-extension vscode-bicep.vsix
+rm ./vscode-bicep.vsix
 
 code --list-extensions --show-versions

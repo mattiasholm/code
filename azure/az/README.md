@@ -12,6 +12,16 @@ az version
 az find "az <subcommand>"
 ```
 
+## List current subscription:
+```shell
+az account show
+```
+
+## List all available subscriptions:
+```shell
+az account list --output table
+```
+
 ## List all required endpoints for Azure Cloud:
 ```shell
 az cloud show --query endpoints
