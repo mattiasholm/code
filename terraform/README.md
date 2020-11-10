@@ -49,7 +49,7 @@ terraform plan
 terraform apply
 ```
 
-## Inspect Terraform state:
+## Output Terraform state:
 ```shell
 terraform show
 ```

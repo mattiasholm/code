@@ -178,7 +178,7 @@ git remote get-url <remote-name>
 git rev-parse --show-toplevel
 ```
 
-## Exclude a file pattern from source control:
+## Exclude specific files from source control:
 ```shell
 cd "$(git rev-parse --show-toplevel)"
 
@@ -1050,7 +1050,7 @@ git checkout --patch <branch-name | commit-id | tag-name> "$(git rev-parse --sho
 
 <br><br>
 
-## Rebase currently checked out branch from another branch by taking all commits from the other branch and replaying them to the current branch as new commits with new commit IDs, effectively rewriting history (not safe to do on public branches)
+## Rebase currently checked out branch from another branch by taking all commits from the other branch and replaying them to the current branch as new commits with new commit IDs, effectively rewriting history (not safe to do on public branches):
 ```shell
 git rebase <branch-name>
 ```

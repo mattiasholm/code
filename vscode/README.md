@@ -143,13 +143,7 @@ code .
 
 
 
-
-
-
-
-
-
-
 <!--
 ## FYLL PÅ! GOOGLA EFTER FLER ANVÄNDBARA SHORTCUTS! Underlättar vardagen enormt!
+Eventuellt byt ut till hotkey-ikoner när ändå håller på: <kbd>⌘F</kbd>
 -->

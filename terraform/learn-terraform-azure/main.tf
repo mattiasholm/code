@@ -12,6 +12,6 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-holmLekstuga-terraform"
+  name     = "holm-terraform"
   location = "WestEurope"
 }

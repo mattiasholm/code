@@ -110,12 +110,31 @@ find <path> -type d -empty
 
 ## Recursively find all files that match a specific wildcard pattern:
 ```shell
-find <path> -type <f | d> -name "<pattern>"
+find <path> [-type <f | d>] -name "<pattern>"
+```
+
+## Recursively find and remove all files that match a specific wildcard pattern:
+```shell
+find <path> [-type <f | d>] -name "<pattern>" -delete
+find <path> [-type <f | d>] -name "<pattern>" -exec rm {} +
+find <path> [-type <f | d>] -name "<pattern>" -exec rm {} \;
+```
+
+## Recursively find all files that match a specific wildcard pattern and write each file's content to standard output:
+```shell
+find <path> [-type <f | d>] -name "<pattern>" -exec cat {} +
+find <path> [-type <f | d>] -name "<pattern>" -exec cat {} \;
 ```
 
 ## Recursively find all files that match a specific wildcard pattern and use `grep` to look for a specific pattern in each file's content:
 ```shell
-find <path> -type <f | d> -name "<pattern>" -exec grep -- <pattern> {} +
+find <path> [-type <f | d>] -name "<pattern>" -exec grep -- <pattern> {} +
+find <path> [-type <f | d>] -name "<pattern>" -exec grep -- <pattern> {} \;
+```
+
+## Recursively find all files that match a specific wildcard pattern and run a custom script with each file as argument:
+```shell
+find . [-type <f | d>] -name "<pattern>" -exec <script-path> {} \;
 ```
 
 ## SSH via a jumphost:

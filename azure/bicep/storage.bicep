@@ -5,7 +5,7 @@ var location = resourceGroup().location
 
 
 
-var storageName = toLower('${prefix}storage01')
+var storageName = replace(toLower('${prefix}storage01'),'-','')
 var storageSku = globalReplication ? 'Standard_GRS' : 'Standard_LRS'
 var storageKind = 'StorageV2'
 var storagePublicAccess = false

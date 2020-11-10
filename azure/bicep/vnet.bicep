@@ -5,7 +5,7 @@ var location = resourceGroup().location
 
 param vnetAddressPrefix string = '10.0.0.0/24'
 
-var vnetName = '${prefix}-vnet01'
+var vnetName = '${prefix}-VNet01'
 var subnetName = 'ServerSubnet'
 
 resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {

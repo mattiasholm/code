@@ -8,11 +8,13 @@ if [[ -z "$1" ]]; then
 fi
 
 subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
-resourceGroupName="holmLekstuga"
+resourceGroupName="holm-bicep"
 location="WestEurope"
 bicepFile="$1"
-buildPath="./build/"
+buildPath="./.bicep/"
 jsonFile="$(echo $bicepFile | sed 's/.bicep$/.json/')"
+
+mkdir -p "${buildPath}"
 
 bicep build "${bicepFile}"
 mv "${jsonFile}" "${buildPath}"

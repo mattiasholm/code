@@ -46,6 +46,7 @@ brew install azure-cli &&
 brew tap azure/bicep https://github.com/azure/bicep
 brew install azure/bicep/bicep
 
+brew cask install dotnet-sdk
 brew install terraform
 brew install pulumi
 brew install jq

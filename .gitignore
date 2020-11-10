@@ -1,4 +1,15 @@
 .DS_Store
-.vscode
-__pycache__/
-venv
+/.vscode
+
+/**/.bicep/
+
+/**/*.tfstate*
+/**/.terraform/
+
+# Pulumi - verifiera att fortfarande aktuella!
+/**/*.pyc
+/**/venv/
+# Pulumi - verifiera att fortfarande aktuella!
+
+/**/stereo2mono/input/
+/**/stereo2mono/output/

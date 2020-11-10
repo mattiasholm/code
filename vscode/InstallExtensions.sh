@@ -18,6 +18,8 @@ code --install-extension vscode-icons-team.vscode-icons
 code --install-extension mechatroner.rainbow-csv
 code --install-extension ilich8086.untabify
 code --install-extension hashicorp.terraform
+code --install-extension bierner.markdown-emoji
+code --install-extension bierner.markdown-footnotes
 
 curl -Lo vscode-bicep.vsix https://github.com/Azure/bicep/releases/latest/download/vscode-bicep.vsix
 code --install-extension vscode-bicep.vsix
