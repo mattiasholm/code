@@ -75,6 +75,11 @@ source venv/bin/activate
 
 <br><br>
 
+## Previw changes before deploying:
+```shell
+pulumi preview
+```
+
 ## Deploy current stack:
 ```shell
 pulumi up
@@ -84,11 +89,6 @@ pulumi up
 ```shell
 pulumi up --yes
 pulumi up --y
-```
-
-## Previw changes before deploying:
-```shell
-pulumi preview
 ```
 
 ## Destroy current stack:

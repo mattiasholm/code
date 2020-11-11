@@ -5,7 +5,7 @@ var location = resourceGroup().location
 
 
 
-var storageName = replace(toLower('${prefix}storage01'),'-','')
+var storageName = toLower(replace('${prefix}-Storage01','-',''))
 var storageSku = globalReplication ? 'Standard_GRS' : 'Standard_LRS'
 var storageKind = 'StorageV2'
 var storagePublicAccess = false
@@ -28,16 +28,16 @@ resource storage 'Microsoft.Storage/storageAccounts@2019-06-01' = {
 
 output storageId string = storage.id
 output storageBlobEndpoint string = storage.properties.primaryEndpoints.blob
-output storageObject object = storage
+output storageQueueEndpoint string = storage.properties.primaryEndpoints.queue
+output storageTableEndpoint string = storage.properties.primaryEndpoints.table
+output storageFileEndpoint string = storage.properties.primaryEndpoints.file
 
 
 
-var containerName = 'logs'
+var containerName = toLower('Container01')
 
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2019-06-01' = {
   name: '${storage.name}/default/${containerName}'
-  properties: {
-  }
 }
 
 output containerId string = container.id

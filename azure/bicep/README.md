@@ -49,3 +49,40 @@ bicep build <file-name>
 ```shell
 bicep build *.bicep
 ```
+
+
+
+<!-- Komplettera med modules när släppt:
+
+Lägg till param attributes:
+
+ param virtualMachineAdminUsername string
+
+  param virtualMachineAdminPassword string {
+    secure: true
+  }
+  
+  param virtualMachineSize string {
+    allowed: [
+      'Standard_D2s_v3'
+      'Standard_D4s_v3'
+      'Standard_D8s_v3'
+    ]
+    default: 'Standard_D8s_v3'
+  }
+
+
+https://github.com/Azure/bicep/blob/main/docs/spec/modules.md
+
+Komplettera med loops när släppt:
+https://github.com/Azure/bicep/blob/main/docs/spec/loops.md
+
+??? Terraform-esque deployments ???
+bicep build
+bicep plan
+bicep apply
+bicep destroy
+??? Om ej släpps officiellt, kanske värt att skapa egna alias för detta ???
+
+Eventuellt lägga till cheat sheet för expressions etc??
+ -->
