@@ -15,6 +15,7 @@ chsh -s /usr/local/bin/bash
 sudo chsh -s /usr/local/bin/bash
 
 brew install coreutils
+brew install curl
 
 brew install git &&
     git config --global user.name "${userName}" &&
