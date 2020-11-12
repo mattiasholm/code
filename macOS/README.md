@@ -56,11 +56,25 @@ open <file-name>
 
 <br><br>
 
+## List all available software updates:
+```shell
+softwareupdate --list
+softwareupdate -l
+```
+
+## Download all available software updates:
+```shell
+softwareupdate --download --all
+softwareupdate -d -a
+```
+
 ## Install all available software updates:
 ```shell
 softwareupdate --install --all
 softwareupdate -i -a
 ```
+
+<br><br>
 
 ## List all volumes, such as external hard drives:
 ```shell
