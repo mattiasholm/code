@@ -56,6 +56,12 @@ open <file-name>
 
 <br><br>
 
+## Install all available software updates:
+```shell
+softwareupdate --install --all
+softwareupdate -i -a
+```
+
 ## List all volumes, such as external hard drives:
 ```shell
 ls /Volumes/
