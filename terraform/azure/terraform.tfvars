@@ -1,4 +1,4 @@
-rgName = "holm-terraform"
+rgName = "holm-tf"
 
 rgLocation = "WestEurope"
 
