@@ -11,27 +11,25 @@ var planKind = 'app'
 resource plan 'Microsoft.Web/serverfarms@2020-06-01' = {
   name: planName
   location: location
+  kind: planKind
   sku: {
     name: planSku
     capacity: planCapacity
   }
 }
 
-output planId string = plan.id
 
 
+var appName = '${prefix}-App01'
+var appHttpsOnly = true
 
-var siteName = '${prefix}-App01'
-var siteHttpsOnly = true
-
-resource site 'Microsoft.Web/sites@2020-06-01' = {
-  name: siteName
+resource app 'Microsoft.Web/sites@2020-06-01' = {
+  name: appName
   location: location
   properties: {
     serverFarmId: plan.id
-    httpsOnly: siteHttpsOnly
+    httpsOnly: appHttpsOnly
   }
 }
 
-output siteId string = site.id
-output siteUrl string = site.properties.defaultHostName
+output appUrl string = app.properties.defaultHostName

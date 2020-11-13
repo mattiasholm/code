@@ -26,7 +26,6 @@ resource storage 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   }
 }
 
-output storageId string = storage.id
 output storageBlobEndpoint string = storage.properties.primaryEndpoints.blob
 output storageQueueEndpoint string = storage.properties.primaryEndpoints.queue
 output storageTableEndpoint string = storage.properties.primaryEndpoints.table
@@ -39,5 +38,3 @@ var containerName = toLower('Container01')
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2019-06-01' = {
   name: '${storage.name}/default/${containerName}'
 }
-
-output containerId string = container.id

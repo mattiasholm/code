@@ -52,10 +52,6 @@ resource "azurerm_storage_account" "storage" {
   min_tls_version = local.storageTls
 }
 
-output "storageId" {
-  value = azurerm_storage_account.storage[*].id
-}
-
 output "storageBlobEndpoint" {
   value = azurerm_storage_account.storage[*].primary_blob_endpoint
 }
@@ -84,10 +80,6 @@ resource "azurerm_storage_container" "container" {
   storage_account_name  = azurerm_storage_account.storage[count.index].name
 }
 
-output "containerId" {
-  value = azurerm_storage_container.container[*].id
-}
-
 
 
 locals {
@@ -105,10 +97,6 @@ resource "azurerm_virtual_network" "vnet" {
       name = local.subnetName
       address_prefix = var.vnetAddressPrefix[0]
       }
-}
-
-output "vnetId" {
-  value = azurerm_virtual_network.vnet.id
 }
 
 
@@ -143,14 +131,54 @@ resource "azurerm_key_vault" "keyvault" {
   }
 }
 
-output "keyvautId" {
-  value = azurerm_key_vault.keyvault.id
-}
-
 output "keyvautUrl" {
   value = azurerm_key_vault.keyvault.vault_uri 
 }
 
 
 
-# GÖR KLART APP, därefter fortsätt med modules!
+locals {
+  planName = "${local.prefix}-AppPlan01"
+  planKind = "app"
+}
+
+resource "azurerm_app_service_plan" "plan" {
+  name = local.planName
+  resource_group_name = azurerm_resource_group.rg.name
+  location = azurerm_resource_group.rg.location
+  tags = azurerm_resource_group.rg.tags
+  kind = local.planKind
+  sku {
+    tier = var.planTier
+    size = var.planSize
+    capacity = var.planCapacity
+  }
+}
+
+
+
+locals {
+  appName = "${local.prefix}-App01"
+  appHttpsOnly = true
+}
+
+resource "azurerm_app_service" "app" {
+  name = local.appName
+  resource_group_name = azurerm_resource_group.rg.name
+  location = azurerm_resource_group.rg.location
+  tags = azurerm_resource_group.rg.tags
+  app_service_plan_id = azurerm_app_service_plan.plan.id
+  https_only = local.appHttpsOnly
+}
+
+output "appUrl" {
+  value = azurerm_app_service.app.default_site_hostname
+}
+
+
+
+# Använda data-resurs för att hämta ut mer info om vnet (DDOSProtection + VMProtection) - måste ju gå!! Fler missade outputs fån Bicep-exempel??
+
+# Rensa undan alla meningslösa outputs med endast resurs-ID, både för Bicep och Terraform - stökar bara ned nu och har ju gott om riktiga exempel-outputs!
+
+# Fortsätt med modules! https://www.terraform.io/docs/configuration/modules.html
