@@ -2,8 +2,8 @@ var prefix = resourceGroup().name
 var location = resourceGroup().location
 
 
-param planSku string = 'F1'
-param planCapacity int = 0
+param planSku string
+param planCapacity int
 
 var planName = '${prefix}-AppPlan01'
 var planKind = 'app'

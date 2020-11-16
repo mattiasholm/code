@@ -18,7 +18,7 @@ mkdir -p "${buildPath}"
 bicep build "${bicepFile}"
 mv "${jsonFile}" "${buildPath}"
 
-az login
+# az login
 az account set --subscription "${subscriptionId}"
 az deployment sub what-if --location "${location}" --template-file "${buildPath}/${jsonFile}"
 az deployment sub create --location "${location}" --template-file "${buildPath}/${jsonFile}"
