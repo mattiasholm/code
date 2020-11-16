@@ -5,7 +5,7 @@ var location = resourceGroup().location
 
 var keyvaultName = '${prefix}-KeyVault01'
 var keyvaultFamily = 'A'
-var keyvaultSku = 'Standard'
+var keyvaultSku = 'standard'
 
 resource keyvault 'Microsoft.KeyVault/vaults@2019-09-01' = {    
     name: keyvaultName       

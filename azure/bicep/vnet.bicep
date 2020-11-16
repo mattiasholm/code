@@ -3,7 +3,7 @@ var location = resourceGroup().location
 
 
 
-param vnetAddressPrefix string = '10.0.0.0/24'
+param vnetAddressPrefix string
 
 var vnetName = '${prefix}-VNet01'
 var subnetName = 'Subnet01'

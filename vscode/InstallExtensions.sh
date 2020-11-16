@@ -20,9 +20,9 @@ code --install-extension ilich8086.untabify
 code --install-extension hashicorp.terraform
 code --install-extension bierner.markdown-emoji
 code --install-extension bierner.markdown-footnotes
-
-curl -Lo vscode-bicep.vsix https://github.com/Azure/bicep/releases/latest/download/vscode-bicep.vsix
-code --install-extension vscode-bicep.vsix
-rm ./vscode-bicep.vsix
+code --install-extension ms-azuretools.vscode-bicep
+code --install-extension ms-dotnettools.vscode-dotnet-runtime
+code --install-extension ms-toolsai.jupyter
+code --install-extension 
 
 code --list-extensions --show-versions

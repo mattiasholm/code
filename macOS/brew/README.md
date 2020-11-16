@@ -18,6 +18,11 @@ https://formulae.brew.sh/cask/
 brew --version
 ```
 
+## Check your system for potential problems:
+```shell
+brew doctor
+```
+
 <br><br>
 
 ## Contextual help:

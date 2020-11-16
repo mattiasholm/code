@@ -15,13 +15,9 @@ brew tap azure/bicep https://github.com/azure/bicep
 brew install azure/bicep/bicep
 ```
 
-## Install VSCode extension on macOS:
+## Install VSCode extension:
 ```shell
-curl -Lo vscode-bicep.vsix https://github.com/Azure/bicep/releases/latest/download/vscode-bicep.vsix
-
-code --install-extension vscode-bicep.vsix
-
-rm vscode-bicep.vsix
+code --install-extension ms-azuretools.vscode-bicep
 ```
 
 <br><br>
