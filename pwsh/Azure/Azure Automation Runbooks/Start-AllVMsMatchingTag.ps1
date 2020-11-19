@@ -11,13 +11,13 @@ foreach ($TagValue in $TagValues) {
   foreach ($VM in $VMs) {
     "{0} ({1})" -f $VM.Name, $VM.ResourceGroupName
 
-    Start-AzVm -Name $VM.Name -ResourceGroupName $VM.ResourceGroupName
+    Start-AzVM -Name $VM.Name -ResourceGroupName $VM.ResourceGroupName
   }
 
   foreach ($VM in $VMs) {
-    while (!(Get-AzVm -Name $VM.Name -ResourceGroupName $VM.ResourceGroupName -Status).Statuses.DisplayStatus -like "*VM running*") {
+    while ((Get-AzVm -Name $VM.Name -ResourceGroupName $VM.ResourceGroupName -Status).Statuses.DisplayStatus[1] -notlike "*VM running*") {
       "Waiting for `"{0}`" to start..." -f $VM.Name
-      Start-Sleep -Seconds 15
+      Start-Sleep -Seconds 5
     }
   }
 
