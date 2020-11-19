@@ -7,12 +7,7 @@ Param
   [String] $ResourceGroup
 )
 
-
-
 $Conn = Get-AutomationConnection -Name AzureRunAsConnection
+Add-AzAccount -ServicePrincipal -Tenant $Conn.TenantID -ApplicationID $Conn.ApplicationID -CertificateThumbprint $Conn.CertificateThumbprint
 
-Add-AzAccount -ServicePrincipal -Tenant $Conn.TenantID `
--ApplicationID $Conn.ApplicationID -CertificateThumbprint $Conn.CertificateThumbprint
-
-Stop-AzVM -Name $VMName -ResourceGroupName $ResourceGroup -Force -NoWait #-StayProvisioned
-# Don't use switch 'StayProvisioned' if the purpose of stopping the VM is reducing costs. In that case the VM needs to be Stopped and Deallocated.
+Stop-AzVM -Name $VMName -ResourceGroupName $ResourceGroup -NoWait -Force

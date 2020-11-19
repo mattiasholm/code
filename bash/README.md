@@ -222,6 +222,14 @@ wc -c
 ll
 ```
 
+<br><br>
+
+## Grep multiple patterns:
+```shell
+grep --extended-regexp '<pattern1>|<pattern2>'
+grep -E '<pattern1>|<pattern2>'
+```
+
 ## Grep case insensitive match:
 ```shell
 grep --ignore-case <substring>
@@ -253,6 +261,8 @@ grep -A <n>
 ```shell
 grep -C <n>
 ```
+
+<br><br>
 
 ## Create empty file in working directory:
 ```shell

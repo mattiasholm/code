@@ -316,22 +316,53 @@ git ls-files
 
 ## List all tracked files that have been modified:
 ```shell
+git ls-files --modified
 git ls-files -m
 ```
 
 ## List all tracked files that have been deleted:
 ```shell
+git ls-files --deleted
 git ls-files -d
 ```
 
 ## List all untracked files (useful for verifying .gitignore):
 ```shell
+git ls-files --others
 git ls-files -o
 ```
 
 ## List all tracked files that match a specific file pattern:
 ```shell
 git ls-files | grep <pattern>
+```
+
+<br><br>
+
+# List the contents of a specific branch, commit or tag:
+```shell
+git ls-tree <branch-name | commit-id | tag-name>
+```
+
+# List the contents of a specific branch, commit or tag (filename-only):
+```shell
+git ls-tree --name-only <branch-name | commit-id | tag-name>
+```
+
+# List the contents of a specific branch, commit or tag (including file size):
+```shell
+git ls-tree --long <branch-name | commit-id | tag-name>
+git ls-tree -l <branch-name | commit-id | tag-name>
+```
+
+# Recursively list the contents of a specific branch, commit or tag:
+```shell
+git ls-tree -r <branch-name | commit-id | tag-name>
+```
+
+# List only directories in a specific branch, commit or tag:
+```shell
+git ls-tree -d <branch-name | commit-id | tag-name>
 ```
 
 <br><br>
@@ -957,6 +988,11 @@ git diff --cached
 ```shell
 git merge <branch-name | commit-id | tag-name>
 git merge <branch-name | commit-id | tag-name>
+```
+
+## Merge a specific branch, commit or tag into currently checked out branch (allow unrelated histories):
+```shell
+git merge <branch-name | commit-id | tag-name> --allow-unrelated-histories
 ```
 
 ## Merge a specific branch, commit or tag into currently checked out branch, with a custom commit message (will attempt to make a merge commit automatically):
