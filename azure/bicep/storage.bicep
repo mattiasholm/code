@@ -27,9 +27,9 @@ resource storage 'Microsoft.Storage/storageAccounts@2019-06-01' = {
 }
 
 output storageBlobEndpoint string = storage.properties.primaryEndpoints.blob
-output storageQueueEndpoint string = storage.properties.primaryEndpoints.queue
-output storageTableEndpoint string = storage.properties.primaryEndpoints.table
 output storageFileEndpoint string = storage.properties.primaryEndpoints.file
+output storageTableEndpoint string = storage.properties.primaryEndpoints.table
+output storageQueueEndpoint string = storage.properties.primaryEndpoints.queue
 
 
 
