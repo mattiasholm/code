@@ -23,6 +23,5 @@ code --install-extension bierner.markdown-footnotes
 code --install-extension ms-azuretools.vscode-bicep
 code --install-extension ms-dotnettools.vscode-dotnet-runtime
 code --install-extension ms-toolsai.jupyter
-code --install-extension 
 
 code --list-extensions --show-versions
