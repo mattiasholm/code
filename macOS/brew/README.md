@@ -68,7 +68,7 @@ brew install <formula-name>@<version>
 
 ## Install cask:
 ```shell
-brew cask install <cask-name>
+brew install --cask <cask-name>
 ```
 
 <br><br>
@@ -99,7 +99,7 @@ brew uninstall <formula-name>
 
 ## Uninstall cask:
 ```shell
-brew cask uninstall <cask-name>
+brew uninstall --cask <cask-name>
 ```
 
 <br><br>
@@ -173,7 +173,7 @@ brew list
 
 ## List installed casks:
 ```shell
-brew cask list
+brew list --cask
 ```
 
 <br><br>
