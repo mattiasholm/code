@@ -13,9 +13,15 @@ https://formulae.brew.sh/cask/
 
 <br><br>
 
+## Install Homebrew:
+```shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+```
+
 ## Check Homebrew version:
 ```shell
 brew --version
+brew -v
 ```
 
 ## Check your system for potential problems:
@@ -23,19 +29,11 @@ brew --version
 brew doctor
 ```
 
-<br><br>
-
 ## Contextual help:
 ```shell
+brew help [<subcommand>]
 brew [<subcommand>] --help
 brew [<subcommand>] -h
-```
-
-<br><br>
-
-## Install Homebrew:
-```shell
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 <br><br>

@@ -3,6 +3,8 @@
 userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
 
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
 brew install --cask iterm2
 
 brew install bash &&
@@ -16,6 +18,7 @@ sudo chsh -s /usr/local/bin/bash
 
 brew install coreutils
 brew install curl
+brew install mas
 
 brew install git &&
     git config --global user.name "${userName}" &&
@@ -58,6 +61,7 @@ brew install --cask azure-data-studio
 brew install --cask microsoft-azure-storage-explorer
 brew install --cask docker
 brew install --cask google-chrome
+brew install --cask intune-company-portal
 brew install --cask microsoft-office
 brew install --cask microsoft-teams
 brew install --cask teamviewer
