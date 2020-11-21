@@ -36,6 +36,11 @@ brew [<subcommand>] --help
 brew [<subcommand>] -h
 ```
 
+## List all Homebrew commands:
+```shell
+brew commands
+```
+
 <br><br>
 
 ## Update Homebrew:

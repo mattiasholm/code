@@ -49,6 +49,11 @@ mas list
 mas search <pattern>
 ```
 
+## Search the Mac App Store (include prices):
+```shell
+mas search <pattern> --price
+```
+
 <br><br>
 
 ## Get information about a specific app:
