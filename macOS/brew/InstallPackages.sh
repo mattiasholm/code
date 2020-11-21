@@ -31,9 +31,11 @@ brew install --cask visual-studio-code &&
     chmod +x "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh" &&
     "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh"
 
-brew install python3
 brew install ffmpeg
 brew install sox
+brew install --cask obs
+
+brew install python3
 pip3 install pydub
 pip3 install soundfile
 pip3 install numpy
