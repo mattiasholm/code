@@ -177,8 +177,25 @@ output "appUrl" {
 
 
 
-# Använda data-resurs för att hämta ut mer info om vnet (DDOSProtection + VMProtection) - måste ju gå!! Fler missade outputs fån Bicep-exempel??
+# Använda data-resurs för att hämta ut mer info om vnet (DDOSProtection + VMProtection) - måste väl ändå gå???
 
-# Rensa undan alla meningslösa outputs med endast resurs-ID, både för Bicep och Terraform - stökar bara ned nu och har ju gott om riktiga exempel-outputs!
+# Fortsätt med modules! Lokalt vs referens på GitHub??? https://www.terraform.io/docs/configuration/modules.html
 
-# Fortsätt med modules! https://www.terraform.io/docs/configuration/modules.html
+# https://github.com/xenitab/terraform-modules
+
+# Testa provider "Azure AD" !!!
+
+# Remote state - Storage Account, hantera utanför Terraform (duh), t.ex. az-cli!
+
+# common.tfvars (auto???) / prod.tfvars (manuell) / test.tfvars (manuell)
+
+# var VS locals! Inte tänkt på att man kan använda flera .tfvars-filer istället - måste väl vara tydligare?!
+
+# resource "random_password"
+
+# OPA (Open Policy Agent)
+
+# DAG: Directed Acyclic Graph (git + terraform) https://en.wikipedia.org/wiki/Directed_acyclic_graph
+
+# HashiCorp Packer vs !!! Ansible
+

@@ -131,6 +131,11 @@ terraform state list
 
 <br><br>
 
+## Plan a Terraform destroy:
+```shell
+terraform plan --destroy
+```
+
 ## Destroy Terraform-managed infrastructure:
 ```shell
 terraform destroy 
