@@ -195,9 +195,9 @@ git fetch
 git fetch origin
 ```
 
-## Fetch metadata from branch `master` in remote `upstream` when using the forking workflow (will not touch your working tree or current `HEAD`):
+## Fetch metadata from branch `main` in remote `upstream` when using the forking workflow (will not touch your working tree or current `HEAD`):
 ```shell
-git fetch upstream master
+git fetch upstream main
 ```
 
 ## Fetch metadata from all remotes (will not touch your working tree or current `HEAD`):
@@ -211,9 +211,9 @@ git pull
 git pull origin
 ```
 
-## Pull changes from branch `master`in remote `upstream` when using the forking workflow (will integrate remote changes into your working tree and current `HEAD`):
+## Pull changes from branch `main` in remote `upstream` when using the forking workflow (will integrate remote changes into your working tree and current `HEAD`):
 ```shell
-git pull upstream master
+git pull upstream main
 ```
 
 ## Pull changes from all remotes (will integrate remote changes into your working tree and current `HEAD`):
@@ -477,7 +477,7 @@ git cherry --verbose
 git cherry -v
 ```
 
-## Cherry-pick a specific commit from another branch and commit it to currently checked out branch, for example if accidentally committed to wrong branch, such as `master` where branch policies are in place (note that the cherry-picked commit will not have the same commit ID as the original commit):
+## Cherry-pick a specific commit from another branch and commit it to currently checked out branch, for example if accidentally committed to wrong branch, such as `main` where branch policies are in place (note that the cherry-picked commit will not have the same commit ID as the original commit):
 ```shell
 git cherry-pick <commit-id>
 ```
@@ -635,7 +635,7 @@ git log [--before | --after] "<YYYY-MM-DD>"
 git log [--before | --after] "<YYYY-MM-DD HH:MM:SS>"
 ```
 
-## Show commit history, include all commits between two specific branches or commits (useful for getting ahead/behind stats between `master` and a feature branch):
+## Show commit history, include all commits between two specific branches or commits (useful for getting ahead/behind stats between `main` and a feature branch):
 ```shell
 git log <branch-name | commit-id>..<branch-name | commit-id>
 ```
@@ -698,7 +698,7 @@ git reflog
 ## List commit ID of current `HEAD`:
 ```shell
 git rev-parse HEAD
-cat .git/refs/heads/master
+cat .git/refs/heads/main
 ```
 
 ## List commit ID of `HEAD` for all branches (both local and remote):
