@@ -29,7 +29,7 @@ alias ga='git add $(git rev-parse --show-toplevel)'
 alias gc='git commit'
 alias gco='git checkout'
 alias gcob='git checkout -b'
-alias gcm='git checkout main'
+alias gcm="git checkout \"\$(git remote show origin | grep 'HEAD' | cut -d' ' -f5)\""
 alias gb='git branch'
 alias gl='git log --oneline'
 alias gla='git log --oneline --all'
@@ -38,7 +38,7 @@ alias gch='git cherry --verbose'
 alias gchp='git cherry-pick'
 alias gd='git diff'
 alias gdo='git diff origin/$(git rev-parse --abbrev-ref HEAD)'
-alias gdm='git diff main'
+alias gdm="git diff \"\$(git remote show origin | grep 'HEAD' | cut -d' ' -f5)\""
 alias gsh='git show'
 alias gr='git remote'
 alias grp='git rev-parse'
@@ -122,7 +122,7 @@ function gba() {
     case "$#" in
     0)
         firstBranch="$(git rev-parse --abbrev-ref HEAD)"
-        secondBranch="main"
+        secondBranch="$(git remote show origin | grep 'HEAD' | cut -d' ' -f5)"
         ;;
     1)
         firstBranch="$(git rev-parse --abbrev-ref HEAD)"

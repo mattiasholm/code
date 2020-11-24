@@ -132,6 +132,8 @@ git clone --branch <branch-name> <url>
 git clone -b <branch-name> <url>
 ```
 
+<br><br>
+
 ## Add a new remote (e.g. `origin` when initiating a new repo or `upstream` when using the forking workflow):
 ```shell
 git remote add <name> <url>
@@ -163,6 +165,11 @@ git remote -v
 git remote show <name>
 ```
 
+## Show the default branch of `origin`:
+```shell
+git remote show origin | grep 'HEAD' | cut -d' ' -f5
+```
+
 ## Show the URL of `origin`:
 ```shell
 git remote get-url origin
@@ -172,6 +179,8 @@ git remote get-url origin
 ```shell
 git remote get-url <remote-name>
 ```
+
+<br><br>
 
 ## Show root directory of the current repository:
 ```shell
@@ -698,7 +707,6 @@ git reflog
 ## List commit ID of current `HEAD`:
 ```shell
 git rev-parse HEAD
-cat .git/refs/heads/main
 ```
 
 ## List commit ID of `HEAD` for all branches (both local and remote):
