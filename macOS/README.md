@@ -44,6 +44,11 @@ Cmd+Alt+Shift+Del
 
 >## **TERMINAL**
 
+## List OS version:
+```shell
+sw_vers
+```
+
 ## Open working directory in Finder:
 ```shell
 open .

@@ -51,6 +51,7 @@ cat <json-file> | jq -r ".<key-name>[] | select(.<first-subelement> == <value>) 
 ## Output values as raw strings rather than JSON (useful to remove quotes from output, instead of using `sed`):
 ```shell
 jq -r
+jq -r .
 ```
 
 ## Output in compact format, instead of pretty-printed format:

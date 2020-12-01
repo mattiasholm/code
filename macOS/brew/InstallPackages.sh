@@ -57,6 +57,7 @@ brew install terraform
 brew install pulumi
 brew install jq
 brew install kubernetes-cli
+brew install lastpass-cli
 brew install p7zip
 brew install --cask owasp-zap
 brew install --cask azure-data-studio

@@ -7,6 +7,11 @@
 man <command>
 ```
 
+## Change password for currently logged in user:
+```shell
+passwd
+```
+
 <br><br>
 
 ## Portable shebang for `bash`:
