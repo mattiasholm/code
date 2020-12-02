@@ -377,6 +377,11 @@ array=("a" "b" "c")
 echo "${array[RANDOM%${#array[@]}]}"
 ```
 
+## Output only a specific number of lines:
+```shell
+head -<number>
+```
+
 ## Replace lower-case letters with upper-case:
 ```shell
 tr a-z A-Z
