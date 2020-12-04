@@ -1,0 +1,96 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageSku": {
+            "type": "string",
+            "defaultValue": "Standard_GRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS"
+            ]
+        }
+    },
+    "variables": {
+        "prefix": "[resourceGroup().name]",
+        "location": "[resourceGroup().location]",
+        "storageCount": 3,
+        "copy": [
+            {
+                "name": "storageName",
+                "count": "[variables('storageCount')]",
+                "input": "[toLower(replace(format('{0}-Storage0{1}', variables('prefix'), copyIndex('storageName', 1)), '-', ''))]"
+            }
+        ],
+        "storageKind": "StorageV2",
+        "storagePublicAccess": [
+            false,
+            true,
+            false
+        ],
+        "storageHttpsOnly": true,
+        "storageTls": "TLS1_2",
+        "containerName": "[format('default/{0}', toLower('Container01'))]"
+    },
+    "resources": [
+        {
+            "copy": {
+                "name": "storageAccounts",
+                "count": "[variables('storageCount')]"
+            },
+            "apiVersion": "2019-06-01",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('storageName')[copyIndex()]]",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "[parameters('storageSku')]"
+            },
+            "kind": "[variables('storageKind')]",
+            "properties": {
+                "allowBlobPublicAccess": "[variables('storagePublicAccess')[copyIndex()]]",
+                "supportsHttpsTrafficOnly": "[variables('storageHttpsOnly')]",
+                "minimumTlsVersion": "[variables('storageTls')]"
+            },
+            "resources": [
+                {
+                    "apiVersion": "2019-06-01",
+                    "type": "blobServices/containers",
+                    "name": "[variables('containerName')]",
+                    "dependsOn": [
+                        "[variables('storageName')[copyIndex()]]"
+                    ]
+                }
+            ]
+        }
+    ],
+    "outputs": {
+        "storageBlobEndpoint": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('storageCount')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')[copyIndex()])).primaryEndpoints.blob]"
+            }
+        },
+        "storageFileEndpoint": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('storageCount')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')[copyIndex()])).primaryEndpoints.file]"
+            }
+        },
+        "storageTableEndpoint": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('storageCount')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')[copyIndex()])).primaryEndpoints.table]"
+            }
+        },
+        "storageQueueEndpoint": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('storageCount')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')[copyIndex()])).primaryEndpoints.queue]"
+            }
+        }
+    }
+}
