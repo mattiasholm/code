@@ -6,7 +6,7 @@ $Location = "WestEurope"
 $TemplateFile = "./storage.json"
 $ParameterFile = "./storage.parameters.json"
 
-# Login-AzAccount
+Login-AzAccount
 
 Set-AzContext -SubscriptionId $SubscriptionId
 

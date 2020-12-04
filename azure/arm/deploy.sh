@@ -6,7 +6,7 @@ location="WestEurope"
 templateFile="./storage.json"
 parameterFile="./storage.parameters.json"
 
-# az login
+az login
 
 az account set --subscription "${subscriptionId}"
 
