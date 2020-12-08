@@ -1,8 +1,6 @@
 var prefix = resourceGroup().name
 var location = resourceGroup().location
 
-
-
 param vnetAddressPrefix string
 
 var vnetName = '${prefix}-VNet01'

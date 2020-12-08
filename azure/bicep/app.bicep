@@ -1,7 +1,6 @@
 var prefix = resourceGroup().name
 var location = resourceGroup().location
 
-
 param planSku string
 param planCapacity int
 
@@ -17,8 +16,6 @@ resource plan 'Microsoft.Web/serverfarms@2020-06-01' = {
     capacity: planCapacity
   }
 }
-
-
 
 var appName = '${prefix}-App01'
 var appHttpsOnly = true

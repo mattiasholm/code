@@ -7,8 +7,6 @@ var planCapacity = 0
 var globalReplication = true
 var vnetAddressPrefix = '10.0.0.0/16'
 
-
-
 resource rg 'Microsoft.Resources/resourceGroups@2019-05-01' = {
     name: rgName
     location: rgLocation
@@ -43,8 +41,6 @@ module vnet './vnet.bicep' = {
         vnetAddressPrefix: vnetAddressPrefix
     }
 }
-
-
 
 output appUrl string = app.outputs.appUrl
 output keyvaultUrl string = keyvault.outputs.keyvaultUrl

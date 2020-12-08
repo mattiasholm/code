@@ -1,0 +1,61 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "planSku": {
+            "type": "string",
+            "defaultValue": "F1",
+            "allowedValues": [
+                "F1",
+                "D1",
+                "B1"
+            ]
+        },
+        "planCapacity": {
+            "type": "int",
+            "defaultValue": 0,
+            "minValue": 0,
+            "maxValue": 3
+        }
+    },
+    "variables": {
+        "prefix": "[resourceGroup().name]",
+        "location": "[resourceGroup().location]",
+        "planName": "[format('{0}-AppPlan01', variables('prefix'))]",
+        "planKind": "app",
+        "appName": "[format('{0}-App01', variables('prefix'))]",
+        "appHttpsOnly": true
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('planName')]",
+            "location": "[variables('location')]",
+            "kind": "[variables('planKind')]",
+            "sku": {
+                "name": "[parameters('planSku')]",
+                "capacity": "[parameters('planCapacity')]"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('appName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
+                "httpsOnly": "[variables('appHttpsOnly')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]"
+            ]
+        }
+    ],
+    "outputs": {
+        "appUrl": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Web/sites', variables('appName'))).defaultHostName]"
+        }
+    }
+}

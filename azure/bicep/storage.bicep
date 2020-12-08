@@ -3,9 +3,7 @@ param globalReplication bool = true
 var prefix = resourceGroup().name
 var location = resourceGroup().location
 
-
-
-var storageName = toLower(replace('${prefix}-Storage01','-',''))
+var storageName = toLower(replace('${prefix}-Storage01', '-', ''))
 var storageSku = globalReplication ? 'Standard_GRS' : 'Standard_LRS'
 var storageKind = 'StorageV2'
 var storagePublicAccess = false
@@ -30,8 +28,6 @@ output storageBlobEndpoint string = storage.properties.primaryEndpoints.blob
 output storageFileEndpoint string = storage.properties.primaryEndpoints.file
 output storageTableEndpoint string = storage.properties.primaryEndpoints.table
 output storageQueueEndpoint string = storage.properties.primaryEndpoints.queue
-
-
 
 var containerName = toLower('Container01')
 

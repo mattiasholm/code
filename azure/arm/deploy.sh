@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 
+if [[ -z "$1" ]]; then
+    echo -e "Argument \"templateFile\" missing, exiting script"
+    exit 1
+else
+    templateFile="$1"
+fi
+
+set -e +x
+
 subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
 resourceGroupName="holm-arm"
 location="WestEurope"
-templateFile="./storage.json"
-parameterFile="./storage.parameters.json"
+parameterFile="$(echo "${templateFile}" | sed 's/.json$/.parameters.json/')"
 
 az login
 
