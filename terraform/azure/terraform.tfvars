@@ -7,11 +7,7 @@ rgTags = {
   Owner       = "mattias.holm@live.com"
 }
 
-
-
 vnetAddressPrefix = ["10.1.0.0/24"]
-
-
 
 planTier = "Free"
 

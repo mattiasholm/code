@@ -10,13 +10,9 @@ variable "rgTags" {
   type = map
 }
 
-
-
 variable "vnetAddressPrefix" {
   type = list(string)
 }
-
-
 
 variable "planTier" {
   type = string
