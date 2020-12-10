@@ -5,6 +5,7 @@
     "variables": {
         "prefix": "[resourceGroup().name]",
         "location": "[resourceGroup().location]",
+        "tags": "[resourceGroup().tags]",
         "keyvaultName": "[format('{0}-KeyVault01', variables('prefix'))]",
         "keyvaultFamily": "A",
         "keyvaultSku": "standard"
@@ -15,7 +16,7 @@
             "apiVersion": "2019-09-01",
             "name": "[variables('keyvaultName')]",
             "location": "[variables('location')]",
-            "tags": "[resourceGroup().tags]",
+            "tags": "[variables('tags')]",
             "properties": {
                 "tenantId": "[subscription().tenantId]",
                 "sku": {

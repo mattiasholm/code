@@ -3,7 +3,7 @@ terraform {
 
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "~> 2.35.0"
     }
   }
@@ -20,36 +20,36 @@ locals {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name = var.rgName
+  name     = var.rgName
   location = var.rgLocation
-  tags = var.tags
+  tags     = var.rgTags
 }
 
 
 
 locals {
-  storageCount = 3
-  storageName = lower(replace("${local.prefix}-Storage0","-",""))
-  storageTier = "Standard"
-  storageReplication = "GRS"
-  storageKind = "StorageV2"
+  storageCount        = 3
+  storageName         = lower(replace("${local.prefix}-Storage0", "-", ""))
+  storageTier         = "Standard"
+  storageReplication  = "GRS"
+  storageKind         = "StorageV2"
   storagePublicAccess = false
-  storageHttpsOnly = true
-  storageTls = "TLS1_2"
+  storageHttpsOnly    = true
+  storageTls          = "TLS1_2"
 }
 
 resource "azurerm_storage_account" "storage" {
-  count = local.storageCount
-  name = "${local.storageName}${count.index + 1}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location = azurerm_resource_group.rg.location
-  tags = azurerm_resource_group.rg.tags
-  account_tier = local.storageTier
-  account_replication_type = local.storageReplication
-  account_kind = local.storageKind
-  allow_blob_public_access = local.storagePublicAccess
+  count                     = local.storageCount
+  name                      = "${local.storageName}${count.index + 1}"
+  resource_group_name       = azurerm_resource_group.rg.name
+  location                  = azurerm_resource_group.rg.location
+  tags                      = azurerm_resource_group.rg.tags
+  account_tier              = local.storageTier
+  account_replication_type  = local.storageReplication
+  account_kind              = local.storageKind
+  allow_blob_public_access  = local.storagePublicAccess
   enable_https_traffic_only = local.storageHttpsOnly
-  min_tls_version = local.storageTls
+  min_tls_version           = local.storageTls
 }
 
 output "storageBlobEndpoint" {
@@ -75,46 +75,46 @@ locals {
 }
 
 resource "azurerm_storage_container" "container" {
-  count = local.storageCount
-  name = local.containerName
-  storage_account_name  = azurerm_storage_account.storage[count.index].name
+  count                = local.storageCount
+  name                 = local.containerName
+  storage_account_name = azurerm_storage_account.storage[count.index].name
 }
 
 
 
 locals {
-  vnetName = "${local.prefix}-VNet01"
+  vnetName   = "${local.prefix}-VNet01"
   subnetName = "Subnet01"
 }
 
 resource "azurerm_virtual_network" "vnet" {
-    name = local.vnetName
-    resource_group_name = azurerm_resource_group.rg.name
-    location = azurerm_resource_group.rg.location
-    tags = azurerm_resource_group.rg.tags
-    address_space = var.vnetAddressPrefix
-    subnet {
-      name = local.subnetName
-      address_prefix = var.vnetAddressPrefix[0]
-      }
+  name                = local.vnetName
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  tags                = azurerm_resource_group.rg.tags
+  address_space       = var.vnetAddressPrefix
+  subnet {
+    name           = local.subnetName
+    address_prefix = var.vnetAddressPrefix[0]
+  }
 }
 
 
 
 locals {
   keyvaultName = "${local.prefix}-KeyVault01"
-  keyvaultSku = "standard"
+  keyvaultSku  = "standard"
 }
 
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "keyvault" {
-  name = local.keyvaultName
+  name                = local.keyvaultName
   resource_group_name = azurerm_resource_group.rg.name
-  location = azurerm_resource_group.rg.location
-  tags = azurerm_resource_group.rg.tags
-  tenant_id = data.azurerm_client_config.current.tenant_id
-  sku_name = local.keyvaultSku
+  location            = azurerm_resource_group.rg.location
+  tags                = azurerm_resource_group.rg.tags
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+  sku_name            = local.keyvaultSku
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
@@ -132,7 +132,7 @@ resource "azurerm_key_vault" "keyvault" {
 }
 
 output "keyvautUrl" {
-  value = azurerm_key_vault.keyvault.vault_uri 
+  value = azurerm_key_vault.keyvault.vault_uri
 }
 
 
@@ -143,14 +143,14 @@ locals {
 }
 
 resource "azurerm_app_service_plan" "plan" {
-  name = local.planName
+  name                = local.planName
   resource_group_name = azurerm_resource_group.rg.name
-  location = azurerm_resource_group.rg.location
-  tags = azurerm_resource_group.rg.tags
-  kind = local.planKind
+  location            = azurerm_resource_group.rg.location
+  tags                = azurerm_resource_group.rg.tags
+  kind                = local.planKind
   sku {
-    tier = var.planTier
-    size = var.planSize
+    tier     = var.planTier
+    size     = var.planSize
     capacity = var.planCapacity
   }
 }
@@ -158,17 +158,17 @@ resource "azurerm_app_service_plan" "plan" {
 
 
 locals {
-  appName = "${local.prefix}-App01"
+  appName      = "${local.prefix}-App01"
   appHttpsOnly = true
 }
 
 resource "azurerm_app_service" "app" {
-  name = local.appName
+  name                = local.appName
   resource_group_name = azurerm_resource_group.rg.name
-  location = azurerm_resource_group.rg.location
-  tags = azurerm_resource_group.rg.tags
+  location            = azurerm_resource_group.rg.location
+  tags                = azurerm_resource_group.rg.tags
   app_service_plan_id = azurerm_app_service_plan.plan.id
-  https_only = local.appHttpsOnly
+  https_only          = local.appHttpsOnly
 }
 
 output "appUrl" {

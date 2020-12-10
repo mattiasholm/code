@@ -2,6 +2,11 @@ targetScope = 'subscription'
 
 var rgName = 'holm-bicep'
 var rgLocation = 'WestEurope'
+var rgTags = {
+    Environment: 'Lab'
+    Owner: 'mattias.holm@live.com'
+}
+
 var planSku = 'F1'
 var planCapacity = 0
 var globalReplication = true
@@ -10,6 +15,7 @@ var vnetAddressPrefix = '10.0.0.0/16'
 resource rg 'Microsoft.Resources/resourceGroups@2019-05-01' = {
     name: rgName
     location: rgLocation
+    tags: rgTags
 }
 
 module app './app.bicep' = {

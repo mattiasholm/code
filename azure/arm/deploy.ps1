@@ -8,8 +8,10 @@ $ErrorActionPreference = "Stop"
 
 $SubscriptionId = "9b184a26-7fff-49ed-9230-d11d484ad51b"
 $ResourceGroupName = "holm-arm"
-$Location = "WestEurope"
+$ResourceGroupLocation = "WestEurope"
+$ResourceGroupTags = @{Environment = "Lab"; Owner = "mattias.holm@live.com" }
 $ParameterFile = $TemplateFile.Replace('.json', '.parameters.json')
+$DeployMode = "Incremental"
 
 Login-AzAccount
 
@@ -17,12 +19,12 @@ Set-AzContext -SubscriptionId $SubscriptionId
 
 New-AzResourceGroup `
     -Name $ResourceGroupName `
-    -Location $Location `
-    -Tag @{Environment = "Lab"; Owner = "Mattias Holm" } `
+    -Location $ResourceGroupLocation `
+    -Tag $ResourceGroupTags `
     -Force
 
 New-AzResourceGroupDeployment `
     -ResourceGroupName $ResourceGroupName `
     -TemplateFile $TemplateFile `
     -TemplateParameterFile $ParameterFile `
-    -Mode "Incremental"
+    -Mode $DeployMode

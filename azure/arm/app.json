@@ -21,6 +21,7 @@
     "variables": {
         "prefix": "[resourceGroup().name]",
         "location": "[resourceGroup().location]",
+        "tags": "[resourceGroup().tags]",
         "planName": "[format('{0}-AppPlan01', variables('prefix'))]",
         "planKind": "app",
         "appName": "[format('{0}-App01', variables('prefix'))]",
@@ -32,7 +33,7 @@
             "apiVersion": "2020-06-01",
             "name": "[variables('planName')]",
             "location": "[variables('location')]",
-            "tags": "[resourceGroup().tags]",
+            "tags": "[variables('tags')]",
             "kind": "[variables('planKind')]",
             "sku": {
                 "name": "[parameters('planSku')]",
@@ -44,7 +45,7 @@
             "apiVersion": "2020-06-01",
             "name": "[variables('appName')]",
             "location": "[variables('location')]",
-            "tags": "[resourceGroup().tags]",
+            "tags": "[variables('tags')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]"
             ],

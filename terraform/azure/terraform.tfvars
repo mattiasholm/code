@@ -2,10 +2,10 @@ rgName = "holm-tf"
 
 rgLocation = "WestEurope"
 
-tags = {
-    Environment = "Production"
-    ApplicationName = "Terraform"
-  }
+rgTags = {
+  Environment = "Lab"
+  Owner       = "mattias.holm@live.com"
+}
 
 
 

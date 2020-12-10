@@ -9,6 +9,7 @@
     "variables": {
         "prefix": "[resourceGroup().name]",
         "location": "[resourceGroup().location]",
+        "tags": "[resourceGroup().tags]",
         "vnetName": "[format('{0}-VNet01', variables('prefix'))]",
         "subnetName": "Subnet01"
     },
@@ -18,7 +19,7 @@
             "apiVersion": "2020-06-01",
             "name": "[variables('vnetName')]",
             "location": "[variables('location')]",
-            "tags": "[resourceGroup().tags]",
+            "tags": "[variables('tags')]",
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [

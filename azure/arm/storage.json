@@ -14,6 +14,7 @@
     "variables": {
         "prefix": "[resourceGroup().name]",
         "location": "[resourceGroup().location]",
+        "tags": "[resourceGroup().tags]",
         "storageCount": 3,
         "copy": [
             {
@@ -42,7 +43,7 @@
             "apiVersion": "2019-06-01",
             "name": "[variables('storageName')[copyIndex()]]",
             "location": "[variables('location')]",
-            "tags": "[resourceGroup().tags]",
+            "tags": "[variables('tags')]",
             "sku": {
                 "name": "[parameters('storageSku')]"
             },

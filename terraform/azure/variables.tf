@@ -1,31 +1,31 @@
 variable "rgName" {
-  type    = string
+  type = string
 }
 
 variable "rgLocation" {
   type = string
 }
 
-variable "tags" {
+variable "rgTags" {
   type = map
 }
 
 
 
 variable "vnetAddressPrefix" {
-    type = list(string)
+  type = list(string)
 }
 
 
 
 variable "planTier" {
-    type = string
+  type = string
 }
 
 variable "planSize" {
-    type = string
+  type = string
 }
 
 variable "planCapacity" {
-    type = number
+  type = number
 }
