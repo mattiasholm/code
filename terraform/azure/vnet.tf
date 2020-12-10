@@ -5,9 +5,9 @@ locals {
 
 resource "azurerm_virtual_network" "vnet" {
   name                = local.vnetName
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  tags                = azurerm_resource_group.rg.tags
+  resource_group_name = var.rgName
+  location            = var.rgLocation
+  tags                = var.rgTags
   address_space       = var.vnetAddressPrefix
   subnet {
     name           = local.subnetName
@@ -15,6 +15,6 @@ resource "azurerm_virtual_network" "vnet" {
   }
 }
 
-output "vnetDNS" {
-  value = azurerm_virtual_network.vnet.dns_servers
+output "vnetId" {
+  value = azurerm_virtual_network.vnet.id
 }

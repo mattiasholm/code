@@ -5,9 +5,9 @@ locals {
 
 resource "azurerm_app_service_plan" "plan" {
   name                = local.planName
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  tags                = azurerm_resource_group.rg.tags
+  resource_group_name = var.rgName
+  location            = var.rgLocation
+  tags                = var.rgTags
   kind                = local.planKind
   sku {
     tier     = var.planTier
@@ -25,9 +25,9 @@ locals {
 
 resource "azurerm_app_service" "app" {
   name                = local.appName
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  tags                = azurerm_resource_group.rg.tags
+  resource_group_name = var.rgName
+  location            = var.rgLocation
+  tags                = var.rgTags
   app_service_plan_id = azurerm_app_service_plan.plan.id
   https_only          = local.appHttpsOnly
 }

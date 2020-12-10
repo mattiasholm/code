@@ -14,16 +14,17 @@ provider "azurerm" {
 }
 
 locals {
-  prefix = azurerm_resource_group.rg.name
+  prefix = var.rgName
 }
 
 # Fortsätt med modules med params, inget hårdkodat i respektive template!
+# https://www.terraform.io/docs/modules/index.html
 # https://www.terraform.io/docs/configuration/blocks/modules/syntax.html
 # Lokalt vs referens direkt från GitHub??? 
 # REF: https://github.com/xenitab/terraform-modules
 
+# var VS locals! Inte tänkt på att man såklart kan använda flera .tfvars-filer istället - måste väl vara tydligare?! Fast å andra sidan vill jag väl precis som i ARM bara bryta ut saker saker som skiljer mellan Test/Prod??
 # common.tfvars (auto???) / prod.tfvars (manuell) / test.tfvars (manuell)
-# var VS locals! Inte tänkt på att man såklart kan använda flera .tfvars-filer istället - måste väl vara tydligare?! Fast å andra sidan vill jag väl precis som i ARM hålla isär saker som skiljer mellan Test/Prod??
 
 # Testa provider "Azure AD" !!!
 # resource "random_password"

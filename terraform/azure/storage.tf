@@ -12,9 +12,9 @@ locals {
 resource "azurerm_storage_account" "storage" {
   count                     = local.storageCount
   name                      = "${local.storageName}${count.index + 1}"
-  resource_group_name       = azurerm_resource_group.rg.name
-  location                  = azurerm_resource_group.rg.location
-  tags                      = azurerm_resource_group.rg.tags
+  resource_group_name       = var.rgName
+  location                  = var.rgLocation
+  tags                      = var.rgTags
   account_tier              = local.storageTier
   account_replication_type  = local.storageReplication
   account_kind              = local.storageKind
