@@ -15,6 +15,7 @@
             "apiVersion": "2019-09-01",
             "name": "[variables('keyvaultName')]",
             "location": "[variables('location')]",
+            "tags": "[resourceGroup().tags]",
             "properties": {
                 "tenantId": "[subscription().tenantId]",
                 "sku": {

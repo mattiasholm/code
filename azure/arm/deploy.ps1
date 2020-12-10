@@ -15,7 +15,11 @@ Login-AzAccount
 
 Set-AzContext -SubscriptionId $SubscriptionId
 
-New-AzResourceGroup -Name $ResourceGroupName -Location $Location -Force
+New-AzResourceGroup `
+    -Name $ResourceGroupName `
+    -Location $Location `
+    -Tag @{Environment = "Lab"; Owner = "Mattias Holm" } `
+    -Force
 
 New-AzResourceGroupDeployment `
     -ResourceGroupName $ResourceGroupName `

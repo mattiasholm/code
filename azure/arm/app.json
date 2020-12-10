@@ -32,6 +32,7 @@
             "apiVersion": "2020-06-01",
             "name": "[variables('planName')]",
             "location": "[variables('location')]",
+            "tags": "[resourceGroup().tags]",
             "kind": "[variables('planKind')]",
             "sku": {
                 "name": "[parameters('planSku')]",
@@ -43,13 +44,14 @@
             "apiVersion": "2020-06-01",
             "name": "[variables('appName')]",
             "location": "[variables('location')]",
+            "tags": "[resourceGroup().tags]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]"
+            ],
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
                 "httpsOnly": "[variables('appHttpsOnly')]"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]"
-            ]
+            }
         }
     ],
     "outputs": {

@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetAddressPrefix": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "prefix": "[resourceGroup().name]",
+        "location": "[resourceGroup().location]",
+        "vnetName": "[format('{0}-VNet01', variables('prefix'))]",
+        "subnetName": "Subnet01"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('vnetName')]",
+            "location": "[variables('location')]",
+            "tags": "[resourceGroup().tags]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetAddressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('vnetAddressPrefix')]"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "vnetDdosProtection": {
+            "type": "bool",
+            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))).enableDdosProtection]"
+        },
+        "vnetVmProtection": {
+            "type": "bool",
+            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))).enableVmProtection]"
+        }
+    }
+}

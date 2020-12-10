@@ -38,10 +38,11 @@
                 "name": "storageAccounts",
                 "count": "[variables('storageCount')]"
             },
-            "apiVersion": "2019-06-01",
             "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
             "name": "[variables('storageName')[copyIndex()]]",
             "location": "[variables('location')]",
+            "tags": "[resourceGroup().tags]",
             "sku": {
                 "name": "[parameters('storageSku')]"
             },
@@ -53,8 +54,8 @@
             },
             "resources": [
                 {
-                    "apiVersion": "2019-06-01",
                     "type": "blobServices/containers",
+                    "apiVersion": "2019-06-01",
                     "name": "[variables('containerName')]",
                     "dependsOn": [
                         "[variables('storageName')[copyIndex()]]"

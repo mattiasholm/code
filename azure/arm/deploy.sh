@@ -18,7 +18,10 @@ az login
 
 az account set --subscription "${subscriptionId}"
 
-az group create --name "${resourceGroupName}" --location "${location}"
+az group create \
+    --name "${resourceGroupName}" \
+    --location "${location}" \
+    --tags Environment="Lab" Owner="Mattias Holm"
 
 az deployment group create \
     --resource-group "${resourceGroupName}" \
