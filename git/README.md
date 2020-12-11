@@ -848,6 +848,16 @@ git commit --amend --message "<commit-message>"
 git commit --amend --no-edit
 ```
 
+## Amend authorship of latest commit to a specific author:
+```shell
+git commit --amend --no-edit --author "<author-name> <<author-email>>"
+```
+
+## Amend authorship of latest commit to the current committer:
+```shell
+git commit --amend --no-edit --reset-author
+```
+
 <br><br>
 
 ## Discard changes to a specific file in working tree (will not touch staging area):
