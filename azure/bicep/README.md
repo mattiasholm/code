@@ -30,8 +30,8 @@ bicep -v
 
 ## Contextual help:
 ```shell
-bicep [<subcommand>] --help
-bicep [<subcommand>] -h
+bicep [] --help
+bicep [] -h
 ```
 
 <br><br>
