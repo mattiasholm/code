@@ -34,7 +34,10 @@ brew install coreutils
 brew install grep
 brew install vim
 brew install jq
-brew install mas
+
+brew install mas &&
+    chmod +x "$(git rev-parse --show-toplevel)/macOS/mas/InstallApps.sh" &&
+    "$(git rev-parse --show-toplevel)/macOS/mas/InstallApps.sh"
 
 brew install git &&
     git config --global user.name "${userName}" &&
@@ -55,7 +58,8 @@ brew install python3
 # pip3 install numpy ### Don't think I use this anymore ###
 # pip3 install mssql-cli ### Don't think I use this anymore ###
 
-brew install --cask powershell
+brew install --cask powershell &&
+    pwsh "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"
 
 brew install azure-cli &&
     (
