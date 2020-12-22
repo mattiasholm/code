@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 0.13.5"
+  required_version = "~> 0.14.3"
 
   required_providers {
     azurerm = {
@@ -20,8 +20,6 @@ locals {
 # Fortsätt med modules med params, inget hårdkodat i respektive template!
 # https://www.terraform.io/docs/modules/index.html
 # https://www.terraform.io/docs/configuration/blocks/modules/syntax.html
-# Lokalt vs referens direkt från GitHub??? 
-# REF: https://github.com/xenitab/terraform-modules
 
 # var VS locals! Inte tänkt på att man såklart kan använda flera .tfvars-filer istället - måste väl vara tydligare?! Fast å andra sidan vill jag väl precis som i ARM bara bryta ut saker saker som skiljer mellan Test/Prod??
 # common.tfvars (auto???) / prod.tfvars (manuell) / test.tfvars (manuell)

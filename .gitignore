@@ -5,6 +5,7 @@
 
 /**/*.tfstate*
 /**/.terraform/
+/**/.terraform.lock.hcl
 
 # Pulumi - verifiera att fortfarande aktuella!
 /**/*.pyc
