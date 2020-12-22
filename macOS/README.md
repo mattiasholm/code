@@ -92,3 +92,19 @@ ls /Volumes/
 ```shell
 echo ". ~/.bashrc" > ~/.bash_profile
 ```
+
+## Flush DNS cache:
+```shell
+dscacheutil -flushcache
+```
+
+<br><br>
+
+## Change hostname:
+```shell
+sudo scutil --set HostName <hostname>
+
+sudo scutil --set LocalHostName <hostname>
+
+sudo scutil --set ComputerName <hostname>
+```
