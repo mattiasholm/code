@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e +x
+
 userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
 
