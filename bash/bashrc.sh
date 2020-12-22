@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e +x
+
 function cpbak() {
     if [[ -f "$2" ]]; then
         mv "$2" "$2.bak"

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e +x
+
 inputDir="./input"
 outputDir="./output"
 

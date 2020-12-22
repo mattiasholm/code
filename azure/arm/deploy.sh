@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
+set -e +x
+
 if [[ -z "$1" ]]; then
     echo -e "Argument \"templateFile\" missing, exiting script"
     exit 1
 else
     templateFile="$1"
 fi
-
-set -e +x
 
 subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
 rgName="holm-arm"
