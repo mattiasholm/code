@@ -171,7 +171,7 @@ brew search <formula-name>
 
 ## List installed formulae:
 ```shell
-brew list
+brew list --formulae
 ```
 
 ## List installed casks:
