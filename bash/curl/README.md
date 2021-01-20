@@ -40,7 +40,14 @@ curl --connect-to example.com:443:example.azurewebsites.net:443 https://example.
 curl https://raw.githubusercontent.com/mattiasholm/mattiasholm/main/git/CloneRepos.sh --output CloneRepos.sh
 ```
 
-<!---
-Eventuellt ange placeholder argument <APA> istället för nuvarande exempel? Mer enhetligt med övriga READMEs!
-OBS: Skapa tabell a la REGEX med alla standardväxlar!
--->
+<br><br>
+
+## Test how different HTTP response status codes behave in `curl`:
+```shell
+curl httpstat.us/<status-code>
+```
+
+## Test how different types of SSL misconfigurations behave in `curl`:
+```shell
+curl https://expired.badssl.com/
+```

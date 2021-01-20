@@ -9,6 +9,7 @@ alias fgrep='fgrep --color=auto'
 
 alias a='az'
 alias b='bicep'
+alias c='curl'
 alias g='git'
 alias k='kubectl'
 alias p='pulumi'

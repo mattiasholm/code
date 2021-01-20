@@ -358,6 +358,11 @@ bash <(curl -s <url>)
 nc -z <host> <port>
 ```
 
+## Test whether outbound traffic on a specific port is allowed or not:
+nc -z portquiz.net <port>
+
+<br><br>
+
 ## Make all files with a specific file extension in working directory executable:
 ```shell
 chmod +x *.<file-extension>
