@@ -116,20 +116,52 @@ git config --global --edit
 git init
 ```
 
-## Clone remote repository to working directory:
+## Clone a remote repository to working directory:
 ```shell
 git clone <url>
 ```
 
-## Clone remote repository to a specific directory:
+## Clone a remote repository to a specific directory:
 ```shell
 git clone <url> <path>
 ```
 
-## Clone a specific branch form a remote repository:
+## Clone a specific branch from a remote repository:
 ```shell
 git clone --branch <branch-name> <url>
 git clone -b <branch-name> <url>
+```
+
+<br><br>
+
+## Create a shallow clone containing only a specific number of commits:
+```shell
+git clone --depth <number> <url>
+```
+
+## Create a shallow clone containing only commits since a specific date:
+```shell
+git clone --shallow-since <yyyy-MM-dd> <url>
+```
+
+## Convert an existing complete repository to a shallow clone containing only a specific number of commits:
+```shell
+git fetch --depth <number>
+```
+
+## Convert an existing complete repository to a shallow clone containing only commits since a specific date:
+```shell
+git fetch --shallow-since <yyyy-MM-dd>
+```
+
+## Deepen an existing shallow clone by a specific number of additional commits:
+```shell
+git fetch --deepen <number>
+```
+
+## Unshallow an existing shallow clone:
+```shell
+git fetch --unshallow
 ```
 
 <br><br>
