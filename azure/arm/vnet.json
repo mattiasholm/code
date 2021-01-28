@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vnetAddressPrefix": {
+        "virtualNetworks_addressPrefix": {
             "type": "string"
         }
     },
@@ -10,27 +10,27 @@
         "prefix": "[resourceGroup().name]",
         "location": "[resourceGroup().location]",
         "tags": "[resourceGroup().tags]",
-        "vnetName": "[format('{0}-VNet01', variables('prefix'))]",
-        "subnetName": "Subnet01"
+        "virtualNetworks_name": "[format('{0}-VNet01', variables('prefix'))]",
+        "subnets_name": "Subnet01"
     },
     "resources": [
         {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-06-01",
-            "name": "[variables('vnetName')]",
+            "name": "[variables('virtualNetworks_name')]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "[parameters('vnetAddressPrefix')]"
+                        "[parameters('virtualNetworks_addressPrefix')]"
                     ]
                 },
                 "subnets": [
                     {
-                        "name": "[variables('subnetName')]",
+                        "name": "[variables('subnets_name')]",
                         "properties": {
-                            "addressPrefix": "[parameters('vnetAddressPrefix')]"
+                            "addressPrefix": "[parameters('virtualNetworks_addressPrefix')[0]]"
                         }
                     }
                 ]
@@ -38,13 +38,13 @@
         }
     ],
     "outputs": {
-        "vnetDdosProtection": {
+        "virtualNetworks_enableDdosProtection": {
             "type": "bool",
-            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))).enableDdosProtection]"
+            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_name'))).enableDdosProtection]"
         },
-        "vnetVmProtection": {
+        "virtualNetworks_enableVmProtection": {
             "type": "bool",
-            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))).enableVmProtection]"
+            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_name'))).enableVmProtection]"
         }
     }
 }

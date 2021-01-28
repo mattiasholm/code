@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "planSku": {
+        "serverfarms_sku": {
             "type": "string",
             "defaultValue": "F1",
             "allowedValues": [
@@ -11,7 +11,7 @@
                 "B1"
             ]
         },
-        "planCapacity": {
+        "serverfarms_capacity": {
             "type": "int",
             "defaultValue": 0,
             "minValue": 0,
@@ -22,43 +22,43 @@
         "prefix": "[resourceGroup().name]",
         "location": "[resourceGroup().location]",
         "tags": "[resourceGroup().tags]",
-        "planName": "[format('{0}-AppPlan01', variables('prefix'))]",
-        "planKind": "app",
-        "appName": "[format('{0}-App01', variables('prefix'))]",
-        "appHttpsOnly": true
+        "serverfarms_name": "[format('{0}-AppPlan01', variables('prefix'))]",
+        "serverfarms_kind": "app",
+        "sites_name": "[format('{0}-App01', variables('prefix'))]",
+        "sites_httpsOnly": true
     },
     "resources": [
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2020-06-01",
-            "name": "[variables('planName')]",
+            "name": "[variables('serverfarms_name')]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
-            "kind": "[variables('planKind')]",
+            "kind": "[variables('serverfarms_kind')]",
             "sku": {
-                "name": "[parameters('planSku')]",
-                "capacity": "[parameters('planCapacity')]"
+                "name": "[parameters('serverfarms_sku')]",
+                "capacity": "[parameters('serverfarms_capacity')]"
             }
         },
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2020-06-01",
-            "name": "[variables('appName')]",
+            "name": "[variables('sites_name')]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]"
+                "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_name'))]"
             ],
             "properties": {
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
-                "httpsOnly": "[variables('appHttpsOnly')]"
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_name'))]",
+                "httpsOnly": "[variables('sites_httpsOnly')]"
             }
         }
     ],
     "outputs": {
-        "appUrl": {
+        "sites_defaultHostName": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.Web/sites', variables('appName'))).defaultHostName]"
+            "value": "[reference(resourceId('Microsoft.Web/sites', variables('sites_name'))).defaultHostName]"
         }
     }
 }

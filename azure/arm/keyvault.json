@@ -6,31 +6,31 @@
         "prefix": "[resourceGroup().name]",
         "location": "[resourceGroup().location]",
         "tags": "[resourceGroup().tags]",
-        "keyvaultName": "[format('{0}-KeyVault01', variables('prefix'))]",
-        "keyvaultFamily": "A",
-        "keyvaultSku": "standard"
+        "vaults_name": "[format('{0}-KeyVault01', variables('prefix'))]",
+        "vaults_family": "A",
+        "vaults_sku": "standard"
     },
     "resources": [
         {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2019-09-01",
-            "name": "[variables('keyvaultName')]",
+            "name": "[variables('vaults_name')]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
             "properties": {
                 "tenantId": "[subscription().tenantId]",
                 "sku": {
-                    "family": "[variables('keyvaultFamily')]",
-                    "name": "[variables('keyvaultSku')]"
+                    "family": "[variables('vaults_family')]",
+                    "name": "[variables('vaults_sku')]"
                 },
                 "accessPolicies": []
             }
         }
     ],
     "outputs": {
-        "keyvaultUrl": {
+        "vaults_vaultUri": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.KeyVault/vaults', variables('keyvaultName'))).vaultUri]"
+            "value": "[reference(resourceId('Microsoft.KeyVault/vaults', variables('vaults_name'))).vaultUri]"
         }
     }
 }

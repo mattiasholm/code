@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "storageSku": {
+        "storageAccounts_sku": {
             "type": "string",
             "defaultValue": "Standard_GRS",
             "allowedValues": [
@@ -15,83 +15,83 @@
         "prefix": "[resourceGroup().name]",
         "location": "[resourceGroup().location]",
         "tags": "[resourceGroup().tags]",
-        "storageCount": 3,
+        "storageAccounts_count": 3,
         "copy": [
             {
-                "name": "storageName",
-                "count": "[variables('storageCount')]",
-                "input": "[toLower(replace(format('{0}-Storage0{1}', variables('prefix'), copyIndex('storageName', 1)), '-', ''))]"
+                "name": "storageAccounts_name",
+                "count": "[variables('storageAccounts_count')]",
+                "input": "[toLower(replace(format('{0}-Storage0{1}', variables('prefix'), copyIndex('storageAccounts_name', 1)), '-', ''))]"
             }
         ],
-        "storageKind": "StorageV2",
-        "storagePublicAccess": [
+        "storageAccounts_kind": "StorageV2",
+        "storageAccounts_allowBlobPublicAccess": [
             false,
             true,
             false
         ],
-        "storageHttpsOnly": true,
-        "storageTls": "TLS1_2",
-        "containerName": "[format('default/{0}', toLower('Container01'))]"
+        "storageAccounts_supportsHttpsTrafficOnly": true,
+        "storageAccounts_minimumTlsVersion": "TLS1_2",
+        "containers_name": "[format('default/{0}', toLower('Container01'))]"
     },
     "resources": [
         {
             "copy": {
                 "name": "storageAccounts",
-                "count": "[variables('storageCount')]"
+                "count": "[variables('storageAccounts_count')]"
             },
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-06-01",
-            "name": "[variables('storageName')[copyIndex()]]",
+            "name": "[variables('storageAccounts_name')[copyIndex()]]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
             "sku": {
-                "name": "[parameters('storageSku')]"
+                "name": "[parameters('storageAccounts_sku')]"
             },
-            "kind": "[variables('storageKind')]",
+            "kind": "[variables('storageAccounts_kind')]",
             "properties": {
-                "allowBlobPublicAccess": "[variables('storagePublicAccess')[copyIndex()]]",
-                "supportsHttpsTrafficOnly": "[variables('storageHttpsOnly')]",
-                "minimumTlsVersion": "[variables('storageTls')]"
+                "allowBlobPublicAccess": "[variables('storageAccounts_allowBlobPublicAccess')[copyIndex()]]",
+                "supportsHttpsTrafficOnly": "[variables('storageAccounts_supportsHttpsTrafficOnly')]",
+                "minimumTlsVersion": "[variables('storageAccounts_minimumTlsVersion')]"
             },
             "resources": [
                 {
                     "type": "blobServices/containers",
                     "apiVersion": "2019-06-01",
-                    "name": "[variables('containerName')]",
+                    "name": "[variables('containers_name')]",
                     "dependsOn": [
-                        "[variables('storageName')[copyIndex()]]"
+                        "[variables('storageAccounts_name')[copyIndex()]]"
                     ]
                 }
             ]
         }
     ],
     "outputs": {
-        "storageBlobEndpoint": {
+        "storageAccounts_blobEndpoint": {
             "type": "array",
             "copy": {
-                "count": "[variables('storageCount')]",
-                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')[copyIndex()])).primaryEndpoints.blob]"
+                "count": "[variables('storageAccounts_count')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccounts_name')[copyIndex()])).primaryEndpoints.blob]"
             }
         },
-        "storageFileEndpoint": {
+        "storageAccounts_fileEndpoint": {
             "type": "array",
             "copy": {
-                "count": "[variables('storageCount')]",
-                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')[copyIndex()])).primaryEndpoints.file]"
+                "count": "[variables('storageAccounts_count')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccounts_name')[copyIndex()])).primaryEndpoints.file]"
             }
         },
-        "storageTableEndpoint": {
+        "storageAccounts_tableEndpoint": {
             "type": "array",
             "copy": {
-                "count": "[variables('storageCount')]",
-                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')[copyIndex()])).primaryEndpoints.table]"
+                "count": "[variables('storageAccounts_count')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccounts_name')[copyIndex()])).primaryEndpoints.table]"
             }
         },
-        "storageQueueEndpoint": {
+        "storageAccounts_queueEndpoint": {
             "type": "array",
             "copy": {
-                "count": "[variables('storageCount')]",
-                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')[copyIndex()])).primaryEndpoints.queue]"
+                "count": "[variables('storageAccounts_count')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccounts_name')[copyIndex()])).primaryEndpoints.queue]"
             }
         }
     }
