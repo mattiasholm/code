@@ -41,14 +41,14 @@
             }
         },
         {
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_name'))]"
+            ],
             "type": "Microsoft.Web/sites",
             "apiVersion": "2020-06-01",
             "name": "[variables('sites_name')]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_name'))]"
-            ],
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_name'))]",
                 "httpsOnly": "[variables('sites_httpsOnly')]"

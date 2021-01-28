@@ -56,12 +56,12 @@
             },
             "resources": [
                 {
-                    "type": "blobServices/containers",
-                    "apiVersion": "2019-06-01",
-                    "name": "[variables('containers_name')]",
                     "dependsOn": [
                         "[variables('storageAccounts_name')[copyIndex()]]"
-                    ]
+                    ],
+                    "type": "blobServices/containers",
+                    "apiVersion": "2019-06-01",
+                    "name": "[variables('containers_name')]"
                 }
             ]
         }
