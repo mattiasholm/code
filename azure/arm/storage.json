@@ -37,7 +37,8 @@
         {
             "copy": {
                 "name": "storageAccounts",
-                "count": "[variables('storageAccounts_count')]"
+                "count": "[variables('storageAccounts_count')]",
+                "mode": "parallel"
             },
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-06-01",
