@@ -43,6 +43,7 @@ alias gdm="git diff \"\$(git remote show origin | grep 'HEAD' | cut -d' ' -f5)\"
 alias gsh='git show'
 alias gr='git remote'
 alias grp='git rev-parse'
+alias gres='git restore'
 alias gt='git tag'
 alias gm='git merge'
 alias gls='git ls-files'
