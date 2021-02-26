@@ -64,7 +64,7 @@ code .
 ## Remove current line or selected code block (without adding it to clipboard):
 `Mac` Cmd+Shift+K
 
-`Windows` Ctrl+L
+`Windows` Ctrl+Shift+K
 
 ## Comment out current line or selected code block:
 `Mac` Cmd+Shift+7
