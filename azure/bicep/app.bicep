@@ -2,22 +2,11 @@ var prefix = resourceGroup().name
 var location = resourceGroup().location
 var tags = resourceGroup().tags
 
-param planSku string
-param planCapacity int
-
-var planName = '${prefix}-AppPlan01'
-var planKind = 'app'
-
-resource plan 'Microsoft.Web/serverfarms@2020-06-01' = {
-  name: planName
-  location: location
-  tags: tags
-  kind: planKind
-  sku: {
-    name: planSku
-    capacity: planCapacity
-  }
-}
+//
+param name string
+//
+param sku string
+param capacity int
 
 var appName = '${prefix}-App01'
 var appHttpsOnly = true

@@ -1,12 +1,12 @@
-$userName = "Mattias Holm"
-$userEmail = "mattias.holm@live.com"
-
-
-
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+
+
+
+$userName = "Mattias Holm"
+$userEmail = "mattias.holm@live.com"
 
 choco install -y vscode
 choco install -y git ; git config --global user.name $userName ; git config --global user.email $userEmail ; git config --global credential.helper wincred

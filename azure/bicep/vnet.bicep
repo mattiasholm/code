@@ -27,6 +27,3 @@ resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
     ]
   }
 }
-
-output vnetDdosProtection bool = vnet.properties.enableDdosProtection
-output vnetVmProtection bool = vnet.properties.enableVmProtection
