@@ -13,7 +13,7 @@ tmutil --help
 tmutil -h
 ```
 
-## Check tmutil version:
+## Show version:
 ```shell
 tmutil version
 tmutil --version

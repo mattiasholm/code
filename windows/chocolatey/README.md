@@ -9,6 +9,17 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://chocolatey.org/install.ps1"))
 ```
 
+## Show version:
+```powershell
+choco --version
+choco -v
+```
+
+## Upgrade Chocolatey:
+```powershell
+choco upgrade chocolatey
+```
+
 <br>
 
 ## Chocolatey packages:
