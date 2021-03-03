@@ -1,23 +1,18 @@
-var prefix = resourceGroup().name
-var location = resourceGroup().location
-var tags = resourceGroup().tags
+targetScope = 'resourceGroup'
 
-//
 param name string
-//
-param sku string
-param capacity int
-
-var appName = '${prefix}-App01'
-var appHttpsOnly = true
+param location string
+param tags object
+param planId string
+param httpsOnly bool
 
 resource app 'Microsoft.Web/sites@2020-06-01' = {
-  name: appName
+  name: name
   location: location
   tags: tags
   properties: {
-    serverFarmId: plan.id
-    httpsOnly: appHttpsOnly
+    serverFarmId: planId
+    httpsOnly: httpsOnly
   }
 }
 

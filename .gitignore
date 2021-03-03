@@ -1,8 +1,6 @@
 .DS_Store
 /.vscode
 
-/**/.bicep/
-
 /**/*.tfstate*
 /**/.terraform/
 /**/.terraform.lock.hcl

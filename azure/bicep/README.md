@@ -1,4 +1,4 @@
-# Cheat Sheet - Azure Bicep
+# Cheat Sheet - Bicep CLI
 
 <br>
 
@@ -8,77 +8,55 @@ https://github.com/Azure/bicep
 ## Real-time online compiler (Bicep Playground):
 https://bicepdemo.z22.web.core.windows.net/
 
-## Install Azure Bicep on macOS:
-```shell
-brew tap azure/bicep https://github.com/azure/bicep
-
-brew install azure/bicep/bicep
-```
+<br><br>
 
 ## Install VSCode extension:
 ```shell
 code --install-extension ms-azuretools.vscode-bicep
 ```
 
-<br><br>
+## Install Bicep CLI:
+```shell
+az bicep install
+```
+
+## Upgrade Bicep CLI:
+```shell
+az bicep upgrade
+```
 
 ## Show version:
 ```shell
-bicep --version
-bicep -v
+az bicep version
+```
+
+## List available versions:
+```shell
+az bicep list-versions
 ```
 
 ## Contextual help:
 ```shell
-bicep [] --help
-bicep [] -h
+az bicep [<subcommand>] --help
+az bicep [<subcommand>] -h
 ```
 
 <br><br>
 
-## Build a specific template:
+## Build a Bicep file and output it to the working directory:
 ```shell
-bicep build <file-name>
+az bicep build --files <file-name>
+az bicep build -f <file-name>
 ```
 
-## Build all templates in working directory:
+## Build a Bicep file and output it to standard output:
 ```shell
-bicep build *.bicep
+az bicep build --files <file-name> --stdout
+az bicep build -f <file-name> --stdout
 ```
 
-
-
-<!-- Komplettera med modules när släppt:
-
-Lägg till param attributes:
-
- param virtualMachineAdminUsername string
-
-  param virtualMachineAdminPassword string {
-    secure: true
-  }
-  
-  param virtualMachineSize string {
-    allowed: [
-      'Standard_D2s_v3'
-      'Standard_D4s_v3'
-      'Standard_D8s_v3'
-    ]
-    default: 'Standard_D8s_v3'
-  }
-
-
-https://github.com/Azure/bicep/blob/main/docs/spec/modules.md
-
-Komplettera med loops när släppt:
-https://github.com/Azure/bicep/blob/main/docs/spec/loops.md
-
-??? Terraform-esque deployments ???
-bicep build
-bicep plan
-bicep apply
-bicep destroy
-??? Om ej släpps officiellt, kanske värt att skapa egna alias för detta ???
-
-Eventuellt lägga till cheat sheet för expressions etc??
- -->
+## Decompile an ARM template and output it to the working directory:
+```shell
+az bicep decompile --files <file-name>
+az bicep decompile -f <file-name>
+```

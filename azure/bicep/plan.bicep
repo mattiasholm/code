@@ -1,9 +1,20 @@
+targetScope = 'resourceGroup'
+
 param name string
 param location string
 param tags object
 param kind string
-param sku string
-param capacity int
+param skuName string {
+  allowed: [
+    'F1'
+    'B1'
+    'S1'
+  ]
+}
+param skuCapacity int {
+  minValue: 0
+  maxValue: 10
+}
 
 resource plan 'Microsoft.Web/serverfarms@2020-06-01' = {
   name: name
@@ -11,9 +22,9 @@ resource plan 'Microsoft.Web/serverfarms@2020-06-01' = {
   tags: tags
   kind: kind
   sku: {
-    name: sku
-    capacity: capacity
+    name: skuName
+    capacity: skuCapacity
   }
 }
 
-// output planId??? Nödvändigt???
+output planId string = plan.id

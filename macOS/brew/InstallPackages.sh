@@ -67,9 +67,6 @@ brew install azure-cli &&
         az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
     )
 
-brew tap azure/bicep https://github.com/azure/bicep
-brew install azure/bicep/bicep
-
 brew install --cask dotnet-sdk
 brew install terraform
 brew install pulumi

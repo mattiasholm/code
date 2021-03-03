@@ -1,23 +1,34 @@
-var prefix = resourceGroup().name
-var location = resourceGroup().location
-var tags = resourceGroup().tags
+targetScope = 'resourceGroup'
 
-var keyvaultName = '${prefix}-KeyVault01'
-var keyvaultFamily = 'A'
-var keyvaultSku = 'standard'
+param name string
+param location string
+param tags object
+param tenantId string
+param skuFamily string {
+  allowed: [
+    'A'
+  ]
+}
+param skuName string {
+  allowed: [
+    'standard'
+    'premium'
+  ]
+}
+param accessPolicies array
 
-resource keyvault 'Microsoft.KeyVault/vaults@2019-09-01' = {
-  name: keyvaultName
+resource kv 'Microsoft.KeyVault/vaults@2019-09-01' = {
+  name: name
   location: location
   tags: tags
   properties: {
-    tenantId: subscription().tenantId
+    tenantId: tenantId
     sku: {
-      family: keyvaultFamily
-      name: keyvaultSku
+      family: skuFamily
+      name: skuName
     }
-    accessPolicies: []
+    accessPolicies: accessPolicies
   }
 }
 
-output keyvaultUrl string = keyvault.properties.vaultUri
+output kvUrl string = kv.properties.vaultUri

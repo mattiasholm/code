@@ -8,7 +8,7 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 alias a='az'
-alias b='bicep'
+alias b='az bicep'
 alias c='curl'
 alias g='git'
 alias k='kubectl'
