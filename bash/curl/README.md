@@ -17,6 +17,12 @@ curl ipinfo.io
 curl ipinfo.io/<ip-address>
 ```
 
+## Curl request that shows HTTP status code and response headers:
+```shell
+curl example.com --include
+curl example.com -i
+```
+
 ## Curl request with custom Host header:
 ```shell
 curl --header "Host: example.com" https://example.azurewebsites.net/
