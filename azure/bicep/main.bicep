@@ -27,17 +27,29 @@ module planModule 'plan.bicep' = {
     }
 }
 
-module appModule 'app.bicep' = {
-    name: 'appModule'
+var apps = [
+    {
+        name: 'app-${prefix}-001'
+    }
+    {
+        name: 'app-${prefix}-002'
+    }
+    {
+        name: 'app-${prefix}-003'
+    }
+]
+
+module appModule 'app.bicep' = [for app in apps: {
+    name: 'appModule_${app.name}'
     scope: rg
     params: {
-        name: 'app-${prefix}-001'
+        name: app.name
         location: location
         tags: tags
         planId: planModule.outputs.planId
         httpsOnly: true
     }
-}
+}]
 
 module kvModule 'kv.bicep' = {
     name: 'kvModule'
@@ -83,7 +95,7 @@ module vnetModule 'vnet.bicep' = {
     }
 }
 
-output appUrl string = appModule.outputs.appUrl
+// output appUrl string = appModule.outputs.appUrl // FEL EFTER COPY-LOOP: Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression.
 output kvUrl string = kvModule.outputs.kvUrl
 output stBlobUrl string = stModule.outputs.stBlobUrl
 output stFileUrl string = stModule.outputs.stFileUrl
