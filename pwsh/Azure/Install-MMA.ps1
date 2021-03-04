@@ -8,7 +8,7 @@ $MMADownloadPath = 'C:\Temp'
 $MMADownloadFullPath = "$MMADownloadPath\$MMADownloadFileName"
 $ExtractedDirectoryName = $MMADownloadFileName.Replace('.exe', '')
 $ExtractedDirectoryFullPath = "$MMADownloadPath\$ExtractedDirectoryName"
-$ExtractedMsiFilename = 'Setup.exe'
+$ExtractedMsiFilename = 'MOMAgent.msi'
 $ExtractedMsiFullPath = "$ExtractedDirectoryFullPath\$ExtractedMsiFilename"
 $ArgumentList1 = "/Q /T:$ExtractedDirectoryFullPath /C"
 $ArgumentList2 = "/qn NOAPM=1 ADD_OPINSIGHTS_WORKSPACE=1 OPINSIGHTS_WORKSPACE_AZURE_CLOUD_TYPE=0 OPINSIGHTS_WORKSPACE_ID=`"$WorkspaceId`" OPINSIGHTS_WORKSPACE_KEY=`"$WorkspaceKey`" AcceptEndUserLicenseAgreement=1"
