@@ -71,6 +71,7 @@ brew install kubectx
 brew install lastpass-cli
 brew install p7zip
 brew install sox
+brew install --cask balenaetcher
 brew install --cask owasp-zap
 brew install --cask azure-data-studio
 brew install --cask microsoft-azure-storage-explorer
