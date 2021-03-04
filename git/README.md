@@ -7,7 +7,7 @@ https://git-scm.com/docs
 
 <br><br>
 
-## Check Git version:
+## Show Git version:
 ```shell
 git --version
 ```

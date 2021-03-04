@@ -46,17 +46,13 @@ brew install git &&
     chmod +x "$(git rev-parse --show-toplevel)/git/CloneRepos.sh" &&
     "$(git rev-parse --show-toplevel)/git/CloneRepos.sh"
 
+brew install gh
+
 brew install --cask visual-studio-code &&
     chmod +x "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh" &&
     "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh"
 
 brew install python3
-
-# brew install ffmpeg ### Don't think I use this anymore ###
-# pip3 install pydub ### Don't think I use this anymore ###
-# pip3 install soundfile ### Don't think I use this anymore ###
-# pip3 install numpy ### Don't think I use this anymore ###
-# pip3 install mssql-cli ### Don't think I use this anymore ###
 
 brew install --cask powershell &&
     pwsh "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"
@@ -70,14 +66,14 @@ brew install azure-cli &&
 brew install --cask dotnet-sdk
 brew install terraform
 brew install pulumi
-brew install kubernetes-cli
+brew install kubectl
+brew install kubectx
 brew install lastpass-cli
 brew install p7zip
 brew install sox
 brew install --cask owasp-zap
 brew install --cask azure-data-studio
 brew install --cask microsoft-azure-storage-explorer
-# brew install --cask docker ### Not supported on Apple Silicon ###
 brew install --cask google-chrome
 brew install --cask intune-company-portal
 brew install --cask microsoft-office

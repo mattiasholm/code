@@ -188,15 +188,15 @@ brew tap
 
 ## Tap a formula repository:
 ```shell
-brew tap <github-account>/<github-repo>
+brew tap <github-account>/<repo-name>
 ```
 
 ## Untap a formula respository:
 ```shell
-brew untap <github-account>/<github-repo>
+brew untap <github-account>/<repo-name>
 ```
 
 ## Create a new tap:
 ```shell
-brew new-tap <user>/<repo>
+brew tap-new <github-account>/<repo-name>
 ```
