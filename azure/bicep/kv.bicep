@@ -8,12 +8,14 @@ param skuFamily string {
   allowed: [
     'A'
   ]
+  default: 'A'
 }
 param skuName string {
   allowed: [
     'standard'
     'premium'
   ]
+  default: 'standard'
 }
 param accessPolicies array
 

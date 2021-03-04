@@ -4,7 +4,7 @@ param name string
 param location string
 param tags object
 param planId string
-param httpsOnly bool
+param httpsOnly bool = true
 
 resource app 'Microsoft.Web/sites@2020-06-01' = {
   name: name

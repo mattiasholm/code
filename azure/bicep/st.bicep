@@ -11,6 +11,7 @@ param kind string {
     'FileStorage'
     'BlockBlobStorage'
   ]
+  default: 'StorageV2'
 }
 param skuName string {
   allowed: [
@@ -23,15 +24,17 @@ param skuName string {
     'Standard_GZRS'
     'Standard_RAGZRS'
   ]
+  default: 'Standard_LRS'
 }
-param allowBlobPublicAccess bool
-param supportsHttpsTrafficOnly bool
+param allowBlobPublicAccess bool = false
+param supportsHttpsTrafficOnly bool = true
 param minimumTlsVersion string {
   allowed: [
     'TLS1_0'
     'TLS1_1'
     'TLS1_2'
   ]
+  default: 'TLS1_2'
 }
 
 resource st 'Microsoft.Storage/storageAccounts@2019-06-01' = {
