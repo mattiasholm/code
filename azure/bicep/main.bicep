@@ -7,6 +7,7 @@ var tags = {
     Environment: 'Test'
     Owner: 'mattias.holm@live.com'
 }
+var toggleVnet = true
 
 resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
     name: 'rg-${prefix}-001'
@@ -80,7 +81,7 @@ module stModule 'st.bicep' = {
     }
 }
 
-module vnetModule 'vnet.bicep' = {
+module vnetModule 'vnet.bicep' = if (toggleVnet) {
     name: 'vnetModule'
     scope: rg
     params: {

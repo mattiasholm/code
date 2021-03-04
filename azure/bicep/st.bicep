@@ -52,7 +52,6 @@ resource st 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   }
 }
 
-output stId string = st.id
 output stBlobUrl string = st.properties.primaryEndpoints.blob
 output stFileUrl string = st.properties.primaryEndpoints.file
 output stTableUrl string = st.properties.primaryEndpoints.table
