@@ -15,12 +15,18 @@ alias k='kubectl'
 alias p='pulumi'
 alias t='terraform'
 
+
+alias cx='chmod +x'
+alias .b='. ~/.bashrc'
+alias tcpping='tcping'
+alias azls='az account list --output table'
+alias azlog='az monitor activity-log list --correlation-id'
+
+
 alias cdg='cd $(git rev-parse --show-toplevel)'
 alias codeg='code $(git rev-parse --show-toplevel)'
 alias openg='open $(git rev-parse --show-toplevel)'
 
-alias azls='az account list --output table'
-alias azlog='az monitor activity-log list --correlation-id'
 alias gs='git status'
 alias gf='git fetch'
 alias gp='git pull'
@@ -50,9 +56,6 @@ alias gls='git ls-files'
 alias gclean='git clean -d --force'
 alias gamend='git commit --amend --no-edit'
 alias greset='git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
-
-alias cx='chmod +x'
-alias .b='. ~/.bashrc'
 
 alias ..='cd ..'
 alias ...='cd ../..'
