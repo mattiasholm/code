@@ -18,7 +18,7 @@ alias t='terraform'
 
 alias cx='chmod +x'
 alias .b='. ~/.bashrc'
-alias tcpping='tcping'
+
 alias azls='az account list --output table'
 alias azlog='az monitor activity-log list --correlation-id'
 
