@@ -31,6 +31,7 @@ password   required       pam_deny.so
 session    required       pam_permit.so" | sudo tee /etc/pam.d/sudo
 
 brew install tcping
+brew install fping
 brew install coreutils
 brew install grep
 brew install vim
