@@ -98,17 +98,43 @@ gh repo fork
 
 <br><br>
 
-## List all pull requests:
+## List open pull requests:
 ```shell
 gh pr list
 ```
 
-## View a specific pull request:
+## List open pull requests in a browser:
+```shell
+gh pr list --web
+gh pr list -w
+```
+
+## List closed pull requests:
+```shell
+gh pr list --state closed
+```
+
+<br><br>
+
+## View the most recent pull request:
 ```shell
 gh pr view
 ```
 
-## Create a new pull request from current branch into the default branch:
+## View the most recent pull request in a browswer:
+```shell
+gh pr view --web
+gh pr view -w
+```
+
+## View a specific pull request:
+```shell
+gh pr view <number>
+```
+
+<br><br>
+
+## Create a new pull request from the current branch into the default branch:
 ```shell
 gh pr create
 ```
