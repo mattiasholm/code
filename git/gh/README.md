@@ -30,11 +30,6 @@ gh auth login
 gh auth logout
 ```
 
-## Refresh stored authentication credentials:
-```shell
-gh auth refresh
-```
-
 ## Show authentication status:
 ```shell
 gh auth status
@@ -47,6 +42,12 @@ gh auth status
 gh repo view
 ```
 
+## Open the current repository in a browser:
+```shell
+gh repo view --web
+gh repo view -w
+```
+
 ## Show a specific repository:
 ```shell
 gh repo view <repo-name>
@@ -56,18 +57,6 @@ gh repo view <repo-name>
 ```shell
 gh repo view --branch <branch-name>
 gh repo view -b <branch-name>
-```
-
-## Open the current repository in a browser:
-```shell
-gh repo view --web
-gh repo view -w
-```
-
-## Open a specific branch of the current repository in a browser:
-```shell
-gh repo view --branch <branch-name> --web
-gh repo view -b <branch-name> -w
 ```
 
 <br><br>
@@ -127,6 +116,11 @@ gh pr view --web
 gh pr view -w
 ```
 
+## View pull request for a specific branch:
+```shell
+gh pr view <branch-name>
+```
+
 ## View a specific pull request:
 ```shell
 gh pr view <number>
@@ -139,10 +133,7 @@ gh pr view <number>
 gh pr create
 ```
 
-## 
-```shell
-
-```
+<!-- FORTSÄTT MED FLER "gh pr create" exempel!
 
 ## 
 ```shell
@@ -163,10 +154,58 @@ gh pr create
 ```shell
 
 ```
+
+## 
+```shell
+
+```
+-->
 
 
 
 <!-- FORTSÄTT:
+
+Work with GitHub pull requests
+
+USAGE
+  gh pr <command> [flags]
+
+CORE COMMANDS
+  checkout:   Check out a pull request in git
+  checks:     Show CI status for a single pull request
+  close:      Close a pull request
+  comment:    Create a new pr comment
+  create:     Create a pull request
+  diff:       View changes in a pull request
+  edit:       Edit a pull request
+  list:       List and filter pull requests in this repository
+  merge:      Merge a pull request
+  ready:      Mark a pull request as ready for review
+  reopen:     Reopen a pull request
+  review:     Add a review to a pull request
+  status:     Show status of relevant pull requests
+  view:       View a pull request
+
+FLAGS
+  -R, --repo [HOST/]OWNER/REPO   Select another repository using the [HOST/]OWNER/REPO format
+
+INHERITED FLAGS
+  --help   Show help for command
+
+ARGUMENTS
+  A pull request can be supplied as argument in any of the following formats:
+  - by number, e.g. "123";
+  - by URL, e.g. "https://github.com/OWNER/REPO/pull/123"; or
+  - by the name of its head branch, e.g. "patch-1" or "OWNER:patch-1".
+
+EXAMPLES
+  $ gh pr checkout 353
+  $ gh pr create --fill
+  $ gh pr view --web
+
+LEARN MORE
+  Use 'gh <command> <subcommand> --help' for more information about a command.
+  Read the manual at https://cli.github.com/manual
 
 
 
