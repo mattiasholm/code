@@ -116,12 +116,12 @@ gh pr list --state closed
 
 <br><br>
 
-## View the most recent pull request:
+## View pull request for the current branch:
 ```shell
 gh pr view
 ```
 
-## View the most recent pull request in a browswer:
+## View pull request for the current branch in a browswer:
 ```shell
 gh pr view --web
 gh pr view -w
