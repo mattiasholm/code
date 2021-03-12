@@ -70,21 +70,77 @@ gh repo view --branch <branch-name> --web
 gh repo view -b <branch-name> -w
 ```
 
+<br><br>
+
+## Clone a specific repository from the current GitHub account:
+```shell
+gh repo clone <repo-name> [<path>]
+```
+
+## Clone a specific repository from an arbitrary GitHub account:
+```shell
+gh repo clone <github-account>/<repo-name> [<path>]
+```
+
+<br><br>
+
+## Create a new GitHub repository from working directory:
+```shell
+gh repo create
+```
+
+<br><br>
+
+## Fork the current repository to the current GitHub account:
+```shell
+gh repo fork
+```
+
+<br><br>
+
+## List pull requests:
+```shell
+gh pr list
+```
+
+## View a specific pull request:
+```shell
+gh pr view
+```
+
+## Create a pull request
+```shell
+gh pr create
+```
+
+## 
+```shell
+
+```
+
+## 
+```shell
+
+```
+
+## 
+```shell
+
+```
+
+## 
+```shell
+
+```
+
+## 
+```shell
+
+```
+
+
 
 <!-- FORTSÄTT:
-
-gh config set -h github.com git_protocol https 
-
-
-
-USAGE
-  gh repo <command> [flags]
-
-CORE COMMANDS
-  clone:      Clone a repository locally
-  create:     Create a new repository
-  fork:       Create a fork of a repository
-  view:       View a repository
 
 
 
@@ -104,4 +160,7 @@ ADDITIONAL COMMANDS
   help:       Help about any command
   secret:     Manage GitHub secrets
   ssh-key:    Manage SSH keys
+
+
+  gh config set -h github.com git_protocol https 
 -->
