@@ -98,7 +98,7 @@ gh repo fork
 
 <br><br>
 
-## List pull requests:
+## List all pull requests:
 ```shell
 gh pr list
 ```
@@ -108,7 +108,7 @@ gh pr list
 gh pr view
 ```
 
-## Create a pull request
+## Create a new pull request from current branch into the default branch:
 ```shell
 gh pr create
 ```
