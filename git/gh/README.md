@@ -100,7 +100,8 @@ gh pr list -w
 
 ## List closed pull requests:
 ```shell
-gh pr list --state closed
+gh pr list --state 'closed'
+gh pr list -s 'closed'
 ```
 
 <br><br>
@@ -133,22 +134,44 @@ gh pr view <number>
 gh pr create
 ```
 
-<!-- FORTSÄTT MED FLER "gh pr create" exempel!
+## Create a new pull request from a specific branch into another branch:
+```shell
+gh pr create --head <source-branch> --base <destination-branch>
+gh pr create -H <source-branch> -B <destination-branch>
+```
+
+<br><br>
+
+## Add a comment to the pull request for the current branch:
+```shell
+gh pr comment --body <comment>
+gh pr comment -b <comment>
+```
+
+<br><br>
+
+## Close a specific pull request:
+```shell
+gh pr close <number>
+```
+
+## Close a specific pull request and delete both local and remote branch:
+```shell
+gh pr close <number> --delete-branch
+gh pr close <number> -d
+```
+
+<br><br>
 
 ## 
 ```shell
 
 ```
 
-## 
-```shell
+<!--
 
-```
 
-## 
-```shell
 
-```
 
 ## 
 ```shell
