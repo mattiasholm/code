@@ -87,6 +87,13 @@ gh repo fork
 
 <br><br>
 
+## Show status of pull request in the current branch:
+```shell
+gh pr status
+```
+
+<br><br>
+
 ## List open pull requests:
 ```shell
 gh pr list
@@ -106,12 +113,12 @@ gh pr list -s 'closed'
 
 <br><br>
 
-## View pull request for the current branch:
+## View pull request in the current branch:
 ```shell
 gh pr view
 ```
 
-## View pull request for the current branch in a browswer:
+## View pull request in the current branch in a browswer:
 ```shell
 gh pr view --web
 gh pr view -w
@@ -142,10 +149,10 @@ gh pr create -H <source-branch> -B <destination-branch>
 
 <br><br>
 
-## Add a comment to the pull request for the current branch:
+## Add a comment to pull request in the current branch:
 ```shell
-gh pr comment --body <comment>
-gh pr comment -b <comment>
+gh pr comment --body '<comment>'
+gh pr comment -b '<comment>'
 ```
 
 <br><br>
@@ -163,14 +170,56 @@ gh pr close <number> -d
 
 <br><br>
 
-## 
+## Reopen a closed pull request:
 ```shell
+gh pr reopen <number>
+```
 
+<br><br>
+
+## Approve pull request in the current branch:
+```shell
+gh pr review --approve
+gh pr review -a
+```
+
+## Approve pull request in the current branch with a comment:
+```shell
+gh pr review --approve --body '<comment>'
+gh pr review -a -c '<comment>'
+```
+
+## Approve a specific pull request:
+```shell
+gh pr review <number> --approve
+gh pr review <number> -a
+```
+
+## Request changes in pull request in the current branch:
+```shell
+gh pr review --request-changes --body '<comment>'
+gh pr review -r -b '<comment>'
+```
+
+## Request changes in a specific pull request:
+```shell
+gh pr review <number> --request-changes --body '<comment>'
+gh pr review <number> -r -b '<comment>'
+```
+
+# Leave a review comment for pull request in the current branch:
+```shell
+gh pr review --comment --body '<comment>'
+gh pr review -c -b '<comment>'
 ```
 
 <!--
 
-
+gh pr checkout
+gh pr diff
+gh pr edit
+gh pr merge
+gh pr ready
 
 
 ## 
