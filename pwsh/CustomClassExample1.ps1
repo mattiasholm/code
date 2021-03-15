@@ -94,16 +94,19 @@ $chevy6::numberOfWheels
 function New-Car {
     param(
         [Parameter(Mandatory = $true)]
-        [ValidatePattern()
+        [ValidatePattern('^[A-Z]{3}-[0-9]{3}$')]
         [String]$vin,
+
         [Parameter(Mandatory = $false)]
         [ValidateSet(2, 4)]
         [int]$numberOfDoors,
+
         [Parameter(Mandatory = $true)]
         [ValidateSet('Chevy', 'Volvo', 'Audi')]
         [String]$model,
+        
         [Parameter(Mandatory = $true)]
-        [ValidateRange(1900, 2018)]
+        [ValidateRange(1900, 2021)]
         [int]$year
     )
     $car = [Car2]::new()

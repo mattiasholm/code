@@ -65,9 +65,11 @@ function New-Dog {
     param(
         [Parameter(Mandatory = $true)]
         [string]$Name,
+
         [Parameter(Mandatory = $false)]
         [ValidateSet('small', 'medium', 'large', $null)]
         [string]$size,
+        
         [Parameter(Mandatory = $false)]
         [string]$color
     )
