@@ -213,14 +213,34 @@ gh pr review --comment --body '<comment>'
 gh pr review -c -b '<comment>'
 ```
 
-<!--
+<br><br>
 
-gh pr checkout
+# Check out pull request in the current branch:
+```shell
+gh pr checkout <number>
+```
+
+<br><br>
+
+# View changes in pull request in the current branch:
+```shell
 gh pr diff
+```
+
+# View changes in a specific pull request:
+```shell
+gh pr diff <number>
+```
+
+<!-- FORTSÄTT:
+
 gh pr edit
 gh pr merge
 gh pr ready
 
+Ändra till mer logisk ordning när väl är klar med alla subcommands!
+
+
 
 ## 
 ```shell
@@ -231,72 +251,14 @@ gh pr ready
 ```shell
 
 ```
--->
+
+## 
+```shell
+
+```
 
 
 
-<!-- FORTSÄTT:
-
-Work with GitHub pull requests
-
-USAGE
-  gh pr <command> [flags]
-
-CORE COMMANDS
-  checkout:   Check out a pull request in git
-  checks:     Show CI status for a single pull request
-  close:      Close a pull request
-  comment:    Create a new pr comment
-  create:     Create a pull request
-  diff:       View changes in a pull request
-  edit:       Edit a pull request
-  list:       List and filter pull requests in this repository
-  merge:      Merge a pull request
-  ready:      Mark a pull request as ready for review
-  reopen:     Reopen a pull request
-  review:     Add a review to a pull request
-  status:     Show status of relevant pull requests
-  view:       View a pull request
-
-FLAGS
-  -R, --repo [HOST/]OWNER/REPO   Select another repository using the [HOST/]OWNER/REPO format
-
-INHERITED FLAGS
-  --help   Show help for command
-
-ARGUMENTS
-  A pull request can be supplied as argument in any of the following formats:
-  - by number, e.g. "123";
-  - by URL, e.g. "https://github.com/OWNER/REPO/pull/123"; or
-  - by the name of its head branch, e.g. "patch-1" or "OWNER:patch-1".
-
-EXAMPLES
-  $ gh pr checkout 353
-  $ gh pr create --fill
-  $ gh pr view --web
-
-LEARN MORE
-  Use 'gh <command> <subcommand> --help' for more information about a command.
-  Read the manual at https://cli.github.com/manual
-
-
-
-CORE COMMANDS
-  gist:       Manage gists
-  issue:      Manage issues
-  pr:         Manage pull requests
-  release:    Manage GitHub releases
-  repo:       Create, clone, fork, and view repositories
-
-ADDITIONAL COMMANDS
-  alias:      Create command shortcuts
-  api:        Make an authenticated GitHub API request
-  auth:       Login, logout, and refresh your authentication
-  completion: Generate shell completion scripts
-  config:     Manage configuration for gh
-  help:       Help about any command
-  secret:     Manage GitHub secrets
-  ssh-key:    Manage SSH keys
 
 
   gh config set -h github.com git_protocol https 
