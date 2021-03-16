@@ -10,7 +10,7 @@ mkdir -p "${outputDir}"
 
 if [[ -z "$(ls "${inputDir}")" ]]; then
     echo -e "\nInput directory does not contain any WAV files, exiting script\n"
-    exit
+    exit 1
 fi
 
 for file in ${inputDir}/*.wav; do
