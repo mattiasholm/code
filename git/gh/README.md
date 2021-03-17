@@ -290,23 +290,23 @@ gh pr merge --merge
 
 ## Merge a specific pull request:
 ```shell
-gh pr merge --merge
+gh pr merge <number> --merge
+```
+
+## Automatically merge pull request in the current branch after all requirements are met:
+```shell
+gh pr merge --merge --auto
+```
+
+## Automatically merge a specific pull request after all requirements are met:
+```shell
+gh pr merge <number> --merge --auto
 ```
 
 
 
-
-
-
-
-
-## Enable auto-merge 
-gh pr merge --auto --merge
-
-
 <!-- FORTSÄTT:
 
-gh pr ready
 gh pr merge
 
 Ändra till mer logisk ordning när väl är klar med alla subcommands!
@@ -330,7 +330,5 @@ gh pr merge
 
 
 
-
-
-  gh config set -h github.com git_protocol https 
+gh config set -h github.com git_protocol https 
 -->
