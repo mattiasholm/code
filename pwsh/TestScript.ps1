@@ -1,13 +1,15 @@
 #!/usr/bin/env pwsh
 
-$Path = "C:\Temp"
-
-if (!(Test-Path $Path)) {
-    $Path = Read-Host -Prompt "Enter path"
-}    
+param
+(
+    [Parameter(
+        Mandatory,
+        Position = 0,
+        HelpMessage = 'Enter path to check if exists.')]
+    [string] $Path
+)
 
 $Items = Get-ChildItem -Path $Path
-
 
 foreach ($Item in $Items) {
     Write-Host -NoNewline -ForegroundColor Green "$($Item.Name) "

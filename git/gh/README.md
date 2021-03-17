@@ -30,11 +30,6 @@ gh auth login
 gh auth logout
 ```
 
-## Refresh stored authentication credentials:
-```shell
-gh auth refresh
-```
-
 ## Show authentication status:
 ```shell
 gh auth status
@@ -45,6 +40,12 @@ gh auth status
 ## Show the current repository:
 ```shell
 gh repo view
+```
+
+## Open the current repository in a browser:
+```shell
+gh repo view --web
+gh repo view -w
 ```
 
 ## Show a specific repository:
@@ -58,50 +59,207 @@ gh repo view --branch <branch-name>
 gh repo view -b <branch-name>
 ```
 
-## Open the current repository in a browser:
+<br><br>
+
+## Clone a specific repository from the current GitHub account:
 ```shell
-gh repo view --web
-gh repo view -w
+gh repo clone <repo-name> [<path>]
 ```
 
-## Open a specific branch of the current repository in a browser:
+## Clone a specific repository from an arbitrary GitHub account:
 ```shell
-gh repo view --branch <branch-name> --web
-gh repo view -b <branch-name> -w
+gh repo clone <github-account>/<repo-name> [<path>]
 ```
 
+<br><br>
+
+## Create a new GitHub repository from working directory:
+```shell
+gh repo create
+```
+
+<br><br>
+
+## Fork the current repository to the current GitHub account:
+```shell
+gh repo fork
+```
+
+<br><br>
+
+## Show status of pull request in the current branch:
+```shell
+gh pr status
+```
+
+<br><br>
+
+## List open pull requests:
+```shell
+gh pr list
+```
+
+## List open pull requests in a browser:
+```shell
+gh pr list --web
+gh pr list -w
+```
+
+## List closed pull requests:
+```shell
+gh pr list --state 'closed'
+gh pr list -s 'closed'
+```
+
+<br><br>
+
+## View pull request in the current branch:
+```shell
+gh pr view
+```
+
+## View pull request in the current branch in a browswer:
+```shell
+gh pr view --web
+gh pr view -w
+```
+
+## View pull request for a specific branch:
+```shell
+gh pr view <branch-name>
+```
+
+## View a specific pull request:
+```shell
+gh pr view <number>
+```
+
+<br><br>
+
+## Create a new pull request from the current branch into the default branch:
+```shell
+gh pr create
+```
+
+## Create a new pull request from a specific branch into another branch:
+```shell
+gh pr create --head <source-branch> --base <destination-branch>
+gh pr create -H <source-branch> -B <destination-branch>
+```
+
+<br><br>
+
+## Add a comment to pull request in the current branch:
+```shell
+gh pr comment --body '<comment>'
+gh pr comment -b '<comment>'
+```
+
+<br><br>
+
+## Close a specific pull request:
+```shell
+gh pr close <number>
+```
+
+## Close a specific pull request and delete both local and remote branch:
+```shell
+gh pr close <number> --delete-branch
+gh pr close <number> -d
+```
+
+<br><br>
+
+## Reopen a closed pull request:
+```shell
+gh pr reopen <number>
+```
+
+<br><br>
+
+## Approve pull request in the current branch:
+```shell
+gh pr review --approve
+gh pr review -a
+```
+
+## Approve pull request in the current branch with a comment:
+```shell
+gh pr review --approve --body '<comment>'
+gh pr review -a -c '<comment>'
+```
+
+## Approve a specific pull request:
+```shell
+gh pr review <number> --approve
+gh pr review <number> -a
+```
+
+## Request changes in pull request in the current branch:
+```shell
+gh pr review --request-changes --body '<comment>'
+gh pr review -r -b '<comment>'
+```
+
+## Request changes in a specific pull request:
+```shell
+gh pr review <number> --request-changes --body '<comment>'
+gh pr review <number> -r -b '<comment>'
+```
+
+# Leave a review comment for pull request in the current branch:
+```shell
+gh pr review --comment --body '<comment>'
+gh pr review -c -b '<comment>'
+```
+
+<br><br>
+
+# Check out pull request in the current branch:
+```shell
+gh pr checkout <number>
+```
+
+<br><br>
+
+# View changes in pull request in the current branch:
+```shell
+gh pr diff
+```
+
+# View changes in a specific pull request:
+```shell
+gh pr diff <number>
+```
 
 <!-- FORTSÄTT:
 
-gh config set -h github.com git_protocol https 
+gh pr edit
+gh pr merge
+gh pr ready
+
+Ändra till mer logisk ordning när väl är klar med alla subcommands!
 
 
 
-USAGE
-  gh repo <command> [flags]
+## 
+```shell
 
-CORE COMMANDS
-  clone:      Clone a repository locally
-  create:     Create a new repository
-  fork:       Create a fork of a repository
-  view:       View a repository
+```
+
+## 
+```shell
+
+```
+
+## 
+```shell
+
+```
 
 
 
-CORE COMMANDS
-  gist:       Manage gists
-  issue:      Manage issues
-  pr:         Manage pull requests
-  release:    Manage GitHub releases
-  repo:       Create, clone, fork, and view repositories
 
-ADDITIONAL COMMANDS
-  alias:      Create command shortcuts
-  api:        Make an authenticated GitHub API request
-  auth:       Login, logout, and refresh your authentication
-  completion: Generate shell completion scripts
-  config:     Manage configuration for gh
-  help:       Help about any command
-  secret:     Manage GitHub secrets
-  ssh-key:    Manage SSH keys
+
+  gh config set -h github.com git_protocol https 
 -->

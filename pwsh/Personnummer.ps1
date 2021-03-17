@@ -1,10 +1,14 @@
 #!/usr/bin/env pwsh
 
-$Personnummer = Read-Host -Prompt 'Ange personnummer (YYMMDD-XXXX)'
-
-if ($Personnummer -notmatch '^[0-9]{6,8}-?[0-9]{4}$') {
-    Throw "Ogiltigt format: $Personnummer. Använd format YYMMDD-XXXX."
-}
+param
+(
+    [Parameter(
+        Mandatory,
+        Position = 0,
+        HelpMessage = 'Ange personnummer (YYMMDD-XXXX).')]
+    [ValidatePattern('^[0-9]{6,8}[-+]?[0-9]{4}$')]
+    [string] $Personnummer
+)
 
 $Kontrollsiffra = $Personnummer.Substring($Personnummer.Length - 2, 1)
 

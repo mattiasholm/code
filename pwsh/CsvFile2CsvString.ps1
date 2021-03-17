@@ -1,8 +1,11 @@
 #!/usr/bin/env pwsh
 
-$Path = Read-Host -Prompt "Enter path to a CSV file with a column named 'IpRange'"
+param
+(
+    [Parameter(Mandatory,HelpMessage='Enter the path to a CSV file with a column named "IpRange".')]$CsvPath
+)
 
-$CsvFile = Import-Csv -Path $Path
+$CsvFile = Import-Csv -Path $CsvPath
 $CsvString = $null
 
 foreach ($Row in $CsvFile) {

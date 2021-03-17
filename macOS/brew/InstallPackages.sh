@@ -45,6 +45,7 @@ brew install git &&
     git config --global user.name "${userName}" &&
     git config --global user.email "${userEmail}" &&
     git config --global credential.helper osxkeychain &&
+    git config --global init.defaultBranch main &&
     chmod +x "$(git rev-parse --show-toplevel)/git/CloneRepos.sh" &&
     "$(git rev-parse --show-toplevel)/git/CloneRepos.sh"
 

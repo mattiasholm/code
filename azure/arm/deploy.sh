@@ -29,4 +29,5 @@ az deployment group create \
     --resource-group "${rgName}" \
     --template-file "${templateFile}" \
     --parameters "@${parameterFile}" \
-    --mode "${deployMode}"
+    --mode "${deployMode}" \
+    --confirm-with-what-if

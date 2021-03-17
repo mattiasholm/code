@@ -81,6 +81,11 @@ git config --global user.name "<name>"
 git config --global user.email "<email>"
 ```
 
+## Configure default branch name for all new repositories:
+```shell
+git config --global init.defaultBranch <name>
+```
+
 ## Force case-sensitivity globally:
 ```shell
 git config --global --unset-all core.ignorecase &&
@@ -114,6 +119,11 @@ git config --global --edit
 ## Create a new repository in working directory:
 ```shell
 git init
+```
+
+## Create a new repository in a specific directory:
+```shell
+git init <name>
 ```
 
 ## Clone a remote repository to working directory:
@@ -809,7 +819,7 @@ git switch <branch-name>
 git checkout <branch-name | commit-id | tag-name>
 ```
 
-## Check out a specific file or directory from another branch, commit or tag (effectively discarding the versions in current branch):
+## Check out a specific file or directory from another branch, commit or tag (effectively discarding the versions in the current branch):
 ```shell
 git checkout <branch-name | commit-id | tag-name> <file-name | directory-name>
 ```
@@ -849,6 +859,16 @@ git branch -c <new-name>
 ```shell
 git branch --copy <branch-name> <new-name>
 git branch -c <branch-name> <new-name>
+```
+
+## Set the remote tracking information for the current branch:
+```shell
+git branch --set-upstream-to <remote-name>/<branch-name> <branch-name>
+```
+
+## Unset the remote tracking information for the current branch:
+```shell
+git branch --unset-upstream
 ```
 
 ## Delete a fully merged branch:

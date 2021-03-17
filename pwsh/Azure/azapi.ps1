@@ -1,9 +1,19 @@
 #!/usr/bin/env pwsh
 
 param(
-    [Parameter(Mandatory = $true, Position = 0)] [String] $ArmType,
-    [Parameter(Mandatory = $false, Position = 1)] [Int] $ResultSize = 3,
-    [Parameter(Mandatory = $false)] [Switch] $Clipboard
+    [Parameter(
+        Mandatory = $true,
+        Position = 0)]
+    [String] $ArmType,
+
+    [Parameter(
+        Mandatory = $false,
+        Position = 1)]
+    [Int] $ResultSize = 3,
+
+    [Parameter(
+        Mandatory = $false)]
+    [Switch] $Clipboard
 )
 
 $ProviderNameSpace = $ArmType.Split('/')[0]

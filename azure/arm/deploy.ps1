@@ -1,7 +1,10 @@
 #!/usr/bin/env pwsh
 
 param(
-    [Parameter(Mandatory = $true, Position = 0)] [String] $TemplateFile
+    [Parameter(
+        Mandatory,
+        Position = 0)]
+    [String] $TemplateFile
 )
 
 $ErrorActionPreference = "Stop"
