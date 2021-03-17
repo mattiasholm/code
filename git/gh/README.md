@@ -232,11 +232,82 @@ gh pr diff
 gh pr diff <number>
 ```
 
+<br><br>
+
+# Edit a specific pull request interactively:
+```shell
+gh pr edit <number>
+```
+
+# Add yourself as assignee to a specific pull request:
+```shell
+gh pr edit <number> --add-assignee @me
+```
+
+# Add a specific assignee to a specific pull request:
+```shell
+gh pr edit <number> --add-assignee <github-account>
+```
+
+# Add a specific reviewer to a specific pull request:
+```shell
+gh pr edit <number> --add-reviewer <github-account>
+```
+
+# Remove yourself as assignee from a specific pull request:
+```shell
+gh pr edit <number> --remove-assignee @me
+```
+
+# Remove a specific assignee from a specific pull request:
+```shell
+gh pr edit <number> --remove-assignee <github-account>
+```
+
+# Remove a specific reviewer from a specific pull request:
+```shell
+gh pr edit <number> --remove-reviewer <github-account>
+```
+
+<br><br>
+
+## Mark pull request in the current branch as ready for review:
+```shell
+gh pr ready
+```
+
+## Mark a specific pull request as ready for review:
+```shell
+gh pr ready <number>
+```
+
+<br><br>
+
+## Merge pull request in the current branch:
+```shell
+gh pr merge --merge
+```
+
+## Merge a specific pull request:
+```shell
+gh pr merge --merge
+```
+
+
+
+
+
+
+
+
+## Enable auto-merge 
+gh pr merge --auto --merge
+
+
 <!-- FORTSÄTT:
 
-gh pr edit
-gh pr merge
 gh pr ready
+gh pr merge
 
 Ändra till mer logisk ordning när väl är klar med alla subcommands!
 

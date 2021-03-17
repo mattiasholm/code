@@ -29,6 +29,11 @@ code .
 
 `Windows` Ctrl+K + M
 
+## Select color theme:
+`Mac` Cmd+K + Cmd+T
+
+`Windows` Ctrl+K + Ctrl+T
+
 ## Select current line, regardless of cursor position (simply repeat `L` to select multiple lines):
 `Mac` Cmd+L
 
