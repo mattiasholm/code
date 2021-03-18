@@ -33,6 +33,9 @@ resource plan 'Microsoft.Web/serverfarms@2020-06-01' = {
     name: skuName
     capacity: skuCapacity
   }
+  properties: {
+    reserved: kind == 'linux' ? true : false
+  }
 }
 
 output planId string = plan.id
