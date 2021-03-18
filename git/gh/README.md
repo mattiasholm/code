@@ -286,21 +286,73 @@ gh pr ready <number>
 ## Merge pull request in the current branch:
 ```shell
 gh pr merge --merge
+gh pr merge -m
 ```
 
 ## Merge a specific pull request:
 ```shell
 gh pr merge <number> --merge
+gh pr merge <number> -m
 ```
 
-## Automatically merge pull request in the current branch after all requirements are met:
+## Squash merge pull request in the current branch:
+```shell
+gh pr merge --squash
+gh pr merge -s
+```
+
+## Squash merge a specific pull request:
+```shell
+gh pr merge <number> --squash
+gh pr merge <number> -s
+```
+
+## Rebase pull request in the current branch:
+```shell
+gh pr merge --rebase
+gh pr merge -r
+```
+
+## Rebase a specific pull request:
+```shell
+gh pr merge <number> --rebase
+gh pr merge <number> -r
+```
+
+## Merge pull request in the current branch and delete both local and remote branch afterwards:
+```shell
+gh pr merge --merge --delete-branch
+gh pr merge --merge -d
+```
+
+## Merge a specific pull request and delete both local and remote branch afterwards:
+```shell
+gh pr merge <number> --merge --delete-branch
+gh pr merge <number> -m -d
+```
+
+## Enable auto-merge for pull request in the current branch:
 ```shell
 gh pr merge --merge --auto
+gh pr merge -m --auto
 ```
 
-## Automatically merge a specific pull request after all requirements are met:
+## Enable auto-merge for a specific pull request:
 ```shell
 gh pr merge <number> --merge --auto
+gh pr merge <number> -m --auto
+```
+
+## Disable auto-merge for pull request in the current branch:
+```shell
+gh pr merge --merge --disable-auto
+gh pr merge -m --disable-auto
+```
+
+## Disable auto-merge for a specific pull request:
+```shell
+gh pr merge <number> --merge --disable-auto
+gh pr merge <number> -m --disable-auto
 ```
 
 
