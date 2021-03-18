@@ -22,21 +22,20 @@ module planModule 'plan.bicep' = {
         name: 'plan-${prefix}-001'
         location: location
         tags: tags
-        kind: 'app'
+        kind: 'linux'
         skuName: 'F1'
-        skuCapacity: 0
+        skuCapacity: 1
     }
 }
 
 var apps = [
     {
         name: 'app-${prefix}-001'
+        dockerImageTag: 'latest'
     }
     {
         name: 'app-${prefix}-002'
-    }
-    {
-        name: 'app-${prefix}-003'
+        dockerImageTag: 'plain-text'
     }
 ]
 
@@ -48,6 +47,13 @@ module appModule 'app.bicep' = [for app in apps: {
         location: location
         tags: tags
         planId: planModule.outputs.planId
+        siteConfig: {
+            linuxFxVersion: 'DOCKER|nginxdemos/hello:${app.dockerImageTag}'
+            http20Enabled: true
+            minTlsVersion: '1.2'
+            ftpsState: 'FtpsOnly'
+        }
+        clientAffinityEnabled: false
         httpsOnly: true
     }
 }]

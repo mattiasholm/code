@@ -79,9 +79,11 @@ brew install --cask owasp-zap
 brew install --cask azure-data-studio
 brew install --cask microsoft-azure-storage-explorer
 brew install --cask google-chrome
+brew install --cask drawio
 brew install --cask intune-company-portal
 brew install --cask microsoft-office
 brew install --cask microsoft-teams
+brew install --cask zoom
 brew install --cask teamviewer
 brew install --cask watchguard-mobile-vpn-with-ssl
 brew install --cask avg-antivirus

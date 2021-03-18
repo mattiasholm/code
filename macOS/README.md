@@ -108,3 +108,15 @@ sudo scutil --set LocalHostName <hostname>
 
 sudo scutil --set ComputerName <hostname>
 ```
+
+<br><br>
+
+## Copy to clipboard:
+```shell
+<command> | pbcopy
+```
+
+## Paste from clipboard:
+```shell
+pbpaste
+```
