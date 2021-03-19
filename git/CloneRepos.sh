@@ -5,8 +5,8 @@ set -e +x
 function SetVariables() {
     path=~/repos
     urls=(
-        "https://github.com/mattiasholm/mattiasholm.git"
-        "https://github.com/mattiasholm/longdrink.git"
+        "https://github.com/mattiasholm/code.git"
+        "https://github.com/mattiasholm/drinks.git"
         "https://github.com/mattiasholm/lyrics.git"
     )
 }
