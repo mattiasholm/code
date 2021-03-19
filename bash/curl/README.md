@@ -43,7 +43,7 @@ curl --connect-to example.com:443:example.azurewebsites.net:443 https://example.
 
 ## Curl request that downloads a file to working directory:
 ```shell
-curl https://raw.githubusercontent.com/mattiasholm/mattiasholm/main/git/CloneRepos.sh --output CloneRepos.sh
+curl https://raw.githubusercontent.com/mattiasholm/code/main/git/CloneRepos.sh --output CloneRepos.sh
 ```
 
 <br><br>

@@ -10,7 +10,7 @@ function Get-RandomJsonFile {
         $Count = 1
     )
     $Arguments = @{
-        Path    = 'C:\Users\MattiasHolm\Documents\AzureRepos'
+        Path    = '~/repos'
         Recurse = $True
         Filter  = "*.json"
     }

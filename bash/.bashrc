@@ -162,7 +162,7 @@ function azapi() {
         return
     fi
 
-    scriptPath=~/repos/mattiasholm/pwsh/Azure/azapi.ps1
+    scriptPath=~/repos/code/pwsh/Azure/azapi.ps1
     chmod +x "$scriptPath"
     "$scriptPath" "$1" 1 -Clipboard
 }

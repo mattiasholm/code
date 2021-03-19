@@ -2,7 +2,7 @@
 
 set -e +x
 
-path=~/repos/mattiasholm
+path=~/repos/code
 cd ${path}
 
 userName="Mattias Holm"
