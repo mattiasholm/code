@@ -8,6 +8,7 @@ function SetVariables() {
         "https://github.com/mattiasholm/code.git"
         "https://github.com/mattiasholm/drinks.git"
         "https://github.com/mattiasholm/lyrics.git"
+        "https://github.com/mattiasholm/tunes.git"
     )
 }
 
