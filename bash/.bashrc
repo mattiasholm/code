@@ -171,15 +171,15 @@ function midi() {
         return
     fi
 
-    if [[ -z "$1" ]]; then
+    if [[ -z "$2" ]]; then
         transposeSteps="0"
     else
-        transposeSteps="$1"
+        transposeSteps="$2"
     fi
 
     midiFile="$(echo "$1" | sed 's/.abc$/.mid/')"
     abc2midi "$1" -o "${midiFile}"
-    timidity -A100 -K{$transposeSteps} -f "${midiFile}"
+    timidity -A100 -K"${transposeSteps}" -f "${midiFile}"
     rm "${midiFile}"
 }
 
