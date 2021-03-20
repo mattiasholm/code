@@ -25,6 +25,7 @@ exts=(
     "ms-azuretools.vscode-bicep"
     "ms-dotnettools.vscode-dotnet-runtime"
     "ms-toolsai.jupyter"
+    "softaware.abc-music"
 )
 
 for ext in ${exts[@]}; do
