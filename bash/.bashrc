@@ -15,13 +15,11 @@ alias k='kubectl'
 alias p='pulumi'
 alias t='terraform'
 
-
 alias cx='chmod +x'
 alias .b='. ~/.bashrc'
 
 alias azls='az account list --output table'
 alias azlog='az monitor activity-log list --correlation-id'
-
 
 alias cdg='cd $(git rev-parse --show-toplevel)'
 alias codeg='code $(git rev-parse --show-toplevel)'
@@ -163,8 +161,26 @@ function azapi() {
     fi
 
     scriptPath=~/repos/code/pwsh/Azure/azapi.ps1
-    chmod +x "$scriptPath"
-    "$scriptPath" "$1" 1 -Clipboard
+    chmod +x "${scriptPath}"
+    "${scriptPath}" "$1" 1 -Clipboard
+}
+
+function midi() {
+    if [[ "$#" == 0 ]]; then
+        echo -e "usage: midi <file> [<transpose-steps>]"
+        return
+    fi
+
+    if [[ -z "$1" ]]; then
+        transposeSteps="0"
+    else
+        transposeSteps="$1"
+    fi
+
+    midiFile="$(echo "$1" | sed 's/.abc$/.mid/')"
+    abc2midi "$1" -o "${midiFile}"
+    timidity -A100 -K{$transposeSteps} -f "${midiFile}"
+    rm "${midiFile}"
 }
 
 export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
