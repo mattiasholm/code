@@ -177,7 +177,7 @@ function midi() {
         transposeSteps="$2"
     fi
 
-    midiFile="$(echo "$1" | sed 's/.abc$/.mid/')"
+    midiFile="$(echo ".$1" | sed 's/.abc$/.mid/')"
     abc2midi "$1" -o "${midiFile}"
     timidity -A100 -K"${transposeSteps}" -f "${midiFile}"
     rm "${midiFile}"
