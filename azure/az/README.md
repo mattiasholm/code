@@ -118,3 +118,8 @@ az aks get-credentials --name <cluster-name> --resource-group <rg-name>
 
 az aks get-credentials -n <cluster-name> -g <rg-name>
 ```
+
+## Create Azure AD service principal:
+```shell
+az ad sp create-for-rbac --name <name> --years <years> --role <role> --scopes <scope>
+```
