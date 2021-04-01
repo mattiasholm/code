@@ -37,6 +37,35 @@ gh auth status
 
 <br><br>
 
+## Show currently configured git protocol:
+```shell
+gh config get git_protocol
+```
+
+## Show currently configured text editor:
+```shell
+gh config get editor
+```
+
+<br><br>
+
+## Configure git protocol:
+```shell
+gh config set git_protocol <protocol>
+```
+
+## Configure text editor:
+```shell
+gh config set editor <editor>
+```
+
+<br><br>
+
+## List all repositories in the current GitHub account:
+```shell
+gh repo list
+```
+
 ## Show the current repository:
 ```shell
 gh repo view
@@ -113,23 +142,23 @@ gh pr list -s 'closed'
 
 <br><br>
 
-## View pull request in the current branch:
+## Show pull request in the current branch:
 ```shell
 gh pr view
 ```
 
-## View pull request in the current branch in a browswer:
+## Show pull request in the current branch in a browswer:
 ```shell
 gh pr view --web
 gh pr view -w
 ```
 
-## View pull request for a specific branch:
+## Show pull request for a specific branch:
 ```shell
 gh pr view <branch-name>
 ```
 
-## View a specific pull request:
+## Show a specific pull request:
 ```shell
 gh pr view <number>
 ```
@@ -183,16 +212,16 @@ gh pr review --approve
 gh pr review -a
 ```
 
-## Approve pull request in the current branch with a comment:
-```shell
-gh pr review --approve --body '<comment>'
-gh pr review -a -c '<comment>'
-```
-
 ## Approve a specific pull request:
 ```shell
 gh pr review <number> --approve
 gh pr review <number> -a
+```
+
+## Approve pull request in the current branch with a comment:
+```shell
+gh pr review --approve --body '<comment>'
+gh pr review -a -c '<comment>'
 ```
 
 ## Request changes in pull request in the current branch:
@@ -201,13 +230,7 @@ gh pr review --request-changes --body '<comment>'
 gh pr review -r -b '<comment>'
 ```
 
-## Request changes in a specific pull request:
-```shell
-gh pr review <number> --request-changes --body '<comment>'
-gh pr review <number> -r -b '<comment>'
-```
-
-# Leave a review comment for pull request in the current branch:
+## Leave a review comment for pull request in the current branch:
 ```shell
 gh pr review --comment --body '<comment>'
 gh pr review -c -b '<comment>'
@@ -215,58 +238,63 @@ gh pr review -c -b '<comment>'
 
 <br><br>
 
-# Check out pull request in the current branch:
+## Check out pull request in the current branch:
 ```shell
 gh pr checkout <number>
 ```
 
 <br><br>
 
-# View changes in pull request in the current branch:
+## Show changes in pull request in the current branch:
 ```shell
 gh pr diff
 ```
 
-# View changes in a specific pull request:
+## Show changes in a specific pull request:
 ```shell
 gh pr diff <number>
 ```
 
 <br><br>
 
-# Edit a specific pull request interactively:
+## Edit pull request in the current branch interactively:
+```shell
+gh pr edit
+```
+
+## Edit a specific pull request interactively:
 ```shell
 gh pr edit <number>
 ```
 
-# Add yourself as assignee to a specific pull request:
+## Add yourself as assignee to pull request in the current branch:
 ```shell
-gh pr edit <number> --add-assignee @me
+gh pr edit --add-assignee @me
 ```
 
-# Add a specific assignee to a specific pull request:
+## Add a specific assignee to pull request in the current branch:
 ```shell
-gh pr edit <number> --add-assignee <github-account>
+gh pr edit --add-assignee <github-account>
 ```
 
-# Add a specific reviewer to a specific pull request:
+## Add a specific reviewer to pull request in the current branch:
 ```shell
-gh pr edit <number> --add-reviewer <github-account>
+gh pr edit --add-reviewer <github-account>
 ```
 
-# Remove yourself as assignee from a specific pull request:
+## Remove yourself as assignee from pull request in the current branch:
 ```shell
-gh pr edit <number> --remove-assignee @me
+gh pr edit --remove-assignee @me
 ```
 
-# Remove a specific assignee from a specific pull request:
+## Remove a specific assignee from pull request in the current branch:
 ```shell
-gh pr edit <number> --remove-assignee <github-account>
+gh pr edit --remove-assignee <github-account>
 ```
 
-# Remove a specific reviewer from a specific pull request:
+## Remove a specific reviewer from pull request in the current branch:
 ```shell
-gh pr edit <number> --remove-reviewer <github-account>
+gh pr edit --remove-reviewer <github-account>
 ```
 
 <br><br>
@@ -301,34 +329,16 @@ gh pr merge --squash
 gh pr merge -s
 ```
 
-## Squash merge a specific pull request:
-```shell
-gh pr merge <number> --squash
-gh pr merge <number> -s
-```
-
 ## Rebase pull request in the current branch:
 ```shell
 gh pr merge --rebase
 gh pr merge -r
 ```
 
-## Rebase a specific pull request:
-```shell
-gh pr merge <number> --rebase
-gh pr merge <number> -r
-```
-
 ## Merge pull request in the current branch and delete both local and remote branch afterwards:
 ```shell
 gh pr merge --merge --delete-branch
-gh pr merge --merge -d
-```
-
-## Merge a specific pull request and delete both local and remote branch afterwards:
-```shell
-gh pr merge <number> --merge --delete-branch
-gh pr merge <number> -m -d
+gh pr merge -m -d
 ```
 
 ## Enable auto-merge for pull request in the current branch:
@@ -337,50 +347,8 @@ gh pr merge --merge --auto
 gh pr merge -m --auto
 ```
 
-## Enable auto-merge for a specific pull request:
-```shell
-gh pr merge <number> --merge --auto
-gh pr merge <number> -m --auto
-```
-
 ## Disable auto-merge for pull request in the current branch:
 ```shell
 gh pr merge --merge --disable-auto
 gh pr merge -m --disable-auto
 ```
-
-## Disable auto-merge for a specific pull request:
-```shell
-gh pr merge <number> --merge --disable-auto
-gh pr merge <number> -m --disable-auto
-```
-
-
-
-<!-- FORTSÄTT:
-
-gh pr merge
-
-Ändra till mer logisk ordning när väl är klar med alla subcommands!
-
-
-
-## 
-```shell
-
-```
-
-## 
-```shell
-
-```
-
-## 
-```shell
-
-```
-
-
-
-gh config set -h github.com git_protocol https 
--->
