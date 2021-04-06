@@ -12,6 +12,7 @@ alias b='az bicep'
 alias c='curl'
 alias g='git'
 alias k='kubectl'
+alias m='midi'
 alias p='pulumi'
 alias t='terraform'
 

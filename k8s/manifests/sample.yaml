@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: sample-aks-app
+  name: sample-aks-app
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: sample-aks
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: sample-aks
+    spec:
+      containers:
+        - image: <imageinACR>
+          name: sampleapp
+          imagePullPolicy: Always
+          resources: {}
+          ports:
+            - containerPort: 80
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-aks-app
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+  selector:
+    app: sample-aks
