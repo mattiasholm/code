@@ -10,4 +10,5 @@ templateFile="main.bicep"
 az login --service-principal --username "${appId}" --password "${password}" --tenant "${tenant}" &&
     az account set --subscription "${subscriptionId}"
 
-az deployment sub create --location "${location}" --template-file "${templateFile}" --confirm-with-what-if
+az deployment sub what-if --location "${location}" --template-file "${templateFile}"
+az deployment sub create --location "${location}" --template-file "${templateFile}"
