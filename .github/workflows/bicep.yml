@@ -1,0 +1,18 @@
+name: Azure Bicep
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run deploy script
+        run: |
+          cd ./azure/bicep
+          ./deploy.sh
