@@ -12,3 +12,8 @@ templateFile="main.bicep"
 echo "${subscriptionId}"
 echo "${location}"
 echo "${templateFile}"
+
+# appId
+# password
+
+SP_APPID

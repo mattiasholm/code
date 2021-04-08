@@ -12,12 +12,17 @@ on:
 
 jobs:
   deploy:
+    name: Deploy Bicep templates
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out repository
+        uses: actions/checkout@v2
 
       - name: Run deploy script
         run: |
           cd ./azure/bicep
           ./deploy.sh
+        env:
+          appId: ${{ secrets.appId }}
+          password: ${{ secrets.password }}
