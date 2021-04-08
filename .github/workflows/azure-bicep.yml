@@ -22,7 +22,7 @@ jobs:
       - name: Run deploy script
         run: |
           cd ./azure/bicep
-          ./deploy.sh
+          ./deploy.sh --pipeline
         env:
           appId: ${{ secrets.appId }}
           password: ${{ secrets.password }}
