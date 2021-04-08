@@ -1,3 +1,5 @@
+[![Azure Bicep](https://github.com/mattiasholm/code/actions/workflows/bicep.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/bicep.yml)
+
 # Cheat Sheet - Bicep CLI
 
 <br>
