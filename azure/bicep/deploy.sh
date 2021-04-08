@@ -7,13 +7,7 @@ location="WestEurope"
 templateFile="main.bicep"
 
 # az login
-# az account set --subscription "${subscriptionId}"
-# az deployment sub create --location "${location}" --template-file "${templateFile}" --confirm-with-what-if
-echo "${subscriptionId}"
-echo "${location}"
-echo "${templateFile}"
+az login --service-principal --username "${appId}" --password "${password}" --tenant "${tenant}" &&
+    az account set --subscription "${subscriptionId}"
 
-# appId
-# password
-
-SP_APPID
+az deployment sub create --location "${location}" --template-file "${templateFile}" --confirm-with-what-if

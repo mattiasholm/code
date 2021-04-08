@@ -26,3 +26,4 @@ jobs:
         env:
           appId: ${{ secrets.appId }}
           password: ${{ secrets.password }}
+          tenant: ${{ secrets.tenant }}
