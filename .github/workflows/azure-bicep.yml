@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "azure/bicep/**"
+      - azure/bicep/**
       - "!**.md"
 
   workflow_dispatch:
