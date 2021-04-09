@@ -16,3 +16,4 @@ fi
 
 az deployment sub what-if --location "${location}" --template-file "${templateFile}" &&
     az deployment sub create --location "${location}" --template-file "${templateFile}"
+# Test
