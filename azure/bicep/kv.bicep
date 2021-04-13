@@ -4,19 +4,15 @@ param name string
 param location string
 param tags object
 param tenantId string
-param skuFamily string {
-  allowed: [
-    'A'
-  ]
-  default: 'A'
-}
-param skuName string {
-  allowed: [
-    'standard'
-    'premium'
-  ]
-  default: 'standard'
-}
+@allowed([
+  'A'
+])
+param skuFamily string = 'A'
+@allowed([
+  'standard'
+  'premium'
+])
+param skuName string = 'standard'
 param accessPolicies array
 
 resource kv 'Microsoft.KeyVault/vaults@2019-09-01' = {

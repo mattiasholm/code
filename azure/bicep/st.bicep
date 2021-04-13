@@ -3,39 +3,33 @@ targetScope = 'resourceGroup'
 param name string
 param location string
 param tags object
-param kind string {
-  allowed: [
-    'Storage'
-    'StorageV2'
-    'BlobStorage'
-    'FileStorage'
-    'BlockBlobStorage'
-  ]
-  default: 'StorageV2'
-}
-param skuName string {
-  allowed: [
-    'Standard_LRS'
-    'Standard_GRS'
-    'Standard_RAGRS'
-    'Standard_ZRS'
-    'Premium_LRS'
-    'Premium_ZRS'
-    'Standard_GZRS'
-    'Standard_RAGZRS'
-  ]
-  default: 'Standard_LRS'
-}
+@allowed([
+  'Storage'
+  'StorageV2'
+  'BlobStorage'
+  'FileStorage'
+  'BlockBlobStorage'
+])
+param kind string = 'StorageV2'
+@allowed([
+  'Standard_LRS'
+  'Standard_GRS'
+  'Standard_RAGRS'
+  'Standard_ZRS'
+  'Premium_LRS'
+  'Premium_ZRS'
+  'Standard_GZRS'
+  'Standard_RAGZRS'
+])
+param skuName string = 'Standard_LRS'
 param allowBlobPublicAccess bool = false
 param supportsHttpsTrafficOnly bool = true
-param minimumTlsVersion string {
-  allowed: [
-    'TLS1_0'
-    'TLS1_1'
-    'TLS1_2'
-  ]
-  default: 'TLS1_2'
-}
+@allowed([
+  'TLS1_0'
+  'TLS1_1'
+  'TLS1_2'
+])
+param minimumTlsVersion string = 'TLS1_2'
 
 resource st 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   name: name
