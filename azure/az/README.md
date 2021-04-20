@@ -63,17 +63,17 @@ az account set --subscription <subscription-id>
 
 ## Validate a specific ARM template:
 ```shell
-az deployment group validate --resource-group <rg-name> --template-file <file-name>
+az deployment group validate --resource-group <rg-name> --template-file <filename>
 ```
 
 ## Run a what-if operation that compares a specific ARM template to the actual current state in Azure:
 ```shell
-az deployment group what-if --resource-group <rg-name> --template-file <file-name>
+az deployment group what-if --resource-group <rg-name> --template-file <filename>
 ```
 
 ## Deploy a specific ARM template to Azure:
 ```shell
-az deployment group create --resource-group <rg-name> --template-file <file-name>
+az deployment group create --resource-group <rg-name> --template-file <filename>
 ```
 
 <br><br>

@@ -53,41 +53,41 @@ for file in *.wav; do sox "${file}" "norm_${file}" norm -0.1; done
 
 ## Show informtion about a file:
 ```shell
-sox --info <file-name>
-sox --i <file-name>
+sox --info <filename>
+sox --i <filename>
 ```
 
 ## Get number of channels:
 ```shell
-soxi -c <file-name>
+soxi -c <filename>
 
 for file in *.wav; do soxi -c "${file}"; done
 ```
 
 ## Get bit depth:
 ```shell
-soxi -b <file-name>
+soxi -b <filename>
 
 for file in *.wav; do soxi -b "${file}"; done
 ```
 
 ## Get sample rate:
 ```shell
-soxi -r <file-name>
+soxi -r <filename>
 
 for file in *.wav; do soxi -r "${file}"; done
 ```
 
 ## Get duration:
 ```shell
-soxi -d <file-name>
+soxi -d <filename>
 
 for file in *.wav; do soxi -d "${file}"; done
 ```
 
 ## Get audio encoding:
 ```shell
-soxi -e <file-name>
+soxi -e <filename>
 
 for file in *.wav; do soxi -e "${file}"; done
 ```

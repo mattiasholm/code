@@ -340,22 +340,22 @@ git stage -A
 
 ## Stage only a specific file to index (branch-specific staging area):
 ```shell
-git add <file-name>
-git stage <file-name>
+git add <filename>
+git stage <filename>
 ```
 
 <br><br>
 
 ## Remove a file from working tree and index (branch-specific staging area):
 ```shell
-git rm <file-name>
+git rm <filename>
 ```
 
 <br><br>
 
 ## Rename/move a file in working tree and index (branch-specific staging area):
 ```shell
-git mv <file-name> <new-name | destination-path>
+git mv <filename> <new-name | destination-path>
 ```
 
 <br><br>
@@ -648,7 +648,7 @@ git log --author "<author-name>"
 
 ## Show commit history for a specific file:
 ```shell
-git log -- <file-name>
+git log -- <filename>
 ```
 
 ## Show commit history, include only commits with a message that match a specific pattern:
@@ -763,7 +763,7 @@ git show-ref --heads
 
 ## Show author and commit ID for each line of a file:
 ```shell
-git blame <file-name>
+git blame <filename>
 ```
 
 <br><br>
@@ -821,7 +821,7 @@ git checkout <branch-name | commit-id | tag-name>
 
 ## Check out a specific file or directory from another branch, commit or tag (effectively discarding the versions in the current branch):
 ```shell
-git checkout <branch-name | commit-id | tag-name> <file-name | directory-name>
+git checkout <branch-name | commit-id | tag-name> <filename | directory>
 ```
 
 ## Switch back to the previously checked out branch or commit:
@@ -914,8 +914,8 @@ git commit --amend --no-edit --reset-author
 
 ## Discard changes to a specific file in working tree (will not touch staging area):
 ```shell
-git restore <file-name>
-git checkout <file-name>
+git restore <filename>
+git checkout <filename>
 ```
 
 ## Discard changes to all tracked files in working tree (will not touch staging area):
@@ -926,9 +926,9 @@ git checkout .
 
 ## Unstage a specific file in index (branch-specific staging area):
 ```shell
-git restore <file-name> --staged
-git restore <file-name> -S
-git reset <file-name>
+git restore <filename> --staged
+git restore <filename> -S
+git reset <filename>
 ```
 
 ## Unstage all files in index (branch-specific staging area):
@@ -1023,7 +1023,7 @@ git diff origin/<branch-name>
 
 ## Compare a specific directory or file in working directory to current `HEAD`:
 ```shell
-git diff <directory-name | file-name>
+git diff <directory | filename>
 ```
 
 ## Compare all files in working directory to another branch, commit or tag:
@@ -1033,7 +1033,7 @@ git diff <branch-name | commit-id | tag-name>
 
 ## Compare a specific directory or file in working directory to another branch, commit or tag:
 ```shell
-git diff <branch-name | commit-id | tag-name> <directory-name | file-name>
+git diff <branch-name | commit-id | tag-name> <directory | filename>
 ```
 
 ## Compare all files in a specific branch, commit or tag to another branch, commit or tag:
@@ -1043,7 +1043,7 @@ git diff <branch-name | commit-id | tag-name> <branch-name | commit-id | tag-nam
 
 ## Compare a specific directory or file in a specific branch, commit or tag to another branch, commit or tag:
 ```shell
-git diff <branch-name | commit-id | tag-name> <branch-name | commit-id | tag-name> <directory-name | file-name>
+git diff <branch-name | commit-id | tag-name> <branch-name | commit-id | tag-name> <directory | filename>
 ```
 
 ## Compare files added to index:
@@ -1146,7 +1146,7 @@ git revert <merge-commit-id> -m 2
 
 ## Patch a specific file or directory in currently checked out branch, by interactively selecting what hunks of changes to accept or reject from another branch, commit or tag (selected changes will be staged automatically, but need to be committed manually):
 ```shell
-git checkout --patch <branch-name | commit-id | tag-name> <file-name | directory-name>
+git checkout --patch <branch-name | commit-id | tag-name> <filename | directory>
 ```
 
 ## Patch all files and directories in currently checked out branch, by interactively selecting what hunks of changes to accept or reject from another branch, commit or tag (selected changes will be staged automatically, but need to be committed manually):

@@ -84,7 +84,7 @@ dig <domain1> <domain2>
 
 ## Query multiple domains from file:
 ```shell
-dig -f <file-name>
+dig -f <filename>
 ```
 
 ## Trace DNS lookup path:

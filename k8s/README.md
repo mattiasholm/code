@@ -46,14 +46,14 @@ kubectl cluster-info
 
 ## Apply a Kubernetes manifest:
 ```shell
-kubectl apply --filename <file-name>
-kubectl apply -f <file-name>
+kubectl apply --filename <filename>
+kubectl apply -f <filename>
 ```
 
 ## Delete a Kubernetes manifest:
 ```shell
-kubectl delete --filename <file-name>
-kubectl delete -f <file-name>
+kubectl delete --filename <filename>
+kubectl delete -f <filename>
 ```
 
 <br><br>

@@ -56,7 +56,7 @@ open .
 
 ## Open a specific file from Terminal:
 ```shell
-open <file-name>
+open <filename>
 ```
 
 <br><br>

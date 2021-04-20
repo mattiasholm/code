@@ -66,6 +66,23 @@ gh config set editor <editor>
 gh repo list
 ```
 
+## List all repositories in a specific GitHub account:
+```shell
+gh repo list <github-account>
+```
+
+## List private repositories in the current GitHub account:
+```shell
+gh repo list --private
+```
+
+## List public repositories in the current GitHub account:
+```shell
+gh repo list --public
+```
+
+<br><br>
+
 ## Show the current repository:
 ```shell
 gh repo view
@@ -95,7 +112,7 @@ gh repo view -b <branch-name>
 gh repo clone <repo-name> [<path>]
 ```
 
-## Clone a specific repository from an arbitrary GitHub account:
+## Clone a specific repository from a specific GitHub account:
 ```shell
 gh repo clone <github-account>/<repo-name> [<path>]
 ```
@@ -351,4 +368,111 @@ gh pr merge -m --auto
 ```shell
 gh pr merge --merge --disable-auto
 gh pr merge -m --disable-auto
+```
+
+<br><br>
+
+## List enabled GitHub Actions workflows in the current repository:
+```shell
+gh workflow list
+```
+
+## List enabled GitHub Actions workflows in a specific repository:
+```shell
+gh workflow list --repo <github-account>/<repo-name>
+gh workflow list -R <github-account>/<repo-name>
+```
+
+## List all GitHub Actions workflows in the current repository:
+```shell
+gh workflow list --all
+gh workflow list -a
+```
+
+<br><br>
+
+## Show a specific GitHub Actions workflow:
+```shell
+gh workflow view <id | name | filename>
+```
+
+## Show a specific GitHub Actions workflow in YAML:
+```shell
+gh workflow view <id | name | filename> --yaml
+gh workflow view <id | name | filename> -y
+```
+
+## Show a specific GitHub Actions workflow in a browser:
+```shell
+gh workflow view <id | name | filename> --web
+gh workflow view <id | name | filename> -w
+```
+
+<br><br>
+
+## Enable a specific GitHub Actions workflow:
+```shell
+gh workflow enable <id | name | filename>
+```
+
+## Disable a specific GitHub Actions workflow:
+```shell
+gh workflow disable <id | name | filename>
+```
+
+<br><br>
+
+## Run a specific GitHub Actions workflow:
+```shell
+gh workflow run <id | name | filename>
+```
+
+## Run a specific GitHub Actions workflow in a specific branch or tag:
+```shell
+gh workflow run <id | name | filename> --ref <branch-name | tag-name>
+gh workflow run <id | name | filename> -r <branch-name | tag-name>
+```
+
+<br><br>
+
+## List runs for all GitHub Actions workflows in the current repository:
+```shell
+gh run list
+```
+
+## List runs for all GitHub Actions workflows in a specific repository:
+```shell
+gh run list --repo <github-account>/<repo-name>
+gh run list -R <github-account>/<repo-name>
+```
+
+## List runs for a specific GitHub Actions workflow:
+```shell
+gh run list --workflow <id | name | filename>
+gh run list -w <id | name | filename>
+```
+
+<br><br>
+
+## Show a specific GitHub Actions run:
+```shell
+gh run view <run-id>
+```
+
+## Show a specific GitHub Actions run in a browser:
+```shell
+gh run view <run-id> --web
+gh run view <run-id> -w
+```
+
+<br><br>
+
+## Rerun a failed GitHub Actions run:
+```shell
+gh run rerun <run-id>
+```
+
+## Watch an in-progress GitHub Actions run:
+```shell
+gh run watch <run-id>
 ```

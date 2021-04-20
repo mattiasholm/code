@@ -11,19 +11,19 @@
 
 ## Add file/directory to an archive or create a new one:
 ```shell
-7z a <archive-name> <file-name | directory-name>
+7z a <archive-name> <filename | directory>
 ```
 
 ## Add file/directory to a password-protected archive or create a new one:
 ```shell
-7z a <archive-name> <file-name | directory-name> -p
+7z a <archive-name> <filename | directory> -p
 ```
 
 <br><br>
 
 ## Update existing files in the archive or add new ones:
 ```shell
-7z u <archive-name> <file-name | directory-name>
+7z u <archive-name> <filename | directory>
 ```
 
 <br><br>
@@ -42,14 +42,14 @@
 
 ## Extract all files/directories from an archive to a new directory:
 ```shell
-7z x <archive-name> -o<directory-name>
+7z x <archive-name> -o<directory>
 ```
 
 <br><br>
 
 ## Delete a file/directory from an archive:
 ```shell
-7z d <archive-name> <file-name | directory-name>
+7z d <archive-name> <filename | directory>
 ```
 
 <br><br>

@@ -105,7 +105,7 @@ which -a <executable-name>
 
 ## Locate a specific file:
 ```shell
-locate <file-name>
+locate <filename>
 ```
 
 ## Recursively find all directories that are empty:
@@ -271,7 +271,7 @@ grep -C <n>
 
 ## Create empty file in working directory:
 ```shell
-touch <file-name>
+touch <filename>
 ```
 
 ## Use process substitution to make list act like a file (command substitution would not work):
@@ -394,7 +394,7 @@ tr a-z A-Z
 
 ## Create an MD5 hash from the content of a file (useful for verifying data integrity):
 ```shell
-cat <file-name> | md5
+cat <filename> | md5
 ```
 
 ## Check if a command is installed:

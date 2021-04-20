@@ -4,12 +4,12 @@
 
 ## Ignore a specific file:
 ```
-<file-name>.<file-extension>
+<filename>.<file-extension>
 ```
 
 ## Keep a specific file:
 ```
-!<file-name>.<file-extension>
+!<filename>.<file-extension>
 ```
 
 <br><br>
@@ -21,44 +21,44 @@
 
 ## Ignore all files with a specific filename:
 ```
-<file-name>.*
+<filename>.*
 ```
 
 <br><br>
 
 ## Ignore a directory:
 ```
-<directory-name>/
+<directory>/
 ```
 
 ## Ignore all files in a specific directory:
 ```
-<directory-name>/*
+<directory>/*
 ```
 
 ## Ignore a specific file in the root directory:
 ```
-/<file-name>.<file-extension>
+/<filename>.<file-extension>
 ```
 
 ## Ignore a specific file in a specific directory:
 ```
-<directory-name>/<file-name>.<file-extension>
+<directory>/<filename>.<file-extension>
 ```
 
 ## Ignore a specific file in all directories:
 ```
-**/<file-name>.<file-extension>
+**/<filename>.<file-extension>
 ```
 
 ## Ignore a specific directory in all directories:
 ```
-**/<directory-name>/
+**/<directory>/
 ```
 
 ## Ignore a specific file in zero or more directories:
 ```
-<directory-name>/**/<file-name>.<file-extension>
+<directory>/**/<filename>.<file-extension>
 ```
 
 ## Ignore all files:
