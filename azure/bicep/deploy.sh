@@ -16,7 +16,7 @@ function Deploy() {
     for operation in ${operations[@]}; do
         az deployment sub "${operation}" \
             --template-file "${templateFile}" \
-            --location "${location}" \
+            --location "${location}"
     done
 }
 
