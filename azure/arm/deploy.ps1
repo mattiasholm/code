@@ -14,7 +14,6 @@ $ResourceGroupName = "holm-arm"
 $ResourceGroupLocation = "WestEurope"
 $ResourceGroupTags = @{Environment = "Lab"; Owner = "mattias.holm@live.com" }
 $ParameterFile = $TemplateFile.Replace('.json', '.parameters.json')
-$DeployMode = "Incremental"
 
 Login-AzAccount
 
@@ -29,5 +28,4 @@ New-AzResourceGroup `
 New-AzResourceGroupDeployment `
     -ResourceGroupName $ResourceGroupName `
     -TemplateFile $TemplateFile `
-    -TemplateParameterFile $ParameterFile `
-    -Mode $DeployMode
+    -TemplateParameterFile $ParameterFile

@@ -14,7 +14,6 @@ rgName="holm-arm"
 rgLocation="WestEurope"
 rgTags="Environment=Lab Owner=mattias.holm@live.com"
 parameterFile="$(echo "${templateFile}" | sed 's/.json$/.parameters.json/')"
-deployMode="Incremental"
 
 az login
 
@@ -29,5 +28,4 @@ az deployment group create \
     --resource-group "${rgName}" \
     --template-file "${templateFile}" \
     --parameters "@${parameterFile}" \
-    --mode "${deployMode}" \
     --confirm-with-what-if

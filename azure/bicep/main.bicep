@@ -5,6 +5,7 @@ var location = deployment().location
 var tags = {
     Company: 'Holm'
     Environment: 'Test'
+    Application: 'Bicep'
     Owner: 'mattias.holm@live.com'
 }
 var toggleVnet = true

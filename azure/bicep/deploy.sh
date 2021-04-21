@@ -1,18 +1,34 @@
 #!/usr/bin/env bash
 
-subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
-location="WestEurope"
-templateFile="main.bicep"
+function Login() {
+    if [[ "$*" == *--pipeline* ]]; then
+        az login --service-principal --username "${appId}" --password "${password}" --tenant "${tenant}" &&
+            az account set --subscription "${subscriptionId}"
+    else
+        az login &&
+            az account set --subscription "${subscriptionId}"
+    fi
+}
 
-set -e +x
+function Deploy() {
+    operations=("what-if" "create")
 
-if [[ "$*" == *--pipeline* ]]; then
-    az login --service-principal --username "${appId}" --password "${password}" --tenant "${tenant}" &&
-        az account set --subscription "${subscriptionId}"
-else
-    az login &&
-        az account set --subscription "${subscriptionId}"
-fi
+    for operation in ${operations[@]}; do
+        az deployment sub "${operation}" \
+            --template-file "${templateFile}" \
+            --location "${location}" \
+    done
+}
 
-az deployment sub what-if --location "${location}" --template-file "${templateFile}" &&
-    az deployment sub create --location "${location}" --template-file "${templateFile}"
+function main() {
+    set -e +x
+
+    subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
+    location="WestEurope"
+    templateFile="main.bicep"
+
+    Login
+    Deploy
+}
+
+main
