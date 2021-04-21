@@ -14,9 +14,9 @@ param kind string = 'app'
   'S1'
 ])
 param skuName string = 'F1'
-@minValue(0)
+@minValue(1)
 @maxValue(10)
-param skuCapacity int = 0
+param skuCapacity int = 1
 
 resource plan 'Microsoft.Web/serverfarms@2020-06-01' = {
   name: name
