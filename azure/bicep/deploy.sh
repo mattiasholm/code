@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
 function Login() {
-    if [[ "$*" == *--pipeline* ]]; then
-        az login --service-principal --username "${appId}" --password "${password}" --tenant "${tenant}" &&
-            az account set --subscription "${subscriptionId}"
-    else
+    case "${runMode}" in
+    "Interactive")
         az login &&
             az account set --subscription "${subscriptionId}"
-    fi
+        ;;
+    "Pipeline")
+        az login --service-principal --username "${appId}" --password "${password}" --tenant "${tenant}" &&
+            az account set --subscription "${subscriptionId}"
+        ;;
+    esac
 }
 
 function Deploy() {
@@ -30,5 +33,11 @@ function main() {
     Login
     Deploy
 }
+
+if [[ "$*" == *--pipeline* ]]; then
+    runMode="Pipeline"
+else
+    runMode="Interactive"
+fi
 
 main

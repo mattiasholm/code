@@ -40,8 +40,8 @@ var apps = [
     }
 ]
 
-module appModule 'app.bicep' = [for app in apps: {
-    name: 'appModule_${app.name}'
+module appModule 'app.bicep' = [for (app, i) in apps: {
+    name: 'appModule${i}'
     scope: rg
     params: {
         name: app.name
@@ -103,7 +103,10 @@ module vnetModule 'vnet.bicep' = if (toggleVnet) {
     }
 }
 
-// output appUrl string = appModule.outputs.appUrl // FEL EFTER COPY-LOOP: Directly referencing a resource or module collection is not currently supported. Apply an array indexer to the expression.
+output appUrl array = [for (app, i) in apps: {
+    name: app.name
+    appUrl: appModule[i].outputs.appUrl
+}]
 output kvUrl string = kvModule.outputs.kvUrl
 output stBlobUrl string = stModule.outputs.stBlobUrl
 output stFileUrl string = stModule.outputs.stFileUrl

@@ -1,14 +1,14 @@
 .DS_Store
 /.vscode
 
+/azure/bicep/**/*.json
+
 /**/*.tfstate*
 /**/.terraform/
 /**/.terraform.lock.hcl
 
-# Pulumi - verifiera att fortfarande aktuella!
 /**/*.pyc
 /**/venv/
-# Pulumi - verifiera att fortfarande aktuella!
 
 /**/stereo2mono/input/
 /**/stereo2mono/output/
