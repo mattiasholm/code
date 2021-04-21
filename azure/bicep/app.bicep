@@ -8,7 +8,7 @@ param siteConfig object
 param clientAffinityEnabled bool = false
 param httpsOnly bool = true
 
-resource app 'Microsoft.Web/sites@2020-06-01' = {
+resource app 'Microsoft.Web/sites@2020-12-01' = {
   name: name
   location: location
   tags: tags

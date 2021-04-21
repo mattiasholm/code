@@ -18,7 +18,7 @@ param skuName string = 'F1'
 @maxValue(10)
 param skuCapacity int = 1
 
-resource plan 'Microsoft.Web/serverfarms@2020-06-01' = {
+resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: name
   location: location
   tags: tags

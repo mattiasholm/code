@@ -7,7 +7,7 @@ param addressPrefixes array
 param subnetsName string
 param subnetsAddressPrefix string
 
-resource vnet 'Microsoft.Network/virtualNetworks@2020-06-01' = {
+resource vnet 'Microsoft.Network/virtualNetworks@2020-11-01' = {
   name: name
   location: location
   tags: tags

@@ -10,7 +10,7 @@ var tags = {
 }
 var toggleVnet = true
 
-resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
     name: 'rg-${prefix}-001'
     location: location
     tags: tags

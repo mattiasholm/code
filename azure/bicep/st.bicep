@@ -33,7 +33,7 @@ param supportsHttpsTrafficOnly bool = true
 ])
 param minimumTlsVersion string = 'TLS1_2'
 
-resource st 'Microsoft.Storage/storageAccounts@2019-06-01' = {
+resource st 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   name: name
   location: location
   tags: tags
