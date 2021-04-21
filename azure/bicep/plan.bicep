@@ -8,11 +8,6 @@ param tags object
   'linux'
 ])
 param kind string = 'app'
-@allowed([
-  'F1'
-  'B1'
-  'S1'
-])
 param skuName string = 'F1'
 @minValue(1)
 @maxValue(10)
