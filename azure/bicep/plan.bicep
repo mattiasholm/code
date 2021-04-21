@@ -7,7 +7,7 @@ param tags object
   'app'
   'linux'
 ])
-param kind string = 'app'
+param kind string = 'linux'
 param skuName string = 'F1'
 @minValue(1)
 @maxValue(10)
