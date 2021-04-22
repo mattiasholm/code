@@ -27,6 +27,9 @@
                 "Standard_LRS",
                 "Standard_GRS"
             ]
+        },
+        "vnetAddressPrefix": {
+            "type": "string"
         }
     },
     "variables": {
@@ -55,7 +58,9 @@
         ],
         "stSupportsHttpsTrafficOnly": true,
         "stMinimumTlsVersion": "TLS1_2",
-        "stContainerName": "[format('default/{0}', toLower('Container01'))]"
+        "stContainerName": "[format('default/{0}', toLower('Container01'))]",
+        "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
+        "snetName": "Subnet01"
     },
     "resources": [
         {
@@ -129,6 +134,28 @@
                     "name": "[variables('stContainerName')]"
                 }
             ]
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('vnetName')]",
+            "location": "[variables('location')]",
+            "tags": "[variables('tags')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetAddressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('snetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('vnetAddressPrefix')[0]]"
+                        }
+                    }
+                ]
+            }
         }
     ],
     "outputs": {
@@ -167,6 +194,14 @@
                 "count": "[variables('stCount')]",
                 "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex()])).primaryEndpoints.queue]"
             }
+        },
+        "vnetEnableDdosProtection": {
+            "type": "bool",
+            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))).enableDdosProtection]"
+        },
+        "vnetEnableVmProtection": {
+            "type": "bool",
+            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))).enableVmProtection]"
         }
     }
 }
