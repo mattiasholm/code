@@ -19,6 +19,14 @@
             "defaultValue": 0,
             "minValue": 0,
             "maxValue": 3
+        },
+        "stSku": {
+            "type": "string",
+            "defaultValue": "Standard_GRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS"
+            ]
         }
     },
     "variables": {
@@ -27,7 +35,27 @@
         "planName": "[format('plan-{0}-001', parameters('prefix'))]",
         "planKind": "app",
         "appName": "[format('app-{0}-001', parameters('prefix'))]",
-        "appHttpsOnly": true
+        "appHttpsOnly": true,
+        "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
+        "kvFamily": "A",
+        "kvSku": "standard",
+        "stCount": 3,
+        "copy": [
+            {
+                "name": "stName",
+                "count": "[variables('stCount')]",
+                "input": "[toLower(replace(format('st-{0}-00{1}', parameters('prefix'), copyIndex('stName', 1)), '-', ''))]"
+            }
+        ],
+        "stKind": "StorageV2",
+        "stAllowBlobPublicAccess": [
+            false,
+            true,
+            false
+        ],
+        "stSupportsHttpsTrafficOnly": true,
+        "stMinimumTlsVersion": "TLS1_2",
+        "stContainerName": "[format('default/{0}', toLower('Container01'))]"
     },
     "resources": [
         {
@@ -55,7 +83,90 @@
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
                 "httpsOnly": "[variables('appHttpsOnly')]"
             }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2019-09-01",
+            "name": "[variables('kvName')]",
+            "location": "[variables('location')]",
+            "tags": "[variables('tags')]",
+            "properties": {
+                "tenantId": "[subscription().tenantId]",
+                "sku": {
+                    "family": "[variables('kvFamily')]",
+                    "name": "[variables('kvSku')]"
+                },
+                "accessPolicies": []
+            }
+        },
+        {
+            "copy": {
+                "name": "storageAccounts",
+                "count": "[variables('stCount')]",
+                "mode": "parallel"
+            },
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "name": "[variables('stName')[copyIndex()]]",
+            "location": "[variables('location')]",
+            "tags": "[variables('tags')]",
+            "sku": {
+                "name": "[parameters('stSku')]"
+            },
+            "kind": "[variables('stKind')]",
+            "properties": {
+                "allowBlobPublicAccess": "[variables('stAllowBlobPublicAccess')[copyIndex()]]",
+                "supportsHttpsTrafficOnly": "[variables('stSupportsHttpsTrafficOnly')]",
+                "minimumTlsVersion": "[variables('stMinimumTlsVersion')]"
+            },
+            "resources": [
+                {
+                    "dependsOn": [
+                        "[variables('stName')[copyIndex()]]"
+                    ],
+                    "type": "blobServices/containers",
+                    "apiVersion": "2019-06-01",
+                    "name": "[variables('stContainerName')]"
+                }
+            ]
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "appUrl": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Web/sites', variables('appName'))).defaultHostName]"
+        },
+        "kvUrl": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.KeyVault/vaults', variables('kvName'))).vaultUri]"
+        },
+        "stBlobUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('stCount')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex()])).primaryEndpoints.blob]"
+            }
+        },
+        "stFileUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('stCount')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex()])).primaryEndpoints.file]"
+            }
+        },
+        "stTableUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('stCount')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex()])).primaryEndpoints.table]"
+            }
+        },
+        "stQueueUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('stCount')]",
+                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex()])).primaryEndpoints.queue]"
+            }
+        }
+    }
 }

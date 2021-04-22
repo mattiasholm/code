@@ -10,6 +10,9 @@
     },
     "planCapacity": {
       "value": 1
+    },
+    "stSku": {
+      "value": "Standard_LRS"
     }
   }
 }

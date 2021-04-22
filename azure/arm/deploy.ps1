@@ -29,3 +29,7 @@ New-AzResourceGroupDeployment `
     -ResourceGroupName $ResourceGroupName `
     -TemplateFile $TemplateFile `
     -TemplateParameterFile $ParameterFile
+
+
+
+# OBS: Skriv om skriptet så att det fungerar att köra i pipeline på samma sätt som 'deploy.sh' - bra att ha båda färdiga som referens!
