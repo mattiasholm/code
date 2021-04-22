@@ -1,0 +1,29 @@
+name: Azure Bicep
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "azure/bicep/**"
+      - "!**.md"
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Azure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Run deploy script
+        run: ./deploy.sh --pipeline
+        shell: bash
+        working-directory: azure/bicep
+        env:
+          appId: ${{ secrets.appId }}
+          password: ${{ secrets.password }}
+          tenant: ${{ secrets.tenant }}
