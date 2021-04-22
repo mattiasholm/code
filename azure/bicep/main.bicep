@@ -16,7 +16,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
     tags: tags
 }
 
-module planModule 'plan.bicep' = {
+module planModule 'modules/plan.bicep' = {
     name: 'planModule'
     scope: rg
     params: {
@@ -40,7 +40,7 @@ var apps = [
     }
 ]
 
-module appModule 'app.bicep' = [for (app, i) in apps: {
+module appModule 'modules/app.bicep' = [for (app, i) in apps: {
     name: 'appModule${i}'
     scope: rg
     params: {
@@ -59,7 +59,7 @@ module appModule 'app.bicep' = [for (app, i) in apps: {
     }
 }]
 
-module kvModule 'kv.bicep' = {
+module kvModule 'modules/kv.bicep' = {
     name: 'kvModule'
     scope: rg
     params: {
@@ -73,7 +73,7 @@ module kvModule 'kv.bicep' = {
     }
 }
 
-module stModule 'st.bicep' = {
+module stModule 'modules/st.bicep' = {
     name: 'stModule'
     scope: rg
     params: {
@@ -88,7 +88,7 @@ module stModule 'st.bicep' = {
     }
 }
 
-module vnetModule 'vnet.bicep' = if (toggleVnet) {
+module vnetModule 'modules/vnet.bicep' = if (toggleVnet) {
     name: 'vnetModule'
     scope: rg
     params: {

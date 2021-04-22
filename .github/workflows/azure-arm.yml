@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "azure/arm/**"
+      - "azure/bicep/**"
       - "!**.md"
 
   workflow_dispatch:
@@ -22,7 +22,7 @@ jobs:
       - name: Run deploy script
         run: ./deploy.sh --pipeline
         shell: bash
-        working-directory: azure/arm
+        working-directory: azure/bicep
         env:
           appId: ${{ secrets.appId }}
           password: ${{ secrets.password }}

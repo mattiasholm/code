@@ -1,0 +1,61 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "prefix": {
+            "type": "string"
+        },
+        "planSku": {
+            "type": "string",
+            "defaultValue": "F1",
+            "allowedValues": [
+                "F1",
+                "D1",
+                "B1"
+            ]
+        },
+        "planCapacity": {
+            "type": "int",
+            "defaultValue": 0,
+            "minValue": 0,
+            "maxValue": 3
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "tags": "[resourceGroup().tags]",
+        "planName": "[format('plan-{0}-001', parameters('prefix'))]",
+        "planKind": "app",
+        "appName": "[format('app-{0}-001', parameters('prefix'))]",
+        "appHttpsOnly": true
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2020-12-01",
+            "name": "[variables('planName')]",
+            "location": "[variables('location')]",
+            "tags": "[variables('tags')]",
+            "kind": "[variables('planKind')]",
+            "sku": {
+                "name": "[parameters('planSku')]",
+                "capacity": "[parameters('planCapacity')]"
+            }
+        },
+        {
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]"
+            ],
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-12-01",
+            "name": "[variables('appName')]",
+            "location": "[variables('location')]",
+            "tags": "[variables('tags')]",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
+                "httpsOnly": "[variables('appHttpsOnly')]"
+            }
+        }
+    ],
+    "outputs": {}
+}
