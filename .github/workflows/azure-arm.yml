@@ -1,4 +1,4 @@
-name: Azure Bicep
+name: Azure ARM
 
 on:
   push:
