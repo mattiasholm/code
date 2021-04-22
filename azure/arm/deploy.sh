@@ -41,7 +41,7 @@ function main() {
     templateFile="main.json"
     parameterFile="main.parameters.json"
 
-    # Login
+    Login
     CreateResourceGroup
     Deploy
 }
