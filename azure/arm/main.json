@@ -194,14 +194,6 @@
                 "count": "[variables('stCount')]",
                 "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex()])).primaryEndpoints.queue]"
             }
-        },
-        "vnetEnableDdosProtection": {
-            "type": "bool",
-            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))).enableDdosProtection]"
-        },
-        "vnetEnableVmProtection": {
-            "type": "bool",
-            "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))).enableVmProtection]"
         }
     }
 }
