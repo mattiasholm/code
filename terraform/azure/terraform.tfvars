@@ -9,8 +9,8 @@ rgTags = {
 
 vnetAddressPrefix = ["10.1.0.0/24"]
 
-planTier = "Free"
+planTier = "Basic"
 
-planSize = "F1"
+planSize = "B1"
 
-planCapacity = 0
+planCapacity = 1

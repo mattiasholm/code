@@ -5,20 +5,26 @@
         "prefix": {
             "type": "string"
         },
+        "planKind": {
+            "type": "string",
+            "defaultValue": "linux",
+            "allowedValues": [
+                "app",
+                "linux"
+            ]
+        },
         "planSku": {
             "type": "string",
-            "defaultValue": "F1",
-            "allowedValues": [
-                "F1",
-                "D1",
-                "B1"
-            ]
+            "defaultValue": "B1"
+        },
+        "apps": {
+            "type": "array"
         },
         "planCapacity": {
             "type": "int",
-            "defaultValue": 0,
-            "minValue": 0,
-            "maxValue": 3
+            "defaultValue": 1,
+            "minValue": 1,
+            "maxValue": 10
         },
         "stSku": {
             "type": "string",
@@ -28,26 +34,60 @@
                 "Standard_GRS"
             ]
         },
+        "stCount": {
+            "type": "int"
+        },
+        "toggleVnet": {
+            "type": "bool"
+        },
         "vnetAddressPrefix": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "10.0.0.0/24"
         }
     },
     "variables": {
+        "prefixStripped": "[toLower(replace(parameters('prefix'), '-', ''))]",
         "location": "[resourceGroup().location]",
         "tags": "[resourceGroup().tags]",
         "planName": "[format('plan-{0}-001', parameters('prefix'))]",
-        "planKind": "app",
-        "appName": "[format('app-{0}-001', parameters('prefix'))]",
+        "planId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
+        "appCount": "[length(parameters('apps'))]",
+        "appClientAffinityEnabled": false,
         "appHttpsOnly": true,
         "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
+        "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "kvFamily": "A",
         "kvSku": "standard",
-        "stCount": 3,
         "copy": [
             {
+                "name": "appName",
+                "count": "[variables('appCount')]",
+                "input": "[format('app-{0}-00{1}', parameters('prefix'), copyIndex('appName', 1))]"
+            },
+            {
+                "name": "appId",
+                "count": "[variables('appCount')]",
+                "input": "[resourceId('Microsoft.Web/sites', variables('appName')[copyIndex('appId')])]"
+            },
+            {
+                "name": "appSiteConfig",
+                "count": "[variables('appCount')]",
+                "input": {
+                    "linuxFxVersion": "[format('DOCKER|nginxdemos/hello:{0}', parameters('apps')[copyIndex('appSiteConfig')].dockerImageTag)]",
+                    "http20Enabled": "true",
+                    "minTlsVersion": "1.2",
+                    "ftpsState": "FtpsOnly"
+                }
+            },
+            {
                 "name": "stName",
-                "count": "[variables('stCount')]",
-                "input": "[toLower(replace(format('st-{0}-00{1}', parameters('prefix'), copyIndex('stName', 1)), '-', ''))]"
+                "count": "[parameters('stCount')]",
+                "input": "[format('st{0}00{1}', variables('prefixStripped'), copyIndex('stName', 1))]"
+            },
+            {
+                "name": "stId",
+                "count": "[parameters('stCount')]",
+                "input": "[resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex('stId')])]"
             }
         ],
         "stKind": "StorageV2",
@@ -58,7 +98,7 @@
         ],
         "stSupportsHttpsTrafficOnly": true,
         "stMinimumTlsVersion": "TLS1_2",
-        "stContainerName": "[format('default/{0}', 'container001')]",
+        "stContainerName": "[format('default/container{0}001', variables('prefixStripped'))]",
         "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
         "snetName": "[format('snet-{0}-001', parameters('prefix'))]"
     },
@@ -69,23 +109,33 @@
             "name": "[variables('planName')]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
-            "kind": "[variables('planKind')]",
+            "kind": "[parameters('planKind')]",
             "sku": {
                 "name": "[parameters('planSku')]",
                 "capacity": "[parameters('planCapacity')]"
+            },
+            "properties": {
+                "reserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]"
             }
         },
         {
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]"
+                "[variables('planId')]"
             ],
+            "copy": {
+                "name": "sites",
+                "count": "[variables('appCount')]",
+                "mode": "parallel"
+            },
             "type": "Microsoft.Web/sites",
             "apiVersion": "2020-12-01",
-            "name": "[variables('appName')]",
+            "name": "[variables('appName')[copyIndex()]]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
             "properties": {
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
+                "serverFarmId": "[variables('planId')]",
+                "siteConfig": "[variables('appSiteConfig')[copyIndex()]]",
+                "clientAffinityEnabled": "[variables('appClientAffinityEnabled')]",
                 "httpsOnly": "[variables('appHttpsOnly')]"
             }
         },
@@ -107,7 +157,7 @@
         {
             "copy": {
                 "name": "storageAccounts",
-                "count": "[variables('stCount')]",
+                "count": "[parameters('stCount')]",
                 "mode": "parallel"
             },
             "type": "Microsoft.Storage/storageAccounts",
@@ -136,6 +186,7 @@
             ]
         },
         {
+            "condition": "[parameters('toggleVnet')]",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-11-01",
             "name": "[variables('vnetName')]",
@@ -160,39 +211,42 @@
     ],
     "outputs": {
         "appUrl": {
-            "type": "string",
-            "value": "[reference(resourceId('Microsoft.Web/sites', variables('appName'))).defaultHostName]"
+            "type": "array",
+            "copy": {
+                "count": "[variables('appCount')]",
+                "input": "[reference(variables('appId')[copyIndex()]).defaultHostName]"
+            }
         },
         "kvUrl": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.KeyVault/vaults', variables('kvName'))).vaultUri]"
+            "value": "[reference(variables('kvId')).vaultUri]"
         },
         "stBlobUrl": {
             "type": "array",
             "copy": {
-                "count": "[variables('stCount')]",
-                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex()])).primaryEndpoints.blob]"
+                "count": "[parameters('stCount')]",
+                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.blob]"
             }
         },
         "stFileUrl": {
             "type": "array",
             "copy": {
-                "count": "[variables('stCount')]",
-                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex()])).primaryEndpoints.file]"
+                "count": "[parameters('stCount')]",
+                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.file]"
             }
         },
         "stTableUrl": {
             "type": "array",
             "copy": {
-                "count": "[variables('stCount')]",
-                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex()])).primaryEndpoints.table]"
+                "count": "[parameters('stCount')]",
+                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.table]"
             }
         },
         "stQueueUrl": {
             "type": "array",
             "copy": {
-                "count": "[variables('stCount')]",
-                "input": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex()])).primaryEndpoints.queue]"
+                "count": "[parameters('stCount')]",
+                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.queue]"
             }
         }
     }

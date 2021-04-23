@@ -32,6 +32,7 @@ param supportsHttpsTrafficOnly bool = true
   'TLS1_2'
 ])
 param minimumTlsVersion string = 'TLS1_2'
+param containerName string
 
 resource st 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   name: name
@@ -45,6 +46,14 @@ resource st 'Microsoft.Storage/storageAccounts@2021-02-01' = {
     allowBlobPublicAccess: allowBlobPublicAccess
     supportsHttpsTrafficOnly: supportsHttpsTrafficOnly
     minimumTlsVersion: minimumTlsVersion
+  }
+
+  resource blobServices 'blobServices@2021-02-01' = {
+    name: 'default'
+
+    resource container 'containers@2021-02-01' = {
+      name: containerName
+    }
   }
 }
 

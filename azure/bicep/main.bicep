@@ -1,6 +1,7 @@
 targetScope = 'subscription'
 
 var prefix = 'holm-bicep'
+var prefixStripped = toLower(replace(prefix, '-', ''))
 var location = deployment().location
 var tags = {
     Company: 'Holm'
@@ -8,6 +9,7 @@ var tags = {
     Application: 'Bicep'
     Owner: 'mattias.holm@live.com'
 }
+var stCount = 3
 var toggleVnet = true
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
@@ -24,7 +26,7 @@ module planModule 'modules/plan.bicep' = {
         location: location
         tags: tags
         kind: 'linux'
-        skuName: 'F1'
+        skuName: 'B1'
         skuCapacity: 1
     }
 }
@@ -73,11 +75,11 @@ module kvModule 'modules/kv.bicep' = {
     }
 }
 
-module stModule 'modules/st.bicep' = {
-    name: 'stModule'
+module stModule 'modules/st.bicep' = [for i in range(0, stCount): {
+    name: 'stModule${i}'
     scope: rg
     params: {
-        name: 'st${replace(prefix, '-', '')}001'
+        name: 'st${prefixStripped}00${i + 1}'
         location: location
         tags: tags
         kind: 'StorageV2'
@@ -85,8 +87,9 @@ module stModule 'modules/st.bicep' = {
         allowBlobPublicAccess: false
         supportsHttpsTrafficOnly: true
         minimumTlsVersion: 'TLS1_2'
+        containerName: 'container${prefixStripped}00${i + 1}'
     }
-}
+}]
 
 module vnetModule 'modules/vnet.bicep' = if (toggleVnet) {
     name: 'vnetModule'
@@ -96,7 +99,7 @@ module vnetModule 'modules/vnet.bicep' = if (toggleVnet) {
         location: location
         tags: tags
         addressPrefixes: [
-            '10.0.0.0/16'
+            '10.0.0.0/24'
         ]
         subnetsName: 'snet-${prefix}-001'
         subnetsAddressPrefix: '10.0.0.0/24'
@@ -108,7 +111,19 @@ output appUrl array = [for (app, i) in apps: {
     appUrl: appModule[i].outputs.appUrl
 }]
 output kvUrl string = kvModule.outputs.kvUrl
-output stBlobUrl string = stModule.outputs.stBlobUrl
-output stFileUrl string = stModule.outputs.stFileUrl
-output stTableUrl string = stModule.outputs.stTableUrl
-output stQueueUrl string = stModule.outputs.stQueueUrl
+output stBlobUrl array = [for i in range(0, stCount): {
+    name: 'st${prefixStripped}00${i + 1}'
+    stBlobUrl: stModule[i].outputs.stBlobUrl
+}]
+output stFileUrl array = [for i in range(0, stCount): {
+    name: 'st${prefixStripped}00${i + 1}'
+    stFileUrl: stModule[i].outputs.stFileUrl
+}]
+output stTableUrl array = [for i in range(0, stCount): {
+    name: 'st${prefixStripped}00${i + 1}'
+    stTableUrl: stModule[i].outputs.stTableUrl
+}]
+output stQueueUrl array = [for i in range(0, stCount): {
+    name: 'st${prefixStripped}00${i + 1}'
+    stQueueUrl: stModule[i].outputs.stQueueUrl
+}]

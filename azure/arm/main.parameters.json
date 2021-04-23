@@ -5,17 +5,36 @@
     "prefix": {
       "value": "holm-arm"
     },
+    "planKind": {
+      "value": "linux"
+    },
     "planSku": {
       "value": "B1"
     },
     "planCapacity": {
       "value": 1
     },
+    "apps": {
+      "value": [
+        {
+          "dockerImageTag": "latest"
+        },
+        {
+          "dockerImageTag": "plain-text"
+        }
+      ]
+    },
     "stSku": {
       "value": "Standard_LRS"
     },
+    "stCount": {
+      "value": 3
+    },
+    "toggleVnet": {
+      "value": true
+    },
     "vnetAddressPrefix": {
-      "value": "10.0.0.0/16"
+      "value": "10.0.0.0/24"
     }
   }
 }
