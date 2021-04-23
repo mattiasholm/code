@@ -165,10 +165,10 @@
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
+            "kind": "[variables('stKind')]",
             "sku": {
                 "name": "[parameters('stSku')]"
             },
-            "kind": "[variables('stKind')]",
             "properties": {
                 "allowBlobPublicAccess": "[variables('stAllowBlobPublicAccess')[copyIndex()]]",
                 "supportsHttpsTrafficOnly": "[variables('stSupportsHttpsTrafficOnly')]",

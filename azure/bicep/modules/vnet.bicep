@@ -4,8 +4,8 @@ param name string
 param location string
 param tags object
 param addressPrefixes array
-param subnetsName string
-param subnetsAddressPrefix string
+param snetName string
+param snetAddressPrefix string
 
 resource vnet 'Microsoft.Network/virtualNetworks@2020-11-01' = {
   name: name
@@ -17,9 +17,9 @@ resource vnet 'Microsoft.Network/virtualNetworks@2020-11-01' = {
     }
     subnets: [
       {
-        name: subnetsName
+        name: snetName
         properties: {
-          addressPrefix: subnetsAddressPrefix
+          addressPrefix: snetAddressPrefix
         }
       }
     ]

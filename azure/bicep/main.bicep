@@ -101,8 +101,8 @@ module vnetModule 'modules/vnet.bicep' = if (toggleVnet) {
         addressPrefixes: [
             '10.0.0.0/24'
         ]
-        subnetsName: 'snet-${prefix}-001'
-        subnetsAddressPrefix: '10.0.0.0/24'
+        snetName: 'snet-${prefix}-001'
+        snetAddressPrefix: '10.0.0.0/24'
     }
 }
 
