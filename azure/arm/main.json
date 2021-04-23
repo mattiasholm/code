@@ -58,9 +58,9 @@
         ],
         "stSupportsHttpsTrafficOnly": true,
         "stMinimumTlsVersion": "TLS1_2",
-        "stContainerName": "[format('default/{0}', toLower('Container01'))]",
+        "stContainerName": "[format('default/{0}', 'container001')]",
         "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
-        "snetName": "Subnet01"
+        "snetName": "[format('snet-{0}-001', parameters('prefix'))]"
     },
     "resources": [
         {
@@ -111,7 +111,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2021-01-01",
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
@@ -130,14 +130,14 @@
                         "[variables('stName')[copyIndex()]]"
                     ],
                     "type": "blobServices/containers",
-                    "apiVersion": "2019-06-01",
+                    "apiVersion": "2021-01-01",
                     "name": "[variables('stContainerName')]"
                 }
             ]
         },
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2020-06-01",
+            "apiVersion": "2020-11-01",
             "name": "[variables('vnetName')]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
@@ -151,7 +151,7 @@
                     {
                         "name": "[variables('snetName')]",
                         "properties": {
-                            "addressPrefix": "[parameters('vnetAddressPrefix')[0]]"
+                            "addressPrefix": "[parameters('vnetAddressPrefix')]"
                         }
                     }
                 ]

@@ -32,4 +32,4 @@ New-AzResourceGroupDeployment `
 
 
 
-# OBS: Skriv om skriptet så att det fungerar att köra i pipeline på samma sätt som 'deploy.sh' - bra att ha båda färdiga som referens!
+# OBS: Skriv om skriptet så att det fungerar att köra i pipeline på samma sätt som 'deploy.sh'??? Kan såklart vara bra att ha båda exemplen färdiga som referens!
