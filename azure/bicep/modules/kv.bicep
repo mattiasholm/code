@@ -15,7 +15,7 @@ param skuFamily string = 'A'
   'premium'
 ])
 param skuName string = 'standard'
-param accessPolicies array
+param accessPolicies array = []
 
 resource kv 'Microsoft.KeyVault/vaults@2019-09-01' = {
   name: name
