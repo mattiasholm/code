@@ -13,9 +13,9 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-  - stage: Test
+  - stage: test
     variables:
-      - group: Test
+      - group: test
     jobs:
       - job: Deploy
         steps:
@@ -26,9 +26,9 @@ stages:
             env:
               appId: $(appId)
               password: $(password)
-  - stage: Prod
+  - stage: prod
     variables:
-      - group: Prod
+      - group: prod
     jobs:
       - job: Deploy
         steps:
