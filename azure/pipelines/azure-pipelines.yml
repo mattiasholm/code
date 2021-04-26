@@ -7,7 +7,7 @@ trigger:
       - .gitignore
       - CHANGELOG.md
       - README.md
-  batch: 'true'
+  batch: true
 
 pool:
   vmImage: ubuntu-latest
@@ -22,7 +22,7 @@ stages:
           - bash: |
               ./deploy.sh $(System.StageName) --pipeline
             workingDirectory: scripts
-            failOnStderr: 'false'
+            failOnStderr: false
             env:
               appId: $(appId)
               password: $(password)
@@ -35,7 +35,7 @@ stages:
           - bash: |
               ./deploy.sh $(System.StageName) --pipeline
             workingDirectory: scripts
-            failOnStderr: 'false'
+            failOnStderr: false
             env:
               appId: $(appId)
               password: $(password)
