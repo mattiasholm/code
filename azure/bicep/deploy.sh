@@ -3,6 +3,12 @@
 function Initialize() {
     set -e +x
 
+    if [[ "$@" =~ "--pipeline" ]]; then
+        runMode="Pipeline"
+    else
+        runMode="Interactive"
+    fi
+
     subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
     location="WestEurope"
     templateFile="main.bicep"
@@ -32,15 +38,9 @@ function Deploy() {
 }
 
 function main() {
-    Initialize
+    Initialize "$@"
     Login
     Deploy
 }
 
-if [[ "$*" == *--pipeline* ]]; then
-    runMode="Pipeline"
-else
-    runMode="Interactive"
-fi
-
-main
+main "$@"
