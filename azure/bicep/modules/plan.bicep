@@ -13,6 +13,8 @@ param skuName string = 'B1'
 @maxValue(10)
 param skuCapacity int = 1
 
+var reserved = kind == 'linux' ? true : false
+
 resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: name
   location: location
@@ -23,7 +25,7 @@ resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
     capacity: skuCapacity
   }
   properties: {
-    reserved: kind == 'linux' ? true : false
+    reserved: reserved
   }
 }
 

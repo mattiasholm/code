@@ -51,6 +51,7 @@
         "tags": "[resourceGroup().tags]",
         "planName": "[format('plan-{0}-001', parameters('prefix'))]",
         "planId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
+        "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
         "appCount": "[length(parameters('apps'))]",
         "appClientAffinityEnabled": false,
         "appHttpsOnly": true,
@@ -115,7 +116,7 @@
                 "capacity": "[parameters('planCapacity')]"
             },
             "properties": {
-                "reserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]"
+                "reserved": "[variables('planReserved')]"
             }
         },
         {
