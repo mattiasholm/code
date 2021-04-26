@@ -7,37 +7,35 @@ trigger:
       - .gitignore
       - CHANGELOG.md
       - README.md
-  batch: "true"
+  batch: 'true'
 
 pool:
-  vmImage: ubuntu-20.04
+  vmImage: ubuntu-latest
 
 stages:
-  - stage: test
+  - stage: Test
     variables:
-      - group: test
+      - group: Test
     jobs:
       - job: Deploy
         steps:
           - bash: |
-              chmod +x entrypoint.sh
-              ./entrypoint.sh $(System.StageName) --pipeline
+              ./deploy.sh $(System.StageName) --pipeline
             workingDirectory: scripts
-            failOnStderr: "false"
+            failOnStderr: 'false'
             env:
-              SP_APPID: $(SP_APPID)
-              SP_PASSWORD: $(SP_PASSWORD)
-  - stage: prod
+              appId: $(appId)
+              password: $(password)
+  - stage: Prod
     variables:
-      - group: prod
+      - group: Prod
     jobs:
       - job: Deploy
         steps:
           - bash: |
-              chmod +x entrypoint.sh
-              ./entrypoint.sh $(System.StageName) --pipeline
+              ./deploy.sh $(System.StageName) --pipeline
             workingDirectory: scripts
-            failOnStderr: "false"
+            failOnStderr: 'false'
             env:
-              SP_APPID: $(SP_APPID)
-              SP_PASSWORD: $(SP_PASSWORD)
+              appId: $(appId)
+              password: $(password)
