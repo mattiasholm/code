@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+function Initialize() {
+    set -e +x
+
+    subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
+    location="WestEurope"
+    templateFile="main.bicep"
+}
+
 function Login() {
     case "${runMode}" in
     "Interactive")
@@ -24,12 +32,7 @@ function Deploy() {
 }
 
 function main() {
-    set -e +x
-
-    subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
-    location="WestEurope"
-    templateFile="main.bicep"
-
+    Initialize
     Login
     Deploy
 }

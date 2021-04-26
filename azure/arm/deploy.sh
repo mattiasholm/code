@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+function Initialize() {
+    set -e +x
+
+    subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
+    rgName="rg-holm-arm-001"
+    location="WestEurope"
+    tags="Company=Holm Environment=Test Application=ARM Owner=mattias.holm@live.com"
+    templateFile="main.json"
+    parameterFile="main.parameters.json"
+}
+
 function Login() {
     case "${runMode}" in
     "Interactive")
@@ -32,15 +43,7 @@ function Deploy() {
 }
 
 function main() {
-    set -e +x
-
-    subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
-    rgName="rg-holm-arm-001"
-    location="WestEurope"
-    tags="Company=Holm Environment=Test Application=ARM Owner=mattias.holm@live.com"
-    templateFile="main.json"
-    parameterFile="main.parameters.json"
-
+    Initialize
     Login
     CreateResourceGroup
     Deploy
