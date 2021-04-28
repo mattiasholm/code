@@ -25,28 +25,37 @@ stages:
         value: $(System.StageName)
       - group: test
     jobs:
-      - job: Deploy
-        steps:
-          - bash: |
-              ./deploy.sh $(environment) --pipeline
-            workingDirectory: $(workingDirectory)
-            failOnStderr: $(failOnStderr)
-            env:
-              appId: $(appId)
-              password: $(password)
-
+      - deployment: Deploy
+        environment: test
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - bash: |
+                    ./deploy.sh $(environment) --pipeline
+                  workingDirectory: $(workingDirectory)
+                  failOnStderr: $(failOnStderr)
+                  env:
+                    appId: $(appId)
+                    password: $(password)
   - stage: prod
     variables:
       - name: environment
         value: $(System.StageName)
       - group: prod
     jobs:
-      - job: Deploy
-        steps:
-          - bash: |
-              ./deploy.sh $(environment) --pipeline
-            workingDirectory: $(workingDirectory)
-            failOnStderr: $(failOnStderr)
-            env:
-              appId: $(appId)
-              password: $(password)
+      - deployment: Deploy
+        environment: prod
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - bash: |
+                    ./deploy.sh $(environment) --pipeline
+                  workingDirectory: $(workingDirectory)
+                  failOnStderr: $(failOnStderr)
+                  env:
+                    appId: $(appId)
+                    password: $(password)
