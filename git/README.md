@@ -886,6 +886,7 @@ git branch -D <branch-name>
 ## Delete a remote branch in a specific remote:
 ```shell
 git push <remote-name> --delete <branch-name>
+git push <remote-name> -d <branch-name>
 ```
 
 <br><br>
