@@ -12,30 +12,41 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  - name: workingDirectory
+    value: scripts
+  - name: failOnStderr
+    value: false
+
 stages:
   - stage: test
     variables:
+      - name: environment
+        value: $(System.StageName)
       - group: test
     jobs:
       - job: Deploy
         steps:
           - bash: |
-              ./deploy.sh $(System.StageName) --pipeline
-            workingDirectory: scripts
-            failOnStderr: false
+              ./deploy.sh $(environment) --pipeline
+            workingDirectory: $(workingDirectory)
+            failOnStderr: $(failOnStderr)
             env:
               appId: $(appId)
               password: $(password)
+
   - stage: prod
     variables:
+      - name: environment
+        value: $(System.StageName)
       - group: prod
     jobs:
       - job: Deploy
         steps:
           - bash: |
-              ./deploy.sh $(System.StageName) --pipeline
-            workingDirectory: scripts
-            failOnStderr: false
+              ./deploy.sh $(environment) --pipeline
+            workingDirectory: $(workingDirectory)
+            failOnStderr: $(failOnStderr)
             env:
               appId: $(appId)
               password: $(password)
