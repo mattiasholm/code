@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run deploy script
-        run: ./deploy.sh --pipeline
+        run: deploy.sh --pipeline
         shell: bash
         working-directory: azure/bicep
         env:

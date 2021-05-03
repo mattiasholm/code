@@ -51,8 +51,7 @@ stages:
             deploy:
               steps:
                 - checkout: self
-                - bash: |
-                    ./deploy.sh $(environment) --pipeline
+                - bash: deploy.sh $(environment) --pipeline
                   workingDirectory: $(workingDirectory)
                   failOnStderr: $(failOnStderr)
                   env:
