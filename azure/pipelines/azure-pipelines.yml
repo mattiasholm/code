@@ -5,7 +5,6 @@ trigger:
   paths:
     exclude:
       - .gitignore
-      - CHANGELOG.md
       - README.md
 
 pool:
@@ -31,13 +30,13 @@ stages:
             deploy:
               steps:
                 - checkout: self
-                - bash: |
-                    ./deploy.sh $(environment) --pipeline
+                - bash: ./deploy.sh $(environment) --pipeline
                   workingDirectory: $(workingDirectory)
                   failOnStderr: $(failOnStderr)
                   env:
                     appId: $(appId)
                     password: $(password)
+                    tenant: $(tenant)
   - stage: prod
     variables:
       - name: environment
@@ -57,3 +56,4 @@ stages:
                   env:
                     appId: $(appId)
                     password: $(password)
+                    tenant: $(tenant)
