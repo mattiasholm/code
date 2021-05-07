@@ -49,6 +49,7 @@ module appModule 'modules/app.bicep' = [for (app, i) in apps: {
         name: app.name
         location: location
         tags: tags
+        identityType: 'SystemAssigned'
         planId: planModule.outputs.planId
         siteConfig: {
             linuxFxVersion: 'DOCKER|nginxdemos/hello:${app.dockerImageTag}'

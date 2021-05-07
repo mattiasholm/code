@@ -3,6 +3,11 @@ targetScope = 'resourceGroup'
 param name string
 param location string
 param tags object
+@allowed([
+  'None'
+  'SystemAssigned'
+])
+param identityType string = 'None'
 param planId string
 param siteConfig object
 param clientAffinityEnabled bool = false
@@ -12,6 +17,9 @@ resource app 'Microsoft.Web/sites@2020-12-01' = {
   name: name
   location: location
   tags: tags
+  identity: {
+    type: identityType
+  }
   properties: {
     serverFarmId: planId
     siteConfig: siteConfig

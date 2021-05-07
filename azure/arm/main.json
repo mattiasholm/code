@@ -53,6 +53,7 @@
         "planId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
         "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
         "appCount": "[length(parameters('apps'))]",
+        "appIdentity": "SystemAssigned",
         "appClientAffinityEnabled": false,
         "appHttpsOnly": true,
         "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
@@ -133,6 +134,9 @@
             "name": "[variables('appName')[copyIndex()]]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
+            "identity": {
+                "type": "[variables('appIdentity')]"
+            },
             "properties": {
                 "serverFarmId": "[variables('planId')]",
                 "siteConfig": "[variables('appSiteConfig')[copyIndex()]]",

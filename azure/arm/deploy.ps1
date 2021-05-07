@@ -32,4 +32,4 @@ New-AzResourceGroupDeployment `
 
 
 
-# OBS: Skriv om skriptet så att det fungerar att köra i pipeline på samma sätt som 'deploy.sh'??? Kan såklart vara bra att ha båda exemplen färdiga som referens!
+# Lägg till What-If funktionalitet innan deploy + Skriv om skriptet så att det fungerar att köra i pipeline på samma sätt som 'deploy.sh'??? Kan såklart vara bra att ha båda exemplen färdiga som referens!
