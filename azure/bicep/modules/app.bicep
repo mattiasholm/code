@@ -28,4 +28,5 @@ resource app 'Microsoft.Web/sites@2020-12-01' = {
   }
 }
 
-output appUrl string = app.properties.defaultHostName
+output url string = app.properties.defaultHostName
+output identity string = app.identity.principalId

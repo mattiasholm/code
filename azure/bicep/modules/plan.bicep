@@ -29,4 +29,4 @@ resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
   }
 }
 
-output planId string = plan.id
+output id string = plan.id

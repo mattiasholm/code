@@ -5,7 +5,7 @@ targetScope = 'resourceGroup'
 param name string
 param location string
 param tags object
-param tenantId string
+param tenantId string = subscription().tenantId
 @allowed([
   'A'
 ])
@@ -31,4 +31,4 @@ resource kv 'Microsoft.KeyVault/vaults@2019-09-01' = {
   }
 }
 
-output kvUrl string = kv.properties.vaultUri
+output url string = kv.properties.vaultUri

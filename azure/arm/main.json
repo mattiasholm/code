@@ -49,6 +49,7 @@
         "prefixStripped": "[toLower(replace(parameters('prefix'), '-', ''))]",
         "location": "[resourceGroup().location]",
         "tags": "[resourceGroup().tags]",
+        "tenantId": "[subscription().tenantId]",
         "planName": "[format('plan-{0}-001', parameters('prefix'))]",
         "planId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
         "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
@@ -63,6 +64,10 @@
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "kvFamily": "A",
         "kvSku": "standard",
+        "kvPermissionsSecrets": [
+            "Get",
+            "List"
+        ],
         "copy": [
             {
                 "name": "appName",
@@ -119,9 +124,6 @@
             }
         },
         {
-            "dependsOn": [
-                "[variables('planId')]"
-            ],
             "copy": {
                 "name": "sites",
                 "count": "[variables('appCount')]",
@@ -141,17 +143,20 @@
                     "linuxFxVersion": "[variables('linuxFxVersion')[copyIndex()]]",
                     "http20Enabled": "[variables('appHttp20Enabled')]",
                     "minTlsVersion": "[variables('appMinTlsVersion')]",
-                    "ftpsState": "[variables('appFtpsState')]",
-                    "appSettings": [
-                        {
-                            "name": "kvUrl",
-                            "value": "[reference(variables('kvId')).vaultUri]"
-                        }
-                    ]
+                    "ftpsState": "[variables('appFtpsState')]" //,
+                    // "appSettings": [
+                    //     {
+                    //         "name": "kvUrl",
+                    //         "value": "[reference(variables('kvId')).vaultUri]"
+                    //     }
+                    // ]
                 },
                 "clientAffinityEnabled": "[variables('appClientAffinityEnabled')]",
                 "httpsOnly": "[variables('appHttpsOnly')]"
-            }
+            },
+            "dependsOn": [
+                "[variables('planId')]"
+            ]
         },
         {
             "type": "Microsoft.KeyVault/vaults",
@@ -160,13 +165,28 @@
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
             "properties": {
-                "tenantId": "[subscription().tenantId]",
+                "tenantId": "[variables('tenantId')]",
                 "sku": {
                     "family": "[variables('kvFamily')]",
                     "name": "[variables('kvSku')]"
                 },
-                "accessPolicies": []
-            }
+                "copy": [
+                    {
+                        "name": "accessPolicies",
+                        "count": "[variables('appCount')]",
+                        "input": {
+                            "tenantId": "[variables('tenantId')]",
+                            "objectId": "[reference(variables('appId')[copyIndex('accessPolicies')],'2020-12-01','Full').identity.principalId]",
+                            "permissions": {
+                                "secrets": "[variables('kvPermissionsSecrets')]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "dependsOn": [
+                "sites"
+            ]
         },
         {
             "copy": {
@@ -190,12 +210,12 @@
             },
             "resources": [
                 {
-                    "dependsOn": [
-                        "[variables('stName')[copyIndex()]]"
-                    ],
                     "type": "blobServices/containers",
                     "apiVersion": "2021-01-01",
-                    "name": "[variables('stContainerName')]"
+                    "name": "[variables('stContainerName')]",
+                    "dependsOn": [
+                        "[variables('stName')[copyIndex()]]"
+                    ]
                 }
             ]
         },

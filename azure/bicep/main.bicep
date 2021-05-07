@@ -9,6 +9,7 @@ var tags = {
     Application: 'Bicep'
     Owner: 'mattias.holm@live.com'
 }
+var tenantId = subscription().tenantId
 
 var appObjects = [
     {
@@ -52,18 +53,18 @@ module app 'modules/app.bicep' = [for (appObject, i) in appObjects: {
         location: location
         tags: tags
         identityType: 'SystemAssigned'
-        planId: plan.outputs.planId
+        planId: plan.outputs.id
         siteConfig: {
             linuxFxVersion: 'DOCKER|nginxdemos/hello:${appObject.dockerImageTag}'
             http20Enabled: true
             minTlsVersion: '1.2'
             ftpsState: 'FtpsOnly'
-            appSettings: [
-                {
-                    name: 'kvUrl'
-                    value: kv.outputs.kvUrl
-                }
-            ]
+            // appSettings: [
+            //     {
+            //         name: 'kvUrl'
+            //         // value: kv.outputs.url
+            //     }
+            // ]
         }
         clientAffinityEnabled: false
         httpsOnly: true
@@ -77,10 +78,19 @@ module kv 'modules/kv.bicep' = {
         name: 'kv-${prefix}-001'
         location: location
         tags: tags
-        tenantId: subscription().tenantId
+        tenantId: tenantId
         skuFamily: 'A'
         skuName: 'standard'
-        accessPolicies: []
+        accessPolicies: [for (appObject, i) in appObjects: {
+            tenantId: tenantId
+            objectId: app[i].outputs.identity
+            permissions: {
+                secrets: [
+                    'Get'
+                    'List'
+                ]
+            }
+        }]
     }
 }
 
@@ -117,22 +127,22 @@ module vnet 'modules/vnet.bicep' = if (toggleVnet) {
 
 output appUrl array = [for (appObject, i) in appObjects: {
     name: appObject.name
-    appUrl: app[i].outputs.appUrl
+    url: app[i].outputs.url
 }]
-output kvUrl string = kv.outputs.kvUrl
+output kvUrl string = kv.outputs.url
 output stBlobUrl array = [for i in range(0, stCount): {
     name: 'st${prefixStripped}00${i + 1}'
-    stBlobUrl: st[i].outputs.stBlobUrl
+    blobUrl: st[i].outputs.blobUrl
 }]
 output stFileUrl array = [for i in range(0, stCount): {
     name: 'st${prefixStripped}00${i + 1}'
-    stFileUrl: st[i].outputs.stFileUrl
+    fileUrl: st[i].outputs.fileUrl
 }]
 output stTableUrl array = [for i in range(0, stCount): {
     name: 'st${prefixStripped}00${i + 1}'
-    stTableUrl: st[i].outputs.stTableUrl
+    tableUrl: st[i].outputs.tableUrl
 }]
 output stQueueUrl array = [for i in range(0, stCount): {
     name: 'st${prefixStripped}00${i + 1}'
-    stQueueUrl: st[i].outputs.stQueueUrl
+    queueUrl: st[i].outputs.queueUrl
 }]
