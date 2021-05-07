@@ -54,6 +54,9 @@
         "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
         "appCount": "[length(parameters('apps'))]",
         "appIdentity": "SystemAssigned",
+        "appHttp20Enabled": true,
+        "appMinTlsVersion": "1.2",
+        "appFtpsState": "FtpsOnly",
         "appClientAffinityEnabled": false,
         "appHttpsOnly": true,
         "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
@@ -72,14 +75,9 @@
                 "input": "[resourceId('Microsoft.Web/sites', variables('appName')[copyIndex('appId')])]"
             },
             {
-                "name": "appSiteConfig",
+                "name": "linuxFxVersion",
                 "count": "[variables('appCount')]",
-                "input": {
-                    "linuxFxVersion": "[format('DOCKER|nginxdemos/hello:{0}', parameters('apps')[copyIndex('appSiteConfig')].dockerImageTag)]",
-                    "http20Enabled": "true",
-                    "minTlsVersion": "1.2",
-                    "ftpsState": "FtpsOnly"
-                }
+                "input": "[format('DOCKER|nginxdemos/hello:{0}', parameters('apps')[copyIndex('linuxFxVersion')].dockerImageTag)]"
             },
             {
                 "name": "stName",
@@ -139,7 +137,18 @@
             },
             "properties": {
                 "serverFarmId": "[variables('planId')]",
-                "siteConfig": "[variables('appSiteConfig')[copyIndex()]]",
+                "siteConfig": {
+                    "linuxFxVersion": "[variables('linuxFxVersion')[copyIndex()]]",
+                    "http20Enabled": "[variables('appHttp20Enabled')]",
+                    "minTlsVersion": "[variables('appMinTlsVersion')]",
+                    "ftpsState": "[variables('appFtpsState')]",
+                    "appSettings": [
+                        {
+                            "name": "kvUrl",
+                            "value": "[reference(variables('kvId')).vaultUri]"
+                        }
+                    ]
+                },
                 "clientAffinityEnabled": "[variables('appClientAffinityEnabled')]",
                 "httpsOnly": "[variables('appHttpsOnly')]"
             }

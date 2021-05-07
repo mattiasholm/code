@@ -58,6 +58,12 @@ module app 'modules/app.bicep' = [for (appObject, i) in appObjects: {
             http20Enabled: true
             minTlsVersion: '1.2'
             ftpsState: 'FtpsOnly'
+            appSettings: [
+                {
+                    name: 'kvUrl'
+                    value: kv.outputs.kvUrl
+                }
+            ]
         }
         clientAffinityEnabled: false
         httpsOnly: true
