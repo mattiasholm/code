@@ -9,7 +9,20 @@ var tags = {
     Application: 'Bicep'
     Owner: 'mattias.holm@live.com'
 }
+
+var appObjects = [
+    {
+        name: 'app-${prefix}-001'
+        dockerImageTag: 'latest'
+    }
+    {
+        name: 'app-${prefix}-002'
+        dockerImageTag: 'plain-text'
+    }
+]
+
 var stCount = 3
+
 var toggleVnet = true
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
@@ -18,8 +31,8 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
     tags: tags
 }
 
-module planModule 'modules/plan.bicep' = {
-    name: 'planModule'
+module plan 'modules/plan.bicep' = {
+    name: 'plan'
     scope: rg
     params: {
         name: 'plan-${prefix}-001'
@@ -31,28 +44,17 @@ module planModule 'modules/plan.bicep' = {
     }
 }
 
-var apps = [
-    {
-        name: 'app-${prefix}-001'
-        dockerImageTag: 'latest'
-    }
-    {
-        name: 'app-${prefix}-002'
-        dockerImageTag: 'plain-text'
-    }
-]
-
-module appModule 'modules/app.bicep' = [for (app, i) in apps: {
-    name: 'appModule${i}'
+module app 'modules/app.bicep' = [for (appObject, i) in appObjects: {
+    name: 'app${i}'
     scope: rg
     params: {
-        name: app.name
+        name: appObject.name
         location: location
         tags: tags
         identityType: 'SystemAssigned'
-        planId: planModule.outputs.planId
+        planId: plan.outputs.planId
         siteConfig: {
-            linuxFxVersion: 'DOCKER|nginxdemos/hello:${app.dockerImageTag}'
+            linuxFxVersion: 'DOCKER|nginxdemos/hello:${appObject.dockerImageTag}'
             http20Enabled: true
             minTlsVersion: '1.2'
             ftpsState: 'FtpsOnly'
@@ -62,8 +64,8 @@ module appModule 'modules/app.bicep' = [for (app, i) in apps: {
     }
 }]
 
-module kvModule 'modules/kv.bicep' = {
-    name: 'kvModule'
+module kv 'modules/kv.bicep' = {
+    name: 'kv'
     scope: rg
     params: {
         name: 'kv-${prefix}-001'
@@ -76,8 +78,8 @@ module kvModule 'modules/kv.bicep' = {
     }
 }
 
-module stModule 'modules/st.bicep' = [for i in range(0, stCount): {
-    name: 'stModule${i}'
+module st 'modules/st.bicep' = [for i in range(0, stCount): {
+    name: 'st${i}'
     scope: rg
     params: {
         name: 'st${prefixStripped}00${i + 1}'
@@ -92,8 +94,8 @@ module stModule 'modules/st.bicep' = [for i in range(0, stCount): {
     }
 }]
 
-module vnetModule 'modules/vnet.bicep' = if (toggleVnet) {
-    name: 'vnetModule'
+module vnet 'modules/vnet.bicep' = if (toggleVnet) {
+    name: 'vnet'
     scope: rg
     params: {
         name: 'vnet-${prefix}-001'
@@ -107,24 +109,24 @@ module vnetModule 'modules/vnet.bicep' = if (toggleVnet) {
     }
 }
 
-output appUrl array = [for (app, i) in apps: {
-    name: app.name
-    appUrl: appModule[i].outputs.appUrl
+output appUrl array = [for (appObject, i) in appObjects: {
+    name: appObject.name
+    appUrl: app[i].outputs.appUrl
 }]
-output kvUrl string = kvModule.outputs.kvUrl
+output kvUrl string = kv.outputs.kvUrl
 output stBlobUrl array = [for i in range(0, stCount): {
     name: 'st${prefixStripped}00${i + 1}'
-    stBlobUrl: stModule[i].outputs.stBlobUrl
+    stBlobUrl: st[i].outputs.stBlobUrl
 }]
 output stFileUrl array = [for i in range(0, stCount): {
     name: 'st${prefixStripped}00${i + 1}'
-    stFileUrl: stModule[i].outputs.stFileUrl
+    stFileUrl: st[i].outputs.stFileUrl
 }]
 output stTableUrl array = [for i in range(0, stCount): {
     name: 'st${prefixStripped}00${i + 1}'
-    stTableUrl: stModule[i].outputs.stTableUrl
+    stTableUrl: st[i].outputs.stTableUrl
 }]
 output stQueueUrl array = [for i in range(0, stCount): {
     name: 'st${prefixStripped}00${i + 1}'
-    stQueueUrl: stModule[i].outputs.stQueueUrl
+    stQueueUrl: st[i].outputs.stQueueUrl
 }]
