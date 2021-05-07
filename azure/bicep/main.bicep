@@ -24,7 +24,8 @@ var appObjects = [
 
 var stCount = 3
 
-var toggleVnet = true
+var vnetToggle = true
+var vnetAddressPrefix = '10.0.0.0/24'
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
     name: 'rg-${prefix}-001'
@@ -110,7 +111,7 @@ module st 'modules/st.bicep' = [for i in range(0, stCount): {
     }
 }]
 
-module vnet 'modules/vnet.bicep' = if (toggleVnet) {
+module vnet 'modules/vnet.bicep' = if (vnetToggle) {
     name: 'vnet'
     scope: rg
     params: {
@@ -118,10 +119,10 @@ module vnet 'modules/vnet.bicep' = if (toggleVnet) {
         location: location
         tags: tags
         addressPrefixes: [
-            '10.0.0.0/24'
+            vnetAddressPrefix
         ]
         snetName: 'snet-${prefix}-001'
-        snetAddressPrefix: '10.0.0.0/24'
+        snetAddressPrefix: vnetAddressPrefix
     }
 }
 
