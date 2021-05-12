@@ -55,6 +55,7 @@
         "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
         "appCount": "[length(parameters('apps'))]",
         "appIdentity": "SystemAssigned",
+        "appAlwaysOn": true,
         "appHttp20Enabled": true,
         "appMinTlsVersion": "1.2",
         "appFtpsState": "FtpsOnly",
@@ -141,21 +142,32 @@
                 "serverFarmId": "[variables('planId')]",
                 "siteConfig": {
                     "linuxFxVersion": "[variables('linuxFxVersion')[copyIndex()]]",
+                    "alwaysOn": "[variables('appAlwaysOn')]",
                     "http20Enabled": "[variables('appHttp20Enabled')]",
                     "minTlsVersion": "[variables('appMinTlsVersion')]",
-                    "ftpsState": "[variables('appFtpsState')]" //,
-                    // "appSettings": [
-                    //     {
-                    //         "name": "kvUrl",
-                    //         "value": "[reference(variables('kvId')).vaultUri]"
-                    //     }
-                    // ]
+                    "ftpsState": "[variables('appFtpsState')]"
                 },
                 "clientAffinityEnabled": "[variables('appClientAffinityEnabled')]",
                 "httpsOnly": "[variables('appHttpsOnly')]"
             },
             "dependsOn": [
                 "[variables('planId')]"
+            ],
+            "resources": [
+                {
+                    "type": "config",
+                    "apiVersion": "2020-10-01",
+                    "name": "appsettings",
+                    "location": "[variables('location')]",
+                    "tags": "[variables('tags')]",
+                    "properties": {
+                        "KeyVaultUrl": "[reference(variables('kvId')).vaultUri]"
+                    },
+                    "dependsOn": [
+                        "[variables('appId')[copyIndex()]]",
+                        "[variables('kvId')]"
+                    ]
+                }
             ]
         },
         {
@@ -181,12 +193,14 @@
                                 "secrets": "[variables('kvPermissionsSecrets')]"
                             }
                         }
+                    },
+                    {
+                        "name": "dependsOn",
+                        "count": "[variables('appCount')]",
+                        "input": "[variables('appId')[copyIndex('dependsOn')]]"
                     }
                 ]
-            },
-            "dependsOn": [
-                "sites"
-            ]
+            }
         },
         {
             "copy": {
@@ -214,7 +228,7 @@
                     "apiVersion": "2021-01-01",
                     "name": "[variables('stContainerName')]",
                     "dependsOn": [
-                        "[variables('stName')[copyIndex()]]"
+                        "[variables('stId')[copyIndex()]]"
                     ]
                 }
             ]

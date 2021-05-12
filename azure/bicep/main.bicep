@@ -57,6 +57,7 @@ module app 'modules/app.bicep' = [for (appObject, i) in appObjects: {
         planId: plan.outputs.id
         siteConfig: {
             linuxFxVersion: 'DOCKER|nginxdemos/hello:${appObject.dockerImageTag}'
+            alwaysOn: true
             http20Enabled: true
             minTlsVersion: '1.2'
             ftpsState: 'FtpsOnly'
