@@ -1,5 +1,3 @@
-targetScope = 'resourceGroup'
-
 @minLength(3)
 @maxLength(24)
 param name string

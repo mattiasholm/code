@@ -161,7 +161,7 @@
                     "location": "[variables('location')]",
                     "tags": "[variables('tags')]",
                     "properties": {
-                        "KeyVaultUrl": "[reference(variables('kvId')).vaultUri]"
+                        "kvUrl": "[reference(variables('kvId')).vaultUri]"
                     },
                     "dependsOn": [
                         "[variables('appId')[copyIndex()]]",
@@ -227,6 +227,8 @@
                     "type": "blobServices/containers",
                     "apiVersion": "2021-01-01",
                     "name": "[variables('stContainerName')]",
+                    "location": "[variables('location')]",
+                    "tags": "[variables('tags')]",
                     "dependsOn": [
                         "[variables('stId')[copyIndex()]]"
                     ]

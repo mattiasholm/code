@@ -1,5 +1,3 @@
-targetScope = 'resourceGroup'
-
 @minLength(3)
 @maxLength(24)
 param name string
@@ -48,10 +46,10 @@ resource st 'Microsoft.Storage/storageAccounts@2021-02-01' = {
     minimumTlsVersion: minimumTlsVersion
   }
 
-  resource blobServices 'blobServices@2021-02-01' = {
+  resource blobServices 'blobServices' = {
     name: 'default'
 
-    resource container 'containers@2021-02-01' = {
+    resource container 'containers' = {
       name: containerName
     }
   }

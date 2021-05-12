@@ -1,5 +1,3 @@
-targetScope = 'resourceGroup'
-
 param name string
 param location string
 param tags object
