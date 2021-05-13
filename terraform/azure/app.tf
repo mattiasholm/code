@@ -1,24 +1,4 @@
 # locals {
-#   planName = "${local.prefix}-AppPlan01"
-#   planKind = "app"
-# }
-
-# resource "azurerm_app_service_plan" "plan" {
-#   name                = local.planName
-#   resource_group_name = var.rgName
-#   location            = var.location
-#   tags                = var.tags
-#   kind                = local.planKind
-#   sku {
-#     tier     = var.planTier
-#     size     = var.planSize
-#     capacity = var.planCapacity
-#   }
-# }
-
-
-
-# locals {
 #   appName      = "${local.prefix}-App01"
 #   appHttpsOnly = true
 # }

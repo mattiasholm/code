@@ -2,7 +2,7 @@
 
 # resource "azurerm_key_vault" "kv" {
 #   name                = "kv-${var.prefix}-001"
-#   resource_group_name = var.rgName
+#   resource_group_name = azurerm_resource_group.rg.name
 #   location            = var.location
 #   tags                = var.tags
 #   tenant_id           = data.azurerm_client_config.current.tenant_id
@@ -19,5 +19,5 @@
 # }
 
 # output "keyvautUrl" {
-#   value = azurerm_key_vault.keyvault.vault_uri
+#   value = azurerm_key_vault.kv.vault_uri
 # }

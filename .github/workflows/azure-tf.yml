@@ -1,0 +1,29 @@
+name: Azure Terraform
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "terraform/azure/**"
+      - "!**.md"
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Azure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Run deploy script
+        run: ./deploy.sh --pipeline
+        shell: bash
+        working-directory: terraform/azure
+        env:
+          appId: ${{ secrets.appId }}
+          password: ${{ secrets.password }}
+          tenant: ${{ secrets.tenant }}
