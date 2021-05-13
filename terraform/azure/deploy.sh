@@ -19,8 +19,10 @@ function Login() {
             az account set --subscription "${subscriptionId}"
         ;;
     "Pipeline")
-        az login --service-principal --username "${appId}" --password "${password}" --tenant "${tenant}" &&
-            az account set --subscription "${subscriptionId}"
+        export ARM_CLIENT_ID="${appId}"
+        export ARM_CLIENT_SECRET="${password}"
+        export ARM_SUBSCRIPTION_ID="${subscriptionId}"
+        export ARM_TENANT_ID="${tenant}"
         ;;
     esac
 }
