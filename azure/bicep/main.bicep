@@ -74,9 +74,22 @@ module appsettings 'modules/appsettings.bicep' = [for (appObject, i) in appObjec
         name: appObject.name
         properties: {
             kvUrl: kv.outputs.url
-          }
+            APPLICATIONINSIGHTS_CONNECTION_STRING: appi.outputs.connectionString
+        }
     }
 }]
+
+module appi 'modules/appi.bicep' = {
+    name: 'appi'
+    scope: rg
+    params: {
+        name: 'appi-${prefix}-001'
+        location: location
+        tags: tags
+        kind: 'web'
+        Application_Type: 'web'
+    }
+}
 
 module kv 'modules/kv.bicep' = {
     name: 'kv'

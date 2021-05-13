@@ -61,6 +61,10 @@
         "appFtpsState": "FtpsOnly",
         "appClientAffinityEnabled": false,
         "appHttpsOnly": true,
+        "appiName": "[format('appi-{0}-001', parameters('prefix'))]",
+        "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
+        "appiKind": "web",
+        "appiType": "web",
         "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "kvFamily": "A",
@@ -161,14 +165,27 @@
                     "location": "[variables('location')]",
                     "tags": "[variables('tags')]",
                     "properties": {
-                        "kvUrl": "[reference(variables('kvId')).vaultUri]"
+                        "kvUrl": "[reference(variables('kvId')).vaultUri]",
+                        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[reference(variables('appiId')).ConnectionString]"
                     },
                     "dependsOn": [
                         "[variables('appId')[copyIndex()]]",
-                        "[variables('kvId')]"
+                        "[variables('kvId')]",
+                        "[variables('appiId')]"
                     ]
                 }
             ]
+        },
+        {
+            "type": "Microsoft.Insights/components",
+            "apiVersion": "2015-05-01",
+            "name": "[variables('appiName')]",
+            "location": "[variables('location')]",
+            "tags": "[variables('tags')]",
+            "kind": "[variables('appiKind')]",
+            "properties": {
+                "Application_Type": "[variables('appiType')]"
+            }
         },
         {
             "type": "Microsoft.KeyVault/vaults",
