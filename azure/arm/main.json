@@ -37,7 +37,7 @@
         "stCount": {
             "type": "int"
         },
-        "toggleVnet": {
+        "vnetToggle": {
             "type": "bool"
         },
         "vnetAddressPrefix": {
@@ -253,7 +253,7 @@
             ]
         },
         {
-            "condition": "[parameters('toggleVnet')]",
+            "condition": "[parameters('vnetToggle')]",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-11-01",
             "name": "[variables('vnetName')]",

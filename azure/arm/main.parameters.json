@@ -30,7 +30,7 @@
     "stCount": {
       "value": 3
     },
-    "toggleVnet": {
+    "vnetToggle": {
       "value": true
     },
     "vnetAddressPrefix": {
