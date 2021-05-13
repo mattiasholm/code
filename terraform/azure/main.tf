@@ -1,10 +1,10 @@
 terraform {
-  required_version = "~> 0.14.3"
+  required_version = "~> 0.15.0"
 
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.35.0"
+      version = "~> 2.58.0"
     }
   }
 }
@@ -13,9 +13,18 @@ provider "azurerm" {
   features {}
 }
 
-locals {
-  prefix = var.rgName
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Fortsätt med modules med params, inget hårdkodat i respektive template!
 # https://www.terraform.io/docs/modules/index.html

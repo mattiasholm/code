@@ -1,16 +1,16 @@
-rgName = "holm-tf"
-
-rgLocation = "WestEurope"
-
-rgTags = {
-  Environment = "Lab"
+prefix = "holm-tf"
+location = "WestEurope"
+tags = {
+  Application = "Terraform"
+  Company = "Holm"
+  Environment = "Test"
   Owner       = "mattias.holm@live.com"
 }
 
-vnetAddressPrefix = ["10.1.0.0/24"]
+# vnetAddressPrefix = ["10.1.0.0/24"]
 
-planTier = "Basic"
+# planTier = "Basic"
 
-planSize = "B1"
+# planSize = "B1"
 
-planCapacity = 1
+# planCapacity = 1

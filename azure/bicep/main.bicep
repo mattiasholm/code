@@ -4,9 +4,9 @@ var prefix = 'holm-bicep'
 var prefixStripped = toLower(replace(prefix, '-', ''))
 var location = deployment().location
 var tags = {
+    Application: 'Bicep'
     Company: 'Holm'
     Environment: 'Test'
-    Application: 'Bicep'
     Owner: 'mattias.holm@live.com'
 }
 var tenantId = subscription().tenantId

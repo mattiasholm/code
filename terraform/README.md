@@ -159,13 +159,3 @@ terraform import <terraform-resource-type>.<resource-label> <azure-resource-id>
 ```shell
 terraform console
 ```
-
-<!-- 
-Komplettera med fler subcommands allt eftersom:
-https://www.terraform.io/docs/commands/index.html
-
-Eventuellt lägga till cheat sheet för expressions etc??
-https://www.terraform.io/docs/configuration/expressions.html
-
-"terraform.tfvars" or any ".auto.tfvars"
--->
