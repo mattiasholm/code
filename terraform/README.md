@@ -124,9 +124,14 @@ terraform show --json | jq
 terraform refresh
 ```
 
-## List all resources created with Terraform:
+## List all resources in Terraform state:
 ```shell
 terraform state list
+```
+
+## Remove a specific resource from Terraform state:
+```shell
+terraform state rm <terraform-resource-type>.<resource-label>
 ```
 
 <br><br>

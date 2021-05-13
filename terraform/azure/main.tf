@@ -7,15 +7,19 @@ terraform {
       version = "~> 2.58.0"
     }
   }
+  
+  backend "remote" {
+    organization = "mattiasholm"
+    
+    workspaces {
+      name = "code"
+    }
+  }
 }
 
 provider "azurerm" {
   features {}
 }
-
-
-
-
 
 
 
