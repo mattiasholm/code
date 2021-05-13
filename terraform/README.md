@@ -26,17 +26,22 @@ terraform [<subcommand>] -h
 
 ## Enable tab completion:
 ```shell
-terraform -install-autocomplete
+terraform --install-autocomplete
 ```
 
 <br><br>
 
-## Authenticate to Terraform Cloud (if using remote backend):
+## Log in to Terraform Cloud (if using remote backend):
 ```shell
 terraform login
 ```
 
-## Authenticate to Azure (using Azure CLI):
+## Log out from Terraform Cloud (if using remote backend):
+```shell
+terraform logout
+```
+
+## Log in to Azure (using Azure CLI):
 ```shell
 az login
 ```
@@ -67,7 +72,7 @@ terraform plan
 
 ## Save a Terraform execution plan to file:
 ```shell
-terraform plan -out=<plan-name>
+terraform plan --out=<plan-name>
 ```
 
 <br><br>
@@ -84,17 +89,17 @@ terraform apply --auto-approve
 
 ## Apply a Terraform configuration from a previously saved plan:
 ```shell
-terraform apply -input=false <plan-name>
+terraform apply --input=false <plan-name>
 ```
 
 ## Apply a Terraform configuration and pass variables inline:
 ```shell
-terraform apply -var '<variable-name>=<value>'
+terraform apply --var '<variable-name>=<value>'
 ```
 
 ## Apply a Terraform configuration and pass variables from file:
 ```shell
-terraform apply -var-file='<path>'
+terraform apply --var-file='<path>'
 ```
 
 <br><br>

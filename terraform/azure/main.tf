@@ -10,7 +10,7 @@ terraform {
   
   backend "remote" {
     organization = "mattiasholm"
-    
+
     workspaces {
       name = "code"
     }
@@ -26,8 +26,9 @@ provider "azurerm" {
 
 
 
-# Remote state - Storage Account, hantera utanför Terraform, t.ex. Azure CLI!
-
+# # # Remote state - Storage Account, hantera utanför Terraform, t.ex. Azure CLI!
+# https://docs.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage
+# https://www.terraform.io/docs/language/settings/backends/azurerm.html
 
 
 # https://learn.hashicorp.com/tutorials/terraform/github-actions
