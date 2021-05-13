@@ -28,9 +28,9 @@ function Login() {
 }
 
 function Deploy() {
-    terraform init
-    terraform plan
-    terraform apply --auto-approve
+    terraform init -input=false
+    terraform plan -out=tfplan -input=false
+    terraform apply -input=false tfplan
 }
 
 function main() {

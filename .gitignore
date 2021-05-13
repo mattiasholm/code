@@ -6,6 +6,7 @@
 /**/*.tfstate*
 /**/.terraform/
 /**/.terraform.lock.hcl
+/**/tfplan
 
 /**/*.pyc
 /**/venv/
