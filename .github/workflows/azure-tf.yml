@@ -25,7 +25,7 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Run deploy script
-        run: ./deploy.sh --pipeline
+        run: ./deploy.sh
         shell: bash
         working-directory: terraform/azure
         env:

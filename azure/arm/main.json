@@ -165,7 +165,7 @@
                     "location": "[variables('location')]",
                     "tags": "[variables('tags')]",
                     "properties": {
-                        "kvUrl": "[reference(variables('kvId')).vaultUri]",
+                        "KEYVAULT_URL": "[reference(variables('kvId')).vaultUri]",
                         "APPLICATIONINSIGHTS_CONNECTION_STRING": "[reference(variables('appiId')).ConnectionString]"
                     },
                     "dependsOn": [

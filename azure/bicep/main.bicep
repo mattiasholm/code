@@ -73,7 +73,7 @@ module appsettings 'modules/appsettings.bicep' = [for (appObject, i) in appObjec
     params: {
         name: appObject.name
         properties: {
-            kvUrl: kv.outputs.url
+            KEYVAULT_URL: kv.outputs.url
             APPLICATIONINSIGHTS_CONNECTION_STRING: appi.outputs.connectionString
         }
     }
