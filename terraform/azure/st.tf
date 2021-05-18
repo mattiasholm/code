@@ -1,4 +1,8 @@
 # locals {
+#   prefixStripped = lower(replace(var.prefix, "-",""))
+# }
+
+# locals {
 #   storageCount        = 3
 #   storageName         = lower(replace("${local.prefix}-Storage0", "-", ""))
 #   storageTier         = "Standard"
