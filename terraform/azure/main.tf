@@ -7,6 +7,7 @@ terraform {
       version = "~> 2.58.0"
     }
   }
+
   backend "remote" {
     organization = "mattiasholm"
 
@@ -19,11 +20,6 @@ terraform {
 provider "azurerm" {
   features {}
 }
-
-
-
-
-
 
 # # # Remote state - Storage Account, hantera utanför Terraform, t.ex. Azure CLI!
 # https://docs.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage
