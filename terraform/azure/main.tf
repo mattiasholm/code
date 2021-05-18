@@ -7,7 +7,6 @@ terraform {
       version = "~> 2.58.0"
     }
   }
-
   backend "remote" {
     organization = "mattiasholm"
 
