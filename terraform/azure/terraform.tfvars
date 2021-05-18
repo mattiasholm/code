@@ -9,7 +9,7 @@ tags = {
 
 planKind     = "linux"
 planTier     = "Basic"
-planSize     = "B1"
+planSize     = "Apa"
 planCapacity = 1
 
 # vnetAddressPrefix = ["10.1.0.0/24"]
