@@ -26,10 +26,15 @@ jobs:
 
       - name: Authenticate to Azure
         run: |
-          export ARM_CLIENT_ID="${{ secrets.appId }}"
-          export ARM_CLIENT_SECRET="${{ secrets.password }}"
-          export ARM_SUBSCRIPTION_ID="${{ secrets.subscriptionId }}"
-          export ARM_TENANT_ID="${{ secrets.tenant }}"
+          export ARM_CLIENT_ID="${appId}"
+          export ARM_CLIENT_SECRET="${password}"
+          export ARM_SUBSCRIPTION_ID="${subscriptionId}"
+          export ARM_TENANT_ID="${tenant}"
+        env:
+          appId: ${{ secrets.appId }}
+          password: ${{ secrets.password }}
+          subscriptionId: ${{ secrets.subscriptionId }}
+          tenant: ${{ secrets.tenant }}
 
       - name: terraform init
         run: terraform init --input=false
