@@ -21,7 +21,6 @@ jobs:
 
       - name: Run deploy script
         run: ./deploy.sh --pipeline
-        shell: bash
         working-directory: azure/arm
         env:
           appId: ${{ secrets.appId }}

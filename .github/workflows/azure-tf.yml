@@ -19,16 +19,28 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Terraform Cloud
+      - name: Authenticate to Terraform Cloud
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Run deploy script
-        run: ./deploy.sh
-        shell: bash
-        working-directory: terraform/azure
-        env:
-          appId: ${{ secrets.appId }}
-          password: ${{ secrets.password }}
-          tenant: ${{ secrets.tenant }}
+      - name: Authenticate to Azure
+        run: |
+          export ARM_CLIENT_ID="${appId}"
+          export ARM_CLIENT_SECRET="${password}"
+          export ARM_SUBSCRIPTION_ID="${subscriptionId}"
+          export ARM_TENANT_ID="${tenant}"
+        # env:
+        #   appId: ${{ secrets.appId }}
+        #   password: ${{ secrets.password }}
+        #   subscriptionId: ${{ secrets.subscriptionId }}
+        #   tenant: ${{ secrets.tenant }}
+
+      - name: terraform init
+        run: terraform init --input=false
+
+      - name: terraform plan
+        run: terraform plan -out=tfplan -input=false
+
+      - name: terraform apply
+        run: terraform apply -input=false tfplan
