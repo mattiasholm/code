@@ -7,9 +7,9 @@ tags = {
   Owner       = "mattias.holm@live.com"
 }
 
-planKind     = "linux"
+planKindApa     = "linux"
 planTier     = "Basic"
-planSize     = "Apa"
+planSize     = "B1"
 planCapacity = 1
 
 # vnetAddressPrefix = ["10.1.0.0/24"]
