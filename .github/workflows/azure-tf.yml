@@ -21,22 +21,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Authenticate to Terraform Cloud
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-      # - name: Authenticate to Azure
-      #   run: |
-      #     export ARM_CLIENT_ID="${appId}"
-      #     export ARM_CLIENT_SECRET="${password}"
-      #     export ARM_SUBSCRIPTION_ID="${subscriptionId}"
-      #     export ARM_TENANT_ID="${tenant}"
-      #   env:
-      #     appId: ${{ secrets.appId }}
-      #     password: ${{ secrets.password }}
-      #     subscriptionId: ${{ secrets.subscriptionId }}
-      #     tenant: ${{ secrets.tenant }}
 
       - name: terraform fmt
         run: terraform fmt --check
@@ -47,13 +35,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
       - name: terraform plan
-        run: |
-          # export ARM_CLIENT_ID="${appId}"
-          # export ARM_CLIENT_SECRET="${password}"
-          # export ARM_SUBSCRIPTION_ID="${subscriptionId}"
-          # export ARM_TENANT_ID="${tenant}"
-
-          terraform plan -out=tfplan -input=false
+        run: terraform plan -out=tfplan -input=false
         working-directory: ${{ env.working-directory }}
         env:
           ARM_CLIENT_ID: ${{ secrets.appId }}
