@@ -38,9 +38,12 @@ jobs:
 
       - name: terraform init
         run: terraform init --input=false
+        working-directory: terraform/azure
 
       - name: terraform plan
         run: terraform plan -out=tfplan -input=false
+        working-directory: terraform/azure
 
       - name: terraform apply
         run: terraform apply -input=false tfplan
+        working-directory: terraform/azure
