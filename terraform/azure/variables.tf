@@ -39,7 +39,9 @@ variable "planCapacity" {
 }
 
 variable "apps" {
-  type = list(object({ dockerImageTag=string }))
+  type = list(object({
+    dockerImageTag = string
+  }))
 }
 
 variable "appIdentity" {
@@ -59,10 +61,6 @@ variable "appClientAffinityEnabled" {
 variable "appHttpsOnly" {
   type    = bool
   default = true
-}
-
-variable "appLinuxFxVersion" {
-  type    = string
 }
 
 variable "appAlwaysOn" {
@@ -92,7 +90,3 @@ variable "appFtpsState" {
     error_message = "Invalid value for variable."
   }
 }
-
-# variable "vnetAddressPrefix" {
-#   type = list(string)
-# }

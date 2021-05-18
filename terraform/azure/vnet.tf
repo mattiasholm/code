@@ -18,3 +18,21 @@
 # output "vnetId" {
 #   value = azurerm_virtual_network.vnet.id
 # }
+
+
+
+
+
+
+
+# variable "vnetAddressPrefix" {
+#   type = list(string)
+# }
+
+
+
+
+
+
+
+# vnetAddressPrefix = ["10.1.0.0/24"]
