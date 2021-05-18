@@ -12,8 +12,13 @@ planTier     = "Basic"
 planSize     = "B1"
 planCapacity = 1
 
-# vnetAddressPrefix = ["10.1.0.0/24"]
+appIdentity = "SystemAssigned"
+appLinuxFxVersion = "DOCKER|nginxdemos/hello:latest"
+appAlwaysOn = true
+appHttp20Enabled = true
+appMinTlsVersion = "1.2"
+appFtpsState = "FtpsOnly"
+appClientAffinityEnabled = false
+appHttpsOnly = true
 
-# var VS locals! Går såklart använda flera .tfvars-filer om man vill hålla det modulärt!
-# Fast å andra sidan vill jag väl bara bryta ut saker saker som faktiskt skiljer mellan Test/Prod?
-# global.auto.tfvars + prod.tfvars / test.tfvars
+# vnetAddressPrefix = ["10.1.0.0/24"]

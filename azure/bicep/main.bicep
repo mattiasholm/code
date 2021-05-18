@@ -13,11 +13,9 @@ var tenantId = subscription().tenantId
 
 var appObjects = [
     {
-        name: 'app-${prefix}-001'
         dockerImageTag: 'latest'
     }
     {
-        name: 'app-${prefix}-002'
         dockerImageTag: 'plain-text'
     }
 ]
@@ -50,7 +48,7 @@ module app 'modules/app.bicep' = [for (appObject, i) in appObjects: {
     name: 'app${i}'
     scope: rg
     params: {
-        name: appObject.name
+        name: 'app-${prefix}-00${i + 1}'
         location: location
         tags: tags
         identityType: 'SystemAssigned'
@@ -71,7 +69,7 @@ module appsettings 'modules/appsettings.bicep' = [for (appObject, i) in appObjec
     name: 'appsettings${i}'
     scope: rg
     params: {
-        name: appObject.name
+        name: 'app-${prefix}-00${i + 1}'
         properties: {
             KEYVAULT_URL: kv.outputs.url
             APPLICATIONINSIGHTS_CONNECTION_STRING: appi.outputs.connectionString
@@ -146,7 +144,7 @@ module vnet 'modules/vnet.bicep' = if (vnetToggle) {
 }
 
 output appUrl array = [for (appObject, i) in appObjects: {
-    name: appObject.name
+    name: 'app-${prefix}-00${i + 1}'
     url: app[i].outputs.url
 }]
 output kvUrl string = kv.outputs.url
