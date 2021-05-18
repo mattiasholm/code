@@ -36,16 +36,20 @@ jobs:
       #     subscriptionId: ${{ secrets.subscriptionId }}
       #     tenant: ${{ secrets.tenant }}
 
+      - name: terraform fmt
+        run: terraform fmt --check
+        working-directory: terraform/azure
+        
       - name: terraform init
         run: terraform init --input=false
         working-directory: terraform/azure
 
       - name: terraform plan
         run: |
-          export ARM_CLIENT_ID="${appId}"
-          export ARM_CLIENT_SECRET="${password}"
-          export ARM_SUBSCRIPTION_ID="${subscriptionId}"
-          export ARM_TENANT_ID="${tenant}"
+          # export ARM_CLIENT_ID="${appId}"
+          # export ARM_CLIENT_SECRET="${password}"
+          # export ARM_SUBSCRIPTION_ID="${subscriptionId}"
+          # export ARM_TENANT_ID="${tenant}"
 
           terraform plan -out=tfplan -input=false
         working-directory: terraform/azure
