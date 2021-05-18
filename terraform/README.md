@@ -67,6 +67,16 @@ terraform init
 terraform validate
 ```
 
+## Check formatting of Terraform configuration files:
+```shell
+terraform fmt --check
+```
+
+## Automatically fix formatting of Terraform configuration files:
+```shell
+terraform fmt
+```
+
 ## Create a Terraform execution plan:
 ```shell
 terraform plan

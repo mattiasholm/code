@@ -1,3 +1,7 @@
+# If your instances are almost identical, count is appropriate. If some of their arguments need distinct values that can't be directly derived from an integer, it's safer to use for_each.
+
+# Before for_each was available, it was common to derive count from the length of a list and use count.index to look up the original list value:
+
 # locals {
 #   prefixStripped = lower(replace(var.prefix, "-",""))
 # }
