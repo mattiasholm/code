@@ -40,11 +40,11 @@ jobs:
 
       - name: terraform fmt
         run: terraform fmt --check
-        working-directory: $(working-directory)
+        working-directory: ${{ env.working-directory }}
         
       - name: terraform init
         run: terraform init --input=false
-        working-directory: $(working-directory)
+        working-directory: ${{ env.working-directory }}
 
       - name: terraform plan
         run: |
@@ -54,7 +54,7 @@ jobs:
           # export ARM_TENANT_ID="${tenant}"
 
           terraform plan -out=tfplan -input=false
-        working-directory: $(working-directory)
+        working-directory: ${{ env.working-directory }}
         env:
           ARM_CLIENT_ID: ${{ secrets.appId }}
           ARM_CLIENT_SECRET: ${{ secrets.password }}
@@ -63,4 +63,4 @@ jobs:
 
       - name: terraform apply
         run: terraform apply -input=false tfplan
-        working-directory: $(working-directory)
+        working-directory: ${{ env.working-directory }}
