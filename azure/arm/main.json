@@ -160,7 +160,7 @@
             "resources": [
                 {
                     "type": "config",
-                    "apiVersion": "2020-10-01",
+                    "apiVersion": "2020-12-01",
                     "name": "appsettings",
                     "location": "[variables('location')]",
                     "tags": "[variables('tags')]",
@@ -178,7 +178,7 @@
         },
         {
             "type": "Microsoft.Insights/components",
-            "apiVersion": "2015-05-01",
+            "apiVersion": "2020-02-02-preview",
             "name": "[variables('appiName')]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
@@ -189,7 +189,7 @@
         },
         {
             "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2019-09-01",
+            "apiVersion": "2021-04-01-preview",
             "name": "[variables('kvName')]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
@@ -226,7 +226,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2021-01-01",
+            "apiVersion": "2021-02-01",
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
@@ -242,7 +242,7 @@
             "resources": [
                 {
                     "type": "blobServices/containers",
-                    "apiVersion": "2021-01-01",
+                    "apiVersion": "2021-02-01",
                     "name": "[variables('stContainerName')]",
                     "location": "[variables('location')]",
                     "tags": "[variables('tags')]",
