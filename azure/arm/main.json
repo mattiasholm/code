@@ -160,6 +160,7 @@
             "resources": [
                 {
                     "type": "config",
+                    "apiVersion": "2020-12-01",
                     "name": "appsettings",
                     "location": "[variables('location')]",
                     "tags": "[variables('tags')]",
@@ -241,6 +242,7 @@
             "resources": [
                 {
                     "type": "blobServices/containers",
+                    "apiVersion": "2021-02-01",
                     "name": "[variables('stContainerName')]",
                     "location": "[variables('location')]",
                     "tags": "[variables('tags')]",
