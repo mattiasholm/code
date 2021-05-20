@@ -120,7 +120,7 @@ module st 'modules/st.bicep' = [for i in range(0, stCount): {
         allowBlobPublicAccess: false
         supportsHttpsTrafficOnly: true
         minimumTlsVersion: 'TLS1_2'
-        containerName: 'container${prefixStripped}${padLeft(i + 1, 3, '0')}'
+        containerName: 'container${prefixStripped}001'
     }
 }]
 
@@ -160,6 +160,3 @@ output stQueueUrl array = [for i in range(0, stCount): {
     name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
     queueUrl: st[i].outputs.queueUrl
 }]
-
-// 
-output TESTOUTPUT string = 'rg-${prefix}-${padLeft(1, 3, '0')}'
