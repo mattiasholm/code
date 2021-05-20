@@ -14,14 +14,10 @@
     "planCapacity": {
       "value": 1
     },
-    "apps": {
+    "dockerImageTags": {
       "value": [
-        {
-          "dockerImageTag": "latest"
-        },
-        {
-          "dockerImageTag": "plain-text"
-        }
+        "latest",
+        "plain-text"
       ]
     },
     "stSku": {
