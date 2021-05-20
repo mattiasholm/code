@@ -11,7 +11,7 @@ var tags = {
 }
 var tenantId = subscription().tenantId
 
-var dockerImageTags = [
+var appDockerImageTags = [
     'latest'
     'plain-text'
 ]
@@ -40,7 +40,7 @@ module plan 'modules/plan.bicep' = {
     }
 }
 
-module app 'modules/app.bicep' = [for (dockerImageTag, i) in dockerImageTags: {
+module app 'modules/app.bicep' = [for (appDockerImageTag, i) in appDockerImageTags: {
     name: 'app${i}'
     scope: rg
     params: {
@@ -50,7 +50,7 @@ module app 'modules/app.bicep' = [for (dockerImageTag, i) in dockerImageTags: {
         identityType: 'SystemAssigned'
         planId: plan.outputs.id
         siteConfig: {
-            linuxFxVersion: 'DOCKER|nginxdemos/hello:${dockerImageTag}'
+            linuxFxVersion: 'DOCKER|nginxdemos/hello:${appDockerImageTag}'
             alwaysOn: true
             http20Enabled: true
             minTlsVersion: '1.2'
@@ -61,7 +61,7 @@ module app 'modules/app.bicep' = [for (dockerImageTag, i) in dockerImageTags: {
     }
 }]
 
-module appsettings 'modules/appsettings.bicep' = [for (dockerImageTag, i) in dockerImageTags: {
+module appsettings 'modules/appsettings.bicep' = [for (appDockerImageTag, i) in appDockerImageTags: {
     name: 'appsettings${i}'
     scope: rg
     params: {
@@ -95,7 +95,7 @@ module kv 'modules/kv.bicep' = {
         tenantId: tenantId
         skuFamily: 'A'
         skuName: 'standard'
-        accessPolicies: [for (dockerImageTag, i) in dockerImageTags: {
+        accessPolicies: [for (appDockerImageTag, i) in appDockerImageTags: {
             tenantId: tenantId
             objectId: app[i].outputs.identity
             permissions: {
@@ -139,7 +139,7 @@ module vnet 'modules/vnet.bicep' = if (vnetToggle) {
     }
 }
 
-output appUrl array = [for (dockerImageTag, i) in dockerImageTags: {
+output appUrl array = [for (appDockerImageTag, i) in appDockerImageTags: {
     name: 'app-${prefix}-00${i + 1}'
     url: app[i].outputs.url
 }]

@@ -17,14 +17,17 @@
             "type": "string",
             "defaultValue": "B1"
         },
-        "dockerImageTags": {
-            "type": "array"
-        },
         "planCapacity": {
             "type": "int",
             "defaultValue": 1,
             "minValue": 1,
             "maxValue": 10
+        },
+        "appDockerImageTags": {
+            "type": "array"
+        },
+        "stCount": {
+            "type": "int"
         },
         "stSku": {
             "type": "string",
@@ -33,9 +36,6 @@
                 "Standard_LRS",
                 "Standard_GRS"
             ]
-        },
-        "stCount": {
-            "type": "int"
         },
         "vnetToggle": {
             "type": "bool"
@@ -53,7 +53,7 @@
         "planName": "[format('plan-{0}-001', parameters('prefix'))]",
         "planId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
         "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
-        "appCount": "[length(parameters('dockerImageTags'))]",
+        "appCount": "[length(parameters('appDockerImageTags'))]",
         "appIdentity": "SystemAssigned",
         "appAlwaysOn": true,
         "appHttp20Enabled": true,
@@ -87,7 +87,7 @@
             {
                 "name": "linuxFxVersion",
                 "count": "[variables('appCount')]",
-                "input": "[format('DOCKER|nginxdemos/hello:{0}', parameters('dockerImageTags')[copyIndex('linuxFxVersion')])]"
+                "input": "[format('DOCKER|nginxdemos/hello:{0}', parameters('appDockerImageTags')[copyIndex('linuxFxVersion')])]"
             },
             {
                 "name": "stName",

@@ -14,17 +14,17 @@
     "planCapacity": {
       "value": 1
     },
-    "dockerImageTags": {
+    "appDockerImageTags": {
       "value": [
         "latest",
         "plain-text"
       ]
     },
-    "stSku": {
-      "value": "Standard_LRS"
-    },
     "stCount": {
       "value": 3
+    },
+    "stSku": {
+      "value": "Standard_LRS"
     },
     "vnetToggle": {
       "value": true
