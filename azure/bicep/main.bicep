@@ -44,7 +44,7 @@ module app 'modules/app.bicep' = [for (appDockerImageTag, i) in appDockerImageTa
     name: 'app${i}'
     scope: rg
     params: {
-        name: 'app-${prefix}-00${i + 1}'
+        name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
         location: location
         tags: tags
         identityType: 'SystemAssigned'
@@ -65,7 +65,7 @@ module appsettings 'modules/appsettings.bicep' = [for (appDockerImageTag, i) in 
     name: 'appsettings${i}'
     scope: rg
     params: {
-        name: 'app-${prefix}-00${i + 1}'
+        name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
         properties: {
             KEYVAULT_URL: kv.outputs.url
             APPLICATIONINSIGHTS_CONNECTION_STRING: appi.outputs.connectionString
@@ -112,7 +112,7 @@ module st 'modules/st.bicep' = [for i in range(0, stCount): {
     name: 'st${i}'
     scope: rg
     params: {
-        name: 'st${prefixStripped}00${i + 1}'
+        name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
         location: location
         tags: tags
         kind: 'StorageV2'
@@ -120,7 +120,7 @@ module st 'modules/st.bicep' = [for i in range(0, stCount): {
         allowBlobPublicAccess: false
         supportsHttpsTrafficOnly: true
         minimumTlsVersion: 'TLS1_2'
-        containerName: 'container${prefixStripped}00${i + 1}'
+        containerName: 'container${prefixStripped}${padLeft(i + 1, 3, '0')}'
     }
 }]
 
@@ -140,23 +140,26 @@ module vnet 'modules/vnet.bicep' = if (vnetToggle) {
 }
 
 output appUrl array = [for (appDockerImageTag, i) in appDockerImageTags: {
-    name: 'app-${prefix}-00${i + 1}'
+    name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
     url: app[i].outputs.url
 }]
 output kvUrl string = kv.outputs.url
 output stBlobUrl array = [for i in range(0, stCount): {
-    name: 'st${prefixStripped}00${i + 1}'
+    name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
     blobUrl: st[i].outputs.blobUrl
 }]
 output stFileUrl array = [for i in range(0, stCount): {
-    name: 'st${prefixStripped}00${i + 1}'
+    name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
     fileUrl: st[i].outputs.fileUrl
 }]
 output stTableUrl array = [for i in range(0, stCount): {
-    name: 'st${prefixStripped}00${i + 1}'
+    name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
     tableUrl: st[i].outputs.tableUrl
 }]
 output stQueueUrl array = [for i in range(0, stCount): {
-    name: 'st${prefixStripped}00${i + 1}'
+    name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
     queueUrl: st[i].outputs.queueUrl
 }]
+
+// 
+output TESTOUTPUT string = 'rg-${prefix}-${padLeft(1, 3, '0')}'
