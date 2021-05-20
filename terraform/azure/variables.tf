@@ -38,15 +38,13 @@ variable "planCapacity" {
   }
 }
 
-# variable "apps" {
-#   type = list(object({
-#     appDockerImageTag = string
-#   }))
-# }
-
-variable "apps" {
+variable "appDockerImageTags" {
   type = set(string)
 }
+
+# variable "appDockerImageTags" {
+#   type = list(string)
+# }
 
 variable "appIdentity" {
   type    = string
