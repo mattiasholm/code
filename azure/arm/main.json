@@ -17,7 +17,7 @@
             "type": "string",
             "defaultValue": "B1"
         },
-        "apps": {
+        "dockerImageTags": {
             "type": "array"
         },
         "planCapacity": {
@@ -53,7 +53,7 @@
         "planName": "[format('plan-{0}-001', parameters('prefix'))]",
         "planId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
         "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
-        "appCount": "[length(parameters('apps'))]",
+        "appCount": "[length(parameters('dockerImageTags'))]",
         "appIdentity": "SystemAssigned",
         "appAlwaysOn": true,
         "appHttp20Enabled": true,
@@ -87,7 +87,7 @@
             {
                 "name": "linuxFxVersion",
                 "count": "[variables('appCount')]",
-                "input": "[format('DOCKER|nginxdemos/hello:{0}', parameters('apps')[copyIndex('linuxFxVersion')].dockerImageTag)]"
+                "input": "[format('DOCKER|nginxdemos/hello:{0}', parameters('dockerImageTags')[copyIndex('linuxFxVersion')])]"
             },
             {
                 "name": "stName",
