@@ -1,6 +1,6 @@
 resource "azurerm_app_service" "app" {
-  for_each            = var.appDockerImageTags
-  name                = "app-${var.prefix}-00${each.value}"
+  count               = length(var.appDockerImageTags)
+  name                = "app-${var.prefix}-00${count.index + 1}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
@@ -9,7 +9,7 @@ resource "azurerm_app_service" "app" {
   }
   app_service_plan_id = azurerm_app_service_plan.plan.id
   site_config {
-    linux_fx_version = "DOCKER|nginxdemos/hello:${each.value}"
+    linux_fx_version = "DOCKER|nginxdemos/hello:${var.appDockerImageTags[count.index]}"
     always_on        = var.appAlwaysOn
     http2_enabled    = var.appHttp20Enabled
     min_tls_version  = var.appMinTlsVersion

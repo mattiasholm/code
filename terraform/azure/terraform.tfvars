@@ -12,13 +12,9 @@ planTier     = "Basic"
 planSize     = "B1"
 planCapacity = 1
 
-apps = [
-  {
-    dockerImageTag = "latest"
-  },
-  {
-    dockerImageTag = "plain-text"
-  }
+appDockerImageTags = [
+  "latest",
+  "plain-text"
 ]
 appIdentity              = "SystemAssigned"
 appAlwaysOn              = true
