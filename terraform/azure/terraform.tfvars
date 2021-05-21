@@ -23,3 +23,5 @@ appMinTlsVersion         = "1.2"
 appFtpsState             = "FtpsOnly"
 appClientAffinityEnabled = false
 appHttpsOnly             = true
+
+appiType = "web"

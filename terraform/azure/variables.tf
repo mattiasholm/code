@@ -88,3 +88,12 @@ variable "appHttpsOnly" {
   type    = bool
   default = true
 }
+
+variable "appiType" {
+  type    = string
+  default = "web"
+  validation {
+    condition     = var.appiType == "web" || var.appiType == "ios" || var.appiType == "other" || var.appiType == "store" || var.appiType == "java" || var.appiType == "phone"
+    error_message = "Invalid value for variable."
+  }
+}
