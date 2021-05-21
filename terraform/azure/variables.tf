@@ -97,3 +97,16 @@ variable "appiType" {
     error_message = "Invalid value for variable."
   }
 }
+
+variable "kvSku" {
+  type    = string
+  default = "standard"
+  validation {
+    condition     = var.kvSku == "standard" || var.kvSku == "premium"
+    error_message = "Invalid value for variable."
+  }
+}
+
+variable "kvPermissionsSecrets" {
+  type = list(string)
+}

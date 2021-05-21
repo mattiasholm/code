@@ -25,3 +25,9 @@ appClientAffinityEnabled = false
 appHttpsOnly             = true
 
 appiType = "web"
+
+kvSku = "standard"
+kvPermissionsSecrets = [
+      "Get",
+      "List",
+    ]

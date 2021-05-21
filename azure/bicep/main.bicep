@@ -143,7 +143,9 @@ output appUrl array = [for (appDockerImageTag, i) in appDockerImageTags: {
   name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
   url: app[i].outputs.url
 }]
+
 output kvUrl string = kv.outputs.url
+
 output stBlobUrl array = [for i in range(0, stCount): {
   name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
   blobUrl: st[i].outputs.blobUrl
