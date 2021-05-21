@@ -15,6 +15,10 @@ resource "azurerm_app_service" "app" {
     min_tls_version  = var.appMinTlsVersion
     ftps_state       = var.appFtpsState
   }
+  app_settings = {
+    "KEYVAULT_URL" = azurerm_key_vault.kv.vault_uri
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.appi.connection_string
+  }
   client_affinity_enabled = var.appClientAffinityEnabled
   https_only              = var.appHttpsOnly
 }
