@@ -39,12 +39,8 @@ variable "planCapacity" {
 }
 
 variable "appDockerImageTags" {
-  type = set(string)
+  type = list(string)
 }
-
-# variable "appDockerImageTags" {
-#   type = list(string)
-# }
 
 variable "appIdentity" {
   type    = string

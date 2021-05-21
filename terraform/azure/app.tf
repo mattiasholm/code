@@ -1,8 +1,6 @@
-# https://stackoverflow.com/questions/61343796/terraform-get-list-index-on-for-each
-
 resource "azurerm_app_service" "app" {
-  for_each            = var.appDockerImageTags
-  name                = "app-${var.prefix}-00${each.value}"
+  for_each            = { for i, appDockerImageTag in var.appDockerImageTags : appDockerImageTag => i }
+  name                = "app-${var.prefix}-${format("%03d", each.value + 1)}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
@@ -11,7 +9,7 @@ resource "azurerm_app_service" "app" {
   }
   app_service_plan_id = azurerm_app_service_plan.plan.id
   site_config {
-    linux_fx_version = "DOCKER|nginxdemos/hello:${each.value}"
+    linux_fx_version = "DOCKER|nginxdemos/hello:${each.key}"
     always_on        = var.appAlwaysOn
     http2_enabled    = var.appHttp20Enabled
     min_tls_version  = var.appMinTlsVersion
