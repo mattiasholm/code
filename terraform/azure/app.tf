@@ -1,3 +1,5 @@
+# https://stackoverflow.com/questions/61343796/terraform-get-list-index-on-for-each
+
 resource "azurerm_app_service" "app" {
   for_each            = var.appDockerImageTags
   name                = "app-${var.prefix}-00${each.value}"
