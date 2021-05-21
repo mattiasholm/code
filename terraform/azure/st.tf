@@ -4,7 +4,7 @@ locals {
 
 resource "azurerm_storage_account" "st" {
   count                     = var.stCount
-  name                      = "st${local.prefixStripped}${count.index + 1}"
+  name                      = "st${local.prefixStripped}${format("%03d", count.index + 1)}"
   resource_group_name       = azurerm_resource_group.rg.name
   location                  = var.location
   tags                      = var.tags
@@ -18,6 +18,6 @@ resource "azurerm_storage_account" "st" {
 
 resource "azurerm_storage_container" "container" {
   count                = var.stCount
-  name                 = "st${local.prefixStripped}001"
+  name                 = "container${local.prefixStripped}001"
   storage_account_name = azurerm_storage_account.st[count.index].name
 }
