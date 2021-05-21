@@ -51,16 +51,6 @@ variable "appIdentity" {
   }
 }
 
-variable "appClientAffinityEnabled" {
-  type    = bool
-  default = false
-}
-
-variable "appHttpsOnly" {
-  type    = bool
-  default = true
-}
-
 variable "appAlwaysOn" {
   type    = bool
   default = true
@@ -87,4 +77,14 @@ variable "appFtpsState" {
     condition     = var.appFtpsState == "AllAllowed" || var.appFtpsState == "FtpsOnly" || var.appFtpsState == "Disabled"
     error_message = "Invalid value for variable."
   }
+}
+
+variable "appClientAffinityEnabled" {
+  type    = bool
+  default = false
+}
+
+variable "appHttpsOnly" {
+  type    = bool
+  default = true
 }
