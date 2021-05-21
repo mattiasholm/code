@@ -39,3 +39,5 @@ stReplication  = "LRS"
 stPublicAccess = false
 stHttpsOnly    = true
 stTlsVersion   = "TLS1_2"
+
+vnetAddressPrefix = "10.0.0.0/24"

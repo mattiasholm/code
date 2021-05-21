@@ -1,38 +1,11 @@
-# locals {
-#   vnetName   = "${local.prefix}-VNet01"
-#   subnetName = "Subnet01"
-# }
-
-# resource "azurerm_virtual_network" "vnet" {
-#   name                = local.vnetName
-#   resource_group_name = var.rgName
-#   location            = var.location
-#   tags                = var.tags
-#   address_space       = var.vnetAddressPrefix
-#   subnet {
-#     name           = local.subnetName
-#     address_prefix = var.vnetAddressPrefix[0]
-#   }
-# }
-
-# output "vnetId" {
-#   value = azurerm_virtual_network.vnet.id
-# }
-
-
-
-
-
-
-
-# variable "vnetAddressPrefix" {
-#   type = list(string)
-# }
-
-
-
-
-
-
-
-# vnetAddressPrefix = ["10.1.0.0/24"]
+resource "azurerm_virtual_network" "vnet" {
+  name                = "vnet-${var.prefix}-001"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
+  tags                = var.tags
+  address_space       = [var.vnetAddressPrefix]
+  subnet {
+    name           = "snet-${var.prefix}-001"
+    address_prefix = var.vnetAddressPrefix
+  }
+}

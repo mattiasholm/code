@@ -141,3 +141,7 @@ variable "stTlsVersion" {
     error_message = "Invalid value for variable."
   }
 }
+
+variable "vnetAddressPrefix" {
+  type = string
+}
