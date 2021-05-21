@@ -133,7 +133,7 @@ module vnet 'modules/vnet.bicep' = if (vnetToggle) {
     tags: tags
     addressPrefixes: [
       vnetAddressPrefix
-]
+    ]
     snetName: 'snet-${prefix}-001'
     snetAddressPrefix: vnetAddressPrefix
   }
