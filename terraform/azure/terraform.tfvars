@@ -28,6 +28,14 @@ appiType = "web"
 
 kvSku = "standard"
 kvPermissionsSecrets = [
-      "Get",
-      "List",
-    ]
+  "Get",
+  "List",
+]
+
+stCount        = 3
+stKind         = "StorageV2"
+stSku          = "Standard"
+stReplication  = "LRS"
+stPublicAccess = false
+stHttpsOnly    = true
+stTlsVersion   = "TLS1_2"

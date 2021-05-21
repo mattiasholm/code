@@ -1,11 +1,9 @@
 variable "prefix" {
   type = string
 }
-
 variable "location" {
   type = string
 }
-
 variable "tags" {
   type = map(any)
 }
@@ -18,17 +16,14 @@ variable "planKind" {
     error_message = "Invalid value for variable."
   }
 }
-
 variable "planTier" {
   type    = string
   default = "Basic"
 }
-
 variable "planSize" {
   type    = string
   default = "B1"
 }
-
 variable "planCapacity" {
   type    = number
   default = 1
@@ -41,7 +36,6 @@ variable "planCapacity" {
 variable "appDockerImageTags" {
   type = list(string)
 }
-
 variable "appIdentity" {
   type    = string
   default = "None"
@@ -50,17 +44,14 @@ variable "appIdentity" {
     error_message = "Invalid value for variable."
   }
 }
-
 variable "appAlwaysOn" {
   type    = bool
   default = true
 }
-
 variable "appHttp20Enabled" {
   type    = bool
   default = true
 }
-
 variable "appMinTlsVersion" {
   type    = string
   default = "1.2"
@@ -69,7 +60,6 @@ variable "appMinTlsVersion" {
     error_message = "Invalid value for variable."
   }
 }
-
 variable "appFtpsState" {
   type    = string
   default = "FtpsOnly"
@@ -78,12 +68,10 @@ variable "appFtpsState" {
     error_message = "Invalid value for variable."
   }
 }
-
 variable "appClientAffinityEnabled" {
   type    = bool
   default = false
 }
-
 variable "appHttpsOnly" {
   type    = bool
   default = true
@@ -106,7 +94,50 @@ variable "kvSku" {
     error_message = "Invalid value for variable."
   }
 }
-
 variable "kvPermissionsSecrets" {
   type = list(string)
+}
+
+variable "stCount" {
+  type = number
+}
+variable "stKind" {
+  type    = string
+  default = "StorageV2"
+  validation {
+    condition     = var.stKind == "Storage" || var.stKind == "StorageV2" || var.stKind == "BlobStorage" || var.stKind == "FileStorage" || var.stKind == "BlockBlobStorage"
+    error_message = "Invalid value for variable."
+  }
+}
+variable "stSku" {
+  type    = string
+  default = "Standard"
+  validation {
+    condition     = var.stSku == "Standard" || var.stSku == "Premium"
+    error_message = "Invalid value for variable."
+  }
+}
+variable "stReplication" {
+  type    = string
+  default = "LRS"
+  validation {
+    condition     = var.stReplication == "LRS" || var.stReplication == "ZRS" || var.stReplication == "GRS" || var.stReplication == "RAGRS" || var.stReplication == "GZRS" || var.stReplication == "RAGZRS"
+    error_message = "Invalid value for variable."
+  }
+}
+variable "stPublicAccess" {
+  type    = bool
+  default = false
+}
+variable "stHttpsOnly" {
+  type    = bool
+  default = true
+}
+variable "stTlsVersion" {
+  type    = string
+  default = "TLS1_2"
+  validation {
+    condition     = var.stTlsVersion == "TLS1_0" || var.stTlsVersion == "TLS1_1" || var.stTlsVersion == "TLS1_2"
+    error_message = "Invalid value for variable."
+  }
 }

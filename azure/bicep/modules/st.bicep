@@ -13,13 +13,13 @@ param tags object
 param kind string = 'StorageV2'
 @allowed([
   'Standard_LRS'
+  'Standard_ZRS'
   'Standard_GRS'
   'Standard_RAGRS'
-  'Standard_ZRS'
-  'Premium_LRS'
-  'Premium_ZRS'
   'Standard_GZRS'
   'Standard_RAGZRS'
+  'Premium_LRS'
+  'Premium_ZRS'
 ])
 param skuName string = 'Standard_LRS'
 param allowBlobPublicAccess bool = false

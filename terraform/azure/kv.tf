@@ -7,9 +7,9 @@ resource "azurerm_key_vault" "kv" {
   tags                = var.tags
   tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = var.kvSku
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
-    secret_permissions = var.kvPermissionsSecrets  
+  access_policy { # OBS: Ev bättre att deklarera som en egen resurs istället? Tveksamt om den löser dependency till KV automatiskt annars!
+    tenant_id          = data.azurerm_client_config.current.tenant_id
+    object_id          = data.azurerm_client_config.current.object_id
+    secret_permissions = var.kvPermissionsSecrets
   }
 }

@@ -31,18 +31,23 @@
         },
         "stSku": {
             "type": "string",
-            "defaultValue": "Standard_GRS",
+            "defaultValue": "Standard_LRS",
             "allowedValues": [
                 "Standard_LRS",
-                "Standard_GRS"
+                "Standard_ZRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Standard_GZRS",
+                "Standard_RAGZRS",
+                "Premium_LRS",
+                "Premium_ZRS"
             ]
         },
         "vnetToggle": {
             "type": "bool"
         },
         "vnetAddressPrefix": {
-            "type": "string",
-            "defaultValue": "10.0.0.0/24"
+            "type": "string"
         }
     },
     "variables": {
@@ -101,13 +106,9 @@
             }
         ],
         "stKind": "StorageV2",
-        "stAllowBlobPublicAccess": [
-            false,
-            true,
-            false
-        ],
-        "stSupportsHttpsTrafficOnly": true,
-        "stMinimumTlsVersion": "TLS1_2",
+        "stPublicAccess": false,
+        "stHttpsOnly": true,
+        "stTlsVersion": "TLS1_2",
         "stContainerName": "[format('default/container{0}001', variables('prefixStripped'))]",
         "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
         "snetName": "[format('snet-{0}-001', parameters('prefix'))]"
@@ -235,9 +236,9 @@
                 "name": "[parameters('stSku')]"
             },
             "properties": {
-                "allowBlobPublicAccess": "[variables('stAllowBlobPublicAccess')[copyIndex()]]",
-                "supportsHttpsTrafficOnly": "[variables('stSupportsHttpsTrafficOnly')]",
-                "minimumTlsVersion": "[variables('stMinimumTlsVersion')]"
+                "allowBlobPublicAccess": "[variables('stPublicAccess')]",
+                "supportsHttpsTrafficOnly": "[variables('stHttpsOnly')]",
+                "minimumTlsVersion": "[variables('stTlsVersion')]"
             },
             "resources": [
                 {
