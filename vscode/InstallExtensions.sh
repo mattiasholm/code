@@ -12,6 +12,7 @@ exts=(
     "redhat.vscode-yaml"
     "mechatroner.rainbow-csv"
     "dotjoshjohnson.xml"
+    "gurumukhi.selected-lines-count"
     "ilich8086.untabify"
     "pustelto.bracketeer"
     "waderyan.gitblame"
