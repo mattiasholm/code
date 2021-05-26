@@ -12,7 +12,12 @@ function Initialize() {
     subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
     rgName="rg-holm-arm-001"
     location="WestEurope"
-    tags="Application=ARM Company=Holm Environment=Test Owner=mattias.holm@live.com"
+    tags=(
+        "Application=ARM"
+        "Company=Holm"
+        "Environment=Dev"
+        "Owner=mattias.holm@live.com"
+    )
     templateFile="main.json"
     parameterFile="main.parameters.json"
 }

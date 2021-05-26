@@ -6,7 +6,7 @@ var location = deployment().location
 var tags = {
   Application: 'Bicep'
   Company: 'Holm'
-  Environment: 'Test'
+  Environment: 'Dev'
   Owner: 'mattias.holm@live.com'
 }
 var tenantId = subscription().tenantId
