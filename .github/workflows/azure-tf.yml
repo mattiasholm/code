@@ -35,9 +35,9 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
       - name: terraform plan
-        run: terraform plan -out=tfplan -input=false
+        run: terraform plan --out=tfplan --input=false
         working-directory: ${{ env.working-directory }}
 
       - name: terraform apply
-        run: terraform apply -input=false tfplan
+        run: terraform apply --input=false tfplan
         working-directory: ${{ env.working-directory }}
