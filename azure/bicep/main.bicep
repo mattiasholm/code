@@ -96,7 +96,7 @@ module kv 'modules/kv.bicep' = {
     skuFamily: 'A'
     skuName: 'standard'
     accessPolicies: [for (appDockerImageTag, i) in appDockerImageTags: {
-      tenantId: tenantId // ??? azurerm_app_service.example.identity.0.tenant_id
+      tenantId: tenantId
       objectId: app[i].outputs.identity
       permissions: {
         secrets: [
