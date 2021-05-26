@@ -14,7 +14,7 @@ resource "azurerm_key_vault" "kv" {
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy" {
-  for_each     = toset(var.appDockerImageTags)
+  for_each     = azurerm_app_service.app
   key_vault_id = azurerm_key_vault.kv.id
   tenant_id          = local.tenantId
   object_id          = azurerm_app_service.app[each.key].identity.0.principal_id
