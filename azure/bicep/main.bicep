@@ -16,6 +16,13 @@ var appDockerImageTags = [
   'plain-text'
 ]
 
+var kvPermissions = {
+  secrets: [
+    'Get'
+    'List'
+  ]
+}
+
 var stCount = 3
 
 var vnetToggle = true
@@ -98,12 +105,7 @@ module kv 'modules/kv.bicep' = {
     accessPolicies: [for (appDockerImageTag, i) in appDockerImageTags: {
       tenantId: tenantId
       objectId: app[i].outputs.identity
-      permissions: {
-        secrets: [
-          'Get'
-          'List'
-        ]
-      }
+      permissions: kvPermissions
     }]
   }
 }

@@ -18,5 +18,5 @@ resource "azurerm_key_vault_access_policy" "accesspolicy" {
   key_vault_id       = azurerm_key_vault.kv.id
   tenant_id          = local.tenantId
   object_id          = azurerm_app_service.app[each.key].identity.0.principal_id
-  secret_permissions = var.kvPermissionsSecrets
+  secret_permissions = var.kvPermissions
 }

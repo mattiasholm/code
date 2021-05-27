@@ -26,8 +26,92 @@
         "appDockerImageTags": {
             "type": "array"
         },
+        "appIdentity": {
+            "type": "string",
+            "defaultValue": "None",
+            "allowedValues": [
+                "None",
+                "SystemAssigned"
+            ]
+        },
+        "appAlwaysOn": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "appHttp20Enabled": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "appMinTlsVersion": {
+            "type": "string",
+            "defaultValue": "1.2",
+            "allowedValues": [
+                "1.0",
+                "1.1",
+                "1.2"
+            ]
+        },
+        "appFtpsState": {
+            "type": "string",
+            "defaultValue": "FtpsOnly",
+            "allowedValues": [
+                "AllAllowed",
+                "FtpsOnly",
+                "Disabled"
+            ]
+        },
+        "appClientAffinityEnabled": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "appHttpsOnly": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "appiKind": {
+            "type": "string",
+            "defaultValue": "web",
+            "allowedValues": [
+                "web",
+                "ios",
+                "other",
+                "store",
+                "java",
+                "phone"
+            ]
+        },
+        "appiType": {
+            "type": "string",
+            "defaultValue": "web",
+            "allowedValues": [
+                "web",
+                "other"
+            ]
+        },
+        "kvSku": {
+            "type": "string",
+            "defaultValue": "standard",
+            "allowedValues": [
+                "standard",
+                "premium"
+            ]
+        },
+        "kvPermissions": {
+            "type": "object"
+        },
         "stCount": {
             "type": "int"
+        },
+        "stKind": {
+            "type": "string",
+            "defaultValue": "StorageV2",
+            "allowedValues": [
+                "Storage",
+                "StorageV2",
+                "BlobStorage",
+                "FileStorage",
+                "BlockBlobStorage"
+            ]
         },
         "stSku": {
             "type": "string",
@@ -41,6 +125,23 @@
                 "Standard_RAGZRS",
                 "Premium_LRS",
                 "Premium_ZRS"
+            ]
+        },
+        "stPublicAccess": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "stHttpsOnly": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "stTlsVersion": {
+            "type": "string",
+            "defaultValue": "TLS1_2",
+            "allowedValues": [
+                "TLS1_0",
+                "TLS1_1",
+                "TLS1_2"
             ]
         },
         "vnetToggle": {
@@ -59,25 +160,11 @@
         "planId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
         "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
         "appCount": "[length(parameters('appDockerImageTags'))]",
-        "appIdentity": "SystemAssigned",
-        "appAlwaysOn": true,
-        "appHttp20Enabled": true,
-        "appMinTlsVersion": "1.2",
-        "appFtpsState": "FtpsOnly",
-        "appClientAffinityEnabled": false,
-        "appHttpsOnly": true,
         "appiName": "[format('appi-{0}-001', parameters('prefix'))]",
         "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
-        "appiKind": "web",
-        "appiType": "web",
         "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "kvFamily": "A",
-        "kvSku": "standard",
-        "kvPermissionsSecrets": [
-            "Get",
-            "List"
-        ],
         "copy": [
             {
                 "name": "appName",
@@ -105,10 +192,6 @@
                 "input": "[resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex('stId')])]"
             }
         ],
-        "stKind": "StorageV2",
-        "stPublicAccess": false,
-        "stHttpsOnly": true,
-        "stTlsVersion": "TLS1_2",
         "stContainerName": "[format('default/container{0}001', variables('prefixStripped'))]",
         "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
         "snetName": "[format('snet-{0}-001', parameters('prefix'))]"
@@ -141,19 +224,19 @@
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
             "identity": {
-                "type": "[variables('appIdentity')]"
+                "type": "[parameters('appIdentity')]"
             },
             "properties": {
                 "serverFarmId": "[variables('planId')]",
                 "siteConfig": {
                     "linuxFxVersion": "[variables('linuxFxVersion')[copyIndex()]]",
-                    "alwaysOn": "[variables('appAlwaysOn')]",
-                    "http20Enabled": "[variables('appHttp20Enabled')]",
-                    "minTlsVersion": "[variables('appMinTlsVersion')]",
-                    "ftpsState": "[variables('appFtpsState')]"
+                    "alwaysOn": "[parameters('appAlwaysOn')]",
+                    "http20Enabled": "[parameters('appHttp20Enabled')]",
+                    "minTlsVersion": "[parameters('appMinTlsVersion')]",
+                    "ftpsState": "[parameters('appFtpsState')]"
                 },
-                "clientAffinityEnabled": "[variables('appClientAffinityEnabled')]",
-                "httpsOnly": "[variables('appHttpsOnly')]"
+                "clientAffinityEnabled": "[parameters('appClientAffinityEnabled')]",
+                "httpsOnly": "[parameters('appHttpsOnly')]"
             },
             "dependsOn": [
                 "[variables('planId')]"
@@ -183,9 +266,9 @@
             "name": "[variables('appiName')]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
-            "kind": "[variables('appiKind')]",
+            "kind": "[parameters('appiKind')]",
             "properties": {
-                "Application_Type": "[variables('appiType')]"
+                "Application_Type": "[parameters('appiType')]"
             }
         },
         {
@@ -198,7 +281,7 @@
                 "tenantId": "[variables('tenantId')]",
                 "sku": {
                     "family": "[variables('kvFamily')]",
-                    "name": "[variables('kvSku')]"
+                    "name": "[parameters('kvSku')]"
                 },
                 "copy": [
                     {
@@ -207,9 +290,7 @@
                         "input": {
                             "tenantId": "[variables('tenantId')]",
                             "objectId": "[reference(variables('appId')[copyIndex('accessPolicies')],'2020-12-01','Full').identity.principalId]",
-                            "permissions": {
-                                "secrets": "[variables('kvPermissionsSecrets')]"
-                            }
+                            "permissions": "[parameters('kvPermissions')]"
                         }
                     },
                     {
@@ -231,14 +312,14 @@
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[variables('location')]",
             "tags": "[variables('tags')]",
-            "kind": "[variables('stKind')]",
+            "kind": "[parameters('stKind')]",
             "sku": {
                 "name": "[parameters('stSku')]"
             },
             "properties": {
-                "allowBlobPublicAccess": "[variables('stPublicAccess')]",
-                "supportsHttpsTrafficOnly": "[variables('stHttpsOnly')]",
-                "minimumTlsVersion": "[variables('stTlsVersion')]"
+                "allowBlobPublicAccess": "[parameters('stPublicAccess')]",
+                "supportsHttpsTrafficOnly": "[parameters('stHttpsOnly')]",
+                "minimumTlsVersion": "[parameters('stTlsVersion')]"
             },
             "resources": [
                 {

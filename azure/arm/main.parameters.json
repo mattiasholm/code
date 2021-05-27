@@ -20,11 +20,61 @@
         "plain-text"
       ]
     },
+    "appIdentity": {
+      "value": "SystemAssigned"
+    },
+    "appAlwaysOn": {
+      "value": true
+    },
+    "appHttp20Enabled": {
+      "value": true
+    },
+    "appMinTlsVersion": {
+      "value": "1.2"
+    },
+    "appFtpsState": {
+      "value": "FtpsOnly"
+    },
+    "appClientAffinityEnabled": {
+      "value": false
+    },
+    "appHttpsOnly": {
+      "value": true
+    },
+    "appiKind": {
+      "value": "web"
+    },
+    "appiType": {
+      "value": "web"
+    },
+    "kvSku": {
+      "value": "standard"
+    },
+    "kvPermissions": {
+      "value": {
+        "secrets": [
+          "Get",
+          "List"
+        ]
+      }
+    },
     "stCount": {
       "value": 3
     },
+    "stKind": {
+      "value": "StorageV2"
+    },
     "stSku": {
       "value": "Standard_LRS"
+    },
+    "stPublicAccess": {
+      "value": false
+    },
+    "stHttpsOnly": {
+      "value": true
+    },
+    "stTlsVersion": {
+      "value": "TLS1_2"
     },
     "vnetToggle": {
       "value": true

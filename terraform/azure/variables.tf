@@ -94,7 +94,7 @@ variable "kvSku" {
     error_message = "Invalid value for variable."
   }
 }
-variable "kvPermissionsSecrets" {
+variable "kvPermissions" {
   type = list(string)
 }
 
