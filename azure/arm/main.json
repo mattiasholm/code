@@ -145,7 +145,8 @@
             ]
         },
         "vnetToggle": {
-            "type": "bool"
+            "type": "bool",
+            "defaultValue": true
         },
         "vnetAddressPrefix": {
             "type": "string"
