@@ -33,6 +33,14 @@ alias cdg='cd $(git rev-parse --show-toplevel)'
 alias codeg='code $(git rev-parse --show-toplevel)'
 alias openg='open $(git rev-parse --show-toplevel)'
 
+alias exti='code --install-extension'
+alias extu='code --uninstall-extension'
+alias extl='code --list-extensions'
+
+alias bi='brew install'
+alias bu='brew uninstall'
+alias bl='brew list'
+
 alias gs='git status'
 alias gf='git fetch'
 alias gp='git pull'

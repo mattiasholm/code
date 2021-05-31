@@ -24,11 +24,12 @@ USE DemoDB;
 
 
 -- Create a new table
-CREATE TABLE People (
-PersonID int,
-FirstName varchar(255),
-LastName varchar(255),
-Age int,
+CREATE TABLE People
+(
+    PersonID int,
+    FirstName varchar(255),
+    LastName varchar(255),
+    Age int,
 );
 
 
@@ -38,8 +39,10 @@ FROM information_schema.tables;
 
 
 -- Insert a row into the table
-INSERT INTO People (FirstName, LastName)
-VALUES ('Mattias', 'Holm');
+INSERT INTO People
+    (FirstName, LastName)
+VALUES
+    ('Mattias', 'Holm');
 
 
 -- List all rows in table
@@ -60,8 +63,10 @@ WHERE PersonID = 1;
 
 
 -- Insert another row into the table
-INSERT INTO People (PersonID, FirstName, LastName)
-VALUES (1,'Mattias', 'Holm');
+INSERT INTO People
+    (PersonID, FirstName, LastName)
+VALUES
+    (1, 'Mattias', 'Holm');
 
 
 -- List all rows in table
@@ -74,17 +79,20 @@ DROP TABLE People;
 
 
 -- Create a more advanced table
-CREATE TABLE People (
-PersonID int IDENTITY(1,1) PRIMARY KEY,
-FirstName varchar(255) NOT NULL,
-LastName varchar(255) NOT NULL,
-Age int
+CREATE TABLE People
+(
+    PersonID int IDENTITY(1,1) PRIMARY KEY,
+    FirstName varchar(255) NOT NULL,
+    LastName varchar(255) NOT NULL,
+    Age int
 );
 
 
 -- Insert a row into the table
-INSERT INTO People (FirstName, LastName)
-VALUES ('Mattias', 'Holm');
+INSERT INTO People
+    (FirstName, LastName)
+VALUES
+    ('Mattias', 'Holm');
 
 
 -- List all rows in table
@@ -93,8 +101,10 @@ FROM People;
 
 
 -- Insert another row into the table
-INSERT INTO People (FirstName, LastName)
-VALUES ('Mattias', 'Holm');
+INSERT INTO People
+    (FirstName, LastName)
+VALUES
+    ('Mattias', 'Holm');
 
 
 -- Delete specific rows
@@ -115,8 +125,10 @@ WHERE PersonID = 1;
 
 
 -- Insert another person into the table
-INSERT INTO People (FirstName, LastName, Age)
-VALUES ('Test', 'Testson', 35);
+INSERT INTO People
+    (FirstName, LastName, Age)
+VALUES
+    ('Test', 'Testson', 35);
 
 
 -- List all rows in table

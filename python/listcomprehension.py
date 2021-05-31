@@ -12,14 +12,12 @@ matching = [s for s in list if pattern in s]
 print(matching)
 
 
-
 # Example 2
 
 list = ["apa", "aceton", "bacon"]
 
 for x in [x for x in list if "ac" in x]:
     print(x)
-
 
 
 # Example 3
@@ -29,7 +27,6 @@ list = ["apa", "aceton", "bacon", "bordtennis"]
 newlist = [x for x in list if "ac" in x]
 
 print(newlist)
-
 
 
 # Example without list comprehension

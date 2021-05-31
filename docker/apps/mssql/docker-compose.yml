@@ -1,6 +1,5 @@
 version: "3.2"
 services:
-
   sql-server-db:
     container_name: sql-server-db
     image: microsoft/mssql-server-linux:2017-latest
