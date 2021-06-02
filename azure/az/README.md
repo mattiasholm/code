@@ -29,7 +29,7 @@ az find "az [<subcommand>]"
 
 ## Show currently signed-in account:
 ```shell
-az ad signed-in-user show | jq -r .userPrincipalName
+az ad signed-in-user show --query userPrincipalName
 ```
 
 ## Log in to Azure:

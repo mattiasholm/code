@@ -25,8 +25,16 @@ function Initialize() {
 function Login() {
     case "${runMode}" in
     "Interactive")
-        az login &&
-            az account set --subscription "${subscriptionId}"
+        set +e +x
+        az account set --subscription "${subscriptionId}" 2>/dev/null
+        currentContext="$(az account show --query id --output tsv 2>/dev/null)"
+        set -e +x
+
+        if [[ "${currentContext}" != "${subscriptionId}" ]]; then
+            az login
+        fi
+
+        az account set --subscription "${subscriptionId}"
         ;;
     "Pipeline")
         az login --service-principal --username "${appId}" --password "${password}" --tenant "${tenant}" &&
