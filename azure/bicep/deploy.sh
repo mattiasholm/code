@@ -3,20 +3,15 @@
 function Initialize() {
     set -e +x
 
-    if [[ "$@" =~ "--pipeline" ]]; then
-        runMode="Pipeline"
-    else
-        runMode="Interactive"
-    fi
-
     subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
     location="WestEurope"
     templateFile="main.bicep"
 }
 
 function Login() {
-    case "${runMode}" in
-    "Interactive")
+    if [[ "${appId}" && "${password}" && "${tenant}" ]]; then
+        az login --service-principal --username "${appId}" --password "${password}" --tenant "${tenant}"
+    else
         set +e +x
         az account set --subscription "${subscriptionId}" 2>/dev/null
         currentContext="$(az account show --query id --output tsv 2>/dev/null)"
@@ -25,14 +20,9 @@ function Login() {
         if [[ "${currentContext}" != "${subscriptionId}" ]]; then
             az login
         fi
+    fi
 
-        az account set --subscription "${subscriptionId}"
-        ;;
-    "Pipeline")
-        az login --service-principal --username "${appId}" --password "${password}" --tenant "${tenant}" &&
-            az account set --subscription "${subscriptionId}"
-        ;;
-    esac
+    az account set --subscription "${subscriptionId}"
 }
 
 function Deploy() {
@@ -46,9 +36,9 @@ function Deploy() {
 }
 
 function main() {
-    Initialize "$@"
+    Initialize
     Login
     Deploy
 }
 
-main "$@"
+main

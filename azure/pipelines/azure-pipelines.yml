@@ -11,8 +11,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  - name: workingDirectory
-    value: azure/bicep
+  workingDirectory: scripts
 
 stages:
   - stage: test
