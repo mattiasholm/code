@@ -9,4 +9,4 @@ Heartbeat
 | extend availability_rate=total_available_hours*100/total_number_of_buckets
 | where availability_rate < 99.9
 | project Computer, availability_rate
-| sort by availability_rate asc
+| order by availability_rate asc
