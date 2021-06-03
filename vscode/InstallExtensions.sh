@@ -21,6 +21,7 @@ exts=(
     "bierner.markdown-footnotes"
     "waderyan.gitblame"
     "gurumukhi.selected-lines-count"
+    "ms-vsliveshare.vsliveshare"
 )
 
 for ext in ${exts[@]}; do
