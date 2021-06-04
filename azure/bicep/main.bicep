@@ -55,7 +55,7 @@ module app 'modules/app.bicep' = [for (appDockerImageTag, i) in appDockerImageTa
     location: location
     tags: tags
     identityType: 'SystemAssigned'
-    planId: plan.outputs.id
+    serverFarmId: plan.outputs.id
     siteConfig: {
       linuxFxVersion: 'DOCKER|nginxdemos/hello:${appDockerImageTag}'
       alwaysOn: true
@@ -74,7 +74,7 @@ module appsettings 'modules/appsettings.bicep' = [for (appDockerImageTag, i) in 
   params: {
     name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
     properties: {
-      KEYVAULT_URL: kv.outputs.url
+      KEYVAULT_URL: kv.outputs.vaultUri
       APPLICATIONINSIGHTS_CONNECTION_STRING: appi.outputs.connectionString
     }
   }
@@ -104,7 +104,7 @@ module kv 'modules/kv.bicep' = {
     skuName: 'standard'
     accessPolicies: [for (appDockerImageTag, i) in appDockerImageTags: {
       tenantId: tenantId
-      objectId: app[i].outputs.identity
+      objectId: app[i].outputs.identity.principalId
       permissions: kvPermissions
     }]
   }
@@ -143,24 +143,24 @@ module vnet 'modules/vnet.bicep' = if (vnetToggle) {
 
 output appUrl array = [for (appDockerImageTag, i) in appDockerImageTags: {
   name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
-  url: app[i].outputs.url
+  url: app[i].outputs.defaultHostName
 }]
 
-output kvUrl string = kv.outputs.url
+output kvUrl string = kv.outputs.vaultUri
 
 output stBlobUrl array = [for i in range(0, stCount): {
   name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
-  blobUrl: st[i].outputs.blobUrl
+  blobUrl: st[i].outputs.primaryEndpoints.blob
 }]
 output stFileUrl array = [for i in range(0, stCount): {
   name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
-  fileUrl: st[i].outputs.fileUrl
-}]
-output stTableUrl array = [for i in range(0, stCount): {
-  name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
-  tableUrl: st[i].outputs.tableUrl
+  fileUrl: st[i].outputs.primaryEndpoints.file
 }]
 output stQueueUrl array = [for i in range(0, stCount): {
   name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
-  queueUrl: st[i].outputs.queueUrl
+  queueUrl: st[i].outputs.primaryEndpoints.queue
+}]
+output stTableUrl array = [for i in range(0, stCount): {
+  name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
+  tableUrl: st[i].outputs.primaryEndpoints.table
 }]

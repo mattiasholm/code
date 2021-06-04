@@ -29,4 +29,4 @@ resource kv 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
   }
 }
 
-output url string = kv.properties.vaultUri
+output vaultUri string = kv.properties.vaultUri

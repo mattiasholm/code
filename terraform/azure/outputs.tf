@@ -12,9 +12,9 @@ output "stBlobUrl" {
 output "stFileUrl" {
   value = azurerm_storage_account.st[*].primary_file_endpoint
 }
-output "stTableUrl" {
-  value = azurerm_storage_account.st[*].primary_table_endpoint
-}
 output "stQueueUrl" {
   value = azurerm_storage_account.st[*].primary_queue_endpoint
+}
+output "stTableUrl" {
+  value = azurerm_storage_account.st[*].primary_table_endpoint
 }

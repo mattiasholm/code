@@ -6,7 +6,7 @@ param tags object
   'SystemAssigned'
 ])
 param identityType string = 'None'
-param planId string
+param serverFarmId string
 param siteConfig object
 param clientAffinityEnabled bool = false
 param httpsOnly bool = true
@@ -19,12 +19,12 @@ resource app 'Microsoft.Web/sites@2020-12-01' = {
     type: identityType
   }
   properties: {
-    serverFarmId: planId
+    serverFarmId: serverFarmId
     siteConfig: siteConfig
     clientAffinityEnabled: clientAffinityEnabled
     httpsOnly: httpsOnly
   }
 }
 
-output url string = app.properties.defaultHostName
-output identity string = app.identity.principalId
+output defaultHostName string = app.properties.defaultHostName
+output identity object = app.identity

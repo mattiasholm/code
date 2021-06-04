@@ -385,18 +385,18 @@
                 "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.file]"
             }
         },
-        "stTableUrl": {
-            "type": "array",
-            "copy": {
-                "count": "[parameters('stCount')]",
-                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.table]"
-            }
-        },
         "stQueueUrl": {
             "type": "array",
             "copy": {
                 "count": "[parameters('stCount')]",
                 "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.queue]"
+            }
+        },
+        "stTableUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[parameters('stCount')]",
+                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.table]"
             }
         }
     }

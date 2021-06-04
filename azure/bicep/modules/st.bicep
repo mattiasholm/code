@@ -55,7 +55,4 @@ resource st 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   }
 }
 
-output blobUrl string = st.properties.primaryEndpoints.blob
-output fileUrl string = st.properties.primaryEndpoints.file
-output tableUrl string = st.properties.primaryEndpoints.table
-output queueUrl string = st.properties.primaryEndpoints.queue
+output primaryEndpoints object = st.properties.primaryEndpoints
