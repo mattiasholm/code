@@ -19,7 +19,6 @@ alias t='terraform'
 
 alias .b='. ~/.bashrc'
 alias cl='clear'
-alias cls='clear'
 alias cx='chmod +x'
 alias h='history'
 alias ip='curl -s ifconfig.io'
