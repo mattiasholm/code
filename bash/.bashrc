@@ -37,7 +37,7 @@ alias extu='code --uninstall-extension'
 alias extl='code --list-extensions'
 
 alias bi='brew install'
-alias bu='brew uninstall'
+alias bu='brew upgrade'
 alias bl='brew list'
 
 alias gs='git status'
