@@ -21,7 +21,7 @@ alias .b='. ~/.bashrc'
 alias cl='clear'
 alias cx='chmod +x'
 alias h='history'
-alias ip='curl -s ifconfig.io'
+alias ip='curl -s ifconfig.io | tee >(pbcopy)'
 
 alias azli='az login'
 alias azlo='az logout'
