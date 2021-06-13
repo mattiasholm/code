@@ -1,6 +1,7 @@
 #!/usr/bin/env pwsh
 
-$Path = $(git rev-parse --show-toplevel).Replace($(Split-Path -Leaf -Path $(git rev-parse --show-toplevel)), 'arm-ttk/unit-tests')
+$TopLevel = git rev-parse --show-toplevel
+$Path = $($TopLevel).Replace($(Split-Path -Leaf -Path $($TopLevel)), 'arm-ttk/unit-tests')
 
 Set-Location -Path $Path
 

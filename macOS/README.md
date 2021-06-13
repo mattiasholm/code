@@ -120,3 +120,23 @@ sudo scutil --set ComputerName <hostname>
 ```shell
 pbpaste
 ```
+
+<br><br>
+
+## Lock the Dock to prevent unwanted changes:
+```shell
+defaults write com.apple.Dock position-immutable -bool true; killall Dock
+
+defaults write com.apple.Dock size-immutable -bool true; killall Dock
+
+defaults write com.apple.Dock contents-immutable -bool true; killall Dock
+```
+
+## Unlock the Dock in order to make changes:
+```shell
+defaults write com.apple.Dock position-immutable -bool false; killall Dock
+
+defaults write com.apple.Dock size-immutable -bool false; killall Dock
+
+defaults write com.apple.Dock contents-immutable -bool false; killall Dock
+```
