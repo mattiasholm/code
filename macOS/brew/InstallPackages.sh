@@ -72,6 +72,7 @@ brew install pulumi
 brew install kubectl
 brew install kubectx
 brew install lastpass-cli
+brew install graphviz
 brew install p7zip
 brew install sox
 brew install abcmidi

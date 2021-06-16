@@ -181,3 +181,10 @@ terraform import <terraform-resource-type>.<resource-label> <azure-resource-id>
 ```shell
 terraform console
 ```
+
+<br><br>
+
+## Generate a visualization of a Terraform configuration:
+```shell
+terraform graph | dot -Tsvg > graph.svg
+```
