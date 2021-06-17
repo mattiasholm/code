@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
+set -e +x
+
 topLevel=$(git rev-parse --show-toplevel)
-childPath="arm-ttk\/arm-ttk"
-path=$(echo ${topLevel} | sed "s/$(basename ${topLevel})$/${childPath}/")
+linterPath="arm-ttk\/arm-ttk"
+path=$(echo ${topLevel} | sed "s/$(basename ${topLevel})$/${linterPath}/")
+templateFile="main.json"
+linterCommand="Test-AzTemplate -MainTemplateFile ${templateFile} -TemplatePath ${templateFile}"
 
-${path}/Test-AzTemplate.sh
-
-# Test-AzTemplate -MainTemplateFile
-
-# Import-Module ./arm-ttk.psd1
-
-# Test-AzTemplate -TemplatePath /path/to/template
+pwsh -Command "Import-Module -FullyQualifiedName '${path}/arm-ttk.psd1'; ${linterCommand}; if (\$error.Count) { exit 1 }"

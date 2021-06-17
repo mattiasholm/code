@@ -5,6 +5,10 @@
         "prefix": {
             "type": "string"
         },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]"
+        },
         "planKind": {
             "type": "string",
             "defaultValue": "linux",
@@ -154,7 +158,6 @@
     },
     "variables": {
         "prefixStripped": "[toLower(replace(parameters('prefix'), '-', ''))]",
-        "location": "[resourceGroup().location]",
         "tags": "[resourceGroup().tags]",
         "tenantId": "[subscription().tenantId]",
         "planName": "[format('plan-{0}-001', parameters('prefix'))]",
@@ -202,7 +205,7 @@
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2020-12-01",
             "name": "[variables('planName')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
             "kind": "[parameters('planKind')]",
             "sku": {
@@ -222,7 +225,7 @@
             "type": "Microsoft.Web/sites",
             "apiVersion": "2020-12-01",
             "name": "[variables('appName')[copyIndex()]]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
             "identity": {
                 "type": "[parameters('appIdentity')]"
@@ -247,7 +250,7 @@
                     "type": "config",
                     "apiVersion": "2020-12-01",
                     "name": "appsettings",
-                    "location": "[variables('location')]",
+                    "location": "[parameters('location')]",
                     "tags": "[variables('tags')]",
                     "properties": {
                         "KEYVAULT_URL": "[reference(variables('kvId')).vaultUri]",
@@ -265,7 +268,7 @@
             "type": "Microsoft.Insights/components",
             "apiVersion": "2020-02-02-preview",
             "name": "[variables('appiName')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
             "kind": "[parameters('appiKind')]",
             "properties": {
@@ -276,7 +279,7 @@
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2021-04-01-preview",
             "name": "[variables('kvName')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
             "properties": {
                 "tenantId": "[variables('tenantId')]",
@@ -311,7 +314,7 @@
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2021-02-01",
             "name": "[variables('stName')[copyIndex()]]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
             "kind": "[parameters('stKind')]",
             "sku": {
@@ -327,7 +330,7 @@
                     "type": "blobServices/containers",
                     "apiVersion": "2021-02-01",
                     "name": "[variables('stContainerName')]",
-                    "location": "[variables('location')]",
+                    "location": "[parameters('location')]",
                     "tags": "[variables('tags')]",
                     "dependsOn": [
                         "[variables('stId')[copyIndex()]]"
@@ -340,7 +343,7 @@
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-11-01",
             "name": "[variables('vnetName')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
             "properties": {
                 "addressSpace": {
