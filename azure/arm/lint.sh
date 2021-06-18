@@ -3,9 +3,9 @@
 set -e +x
 
 topLevel=$(git rev-parse --show-toplevel)
-linterPath="arm-ttk\/arm-ttk"
-path=$(echo ${topLevel} | sed "s/$(basename ${topLevel})$/${linterPath}/")
+childPath="arm-ttk\/arm-ttk\/arm-ttk.psd1"
+path=$(echo ${topLevel} | sed s/$(basename ${topLevel})$/${childPath}/)
 templateFile="main.json"
-linterCommand="Test-AzTemplate -MainTemplateFile ${templateFile} -TemplatePath ${templateFile}"
+command="Test-AzTemplate -MainTemplateFile ${templateFile} -TemplatePath ${templateFile}"
 
-pwsh -Command "Import-Module -FullyQualifiedName '${path}/arm-ttk.psd1'; ${linterCommand}; if (\$error.Count) { exit 1 }"
+pwsh -Command "Import-Module -FullyQualifiedName ${path}; ${command}; if (\$error.Count) { exit 1 }"
