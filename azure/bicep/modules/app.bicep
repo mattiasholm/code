@@ -1,6 +1,6 @@
 param name string
 param location string
-param tags object
+param tags object = resourceGroup().tags
 @allowed([
   'None'
   'SystemAssigned'

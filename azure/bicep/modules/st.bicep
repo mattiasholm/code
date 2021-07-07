@@ -2,7 +2,7 @@
 @maxLength(24)
 param name string
 param location string
-param tags object
+param tags object = resourceGroup().tags
 @allowed([
   'Storage'
   'StorageV2'
