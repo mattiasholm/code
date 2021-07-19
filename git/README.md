@@ -1053,6 +1053,11 @@ git diff --staged
 git diff --cached
 ```
 
+## Find all deleted files in a repository:
+```shell
+git log --diff-filter=D --summary
+```
+
 <br><br>
 
 ## Merge a specific branch, commit or tag into currently checked out branch (will attempt to make a merge commit automatically):
