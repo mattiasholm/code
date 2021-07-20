@@ -193,41 +193,37 @@ function midi() {
     fi
 
     abcFile="$1"
-    type=$(basename $(dirname "${abcFile}"))
-
-    if [[ "${type}" == "." ]]; then
-        type=$(basename $(pwd))
-    fi
+    type=$(grep "R:" "${abcFile}" | sed 's/R://')
 
     case "${type}" in
-    barndances)
+    "barndance")
         tempo="160"
         tmpFile=$(echo "${abcFile}" | sed 's/.abc/.mid/')
         cat "${abcFile}" | sed 's/barndance/hornpipe/' >"${tmpFile}"
         abcFile="${tmpFile}"
         ;;
-    hornpipes)
+    "hornpipe")
         tempo="150"
         ;;
-    jigs)
+    "jig")
         tempo="160"
         ;;
-    marches)
+    "march")
         tempo="160"
         ;;
-    polkas)
+    "polka")
         tempo="140"
         ;;
-    reels)
+    "reel")
         tempo="170"
         ;;
-    slides)
+    "slide")
         tempo="200"
         ;;
-    slipjigs)
+    "slip jig")
         tempo="160"
         ;;
-    strathspeys)
+    "strathspey")
         tempo="150"
         ;;
     *)
