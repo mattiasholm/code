@@ -192,9 +192,52 @@ function midi() {
         transposeSteps="$2"
     fi
 
-    midiFile="$(echo "$1" | sed 's/.abc$/.mid/')"
-    abc2midi "$1" -o "${midiFile}"
-    timidity -A100 -K"${transposeSteps}" -f "${midiFile}"
+    abcFile="$1"
+    type=$(basename $(dirname "${abcFile}"))
+
+    if [[ "${type}" == "." ]]; then
+        type=$(basename $(pwd))
+    fi
+
+    case "${type}" in
+    barndances)
+        tempo="160"
+        tmpFile=$(echo "${abcFile}" | sed 's/.abc/.mid/')
+        cat "${abcFile}" | sed 's/barndance/hornpipe/' >"${tmpFile}"
+        abcFile="${tmpFile}"
+        ;;
+    hornpipes)
+        tempo="150"
+        ;;
+    jigs)
+        tempo="160"
+        ;;
+    marches)
+        tempo="160"
+        ;;
+    polkas)
+        tempo="140"
+        ;;
+    reels)
+        tempo="170"
+        ;;
+    slides)
+        tempo="200"
+        ;;
+    slipjigs)
+        tempo="160"
+        ;;
+    strathspeys)
+        tempo="150"
+        ;;
+    *)
+        tempo="120"
+        ;;
+    esac
+
+    midiFile="$(echo "${abcFile}" | sed 's/.abc$/.mid/')"
+    abc2midi "${abcFile}" -o "${midiFile}" -Q ${tempo}
+    timidity -f "${midiFile}" -A 200 -K "${transposeSteps}"
     rm "${midiFile}"
 }
 
