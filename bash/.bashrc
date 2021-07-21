@@ -228,6 +228,7 @@ function midi() {
         ;;
     *)
         tempo="120"
+        echo -e "\033[33;1mWARNING: Tune type \"${type}\" not recognized\033[0m"
         ;;
     esac
 
