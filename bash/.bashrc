@@ -224,7 +224,10 @@ function midi() {
         tempo="160"
         ;;
     "strathspey")
-        tempo="150"
+        tempo="140"
+        ;;
+    "waltz")
+        tempo="160"
         ;;
     *)
         tempo="120"
