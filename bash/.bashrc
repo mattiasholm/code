@@ -237,7 +237,7 @@ function midi() {
 
     midiFile="$(echo "${abcFile}" | sed 's/.abc$/.mid/')"
     abc2midi "${abcFile}" -o "${midiFile}" -Q ${tempo}
-    timidity -f "${midiFile}" -A 200 -K "${transposeSteps}"
+    timidity -f "${midiFile}" -A 300 -K "${transposeSteps}"
     rm "${midiFile}"
 }
 
