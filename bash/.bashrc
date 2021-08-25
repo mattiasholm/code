@@ -227,7 +227,7 @@ function midi() {
         tempo="140"
         ;;
     "waltz")
-        tempo="170"
+        tempo="90"
         ;;
     *)
         tempo="120"
