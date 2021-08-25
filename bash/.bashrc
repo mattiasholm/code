@@ -221,7 +221,7 @@ function midi() {
         tempo="200"
         ;;
     "slip jig")
-        tempo="160"
+        tempo="170"
         ;;
     "strathspey")
         tempo="140"
