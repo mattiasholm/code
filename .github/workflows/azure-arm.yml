@@ -19,6 +19,20 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+        ###
+      - name: Run ARM-TTK 1
+        uses: venura9/arm-ttk@master
+        with:
+          path: azure/arm # Use variable instead!
+          file: main.json
+        ###
+      - name: Run ARM-TTK 2
+        uses: aliencube/arm-ttk-actions@v0.3
+        with:
+          path: azure/arm # Use variable instead!
+          files: main.json
+
+
       - name: Run deploy script
         run: ./deploy.sh
         working-directory: azure/arm
