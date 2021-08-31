@@ -2,18 +2,17 @@
 
 set -e +x
 
-if [[ ! -d "arm-ttk" ]]; then
-    git clone --depth 1 "https://github.com/Azure/arm-ttk"
-fi
+# if [[ ! -d "arm-ttk" ]]; then
+#     git clone --depth 1 "https://github.com/Azure/arm-ttk"
+# fi
 
 path="./arm-ttk/arm-ttk/arm-ttk.psd1"
-templateFile="main.json"
-# Lägg till if-sats om ".bicep", gör först en build!
+templateFile="main.json" # Lägg till if-sats om ".bicep" => gör först en build till ARM!
 command="Test-AzTemplate -MainTemplateFile ${templateFile} -TemplatePath ${templateFile}"
 
 pwsh -Command "Import-Module -FullyQualifiedName ${path}; ${command}; if (\$error.Count) { exit 1 }"
 
-rm -rf "arm-ttk/" # Hinner exita innan körs nu! Bättre med permanent submodule, så slipper man både clone + rm!
+# rm -rf "arm-ttk/" # Hinner exita innan körs nu! Bättre med permanent submodule, så slipper man både clone + rm!
 
 # hint: You've added another git repository inside your current repository.
 # hint: Clones of the outer repository will not contain the contents of
@@ -34,3 +33,9 @@ rm -rf "arm-ttk/" # Hinner exita innan körs nu! Bättre med permanent submodule
 #   continue-on-error: true
 #   run: |
 #     echo 'Results: ${{ toJSON(fromJSON(steps.armtest.outputs.results)) }}'
+
+# HAR KÖRT IFRÅN azure/arm directory:
+# git submodule add https://github.com/Azure/arm-ttk
+# git submodule
+# git submodule status
+# git submodule -h
