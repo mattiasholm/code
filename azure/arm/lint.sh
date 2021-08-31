@@ -38,4 +38,6 @@ pwsh -Command "Import-Module -FullyQualifiedName ${path}; ${command}; if (\$erro
 # git submodule add https://github.com/Azure/arm-ttk
 # git submodule
 # git submodule status
+# git submodule update
+# git submodule update --init --recursive
 # git submodule -h
