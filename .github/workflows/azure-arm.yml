@@ -33,3 +33,10 @@ jobs:
       - name: Run deploy script
         run: ./deploy.sh
         working-directory: ${{ env.working-directory }}
+
+      # Test:
+      - name: Show ARM TTK test result
+        shell: bash
+        continue-on-error: true
+        run: |
+          echo 'Results: ${{ toJSON(fromJSON(steps.armtest.outputs.results)) }}
