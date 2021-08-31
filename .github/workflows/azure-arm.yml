@@ -14,6 +14,11 @@ jobs:
   deploy:
     name: Deploy to Azure
     runs-on: ubuntu-latest
+    env:
+      working-directory: azure/arm
+      appId: ${{ secrets.appId }}
+      password: ${{ secrets.password }}
+      tenant: ${{ secrets.tenant }}
 
     steps:
       - name: Check out repository
@@ -21,12 +26,8 @@ jobs:
 
       - name: Run lint script
         run: ./lint.sh
-        working-directory: azure/arm # Use variable instead
+        working-directory: ${{ env.working-directory }}
 
       - name: Run deploy script
         run: ./deploy.sh
-        working-directory: azure/arm  # Use variable instead
-        env:
-          appId: ${{ secrets.appId }}
-          password: ${{ secrets.password }}
-          tenant: ${{ secrets.tenant }}
+        working-directory: ${{ env.working-directory }}

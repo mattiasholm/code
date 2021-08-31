@@ -8,13 +8,12 @@ fi
 
 path="./arm-ttk/arm-ttk/arm-ttk.psd1"
 templateFile="main.json"
+# Lägg till if-sats om ".bicep", gör först en build!
 command="Test-AzTemplate -MainTemplateFile ${templateFile} -TemplatePath ${templateFile}"
 
 pwsh -Command "Import-Module -FullyQualifiedName ${path}; ${command}; if (\$error.Count) { exit 1 }"
 
-rm -rf "arm-ttk/" # Hinner exita innan körs nu! Bättre med permanent submodule!
-
-
+rm -rf "arm-ttk/" # Hinner exita innan körs nu! Bättre med permanent submodule, så slipper man både clone + rm!
 
 # hint: You've added another git repository inside your current repository.
 # hint: Clones of the outer repository will not contain the contents of
@@ -29,3 +28,9 @@ rm -rf "arm-ttk/" # Hinner exita innan körs nu! Bättre med permanent submodule
 # hint: 	git rm --cached azure/arm/arm-ttk
 # hint:
 # hint: See "git help submodule" for more information.
+
+# - name: Show ARM TTK test result
+#   shell: bash
+#   continue-on-error: true
+#   run: |
+#     echo 'Results: ${{ toJSON(fromJSON(steps.armtest.outputs.results)) }}'

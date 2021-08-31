@@ -14,6 +14,11 @@ jobs:
   deploy:
     name: Deploy to Azure
     runs-on: ubuntu-latest
+    env:
+      working-directory: azure/bicep
+      appId: ${{ secrets.appId }}
+      password: ${{ secrets.password }}
+      tenant: ${{ secrets.tenant }}
 
     steps:
       - name: Check out repository
@@ -21,8 +26,4 @@ jobs:
 
       - name: Run deploy script
         run: ./deploy.sh
-        working-directory: azure/bicep
-        env:
-          appId: ${{ secrets.appId }}
-          password: ${{ secrets.password }}
-          tenant: ${{ secrets.tenant }}
+        working-directory: ${{ env.working-directory }}
