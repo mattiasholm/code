@@ -27,6 +27,9 @@ jobs:
           submodules: recursive
 
       - name: Run lint script
+        #
+        id: lint
+        #
         run: ./lint.sh
         working-directory: ${{ env.working-directory }}
 
@@ -39,4 +42,4 @@ jobs:
         shell: bash
         continue-on-error: true
         run: |
-          echo 'Results: ${{ toJSON(fromJSON(steps.armtest.outputs.results)) }}
+          echo 'Results: ${{ toJSON(fromJSON(steps.lint.outputs.results)) }}
