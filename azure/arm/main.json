@@ -203,7 +203,7 @@
     "resources": [
         {
             "type": "Microsoft.Web/serverfarms",
-            "apiVersion": "2020-12-01",
+            "apiVersion": "2021-01-15",
             "name": "[variables('planName')]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
@@ -223,7 +223,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Web/sites",
-            "apiVersion": "2020-12-01",
+            "apiVersion": "2021-01-15",
             "name": "[variables('appName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
@@ -248,7 +248,7 @@
             "resources": [
                 {
                     "type": "config",
-                    "apiVersion": "2020-12-01",
+                    "apiVersion": "2021-01-15",
                     "name": "appsettings",
                     "location": "[parameters('location')]",
                     "tags": "[variables('tags')]",
@@ -266,7 +266,7 @@
         },
         {
             "type": "Microsoft.Insights/components",
-            "apiVersion": "2020-02-02-preview",
+            "apiVersion": "2020-02-02",
             "name": "[variables('appiName')]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
@@ -277,7 +277,7 @@
         },
         {
             "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2021-04-01-preview",
+            "apiVersion": "2021-06-01-preview",
             "name": "[variables('kvName')]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
@@ -312,7 +312,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2021-02-01",
+            "apiVersion": "2021-04-01",
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
@@ -328,7 +328,7 @@
             "resources": [
                 {
                     "type": "blobServices/containers",
-                    "apiVersion": "2021-02-01",
+                    "apiVersion": "2021-04-01",
                     "name": "[variables('stContainerName')]",
                     "location": "[parameters('location')]",
                     "tags": "[variables('tags')]",
@@ -341,7 +341,7 @@
         {
             "condition": "[parameters('vnetToggle')]",
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2020-11-01",
+            "apiVersion": "2021-02-01",
             "name": "[variables('vnetName')]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",

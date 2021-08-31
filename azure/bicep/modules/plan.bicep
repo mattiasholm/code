@@ -13,7 +13,7 @@ param skuCapacity int = 1
 
 var reserved = kind == 'linux' ? true : false
 
-resource plan 'Microsoft.Web/serverfarms@2020-12-01' = {
+resource plan 'Microsoft.Web/serverfarms@2021-01-15' = {
   name: name
   location: location
   tags: tags

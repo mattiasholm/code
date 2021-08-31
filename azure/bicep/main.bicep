@@ -28,7 +28,7 @@ var stCount = 3
 var vnetToggle = true
 var vnetAddressPrefix = '10.0.0.0/24'
 
-resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
+resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: 'rg-${prefix}-001'
   location: location
   tags: tags

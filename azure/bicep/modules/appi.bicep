@@ -16,7 +16,7 @@ param kind string = 'web'
 ])
 param Application_Type string = 'web'
 
-resource appi 'Microsoft.Insights/components@2020-02-02-preview' = {
+resource appi 'Microsoft.Insights/components@2020-02-02' = {
   name: name
   location: location
   tags: tags
