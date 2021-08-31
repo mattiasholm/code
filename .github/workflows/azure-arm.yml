@@ -27,19 +27,9 @@ jobs:
           submodules: recursive
 
       - name: Run lint script
-        #
-        id: lint
-        #
         run: ./lint.sh
         working-directory: ${{ env.working-directory }}
 
       - name: Run deploy script
         run: ./deploy.sh
         working-directory: ${{ env.working-directory }}
-
-      # Test:
-      - name: Show ARM TTK test result
-        shell: bash
-        continue-on-error: true
-        run: |
-          echo 'Results: ${{ toJSON(fromJSON(steps.lint.outputs.results)) }}
