@@ -1196,7 +1196,7 @@ git submodule add <url> <path>
 
 <br>
 
-## List all submodules in current repository:
+## List all submodules:
 ```shell
 git submodule status
 git submodule
@@ -1204,7 +1204,7 @@ git submodule
 
 <br>
 
-## Initialize all submodules in current repository:
+## Initialize all submodules:
 ```shell
 git submodule init
 ```
@@ -1216,7 +1216,7 @@ git submodule init <path>
 
 <br>
 
-## Update all submodules in current repository:
+## Update all submodules:
 ```shell
 git submodule update
 ```
@@ -1226,19 +1226,19 @@ git submodule update
 git submodule update <path>
 ```
 
-## Initialize and update all submodules in current repository:
+## Initialize and update all submodules:
 ```shell
 git submodule update --init
 ```
 
-## Recursively initialize and update all submodules in current repository:
+## Recursively initialize and update all submodules:
 ```shell
 git submodule update --init --recursive
 ```
 
 <br>
 
-## Deinitialize all submodules in current repository:
+## Deinitialize all submodules:
 ```shell
 git submodule deinit --all
 ```
@@ -1246,4 +1246,11 @@ git submodule deinit --all
 ## Deinitialize a specific submodule:
 ```shell
 git submodule deinit <path>
+```
+
+<br>
+
+## Run a specific command in all submodules:
+```shell
+git submodule foreach <command>
 ```
