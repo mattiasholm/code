@@ -1204,9 +1204,21 @@ git submodule
 
 <br>
 
+## Initialize all submodules in current repository:
+```shell
+git submodule init
+```
+
 ## Initialize a specific submodule:
 ```shell
 git submodule init <path>
+```
+
+<br>
+
+## Update all submodules in current repository:
+```shell
+git submodule update
 ```
 
 ## Update a specific submodule:
@@ -1214,24 +1226,24 @@ git submodule init <path>
 git submodule update <path>
 ```
 
-## Initialize and update a specific submodule:
+## Initialize and update all submodules in current repository:
 ```shell
-git submodule update --init <path>
+git submodule update --init
 ```
 
-## Recursively initialize and update a specific submodule:
+## Recursively initialize and update all submodules in current repository:
 ```shell
-git submodule update --init --recursive <path>
+git submodule update --init --recursive
 ```
 
 <br>
 
+## Deinitialize all submodules in current repository:
+```shell
+git submodule deinit --all
+```
+
 ## Deinitialize a specific submodule:
 ```shell
 git submodule deinit <path>
-```
-
-## Remove a specific submodule:
-```shell
-git rm <path>
 ```
