@@ -8,16 +8,13 @@ command="Test-AzTemplate -MainTemplateFile ${templateFile} -TemplatePath ${templ
 
 pwsh -Command "Import-Module -FullyQualifiedName ${path}; ${command}; if (\$error.Count) { exit 1 }"
 
-# - name: Show ARM TTK test result
-#   shell: bash
-#   continue-on-error: true
-#   run: |
-#     echo 'Results: ${{ toJSON(fromJSON(steps.armtest.outputs.results)) }}'
-
 # HAR KÖRT IFRÅN azure/arm directory:
-# git submodule add https://github.com/Azure/arm-ttk
 # git submodule
 # git submodule status
 # git submodule update
 # git submodule update --init --recursive
+# git submodule init
+# git clone --recurse-submodules
 # git submodule -h
+# FYLL PÅ: https://git-scm.com/book/en/v2/Git-Tools-Submodules
+# Ev flytta till mer logisk plats än längst ned i README?

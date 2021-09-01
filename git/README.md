@@ -142,6 +142,11 @@ git clone --branch <branch-name> <url>
 git clone -b <branch-name> <url>
 ```
 
+## Clone a remote repository and all its submodules:
+```shell
+git clone --recurse-submodules <url>
+```
+
 <br><br>
 
 ## Create a shallow clone containing only a specific number of commits:
@@ -1176,3 +1181,36 @@ git rebase --continue
 ```shell
 git rebase --abort
 ```
+
+<br><br>
+
+## Add a submodule to working directory:
+```shell
+git submodule add <url>
+```
+
+## Add a submodule to a specific directory:
+```shell
+git submodule add <url> <path>
+```
+<!-- 
+## Add a submodule based on a specific branch, commit or tag:
+```shell
+# ???
+```
+
+## List all submodules in current repository:
+```shell
+git submodule
+```
+
+## Remove a specific submodule:
+```shell
+git rm <path>
+```
+
+## Initialize a specific submodule:
+```shell
+git submodule init <path>
+git submodule update <path>
+``` -->
