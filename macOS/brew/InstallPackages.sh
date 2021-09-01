@@ -68,6 +68,7 @@ brew install azure-cli &&
 
 brew install --cask dotnet-sdk
 brew install terraform
+brew install tflint
 brew install pulumi
 brew install kubectl
 brew install kubectx

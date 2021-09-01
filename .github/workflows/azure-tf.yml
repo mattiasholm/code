@@ -30,6 +30,18 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v1
+
+      - name: Show version
+        run: tflint --version
+
+      - name: Init TFLint
+        run: tflint --init
+
+      - name: Run TFLint
+        run: tflint -f compact
+
       - name: terraform init
         run: terraform init -input=false
         working-directory: ${{ env.working-directory }}
