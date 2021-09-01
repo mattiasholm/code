@@ -1193,16 +1193,30 @@ git submodule add <url>
 ```shell
 git submodule add <url> <path>
 ```
+
+## List all submodules in current repository:
+```shell
+git submodule status
+git submodule
+```
+
+## Initialize a specific submodule:
+```shell
+git submodule init <path>
+```
+
+## Deinitialize a specific submodule:
+```shell
+git submodule deinit <path>
+```
+
+
 <!-- 
 ## Add a submodule based on a specific branch, commit or tag:
 ```shell
 # ???
 ```
 
-## List all submodules in current repository:
-```shell
-git submodule
-```
 
 ## Remove a specific submodule:
 ```shell
