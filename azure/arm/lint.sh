@@ -16,6 +16,6 @@ command="Test-AzTemplate -MainTemplateFile ${templateFile} -TemplatePath ${templ
 
 pwsh -Command "Import-Module -FullyQualifiedName ${path}; ${command}; if (\$error.Count) { exit 1 }"
 
-if [[ ${bicep} ]]; then
+if [[ ${bicep} == true ]]; then
     rm ${templateFile}
 fi
