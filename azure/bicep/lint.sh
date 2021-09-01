@@ -2,9 +2,7 @@
 
 set -e +x
 
-topLevel=$(git rev-parse --show-toplevel)
-childPath="arm-ttk\/arm-ttk\/arm-ttk.psd1"
-path=$(echo ${topLevel} | sed s/$(basename ${topLevel})$/${childPath}/)
+path="./arm-ttk/arm-ttk/arm-ttk.psd1"
 templateFile="main.bicep"
 
 bicep=false

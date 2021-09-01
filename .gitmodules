@@ -1,3 +1,6 @@
 [submodule "azure/arm/arm-ttk"]
 	path = azure/arm/arm-ttk
 	url = https://github.com/Azure/arm-ttk
+[submodule "azure/bicep/arm-ttk"]
+	path = azure/bicep/arm-ttk
+	url = https://github.com/Azure/arm-ttk
