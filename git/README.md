@@ -1194,37 +1194,44 @@ git submodule add <url>
 git submodule add <url> <path>
 ```
 
+<br>
+
 ## List all submodules in current repository:
 ```shell
 git submodule status
 git submodule
 ```
 
+<br>
+
 ## Initialize a specific submodule:
 ```shell
 git submodule init <path>
 ```
+
+## Update a specific submodule:
+```shell
+git submodule update <path>
+```
+
+## Initialize and update a specific submodule:
+```shell
+git submodule update --init <path>
+```
+
+## Recursively initialize and update a specific submodule:
+```shell
+git submodule update --init --recursive <path>
+```
+
+<br>
 
 ## Deinitialize a specific submodule:
 ```shell
 git submodule deinit <path>
 ```
 
-
-<!-- 
-## Add a submodule based on a specific branch, commit or tag:
-```shell
-# ???
-```
-
-
 ## Remove a specific submodule:
 ```shell
 git rm <path>
 ```
-
-## Initialize a specific submodule:
-```shell
-git submodule init <path>
-git submodule update <path>
-``` -->
