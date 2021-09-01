@@ -55,9 +55,14 @@ az account set --subscription <subscription-id>
 
 <br><br>
 
-## Initialize working directory containing Terraform configuration files:
+## Initialize Terraform backend:
 ```shell
 terraform init
+```
+
+## Upgrade Terraform backend to a newer version:
+```shell
+terraform init --upgrade
 ```
 
 <br><br>
