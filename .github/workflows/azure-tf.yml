@@ -25,6 +25,12 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+      - name: Cache plugin dir
+        uses: actions/cache@v2
+        with:
+          path: ~/.tflint.d/plugins
+          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:

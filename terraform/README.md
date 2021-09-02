@@ -193,3 +193,26 @@ terraform console
 ```shell
 terraform graph | dot -Tsvg > graph.svg
 ```
+
+<br><br>
+
+## Contextual help:
+```shell
+tflint --help
+tflint -h
+```
+
+## Show version:
+```shell
+tflint --version
+tflint -v
+```
+
+
+
+<!--
+
+tflint --init
+
+tflint -f compact
+-->
