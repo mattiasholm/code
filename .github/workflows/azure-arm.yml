@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "azure/arm/**"
+      - ".github/workflows/azure-arm.yml"
       - "!**.md"
 
   workflow_dispatch:

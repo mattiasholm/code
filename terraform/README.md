@@ -215,4 +215,5 @@ tflint -v
 tflint --init
 
 tflint -f compact
+tflint --format compact
 -->

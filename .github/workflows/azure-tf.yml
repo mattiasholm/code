@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "terraform/azure/**"
+      - ".github/workflows/azure-tf.yml"
       - "!**.md"
 
   workflow_dispatch:
@@ -46,7 +47,7 @@ jobs:
         run: tflint --init
 
       - name: Run TFLint
-        run: tflint -f compact
+        run: tflint --format compact
 
       - name: terraform init
         run: terraform init -input=false
