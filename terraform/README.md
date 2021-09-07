@@ -208,12 +208,30 @@ tflint --version
 tflint -v
 ```
 
-
-
-<!--
-
+## Initialize TFLint:
+```shell
 tflint --init
+```
 
-tflint -f compact
+## Run TFLint:
+```shell
+tflint
+```
+
+## Run TFLint and output in compact format:
+```shell
 tflint --format compact
--->
+tflint -f compact
+```
+
+## Run TFLint and output in JSON format:
+```shell
+tflint --format json
+tflint -f json
+```
+
+## Run TFLint with a different config file than `.tflint.hcl`:
+```shell
+tflint --config <filename>
+tflint -c <filename>
+```
