@@ -38,9 +38,11 @@ jobs:
 
       - name: Initialize TFLint
         run: tflint --init
+        working-directory: ${{ env.working-directory }}
 
       - name: Run TFLint
         run: tflint --format json
+        working-directory: ${{ env.working-directory }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
