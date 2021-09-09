@@ -26,13 +26,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      # Needed?
-      - name: Cache plugin dir
-        uses: actions/cache@v2
-        with:
-          path: ~/.tflint.d/plugins
-          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
-
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v1
 
@@ -49,14 +42,14 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: terraform init
+      - name: Initialize Terraform
         run: terraform init -input=false
         working-directory: ${{ env.working-directory }}
 
-      - name: terraform plan
+      - name: Plan Terraform
         run: terraform plan -out=tfplan -input=false
         working-directory: ${{ env.working-directory }}
 
-      - name: terraform apply
+      - name: Apply Terraform
         run: terraform apply -input=false tfplan
         working-directory: ${{ env.working-directory }}
