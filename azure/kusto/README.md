@@ -1,5 +1,7 @@
 # Cheat Sheet - Kusto Query Language (KQL)
 
+<br>
+
 | Operator       | Description                                               |
 | -------------- | --------------------------------------------------------- |
 | count          | Count number of rows                                      |

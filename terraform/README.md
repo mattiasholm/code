@@ -2,17 +2,19 @@
 
 # Cheat Sheet - Terraform
 
+<br>
+
 ## Official docs:
 https://www.terraform.io/docs/cli-index.html
 
 https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
 
-<br>
+<br><br>
 
 ## Azure tutorial:
 https://learn.hashicorp.com/collections/terraform/azure-get-started
 
-<br>
+<br><br>
 
 ## Show version:
 ```shell
@@ -192,46 +194,4 @@ terraform console
 ## Generate a visualization of a Terraform configuration:
 ```shell
 terraform graph | dot -Tsvg > graph.svg
-```
-
-<br><br>
-
-## Contextual help:
-```shell
-tflint --help
-tflint -h
-```
-
-## Show version:
-```shell
-tflint --version
-tflint -v
-```
-
-## Initialize TFLint:
-```shell
-tflint --init
-```
-
-## Run TFLint:
-```shell
-tflint
-```
-
-## Run TFLint and output in compact format:
-```shell
-tflint --format compact
-tflint -f compact
-```
-
-## Run TFLint and output in JSON format:
-```shell
-tflint --format json
-tflint -f json
-```
-
-## Run TFLint with a different config file than `.tflint.hcl`:
-```shell
-tflint --config <filename>
-tflint -c <filename>
 ```
