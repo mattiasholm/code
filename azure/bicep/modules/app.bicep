@@ -1,5 +1,5 @@
 param name string
-param location string
+param location string = resourceGroup().location
 param tags object = resourceGroup().tags
 @allowed([
   'None'
@@ -7,7 +7,7 @@ param tags object = resourceGroup().tags
 ])
 param identityType string = 'None'
 param serverFarmId string
-param siteConfig object
+param siteConfig object = {}
 param clientAffinityEnabled bool = false
 param httpsOnly bool = true
 
