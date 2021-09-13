@@ -94,7 +94,19 @@ variable "kvSku" {
     error_message = "Invalid value for variable."
   }
 }
-variable "kvPermissions" {
+variable "kvAppSecretPermissions" {
+  type = list(string)
+}
+
+variable "kvGroupKeyPermissions" {
+  type = list(string)
+}
+
+variable "kvGroupSecretPermissions" {
+  type = list(string)
+}
+
+variable "kvGroupCertificatePermissions" {
   type = list(string)
 }
 

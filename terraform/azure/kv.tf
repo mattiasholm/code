@@ -13,12 +13,19 @@ resource "azurerm_key_vault" "kv" {
   sku_name            = var.kvSku
 }
 
-resource "azurerm_key_vault_access_policy" "accesspolicy" {
+resource "azurerm_key_vault_access_policy" "accesspolicy_app" {
   for_each           = azurerm_app_service.app
   key_vault_id       = azurerm_key_vault.kv.id
   tenant_id          = local.tenantId
   object_id          = azurerm_app_service.app[each.key].identity.0.principal_id
-  secret_permissions = var.kvPermissions
+  secret_permissions = var.kvAppSecretPermissions
 }
 
-# Placeholder Access Policy AAD group!
+resource "azurerm_key_vault_access_policy" "accesspolicy_group" {
+  key_vault_id            = azurerm_key_vault.kv.id
+  tenant_id               = local.tenantId
+  object_id               = azuread_group.group.id
+  key_permissions         = var.kvGroupKeyPermissions
+  secret_permissions      = var.kvGroupSecretPermissions
+  certificate_permissions = var.kvGroupCertificatePermissions
+}

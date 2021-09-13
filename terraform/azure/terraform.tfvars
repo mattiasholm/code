@@ -27,9 +27,46 @@ appHttpsOnly             = true
 appiType = "web"
 
 kvSku = "standard"
-kvPermissions = [
+kvAppSecretPermissions = [
   "Get",
   "List",
+]
+kvGroupKeyPermissions = [
+  "Get",
+  "List",
+  "Update",
+  "Create",
+  "Import",
+  "Delete",
+  "Recover",
+  "Backup",
+  "Restore"
+]
+kvGroupSecretPermissions = [
+  "Get",
+  "List",
+  "Set",
+  "Delete",
+  "Recover",
+  "Backup",
+  "Restore"
+]
+kvGroupCertificatePermissions = [
+  "Get",
+  "List",
+  "Update",
+  "Create",
+  "Import",
+  "Delete",
+  "Recover",
+  "Backup",
+  "Restore",
+  "ManageContacts",
+  "ManageIssuers",
+  "GetIssuers",
+  "ListIssuers",
+  "SetIssuers",
+  "DeleteIssuers"
 ]
 
 stCount        = 3

@@ -14,10 +14,9 @@ resource "azuread_group" "group" {
   security_enabled = true
 }
 
-# https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/group
+resource "azuread_group_member" "member" {
+  group_object_id  = azuread_group.group.id
+  member_object_id = data.azuread_user.user.id
+}
 
-# Member current user?! Blir ju dock dumt i pipeline?
-
-# KV AP
-
-# Parameterisera!
+# Parameterisera + bygg ekvivalent i Bicep/ARM!
