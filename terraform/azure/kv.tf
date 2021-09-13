@@ -20,3 +20,5 @@ resource "azurerm_key_vault_access_policy" "accesspolicy" {
   object_id          = azurerm_app_service.app[each.key].identity.0.principal_id
   secret_permissions = var.kvPermissions
 }
+
+# Placeholder Access Policy AAD group!
