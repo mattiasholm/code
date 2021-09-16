@@ -31,6 +31,11 @@ kvAppSecretPermissions = [
   "Get",
   "List",
 ]
+kvGroupName  = "AzureRBAC-KeyVault"
+kvGroupOwner = "mattias.holm@azronnieb3it.onmicrosoft.com"
+kvGroupMembers = [
+  "mattias.holm@azronnieb3it.onmicrosoft.com"
+]
 kvGroupKeyPermissions = [
   "Get",
   "List",

@@ -1,22 +1,18 @@
-locals {
-  userId = data.azuread_user.user.id
-}
-
 data "azuread_user" "user" {
-  user_principal_name = "mattias.holm@azronnieb3it.onmicrosoft.com"
+  for_each            = toset(var.kvGroupMembers)
+  user_principal_name = each.key
 }
 
 resource "azuread_group" "group" {
-  display_name = "AzureRBAC-KeyVault"
+  display_name = var.kvGroupName
   owners = [
-    local.userId
+    data.azuread_user.user[var.kvGroupOwner].id
   ]
   security_enabled = true
 }
 
 resource "azuread_group_member" "member" {
+  for_each         = toset(var.kvGroupMembers)
   group_object_id  = azuread_group.group.id
-  member_object_id = data.azuread_user.user.id
+  member_object_id = data.azuread_user.user[each.key].id
 }
-
-# Parameterisera + bygg ekvivalent i Bicep/ARM!

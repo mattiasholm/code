@@ -23,6 +23,7 @@ alias cx='chmod +x'
 alias h='history'
 alias ip='ip=$(curl -s ifconfig.io) && (echo $ip ; echo -n $ip | pbcopy)'
 
+alias azb='az bicep'
 alias azli='az login'
 alias azlo='az logout'
 alias azls='az account list --output table'

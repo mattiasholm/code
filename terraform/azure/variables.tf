@@ -98,6 +98,18 @@ variable "kvAppSecretPermissions" {
   type = list(string)
 }
 
+variable "kvGroupName" {
+  type = string
+}
+
+variable "kvGroupOwner" {
+  type = string
+}
+
+variable "kvGroupMembers" {
+  type = list(string)
+}
+
 variable "kvGroupKeyPermissions" {
   type = list(string)
 }

@@ -397,6 +397,11 @@ tr a-z A-Z
 cat <filename> | md5
 ```
 
+## Generate a GUID:
+```shell
+uuidgen
+```
+
 ## Check if a command is installed:
 ```shell
 if [[ -x "$(command -v ${prereq})" ]]
