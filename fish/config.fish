@@ -1,14 +1,15 @@
 set --export PATH /usr/local/sbin $PATH
-# set --export LSCOLORS exfxcxdxbxegedabagacad # DEFAULT
-# set --export LSCOLORS ExfxcxdxbxEgEdabagacad
-# set --export LSCOLORS gxfxcxdxbxgggdabagacad
 set --export LSCOLORS cxfxcxdxbxcgcdabagacad
 
 set fish_greeting ''
 set fish_prompt_pwd_dir_length 0
+set fish_color_command cyan
+
+# Bättre att sätta prompt hårt nedan??? Har ju redan ändrat lite gott och blandat, känns lite redundant nu!
+# Värt att lägga till user@hostname ??? Sitter ju ändå aldrig med SSH mot någon server, endast lokalt på MBP...
+set __fish_git_prompt_color_untrackedfiles cyan
 set __fish_git_prompt_color_dirtystate cyan
 
-# Värt att lägga till user@hostname ??? Sitter ju ändå aldrig med SSH mot någon server, endast lokalt på MBP...
 function fish_prompt
     set -l last_pipestatus $pipestatus
     set -lx __fish_last_status $status
