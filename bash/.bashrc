@@ -1,3 +1,14 @@
+export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
+export PATH="/usr/local/opt/curl/bin:$PATH"
+
+alias .b='. ~/.bashrc'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+
 alias ls='ls -FGh'
 alias l='ls'
 alias la='ls -A'
@@ -18,7 +29,6 @@ alias m='midi'
 alias p='pulumi'
 alias t='terraform'
 
-alias .b='. ~/.bashrc'
 alias cl='clear'
 alias cx='chmod +x'
 alias ip='ip=$(curl -s ifconfig.io) && (echo $ip ; echo -n $ip | pbcopy)'
@@ -33,97 +43,45 @@ alias cdg='cd $(git rev-parse --show-toplevel)'
 alias codeg='code $(git rev-parse --show-toplevel)'
 alias openg='open $(git rev-parse --show-toplevel)'
 
+alias extl='code --list-extensions'
 alias exti='code --install-extension'
 alias extu='code --uninstall-extension'
-alias extl='code --list-extensions'
 
+alias bl='brew list'
 alias bi='brew install'
 alias bu='brew upgrade'
-alias bl='brew list'
+alias bun='brew uninstall'
 
-alias gs='git status'
+alias gcl='git clone'
 alias gf='git fetch'
 alias gp='git pull'
-alias gpu='git push'
-alias gcl='git clone'
-alias ga='git add $(git rev-parse --show-toplevel)'
-alias gc='git commit'
-alias gco='git checkout'
-alias gcob='git checkout -b'
-alias gcm="git checkout \"\$(git remote show origin | grep 'HEAD' | cut -d' ' -f5)\""
-alias gb='git branch'
-alias gl='git log --oneline'
-alias gla='git log --oneline --all'
-alias gsl='git shortlog --summary'
-alias gch='git cherry --verbose'
-alias gchp='git cherry-pick'
+alias gs='git status'
+alias gsh='git show'
 alias gd='git diff'
 alias gdo='git diff origin/$(git rev-parse --abbrev-ref HEAD)'
 alias gdm="git diff \"\$(git remote show origin | grep 'HEAD' | cut -d' ' -f5)\""
-alias gsh='git show'
-alias gr='git remote'
-alias grp='git rev-parse'
-alias gres='git restore'
-alias gt='git tag'
+alias ga='git add $(git rev-parse --show-toplevel)'
+alias gr='git restore'
+alias gc='git commit'
+alias gpu='git push'
 alias gm='git merge'
-alias gls='git ls-files'
+alias gl='git log --oneline'
+alias gla='git log --oneline --all'
+alias glog='git log'
+alias gsl='git shortlog --summary'
+alias gco='git checkout'
+alias gcm="git checkout \"\$(git remote show origin | grep 'HEAD' | cut -d' ' -f5)\""
+alias gb='git branch'
+alias gt='git tag'
+alias gch='git cherry --verbose'
+alias gchp='git cherry-pick'
+alias grem='git remote'
 alias gsm='git submodule'
-alias gclean='git clean -d --force'
+alias gls='git ls-files'
+alias grp='git rev-parse'
 alias gamend='git commit --amend --no-edit'
+alias gclean='git clean -d --force'
 alias greset='git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
-
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
-
-function up() {
-    cd $(eval printf '../'%.0s {1..$1})
-}
-
-function cpbak() {
-    if [[ -f "$2" ]]; then
-        mv "$2" "$2.bak"
-    fi
-
-    cp "$1" "$2"
-}
-
-function pw() {
-    case "$#" in
-    0)
-        passwordLength=16
-        ;;
-    1)
-        passwordLength="$1"
-        ;;
-    *)
-        echo -e "usage: genpass [<password-length>]"
-        return
-        ;;
-    esac
-
-    if [[ ${passwordLength} -lt 8 ]]; then
-        echo -e "Password cannot be shorter than 8 characters"
-        return
-    fi
-
-    chars='@#$%&_+='
-    {
-        LC_ALL=C grep </dev/urandom -ao '[A-Za-z0-9]' |
-            head -n $(expr $passwordLength - 4)
-        echo ${chars:$((RANDOM % ${#chars})):1}
-        echo ${chars:$((RANDOM % ${#chars})):1}
-        echo ${chars:$((RANDOM % ${#chars})):1}
-        echo ${chars:$((RANDOM % ${#chars})):1}
-    } |
-        shuf |
-        tr -d '\n' |
-        pbcopy
-
-    echo -e "A random password with ${passwordLength} characters is now in clipboard"
-}
 
 function gquick() {
     if [[ -z "$1" ]]; then
@@ -168,6 +126,49 @@ function gba() {
     echo -e "\nCOMMITS AHEAD:"
     git log --oneline "${secondBranch}".."${firstBranch}"
     echo -e ""
+}
+
+function cpbak() {
+    if [[ -f "$2" ]]; then
+        mv "$2" "$2.bak"
+    fi
+
+    cp "$1" "$2"
+}
+
+function pw() {
+    case "$#" in
+    0)
+        passwordLength=16
+        ;;
+    1)
+        passwordLength="$1"
+        ;;
+    *)
+        echo -e "usage: genpass [<password-length>]"
+        return
+        ;;
+    esac
+
+    if [[ ${passwordLength} -lt 8 ]]; then
+        echo -e "Password cannot be shorter than 8 characters"
+        return
+    fi
+
+    chars='@#$%&_+='
+    {
+        LC_ALL=C grep </dev/urandom -ao '[A-Za-z0-9]' |
+            head -n $(expr $passwordLength - 4)
+        echo ${chars:$((RANDOM % ${#chars})):1}
+        echo ${chars:$((RANDOM % ${#chars})):1}
+        echo ${chars:$((RANDOM % ${#chars})):1}
+        echo ${chars:$((RANDOM % ${#chars})):1}
+    } |
+        shuf |
+        tr -d '\n' |
+        pbcopy
+
+    echo -e "A random password with ${passwordLength} characters is now in clipboard"
 }
 
 function azapi() {
@@ -241,6 +242,3 @@ function midi() {
     timidity -f "${midiFile}" -A 300 -K "${transposeSteps}"
     rm "${midiFile}"
 }
-
-export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
-export PATH="/usr/local/opt/curl/bin:$PATH"
