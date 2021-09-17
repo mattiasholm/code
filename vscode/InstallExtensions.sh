@@ -4,6 +4,7 @@ set -e +x
 
 exts=(
     "foxundermoon.shell-format"
+    "bmalehorn.vscode-fish"
     "ms-vscode.powershell"
     "ms-python.vscode-pylance"
     "ms-azuretools.vscode-bicep"

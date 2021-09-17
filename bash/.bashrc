@@ -12,6 +12,7 @@ alias b='brew'
 alias c='curl'
 alias d='dotnet'
 alias g='git'
+alias h='history'
 alias k='kubectl'
 alias m='midi'
 alias p='pulumi'
@@ -20,7 +21,6 @@ alias t='terraform'
 alias .b='. ~/.bashrc'
 alias cl='clear'
 alias cx='chmod +x'
-alias h='history'
 alias ip='ip=$(curl -s ifconfig.io) && (echo $ip ; echo -n $ip | pbcopy)'
 
 alias azb='az bicep'
@@ -77,7 +77,6 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
-alias .......='cd ../../../../../..'
 
 function up() {
     cd $(eval printf '../'%.0s {1..$1})

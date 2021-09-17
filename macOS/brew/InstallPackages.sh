@@ -12,6 +12,8 @@ userEmail="mattias.holm@live.com"
 
 brew install --cask iterm2
 
+brew install fish
+
 brew install bash &&
     chmod +x "$(git rev-parse --show-toplevel)/bash/bashrc.sh" &&
     "$(git rev-parse --show-toplevel)/bash/bashrc.sh"
