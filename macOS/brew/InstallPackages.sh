@@ -11,6 +11,7 @@ userEmail="mattias.holm@live.com"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 brew install --cask iterm2
+touch ~/.hushlogin
 
 brew install bash &&
     chmod +x "$(git rev-parse --show-toplevel)/bash/bashrc.sh" &&
