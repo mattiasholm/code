@@ -13,8 +13,8 @@ sudo apt install -y git &&
     git config --global user.email "${userEmail}" &&
     git config --global credential.helper 'cache --timeout=86400' &&
     git config --global init.defaultBranch main &&
-    chmod +x "$(git rev-parse --show-toplevel)/git/CloneRepos.sh" &&
-    "$(git rev-parse --show-toplevel)/git/CloneRepos.sh"
+    chmod +x "$(git rev-parse --show-toplevel)/git/cloneRepos.sh" &&
+    "$(git rev-parse --show-toplevel)/git/cloneRepos.sh"
 
 sudo apt install -y python3
 
