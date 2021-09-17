@@ -2,7 +2,7 @@
 
 set -e +x
 
-function SetVariables() {
+function setVariables() {
     path=~/repos
     urls=(
         "https://github.com/mattiasholm/code.git"
@@ -12,7 +12,7 @@ function SetVariables() {
     )
 }
 
-function CloneRepos() {
+function cloneRepos() {
     mkdir -p "${path}" &&
         cd "$_"
 
@@ -37,8 +37,8 @@ function CloneRepos() {
 }
 
 function main() {
-    SetVariables
-    CloneRepos
+    setVariables
+    cloneRepos
 }
 
 main
