@@ -5,8 +5,8 @@ set -e +x
 userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
 
-chmod +x $(git rev-parse --show-toplevel)/bash/bashrc.sh &&
-    $(git rev-parse --show-toplevel)/bash/bashrc.sh
+. $(git rev-parse --show-toplevel)/bash/.bashrc
+.b
 
 sudo apt install -y git &&
     git config --global user.name "${userName}" &&

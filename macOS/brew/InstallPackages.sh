@@ -13,9 +13,10 @@ userEmail="mattias.holm@live.com"
 brew install --cask iterm2
 touch ~/.hushlogin
 
-brew install bash &&
-    chmod +x "$(git rev-parse --show-toplevel)/bash/bashrc.sh" &&
-    "$(git rev-parse --show-toplevel)/bash/bashrc.sh"
+brew install bash
+
+. $(git rev-parse --show-toplevel)/bash/.bashrc
+.b
 
 if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/bash)" ]]; then
     echo "/usr/local/bin/bash" | sudo tee -a /etc/shells

@@ -1,7 +1,5 @@
 export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
-export PATH="/usr/local/opt/curl/bin:$PATH"
-
-alias .b='. ~/.bashrc'
+export PATH="/usr/local/sbin:$PATH"
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -9,10 +7,10 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
+alias l='ll'
 alias ls='ls -FGh'
-alias l='ls'
-alias la='ls -A'
-alias ll='ls -la'
+alias ll='ls -l'
+alias la='ls -la'
 
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -83,6 +81,15 @@ alias grp='git rev-parse'
 alias gamend='git commit --amend --no-edit'
 alias gclean='git clean -d --force'
 alias greset='git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
+
+function .b() {
+    path=~/repos/code
+    cp "$path/macOS/.bash_profile" ~/.bash_profile
+    cp "$path/bash/.bashrc" ~/.bashrc
+    cp "$path/bash/.inputrc" ~/.inputrc
+    . ~/.bash_profile
+    . ~/.bashrc
+}
 
 function gquick() {
     if [[ -z "$1" ]]; then

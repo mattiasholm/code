@@ -1,5 +1,6 @@
 set --export PATH /usr/local/sbin $PATH
-set --export LSCOLORS cxfxcxdxbxcgcdabagacad
+# set --export LSCOLORS cxfxcxdxbxcgcdabagacad
+# set --export LSCOLORS 'di=0;32'
 
 set fish_greeting ''
 set fish_prompt_pwd_dir_length 0
