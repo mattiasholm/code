@@ -2,10 +2,14 @@
 
 set -e +x
 
+path=~/repos/code
+cd "${path}"
+
 userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
+topLevel="$(git rev-parse --show-toplevel)"
 
-. $(git rev-parse --show-toplevel)/bash/.bashrc
+. "${topLevel}/bash/.bashrc"
 .b
 
 sudo apt install -y git &&
@@ -13,8 +17,8 @@ sudo apt install -y git &&
     git config --global user.email "${userEmail}" &&
     git config --global credential.helper 'cache --timeout=86400' &&
     git config --global init.defaultBranch main &&
-    chmod +x "$(git rev-parse --show-toplevel)/git/cloneRepos.sh" &&
-    "$(git rev-parse --show-toplevel)/git/cloneRepos.sh"
+    chmod +x "${topLevel}/git/cloneRepos.sh" &&
+    "${topLevel}/git/cloneRepos.sh"
 
 sudo apt install -y python3
 

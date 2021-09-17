@@ -1,5 +1,5 @@
-export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
 export PATH="/usr/local/sbin:$PATH"
+export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -177,17 +177,6 @@ function pw() {
         pbcopy
 
     echo -e "A random password with ${passwordLength} characters is now in clipboard"
-}
-
-function azapi() {
-    if [[ "$#" == 0 ]]; then
-        echo -e "usage: azapi <type>"
-        return
-    fi
-
-    scriptPath=~/repos/code/pwsh/Azure/azapi.ps1
-    chmod +x "${scriptPath}"
-    "${scriptPath}" "$1" 1 -Clipboard
 }
 
 function midi() {

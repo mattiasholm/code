@@ -7,6 +7,10 @@ cd "${path}"
 
 userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
+topLevel="$(git rev-parse --show-toplevel)"
+
+. "${topLevel}/bash/.bashrc"
+.b
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
@@ -14,9 +18,6 @@ brew install --cask iterm2
 touch ~/.hushlogin
 
 brew install bash
-
-. $(git rev-parse --show-toplevel)/bash/.bashrc
-.b
 
 if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/bash)" ]]; then
     echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
