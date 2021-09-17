@@ -1,4 +1,14 @@
-# export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
+set --export PATH /usr/local/sbin $PATH
+
+# function fish_prompt -d "Write out the prompt"
+#     # This shows up as USER@HOST /home/user/ >, with the directory colored
+#     # $USER and $hostname are set by fish, so you can just use them
+#     # instead of using `whoami` and `hostname`
+#     printf '%s@%s %s%s%s > ' $USER $hostname \
+#         (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)
+# end
+
+# set fish_theme robbyrussell
 
 alias .f='. ~/.config/fish/config.fish'
 
@@ -75,11 +85,11 @@ alias gclean='git clean -d --force'
 alias greset='git reset --hard origin/(git rev-parse --abbrev-ref HEAD)'
 
 function gquick --argument-names message
-    if not test "$message"
+    if not test $message
         set message 'Quick change'
     end
     git add (git rev-parse --show-toplevel)
-    git commit --message "$message"
+    git commit --message $message
     git push
 end
 
