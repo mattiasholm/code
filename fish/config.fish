@@ -1,4 +1,6 @@
 set --export PATH /usr/local/sbin $PATH
+set fish_greeting ''
+set fish_prompt_pwd_dir_length 0
 
 # function fish_prompt -d "Write out the prompt"
 #     # This shows up as USER@HOST /home/user/ >, with the directory colored
@@ -7,8 +9,6 @@ set --export PATH /usr/local/sbin $PATH
 #     printf '%s@%s %s%s%s > ' $USER $hostname \
 #         (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)
 # end
-
-# set fish_theme robbyrussell
 
 alias .f='. ~/.config/fish/config.fish'
 
@@ -33,6 +33,7 @@ alias t='terraform'
 alias cl='clear'
 alias cx='chmod +x'
 alias ip='curl -s ifconfig.io' # Add pbcopy support
+alias fc='fish_config'
 
 alias azb='az bicep'
 alias azli='az login'

@@ -3,7 +3,7 @@
 set -e +x
 
 path=~/repos/code
-cd ${path}
+cd "${path}"
 
 userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
@@ -12,8 +12,6 @@ userEmail="mattias.holm@live.com"
 
 brew install --cask iterm2
 
-brew install fish
-
 brew install bash &&
     chmod +x "$(git rev-parse --show-toplevel)/bash/bashrc.sh" &&
     "$(git rev-parse --show-toplevel)/bash/bashrc.sh"
@@ -21,8 +19,15 @@ brew install bash &&
 if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/bash)" ]]; then
     echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
 fi
-chsh -s /usr/local/bin/bash
-sudo chsh -s /usr/local/bin/bash
+
+brew install fish
+
+if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/fish)" ]]; then
+    echo "/usr/local/bin/fish" | sudo tee -a /etc/shells
+fi
+
+chsh -s /usr/local/bin/fish
+sudo chsh -s /usr/local/bin/fish
 
 echo -e "# sudo: auth account password session
 auth       sufficient     pam_tid.so
