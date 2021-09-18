@@ -16,6 +16,7 @@ alias a='az'
 alias b='brew'
 alias c='curl'
 alias d='dotnet'
+alias e='echo'
 alias f='fish'
 alias g='git'
 alias h='history'
@@ -86,68 +87,10 @@ function .f
     source ~/.config/fish/config.fish
 end
 
-# # Bättre att sätta prompt hårt nedan??? Har ju redan ändrat lite gott och blandat, känns lite redundant nu!
-# # Värt att lägga till user@hostname ??? Sitter ju ändå aldrig med SSH mot någon server, endast lokalt på MBP...
-
 function fish_prompt
-    set -l last_pipestatus $pipestatus
-    set -lx __fish_last_status $status
-
-    if not set -q __fish_git_prompt_show_informative_status
-        set -g __fish_git_prompt_show_informative_status 1
-    end
-    if not set -q __fish_git_prompt_hide_untrackedfiles
-        set -g __fish_git_prompt_hide_untrackedfiles 1
-    end
-    if not set -q __fish_git_prompt_color_branch
-        set -g __fish_git_prompt_color_branch magenta
-    end
-    if not set -q __fish_git_prompt_showupstream
-        set -g __fish_git_prompt_showupstream informative
-    end
-    if not set -q __fish_git_prompt_color_dirtystate
-        set -g __fish_git_prompt_color_dirtystate blue
-    end
-    if not set -q __fish_git_prompt_color_stagedstate
-        set -g __fish_git_prompt_color_stagedstate yellow
-    end
-    if not set -q __fish_git_prompt_color_invalidstate
-        set -g __fish_git_prompt_color_invalidstate red
-    end
-    if not set -q __fish_git_prompt_color_untrackedfiles
-        set -g __fish_git_prompt_color_untrackedfiles $fish_color_normal
-    end
-    if not set -q __fish_git_prompt_color_cleanstate
-        set -g __fish_git_prompt_color_cleanstate green --bold
-    end
-
-    set -l color_cwd
-    set -l suffix
-    if functions -q fish_is_root_user; and fish_is_root_user
-        if set -q fish_color_cwd_root
-            set color_cwd $fish_color_cwd_root
-        else
-            set color_cwd $fish_color_cwd
-        end
-        set suffix '#'
-    else
-        set color_cwd $fish_color_cwd
-        set suffix '$'
-    end
-
-    set_color $color_cwd
-    echo -n (prompt_pwd)
-    set_color normal
-
-    printf '%s ' (fish_vcs_prompt)
-
-    set -l status_color (set_color $fish_color_status)
-    set -l statusb_color (set_color --bold $fish_color_status)
-    set -l prompt_status (__fish_print_pipestatus "[" "]" "|" "$status_color" "$statusb_color" $last_pipestatus)
-    echo -n $prompt_status
-    set_color normal
-
-    echo -n "$suffix "
+    set branch \((git rev-parse --abbrev-ref HEAD 2> /dev/null)\)
+    set suffix '$ '
+    echo (set_color green)$USER@$hostname(set_color normal):(set_color magenta)(prompt_pwd)(set_color cyan) $branch (set_color normal)$suffix
 end
 
 function gquick --argument-names message
@@ -159,7 +102,7 @@ function gquick --argument-names message
     git push
 end
 
-function midi --argument-names abcFile#, transposeSteps
+function midi --argument-names abcFile transposeSteps
     if not test $abcFile
         echo "usage: midi <file> [<transpose-steps>]"
         return
@@ -168,70 +111,45 @@ function midi --argument-names abcFile#, transposeSteps
     if not test $transposeSteps
         set transposeSteps 0
     end
-    echo "abcFile: $abcFile"
-    echo "transposeSteps: $transposeSteps"
+
+    set type (grep "R:" $abcFile | sed 's/R://')
+    echo $type
+
+    switch $type
+        case barndance
+            set tempo 160
+            set tmpFile (echo $abcFile | sed 's/.abc/.mid/')
+            cat $abcFile | sed s/barndance/hornpipe/ >$tmpFile
+            set abcFile $tmpFile
+        case hornpipe
+            set tempo 150
+        case jig
+            set tempo 160
+        case march
+            set tempo 160
+        case polka
+            set tempo 140
+        case reel
+            set tempo 170
+        case slide
+            set tempo 200
+        case slip jig
+            set tempo 170
+        case strathspey
+            set tempo 140
+        case waltz
+            set tempo 90
+        case '*'
+            set tempo 120
+            echo (set_color bryellow) WARNING: Tune type \"$type\" not recognized (set_color normal)
+
+    end
+
+    set midiFile (echo $abcFile | sed 's/.abc$/.mid/')
+    abc2midi $abcFile -o $midiFile -Q $tempo
+    timidity -f $midiFile -A 300 -K $transposeSteps
+    rm $midiFile
 end
-
-# function midi() {
-#     if [[ "$#" == 0 ]]; then
-#         echo "usage: midi <file> [<transpose-steps>]"
-#         return
-#     fi
-
-#     if [[ -z "$2" ]]; then
-#         transposeSteps="0"
-#     else
-#         transposeSteps="$2"
-#     fi
-
-#     abcFile="$1"
-#     type=$(grep "R:" "${abcFile}" | sed 's/R://')
-
-#     case "${type}" in
-#     "barndance")
-#         tempo="160"
-#         tmpFile=$(echo "${abcFile}" | sed 's/.abc/.mid/')
-#         cat "${abcFile}" | sed 's/barndance/hornpipe/' >"${tmpFile}"
-#         abcFile="${tmpFile}"
-#         ;;
-#     "hornpipe")
-#         tempo="150"
-#         ;;
-#     "jig")
-#         tempo="160"
-#         ;;
-#     "march")
-#         tempo="160"
-#         ;;
-#     "polka")
-#         tempo="140"
-#         ;;
-#     "reel")
-#         tempo="170"
-#         ;;
-#     "slide")
-#         tempo="200"
-#         ;;
-#     "slip jig")
-#         tempo="170"
-#         ;;
-#     "strathspey")
-#         tempo="140"
-#         ;;
-#     "waltz")
-#         tempo="90"
-#         ;;
-#     *)
-#         tempo="120"
-#         echo -e "\033[33;1mWARNING: Tune type \"${type}\" not recognized\033[0m"
-#         ;;
-#     esac
-
-#     midiFile="$(echo "${abcFile}" | sed 's/.abc$/.mid/')"
-#     abc2midi "${abcFile}" -o "${midiFile}" -Q ${tempo}
-#     timidity -f "${midiFile}" -A 300 -K "${transposeSteps}"
-#     rm "${midiFile}"
-# }
 
 # function gba() {
 #     case "$#" in
