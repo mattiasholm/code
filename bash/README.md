@@ -276,8 +276,8 @@ touch <filename>
 
 ## Use process substitution to make list act like a file (command substitution would not work):
 ```shell
-. <(echo key=value)
-. /dev/stdin <<<"$(echo key=value)"
+source <(echo key=value)
+source /dev/stdin <<<"$(echo key=value)"
 ```
 
 <br>
@@ -293,6 +293,7 @@ export PS1="\u@\h \W\[\033[32m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -
 
 ## Source `.bashrc` to make changes take effect right away, without having to restart the shell:
 ```shell
+source ~/.bashrc
 . ~/.bashrc
 ```
 
@@ -333,9 +334,9 @@ history
 last
 ```
 
-## Source .env file in the same path as script:
+## Source .config file in the same path as script:
 ```shell
-. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}" | sed 's/[.].*$/.\env/')"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}" | sed 's/[.].*$/.\config/')"
 ```
 
 ## Reference a variable by another variable's value:

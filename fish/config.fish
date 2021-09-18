@@ -1,15 +1,8 @@
 set --export PATH /usr/local/sbin $PATH
-
-# set --export LSCOLORS cxfxcxdxbxcgcdabagacad
-set --export LSCOLORS 'di=0;32'
+set --export LSCOLORS cxfxcxdxbxcgcdabagacad
 
 set fish_greeting ''
 set fish_prompt_pwd_dir_length 0
-# set fish_color_command cyan
-set fish_color_command green
-
-# Bättre att sätta prompt hårt nedan??? Har ju redan ändrat lite gott och blandat, känns lite redundant nu!
-# Värt att lägga till user@hostname ??? Sitter ju ändå aldrig med SSH mot någon server, endast lokalt på MBP...
 set __fish_git_prompt_color_untrackedfiles cyan
 set __fish_git_prompt_color_dirtystate cyan
 
@@ -93,6 +86,9 @@ function .f
     source ~/.config/fish/config.fish
 end
 
+# # Bättre att sätta prompt hårt nedan??? Har ju redan ändrat lite gott och blandat, känns lite redundant nu!
+# # Värt att lägga till user@hostname ??? Sitter ju ändå aldrig med SSH mot någon server, endast lokalt på MBP...
+
 function fish_prompt
     set -l last_pipestatus $pipestatus
     set -lx __fish_last_status $status
@@ -163,89 +159,22 @@ function gquick --argument-names message
     git push
 end
 
-# function gba() {
-#     case "$#" in
-#     0)
-#         firstBranch="$(git rev-parse --abbrev-ref HEAD)"
-#         secondBranch="$(git remote show origin | grep 'HEAD' | cut -d' ' -f5)"
-#         ;;
-#     1)
-#         firstBranch="$(git rev-parse --abbrev-ref HEAD)"
-#         secondBranch="$1"
-#         ;;
-#     2)
-#         firstBranch="$1"
-#         secondBranch="$2"
-#         ;;
-#     *)
-#         echo -e "usage: gba [<second-branch> | <first-branch> <second-branch>]"
-#         return
-#         ;;
-#     esac
+function midi --argument-names abcFile#, transposeSteps
+    if not test $abcFile
+        echo "usage: midi <file> [<transpose-steps>]"
+        return
+    end
 
-#     echo -e "\nComparing branch \"${firstBranch}\" to branch \"${secondBranch}\":\n"
-
-#     echo -e "BEHIND: $(git log --oneline "${firstBranch}".."${secondBranch}" | wc -l)"
-#     echo -e "AHEAD: \t$(git log --oneline "${secondBranch}".."${firstBranch}" | wc -l)"
-
-#     echo -e "\nCOMMITS BEHIND:"
-#     git log --oneline "${firstBranch}".."${secondBranch}"
-
-#     echo -e "\nCOMMITS AHEAD:"
-#     git log --oneline "${secondBranch}".."${firstBranch}"
-#     echo -e ""
-# }
-
-# function up() {
-#     cd $(eval printf '../'%.0s {1..$1})
-# }
-
-# function cpbak() {
-#     if [[ -f "$2" ]]; then
-#         mv "$2" "$2.bak"
-#     fi
-
-#     cp "$1" "$2"
-# }
-
-# function pw() {
-#     case "$#" in
-#     0)
-#         passwordLength=16
-#         ;;
-#     1)
-#         passwordLength="$1"
-#         ;;
-#     *)
-#         echo -e "usage: genpass [<password-length>]"
-#         return
-#         ;;
-#     esac
-
-#     if [[ ${passwordLength} -lt 8 ]]; then
-#         echo -e "Password cannot be shorter than 8 characters"
-#         return
-#     fi
-
-#     chars='@#$%&_+='
-#     {
-#         LC_ALL=C grep </dev/urandom -ao '[A-Za-z0-9]' |
-#             head -n $(expr $passwordLength - 4)
-#         echo ${chars:$((RANDOM % ${#chars})):1}
-#         echo ${chars:$((RANDOM % ${#chars})):1}
-#         echo ${chars:$((RANDOM % ${#chars})):1}
-#         echo ${chars:$((RANDOM % ${#chars})):1}
-#     } |
-#         shuf |
-#         tr -d '\n' |
-#         pbcopy
-
-#     echo -e "A random password with ${passwordLength} characters is now in clipboard"
-# }
+    if not test $transposeSteps
+        set transposeSteps 0
+    end
+    echo "abcFile: $abcFile"
+    echo "transposeSteps: $transposeSteps"
+end
 
 # function midi() {
 #     if [[ "$#" == 0 ]]; then
-#         echo -e "usage: midi <file> [<transpose-steps>]"
+#         echo "usage: midi <file> [<transpose-steps>]"
 #         return
 #     fi
 
@@ -302,4 +231,80 @@ end
 #     abc2midi "${abcFile}" -o "${midiFile}" -Q ${tempo}
 #     timidity -f "${midiFile}" -A 300 -K "${transposeSteps}"
 #     rm "${midiFile}"
+# }
+
+# function gba() {
+#     case "$#" in
+#     0)
+#         firstBranch="$(git rev-parse --abbrev-ref HEAD)"
+#         secondBranch="$(git remote show origin | grep 'HEAD' | cut -d' ' -f5)"
+#         ;;
+#     1)
+#         firstBranch="$(git rev-parse --abbrev-ref HEAD)"
+#         secondBranch="$1"
+#         ;;
+#     2)
+#         firstBranch="$1"
+#         secondBranch="$2"
+#         ;;
+#     *)
+#         echo "usage: gba [<second-branch> | <first-branch> <second-branch>]"
+#         return
+#         ;;
+#     esac
+
+#     echo -e "\nComparing branch \"${firstBranch}\" to branch \"${secondBranch}\":\n"
+
+#     echo "BEHIND: $(git log --oneline "${firstBranch}".."${secondBranch}" | wc -l)"
+#     echo -e "AHEAD: \t$(git log --oneline "${secondBranch}".."${firstBranch}" | wc -l)"
+
+#     echo -e "\nCOMMITS BEHIND:"
+#     git log --oneline "${firstBranch}".."${secondBranch}"
+
+#     echo -e "\nCOMMITS AHEAD:"
+#     git log --oneline "${secondBranch}".."${firstBranch}"
+#     echo ""
+# }
+
+# function cpbak() {
+#     if [[ -f "$2" ]]; then
+#         mv "$2" "$2.bak"
+#     fi
+
+#     cp "$1" "$2"
+# }
+
+# function pw() {
+#     case "$#" in
+#     0)
+#         passwordLength=16
+#         ;;
+#     1)
+#         passwordLength="$1"
+#         ;;
+#     *)
+#         echo "usage: genpass [<password-length>]"
+#         return
+#         ;;
+#     esac
+
+#     if [[ ${passwordLength} -lt 8 ]]; then
+#         echo "Password cannot be shorter than 8 characters"
+#         return
+#     fi
+
+#     chars='@#$%&_+='
+#     {
+#         LC_ALL=C grep </dev/urandom -ao '[A-Za-z0-9]' |
+#             head -n $(expr $passwordLength - 4)
+#         echo ${chars:$((RANDOM % ${#chars})):1}
+#         echo ${chars:$((RANDOM % ${#chars})):1}
+#         echo ${chars:$((RANDOM % ${#chars})):1}
+#         echo ${chars:$((RANDOM % ${#chars})):1}
+#     } |
+#         shuf |
+#         tr -d '\n' |
+#         pbcopy
+
+#     echo "A random password with ${passwordLength} characters is now in clipboard"
 # }

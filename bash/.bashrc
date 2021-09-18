@@ -1,6 +1,8 @@
 export PATH="/usr/local/sbin:$PATH"
+export LSCOLORS="cxfxcxdxbxcgcdabagacad"
 export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
 
+alias -- -='cd -'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -87,8 +89,8 @@ function .b() {
     cp "$path/macOS/.bash_profile" ~/.bash_profile
     cp "$path/bash/.bashrc" ~/.bashrc
     cp "$path/bash/.inputrc" ~/.inputrc
-    . ~/.bash_profile
-    . ~/.bashrc
+    source ~/.bash_profile
+    source ~/.bashrc
 }
 
 function gquick() {
@@ -118,14 +120,14 @@ function gba() {
         secondBranch="$2"
         ;;
     *)
-        echo -e "usage: gba [<second-branch> | <first-branch> <second-branch>]"
+        echo "usage: gba [<second-branch> | <first-branch> <second-branch>]"
         return
         ;;
     esac
 
     echo -e "\nComparing branch \"${firstBranch}\" to branch \"${secondBranch}\":\n"
 
-    echo -e "BEHIND: $(git log --oneline "${firstBranch}".."${secondBranch}" | wc -l)"
+    echo "BEHIND: $(git log --oneline "${firstBranch}".."${secondBranch}" | wc -l)"
     echo -e "AHEAD: \t$(git log --oneline "${secondBranch}".."${firstBranch}" | wc -l)"
 
     echo -e "\nCOMMITS BEHIND:"
@@ -133,7 +135,7 @@ function gba() {
 
     echo -e "\nCOMMITS AHEAD:"
     git log --oneline "${secondBranch}".."${firstBranch}"
-    echo -e ""
+    echo ""
 }
 
 function cpbak() {
@@ -153,13 +155,13 @@ function pw() {
         passwordLength="$1"
         ;;
     *)
-        echo -e "usage: genpass [<password-length>]"
+        echo "usage: genpass [<password-length>]"
         return
         ;;
     esac
 
     if [[ ${passwordLength} -lt 8 ]]; then
-        echo -e "Password cannot be shorter than 8 characters"
+        echo "Password cannot be shorter than 8 characters"
         return
     fi
 
@@ -176,12 +178,12 @@ function pw() {
         tr -d '\n' |
         pbcopy
 
-    echo -e "A random password with ${passwordLength} characters is now in clipboard"
+    echo "A random password with ${passwordLength} characters is now in clipboard"
 }
 
 function midi() {
     if [[ "$#" == 0 ]]; then
-        echo -e "usage: midi <file> [<transpose-steps>]"
+        echo "usage: midi <file> [<transpose-steps>]"
         return
     fi
 

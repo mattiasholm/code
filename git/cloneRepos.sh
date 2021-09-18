@@ -16,14 +16,14 @@ function cloneRepos() {
     mkdir -p "${path}" &&
         cd "$_"
 
-    echo -e ""
+    echo ""
 
     for url in "${urls[@]}"; do
 
         name=$(basename "${url}" | sed "s/.git$//")
 
         if [[ ! -d "${path}/${name}" ]]; then
-            echo -e "Want to clone ${url}? (y/n)"
+            echo "Want to clone ${url}? (y/n)"
             read confirm
 
             if [[ ${confirm} == "y" ]]; then

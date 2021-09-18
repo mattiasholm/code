@@ -9,7 +9,7 @@ userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
 topLevel="$(git rev-parse --show-toplevel)"
 
-. "${topLevel}/bash/.bashrc"
+source "${topLevel}/bash/.bashrc"
 .b
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -32,7 +32,7 @@ fi
 chsh -s /usr/local/bin/fish
 sudo chsh -s /usr/local/bin/fish
 
-echo -e "# sudo: auth account password session
+echo "# sudo: auth account password session
 auth       sufficient     pam_tid.so
 auth       sufficient     pam_smartcard.so
 auth       required       pam_opendirectory.so
