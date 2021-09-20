@@ -33,7 +33,6 @@ alias t='terraform'
 
 alias cl='clear'
 alias cx='chmod +x'
-alias ip='ip=$(curl -s ifconfig.io) && (echo $ip ; echo -n $ip | pbcopy)'
 
 alias azb='az bicep'
 alias azli='az login'
@@ -94,6 +93,25 @@ function .b() {
     source ~/.bashrc
 }
 
+function ip() {
+    ip="$(curl -s ifconfig.io)"
+    echo "${ip}"
+    echo -n "${ip}" | pbcopy
+}
+
+function cpbak() {
+    if [[ "$#" != 2 ]]; then
+        echo "usage: cpbak <sourceFile> <destinationFile>"
+        return
+    fi
+
+    if [[ -f "$2" ]]; then
+        mv "$2" "$2.bak"
+    fi
+
+    cp "$1" "$2"
+}
+
 function gquick() {
     if [[ -z "$1" ]]; then
         message="Quick change"
@@ -137,14 +155,6 @@ function gba() {
     echo -e "\nCOMMITS AHEAD:"
     git log --oneline "${secondBranch}".."${firstBranch}"
     echo ""
-}
-
-function cpbak() {
-    if [[ -f "$2" ]]; then
-        mv "$2" "$2.bak"
-    fi
-
-    cp "$1" "$2"
 }
 
 function pw() {

@@ -28,7 +28,6 @@ alias t='terraform'
 
 alias cl='clear'
 alias cx='chmod +x'
-alias ip='curl -s ifconfig.io' # Add pbcopy support
 alias fc='fish_config'
 
 alias azb='az bicep'
@@ -93,6 +92,25 @@ function fish_prompt
     echo (set_color green)$USER@$hostname(set_color normal):(set_color magenta)(prompt_pwd)(set_color cyan) $branch (set_color normal)$suffix
 end
 
+function ip
+    set ip (curl -s ifconfig.io)
+    echo $ip
+    echo -n $ip | pbcopy
+end
+
+function cpbak --argument-names sourceFile destinationFile
+    if test (count $argv) -ne 2
+        echo "usage: cpbak <sourceFile> <destinationFile>"
+        return
+    end
+
+    if test -e $destinationFile
+        mv $destinationFile "$destinationFile.bak"
+    end
+
+    cp $sourceFile $destinationFile
+end
+
 function gquick --argument-names message
     if not test $message
         set message 'Quick change'
@@ -101,6 +119,10 @@ function gquick --argument-names message
     git commit --message $message
     git push
 end
+
+# function gba
+
+# function pw
 
 function midi --argument-names abcFile transposeSteps
     if not test $abcFile
@@ -150,79 +172,3 @@ function midi --argument-names abcFile transposeSteps
     timidity -f $midiFile -A 300 -K $transposeSteps
     rm $midiFile
 end
-
-# function gba() {
-#     case "$#" in
-#     0)
-#         firstBranch="$(git rev-parse --abbrev-ref HEAD)"
-#         secondBranch="$(git remote show origin | grep 'HEAD' | cut -d' ' -f5)"
-#         ;;
-#     1)
-#         firstBranch="$(git rev-parse --abbrev-ref HEAD)"
-#         secondBranch="$1"
-#         ;;
-#     2)
-#         firstBranch="$1"
-#         secondBranch="$2"
-#         ;;
-#     *)
-#         echo "usage: gba [<second-branch> | <first-branch> <second-branch>]"
-#         return
-#         ;;
-#     esac
-
-#     echo -e "\nComparing branch \"${firstBranch}\" to branch \"${secondBranch}\":\n"
-
-#     echo "BEHIND: $(git log --oneline "${firstBranch}".."${secondBranch}" | wc -l)"
-#     echo -e "AHEAD: \t$(git log --oneline "${secondBranch}".."${firstBranch}" | wc -l)"
-
-#     echo -e "\nCOMMITS BEHIND:"
-#     git log --oneline "${firstBranch}".."${secondBranch}"
-
-#     echo -e "\nCOMMITS AHEAD:"
-#     git log --oneline "${secondBranch}".."${firstBranch}"
-#     echo ""
-# }
-
-# function cpbak() {
-#     if [[ -f "$2" ]]; then
-#         mv "$2" "$2.bak"
-#     fi
-
-#     cp "$1" "$2"
-# }
-
-# function pw() {
-#     case "$#" in
-#     0)
-#         passwordLength=16
-#         ;;
-#     1)
-#         passwordLength="$1"
-#         ;;
-#     *)
-#         echo "usage: genpass [<password-length>]"
-#         return
-#         ;;
-#     esac
-
-#     if [[ ${passwordLength} -lt 8 ]]; then
-#         echo "Password cannot be shorter than 8 characters"
-#         return
-#     fi
-
-#     chars='@#$%&_+='
-#     {
-#         LC_ALL=C grep </dev/urandom -ao '[A-Za-z0-9]' |
-#             head -n $(expr $passwordLength - 4)
-#         echo ${chars:$((RANDOM % ${#chars})):1}
-#         echo ${chars:$((RANDOM % ${#chars})):1}
-#         echo ${chars:$((RANDOM % ${#chars})):1}
-#         echo ${chars:$((RANDOM % ${#chars})):1}
-#     } |
-#         shuf |
-#         tr -d '\n' |
-#         pbcopy
-
-#     echo "A random password with ${passwordLength} characters is now in clipboard"
-# }
