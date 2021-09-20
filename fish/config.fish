@@ -100,7 +100,7 @@ end
 
 function cpbak --argument-names sourceFile destinationFile
     if test (count $argv) -ne 2
-        echo "usage: cpbak <sourceFile> <destinationFile>"
+        echo 'usage: cpbak <sourceFile> <destinationFile>'
         return
     end
 
@@ -120,13 +120,39 @@ function gquick --argument-names message
     git push
 end
 
-# function gba
+function gba #--argument-names firstBranch secondBranch
+    switch (count $argv)
+        case 0
+            set firstBranch (git rev-parse --abbrev-ref HEAD)
+            set secondBranch (git remote show origin | grep HEAD | cut -d" " -f5)
+        case 1
+            set firstBranch (git rev-parse --abbrev-ref HEAD)
+            set secondBranch $argv[1]
+        case 2
+            set firstBranch $argv[1]
+            set secondBranch $argv[2]
+        case '*'
+            echo 'usage: gba [<second-branch> | <first-branch> <second-branch>]'
+    end
+
+    echo \nComparing branch \"$firstBranch\" to branch \"$secondBranch\":\n
+
+    echo BEHIND: (git log --oneline $firstBranch..$secondBranch | wc -l)
+    echo AHEAD: \t(git log --oneline $secondBranch..$firstBranch | wc -l)
+
+    echo \nCOMMITS BEHIND:
+    git log --oneline $firstBranch..$secondBranch
+
+    echo \nCOMMITS AHEAD:
+    git log --oneline $secondBranch..$firstBranch
+
+end
 
 # function pw
 
 function midi --argument-names abcFile transposeSteps
     if not test $abcFile
-        echo "usage: midi <file> [<transpose-steps>]"
+        echo 'usage: midi <file> [<transpose-steps>]'
         return
     end
 
@@ -134,7 +160,7 @@ function midi --argument-names abcFile transposeSteps
         set transposeSteps 0
     end
 
-    set type (grep "R:" $abcFile | sed 's/R://')
+    set type (grep 'R:' $abcFile | sed 's/R://')
     echo $type
 
     switch $type
