@@ -259,7 +259,7 @@
                     "location": "[parameters('location')]",
                     "tags": "[variables('tags')]",
                     "properties": {
-                        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[reference(variables('appiId')).ConnectionString]",
+                        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[reference(variables('appiId')).connectionString]",
                         "KEYVAULT_URL": "[reference(variables('kvId')).vaultUri]"
                     },
                     "dependsOn": [
