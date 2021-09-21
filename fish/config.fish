@@ -17,12 +17,13 @@ alias b='brew'
 alias c='curl'
 alias d='dotnet'
 alias e='echo'
-alias f='fish'
+alias f='find'
 alias g='git'
 alias h='history'
 alias k='kubectl'
 alias l='ll'
 alias m='midi'
+alias o='open'
 alias p='pulumi'
 alias t='terraform'
 
@@ -80,22 +81,40 @@ alias gamend='git commit --amend --no-edit'
 alias gclean='git clean -d --force'
 alias greset='git reset --hard origin/(git rev-parse --abbrev-ref HEAD)'
 
-function .f
-    set path ~/repos/code
-    cp $path/fish/config.fish ~/.config/fish/config.fish
-    source ~/.config/fish/config.fish
-end
-
 function fish_prompt
     set branch \((git rev-parse --abbrev-ref HEAD 2> /dev/null)\)
     set suffix '$ '
     echo (set_color green)$USER@$hostname(set_color normal):(set_color magenta)(prompt_pwd)(set_color cyan) $branch (set_color normal)$suffix
 end
 
+function .f
+    set path ~/repos/code
+    cp $path/fish/config.fish ~/.config/fish/config.fish
+    source ~/.config/fish/config.fish
+end
+
 function ip
     set ip (curl -s ifconfig.io)
     echo $ip
     echo -n $ip | pbcopy
+end
+
+function pw --argument-names length count
+    if not test $length
+        set length 16
+    end
+
+    if not test $count
+        set count 1
+    end
+
+    if test $length -lt 12
+        echo 'Password should not be shorter than 12 characters'
+        return
+    end
+
+    pwgen --capitalize --numerals --symbols --secure --ambiguous $length $count | pbcopy
+    echo "$count random password(s) with $length characters added to clipboard"
 end
 
 function cpbak --argument-names sourceFile destinationFile
@@ -148,45 +167,6 @@ function gba
     git log --oneline $secondBranch..$firstBranch
 
 end
-
-function pw --argument-names passwordLength
-    if not test $passwordLength
-        set passwordLength 16
-    end
-
-    if test $passwordLength -lt 8
-        echo 'Password cannot be shorter than 8 characters'
-        return
-    end
-
-    set chars '@#$%&_+='
-
-    #
-
-    # Add logic
-    #function random_pwd
-    cat /dev/urandom | env LC_CTYPE=C tr -dc a-zA-Z0-9 | fold -w 18 | head -n 1 | tr -d '\n' | fold -w 3 | tr '\n' -
-    echo ''
-    #end
-    #     {
-    #         LC_ALL=C grep </dev/urandom -ao '[A-Za-z0-9]' |
-    #             head -n $(expr $passwordLength - 4)
-    #         echo ${chars:$((RANDOM % ${#chars})):1}
-    #         echo ${chars:$((RANDOM % ${#chars})):1}
-    #         echo ${chars:$((RANDOM % ${#chars})):1}
-    #         echo ${chars:$((RANDOM % ${#chars})):1}
-    #     } |
-    #         shuf |
-    #         tr -d '\n' |
-    #         pbcopy
-
-    #
-
-    echo "A random password with $passwordLength characters is now in clipboard"
-end
-
-
-
 
 function midi --argument-names abcFile transposeSteps
     if not test $abcFile

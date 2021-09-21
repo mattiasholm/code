@@ -26,7 +26,7 @@ exts=(
 )
 
 for ext in ${exts[@]}; do
-    code --install-extension "${ext}"
+    code --install-extension "$ext"
 done
 
 code --list-extensions --show-versions

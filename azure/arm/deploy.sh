@@ -17,26 +17,26 @@ function Initialize() {
 }
 
 function Login() {
-    if [[ ${appId} && ${password} && ${tenant} ]]; then
-        az login --service-principal --username ${appId} --password ${password} --tenant ${tenant}
+    if [[ $appId && $password && $tenant ]]; then
+        az login --service-principal --username $appId --password $password --tenant $tenant
     else
         set +e +x
-        az account set --subscription ${subscriptionId} 2>/dev/null
+        az account set --subscription $subscriptionId 2>/dev/null
         currentContext=$(az account show --query id --output tsv 2>/dev/null)
         set -e +x
 
-        if [[ ${currentContext} != ${subscriptionId} ]]; then
+        if [[ $currentContext != $subscriptionId ]]; then
             az login
         fi
     fi
 
-    az account set --subscription ${subscriptionId}
+    az account set --subscription $subscriptionId
 }
 
 function CreateResourceGroup() {
     az group create \
-        --name ${rgName} \
-        --location ${location} \
+        --name $rgName \
+        --location $location \
         --tags ${tags[*]}
 }
 
@@ -44,10 +44,10 @@ function Deploy() {
     operations=("validate" "create")
 
     for operation in ${operations[@]}; do
-        az deployment group ${operation} \
-            --resource-group ${rgName} \
-            --template-file ${templateFile} \
-            --parameters @${parameterFile}
+        az deployment group $operation \
+            --resource-group $rgName \
+            --template-file $templateFile \
+            --parameters @$parameterFile
     done
 }
 

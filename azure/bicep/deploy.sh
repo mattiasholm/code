@@ -9,29 +9,29 @@ function Initialize() {
 }
 
 function Login() {
-    if [[ ${appId} && ${password} && ${tenant} ]]; then
-        az login --service-principal --username ${appId} --password ${password} --tenant ${tenant}
+    if [[ $appId && $password && $tenant ]]; then
+        az login --service-principal --username $appId --password $password --tenant $tenant
     else
         set +e +x
-        az account set --subscription ${subscriptionId} 2>/dev/null
+        az account set --subscription $subscriptionId 2>/dev/null
         currentContext=$(az account show --query id --output tsv 2>/dev/null)
         set -e +x
 
-        if [[ ${currentContext} != ${subscriptionId} ]]; then
+        if [[ $currentContext != $subscriptionId ]]; then
             az login
         fi
     fi
 
-    az account set --subscription ${subscriptionId}
+    az account set --subscription $subscriptionId
 }
 
 function Deploy() {
     operations=("validate" "what-if" "create")
 
     for operation in ${operations[@]}; do
-        az deployment sub ${operation} \
-            --template-file ${templateFile} \
-            --location ${location}
+        az deployment sub $operation \
+            --template-file $templateFile \
+            --location $location
     done
 }
 

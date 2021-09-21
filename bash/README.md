@@ -405,7 +405,7 @@ uuidgen
 
 ## Check if a command is installed:
 ```shell
-if [[ -x "$(command -v ${prereq})" ]]
+if [[ -x "$(command -v <command>)" ]]
 ```
 
 <br><br>

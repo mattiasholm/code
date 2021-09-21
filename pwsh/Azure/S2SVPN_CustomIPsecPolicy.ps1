@@ -1,6 +1,6 @@
-${ConnectionName} = ""
-${ResourceGroupName} = ""
-${IpsecPolicy} = New-AzIpsecPolicy `
+$ConnectionName = ""
+$ResourceGroupName = ""
+$IpsecPolicy = New-AzIpsecPolicy `
     -IkeEncryption AES256 `
     -IkeIntegrity SHA256 `
     -DhGroup DHGroup14 `
@@ -10,4 +10,4 @@ ${IpsecPolicy} = New-AzIpsecPolicy `
     -SALifeTimeSeconds 86400 `
     -SADataSizeKilobytes 102400000
 
-Get-AzVirtualNetworkGatewayConnection -Name ${ConnectionName} -ResourceGroupName ${ResourceGroupName} | Set-AzVirtualNetworkGatewayConnection -IpsecPolicies $IpsecPolicy -Force
+Get-AzVirtualNetworkGatewayConnection -Name $ConnectionName -ResourceGroupName $ResourceGroupName | Set-AzVirtualNetworkGatewayConnection -IpsecPolicies $IpsecPolicy -Force

@@ -3,22 +3,22 @@
 set -e +x
 
 path=~/repos/code
-cd "${path}"
+cd "$path"
 
 userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
 topLevel="$(git rev-parse --show-toplevel)"
 
-source "${topLevel}/bash/.bashrc"
+source "$topLevel/bash/.bashrc"
 .b
 
 sudo apt install -y git &&
-    git config --global user.name "${userName}" &&
-    git config --global user.email "${userEmail}" &&
+    git config --global user.name "$userName" &&
+    git config --global user.email "$userEmail" &&
     git config --global credential.helper 'cache --timeout=86400' &&
     git config --global init.defaultBranch main &&
-    chmod +x "${topLevel}/git/cloneRepos.sh" &&
-    "${topLevel}/git/cloneRepos.sh"
+    chmod +x "$topLevel/git/cloneRepos.sh" &&
+    "$topLevel/git/cloneRepos.sh"
 
 sudo apt install -y python3
 

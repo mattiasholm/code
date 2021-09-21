@@ -3,13 +3,13 @@
 set -e +x
 
 path=~/repos/code
-cd "${path}"
+cd "$path"
 
 userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
 topLevel="$(git rev-parse --show-toplevel)"
 
-source "${topLevel}/bash/.bashrc"
+source "$topLevel/bash/.bashrc"
 .b
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -46,14 +46,15 @@ brew install coreutils
 brew install grep
 brew install vim
 brew install jq
+brew install pwgen
 
 brew install mas &&
     chmod +x "$(git rev-parse --show-toplevel)/macOS/mas/InstallApps.sh" &&
     "$(git rev-parse --show-toplevel)/macOS/mas/InstallApps.sh"
 
 brew install git &&
-    git config --global user.name "${userName}" &&
-    git config --global user.email "${userEmail}" &&
+    git config --global user.name "$userName" &&
+    git config --global user.email "$userEmail" &&
     git config --global credential.helper osxkeychain &&
     git config --global init.defaultBranch main &&
     chmod +x "$(git rev-parse --show-toplevel)/git/cloneRepos.sh" &&

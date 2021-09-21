@@ -22,12 +22,13 @@ alias b='brew'
 alias c='curl'
 alias d='dotnet'
 alias e='echo'
-alias f='fish'
+alias f='find'
 alias g='git'
 alias h='history'
 alias k='kubectl'
 alias l='ll'
 alias m='midi'
+alias o='open'
 alias p='pulumi'
 alias t='terraform'
 
@@ -95,8 +96,30 @@ function .b() {
 
 function ip() {
     ip="$(curl -s ifconfig.io)"
-    echo "${ip}"
-    echo -n "${ip}" | pbcopy
+    echo "$ip"
+    echo -n "$ip" | pbcopy
+}
+
+function pw() {
+    if [[ -z "$1" ]]; then
+        length='16'
+    else
+        length="$1"
+    fi
+
+    if [[ -z "$2" ]]; then
+        count='1'
+    else
+        count="$2"
+    fi
+
+    if [[ $length -lt 12 ]]; then
+        echo 'Password should not be shorter than 12 characters'
+        return
+    fi
+
+    pwgen --capitalize --numerals --symbols --secure --ambiguous $length $count | pbcopy
+    echo "$count random password(s) with $length characters added to clipboard"
 }
 
 function cpbak() {
@@ -120,7 +143,7 @@ function gquick() {
     fi
 
     git add $(git rev-parse --show-toplevel)
-    git commit --message "${message}"
+    git commit --message "$message"
     git push
 }
 
@@ -144,45 +167,17 @@ function gba() {
         ;;
     esac
 
-    echo -e "\nComparing branch \"${firstBranch}\" to branch \"${secondBranch}\":\n"
+    echo -e "\nComparing branch \"$firstBranch\" to branch \"$secondBranch\":\n"
 
-    echo "BEHIND: $(git log --oneline "${firstBranch}".."${secondBranch}" | wc -l)"
-    echo -e "AHEAD: \t$(git log --oneline "${secondBranch}".."${firstBranch}" | wc -l)"
+    echo "BEHIND: $(git log --oneline "$firstBranch".."$secondBranch" | wc -l)"
+    echo -e "AHEAD: \t$(git log --oneline "$secondBranch".."$firstBranch" | wc -l)"
 
     echo -e '\nCOMMITS BEHIND:'
-    git log --oneline "${firstBranch}".."${secondBranch}"
+    git log --oneline "$firstBranch".."$secondBranch"
 
     echo -e '\nCOMMITS AHEAD:'
-    git log --oneline "${secondBranch}".."${firstBranch}"
+    git log --oneline "$secondBranch".."$firstBranch"
     echo ''
-}
-
-function pw() {
-    if [[ -z "$1" ]]; then
-        passwordLength='16'
-    else
-        passwordLength="$1"
-    fi
-
-    if [[ ${passwordLength} -lt 8 ]]; then
-        echo 'Password cannot be shorter than 8 characters'
-        return
-    fi
-
-    chars='@#$%&_+='
-    {
-        LC_ALL=C grep </dev/urandom -ao '[A-Za-z0-9]' |
-            head -n $(expr $passwordLength - 4)
-        echo ${chars:$((RANDOM % ${#chars})):1}
-        echo ${chars:$((RANDOM % ${#chars})):1}
-        echo ${chars:$((RANDOM % ${#chars})):1}
-        echo ${chars:$((RANDOM % ${#chars})):1}
-    } |
-        shuf |
-        tr -d '\n' |
-        pbcopy
-
-    echo "A random password with ${passwordLength} characters is now in clipboard"
 }
 
 function midi() {
@@ -198,14 +193,14 @@ function midi() {
     fi
 
     abcFile="$1"
-    type=$(grep "R:" "${abcFile}" | sed 's/R://')
+    type=$(grep "R:" "$abcFile" | sed 's/R://')
 
-    case "${type}" in
+    case "$type" in
     "barndance")
         tempo="160"
-        tmpFile="$(echo ${abcFile} | sed 's/.abc/.mid/')"
-        cat "${abcFile}" | sed 's/barndance/hornpipe/' >"${tmpFile}"
-        abcFile="${tmpFile}"
+        tmpFile="$(echo $abcFile | sed 's/.abc/.mid/')"
+        cat "$abcFile" | sed 's/barndance/hornpipe/' >"$tmpFile"
+        abcFile="$tmpFile"
         ;;
     "hornpipe")
         tempo="150"
@@ -236,12 +231,12 @@ function midi() {
         ;;
     *)
         tempo="120"
-        echo -e "\033[33;1mWARNING: Tune type \"${type}\" not recognized\033[0m"
+        echo -e "\033[33;1mWARNING: Tune type \"$type\" not recognized\033[0m"
         ;;
     esac
 
-    midiFile="$(echo "${abcFile}" | sed 's/.abc$/.mid/')"
-    abc2midi "${abcFile}" -o "${midiFile}" -Q ${tempo}
-    timidity -f "${midiFile}" -A 300 -K "${transposeSteps}"
-    rm "${midiFile}"
+    midiFile="$(echo "$abcFile" | sed 's/.abc$/.mid/')"
+    abc2midi "$abcFile" -o "$midiFile" -Q $tempo
+    timidity -f "$midiFile" -A 300 -K "$transposeSteps"
+    rm "$midiFile"
 }

@@ -23,7 +23,7 @@ soxi
 sox <input-file> --channels 1 <output-file>
 sox <input-file> -c 1 <output-file>
 
-for file in *.wav; do sox "${file}" "mono_${file}" channels 1; done
+for file in *.wav; do sox "$file" "mono_$file" channels 1; done
 ```
 
 ## Convert bit depth:
@@ -31,7 +31,7 @@ for file in *.wav; do sox "${file}" "mono_${file}" channels 1; done
 sox <input-file> --bits <bit-depth> <output-file>
 sox <input-file> -b <bit-depth> <output-file>
 
-for file in *.wav; do sox "${file}" --bits 16 "bit_${file}"; done
+for file in *.wav; do sox "$file" --bits 16 "bit_$file"; done
 ```
 
 ## Convert sample rate:
@@ -39,14 +39,14 @@ for file in *.wav; do sox "${file}" --bits 16 "bit_${file}"; done
 sox <input-file> --rate <sample-rate> <output-file>
 sox <input-file> -r <sample-rate> <output-file>
 
-for file in *.wav; do sox "${file}" "rate_${file}" rate 48000; done
+for file in *.wav; do sox "$file" "rate_$file" rate 48000; done
 ```
 
 ## Normalize audio to -0.1 dBFS:
 ```shell
 sox <input-file> <output-file> norm -0.1
 
-for file in *.wav; do sox "${file}" "norm_${file}" norm -0.1; done
+for file in *.wav; do sox "$file" "norm_$file" norm -0.1; done
 ```
 
 <br><br>
@@ -61,33 +61,33 @@ sox --i <filename>
 ```shell
 soxi -c <filename>
 
-for file in *.wav; do soxi -c "${file}"; done
+for file in *.wav; do soxi -c "$file"; done
 ```
 
 ## Get bit depth:
 ```shell
 soxi -b <filename>
 
-for file in *.wav; do soxi -b "${file}"; done
+for file in *.wav; do soxi -b "$file"; done
 ```
 
 ## Get sample rate:
 ```shell
 soxi -r <filename>
 
-for file in *.wav; do soxi -r "${file}"; done
+for file in *.wav; do soxi -r "$file"; done
 ```
 
 ## Get duration:
 ```shell
 soxi -d <filename>
 
-for file in *.wav; do soxi -d "${file}"; done
+for file in *.wav; do soxi -d "$file"; done
 ```
 
 ## Get audio encoding:
 ```shell
 soxi -e <filename>
 
-for file in *.wav; do soxi -e "${file}"; done
+for file in *.wav; do soxi -e "$file"; done
 ```
