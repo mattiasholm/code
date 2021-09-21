@@ -1,406 +1,432 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-      "prefix": {
-          "type": "string"
-      },
-      "location": {
-          "type": "string",
-          "defaultValue": "[resourceGroup().location]"
-      },
-      "planKind": {
-          "type": "string",
-          "defaultValue": "linux",
-          "allowedValues": [
-              "app",
-              "linux"
-          ]
-      },
-      "planSku": {
-          "type": "string",
-          "defaultValue": "B1"
-      },
-      "planCapacity": {
-          "type": "int",
-          "defaultValue": 1,
-          "minValue": 1,
-          "maxValue": 10
-      },
-      "appDockerImageTags": {
-          "type": "array"
-      },
-      "appIdentity": {
-          "type": "string",
-          "defaultValue": "None",
-          "allowedValues": [
-              "None",
-              "SystemAssigned"
-          ]
-      },
-      "appAlwaysOn": {
-          "type": "bool",
-          "defaultValue": true
-      },
-      "appHttp20Enabled": {
-          "type": "bool",
-          "defaultValue": true
-      },
-      "appMinTlsVersion": {
-          "type": "string",
-          "defaultValue": "1.2",
-          "allowedValues": [
-              "1.0",
-              "1.1",
-              "1.2"
-          ]
-      },
-      "appFtpsState": {
-          "type": "string",
-          "defaultValue": "FtpsOnly",
-          "allowedValues": [
-              "AllAllowed",
-              "FtpsOnly",
-              "Disabled"
-          ]
-      },
-      "appClientAffinityEnabled": {
-          "type": "bool",
-          "defaultValue": false
-      },
-      "appHttpsOnly": {
-          "type": "bool",
-          "defaultValue": true
-      },
-      "appiKind": {
-          "type": "string",
-          "defaultValue": "web",
-          "allowedValues": [
-              "web",
-              "ios",
-              "other",
-              "store",
-              "java",
-              "phone"
-          ]
-      },
-      "appiType": {
-          "type": "string",
-          "defaultValue": "web",
-          "allowedValues": [
-              "web",
-              "other"
-          ]
-      },
-      "kvSku": {
-          "type": "string",
-          "defaultValue": "standard",
-          "allowedValues": [
-              "standard",
-              "premium"
-          ]
-      },
-      "kvPermissions": {
-          "type": "object"
-      },
-      "stCount": {
-          "type": "int"
-      },
-      "stKind": {
-          "type": "string",
-          "defaultValue": "StorageV2",
-          "allowedValues": [
-              "Storage",
-              "StorageV2",
-              "BlobStorage",
-              "FileStorage",
-              "BlockBlobStorage"
-          ]
-      },
-      "stSku": {
-          "type": "string",
-          "defaultValue": "Standard_LRS",
-          "allowedValues": [
-              "Standard_LRS",
-              "Standard_ZRS",
-              "Standard_GRS",
-              "Standard_RAGRS",
-              "Standard_GZRS",
-              "Standard_RAGZRS",
-              "Premium_LRS",
-              "Premium_ZRS"
-          ]
-      },
-      "stPublicAccess": {
-          "type": "bool",
-          "defaultValue": false
-      },
-      "stHttpsOnly": {
-          "type": "bool",
-          "defaultValue": true
-      },
-      "stTlsVersion": {
-          "type": "string",
-          "defaultValue": "TLS1_2",
-          "allowedValues": [
-              "TLS1_0",
-              "TLS1_1",
-              "TLS1_2"
-          ]
-      },
-      "vnetToggle": {
-          "type": "bool",
-          "defaultValue": true
-      },
-      "vnetAddressPrefix": {
-          "type": "string"
-      }
-  },
-  "variables": {
-      "prefixStripped": "[toLower(replace(parameters('prefix'), '-', ''))]",
-      "tags": "[resourceGroup().tags]",
-      "tenantId": "[subscription().tenantId]",
-      "planName": "[format('plan-{0}-001', parameters('prefix'))]",
-      "planId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
-      "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
-      "appCount": "[length(parameters('appDockerImageTags'))]",
-      "appiName": "[format('appi-{0}-001', parameters('prefix'))]",
-      "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
-      "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
-      "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
-      "kvFamily": "A",
-      "copy": [
-          {
-              "name": "appName",
-              "count": "[variables('appCount')]",
-              "input": "[format('app-{0}-{1}', parameters('prefix'), padLeft(copyIndex('appName', 1), 3, '0'))]"
-          },
-          {
-              "name": "appId",
-              "count": "[variables('appCount')]",
-              "input": "[resourceId('Microsoft.Web/sites', variables('appName')[copyIndex('appId')])]"
-          },
-          {
-              "name": "linuxFxVersion",
-              "count": "[variables('appCount')]",
-              "input": "[format('DOCKER|nginxdemos/hello:{0}', parameters('appDockerImageTags')[copyIndex('linuxFxVersion')])]"
-          },
-          {
-              "name": "stName",
-              "count": "[parameters('stCount')]",
-              "input": "[format('st{0}{1}', variables('prefixStripped'), padLeft(copyIndex('stName', 1), 3, '0'))]"
-          },
-          {
-              "name": "stId",
-              "count": "[parameters('stCount')]",
-              "input": "[resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex('stId')])]"
-          }
-      ],
-      "stContainerName": "[format('default/container{0}001', variables('prefixStripped'))]",
-      "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
-      "snetName": "[format('snet-{0}-001', parameters('prefix'))]"
-  },
-  "resources": [
-      {
-          "type": "Microsoft.Web/serverfarms",
-          "apiVersion": "2021-01-15",
-          "name": "[variables('planName')]",
-          "location": "[parameters('location')]",
-          "tags": "[variables('tags')]",
-          "kind": "[parameters('planKind')]",
-          "sku": {
-              "name": "[parameters('planSku')]",
-              "capacity": "[parameters('planCapacity')]"
-          },
-          "properties": {
-              "reserved": "[variables('planReserved')]"
-          }
-      },
-      {
-          "copy": {
-              "name": "sites",
-              "count": "[variables('appCount')]",
-              "mode": "parallel"
-          },
-          "type": "Microsoft.Web/sites",
-          "apiVersion": "2021-01-15",
-          "name": "[variables('appName')[copyIndex()]]",
-          "location": "[parameters('location')]",
-          "tags": "[variables('tags')]",
-          "identity": {
-              "type": "[parameters('appIdentity')]"
-          },
-          "properties": {
-              "serverFarmId": "[variables('planId')]",
-              "siteConfig": {
-                  "linuxFxVersion": "[variables('linuxFxVersion')[copyIndex()]]",
-                  "alwaysOn": "[parameters('appAlwaysOn')]",
-                  "http20Enabled": "[parameters('appHttp20Enabled')]",
-                  "minTlsVersion": "[parameters('appMinTlsVersion')]",
-                  "ftpsState": "[parameters('appFtpsState')]"
-              },
-              "clientAffinityEnabled": "[parameters('appClientAffinityEnabled')]",
-              "httpsOnly": "[parameters('appHttpsOnly')]"
-          },
-          "dependsOn": [
-              "[variables('planId')]"
-          ],
-          "resources": [
-              {
-                  "type": "config",
-                  "apiVersion": "2021-01-15",
-                  "name": "appsettings",
-                  "location": "[parameters('location')]",
-                  "tags": "[variables('tags')]",
-                  "properties": {
-                      "KEYVAULT_URL": "[reference(variables('kvId')).vaultUri]",
-                      "APPLICATIONINSIGHTS_CONNECTION_STRING": "[reference(variables('appiId')).ConnectionString]"
-                  },
-                  "dependsOn": [
-                      "[variables('appId')[copyIndex()]]",
-                      "[variables('kvId')]",
-                      "[variables('appiId')]"
-                  ]
-              }
-          ]
-      },
-      {
-          "type": "Microsoft.Insights/components",
-          "apiVersion": "2020-02-02",
-          "name": "[variables('appiName')]",
-          "location": "[parameters('location')]",
-          "tags": "[variables('tags')]",
-          "kind": "[parameters('appiKind')]",
-          "properties": {
-              "Application_Type": "[parameters('appiType')]"
-          }
-      },
-      {
-          "type": "Microsoft.KeyVault/vaults",
-          "apiVersion": "2021-06-01-preview",
-          "name": "[variables('kvName')]",
-          "location": "[parameters('location')]",
-          "tags": "[variables('tags')]",
-          "properties": {
-              "tenantId": "[variables('tenantId')]",
-              "sku": {
-                  "family": "[variables('kvFamily')]",
-                  "name": "[parameters('kvSku')]"
-              },
-              "copy": [
-                  {
-                      "name": "accessPolicies",
-                      "count": "[variables('appCount')]",
-                      "input": {
-                          "tenantId": "[variables('tenantId')]",
-                          "objectId": "[reference(variables('appId')[copyIndex('accessPolicies')],'2020-12-01','Full').identity.principalId]",
-                          "permissions": "[parameters('kvPermissions')]"
-                      }
-                  },
-                  {
-                      "name": "dependsOn",
-                      "count": "[variables('appCount')]",
-                      "input": "[variables('appId')[copyIndex('dependsOn')]]"
-                  }
-              ]
-          }
-      },
-      {
-          "copy": {
-              "name": "storageAccounts",
-              "count": "[parameters('stCount')]",
-              "mode": "parallel"
-          },
-          "type": "Microsoft.Storage/storageAccounts",
-          "apiVersion": "2021-04-01",
-          "name": "[variables('stName')[copyIndex()]]",
-          "location": "[parameters('location')]",
-          "tags": "[variables('tags')]",
-          "kind": "[parameters('stKind')]",
-          "sku": {
-              "name": "[parameters('stSku')]"
-          },
-          "properties": {
-              "allowBlobPublicAccess": "[parameters('stPublicAccess')]",
-              "supportsHttpsTrafficOnly": "[parameters('stHttpsOnly')]",
-              "minimumTlsVersion": "[parameters('stTlsVersion')]"
-          },
-          "resources": [
-              {
-                  "type": "blobServices/containers",
-                  "apiVersion": "2021-04-01",
-                  "name": "[variables('stContainerName')]",
-                  "location": "[parameters('location')]",
-                  "tags": "[variables('tags')]",
-                  "dependsOn": [
-                      "[variables('stId')[copyIndex()]]"
-                  ]
-              }
-          ]
-      },
-      {
-          "condition": "[parameters('vnetToggle')]",
-          "type": "Microsoft.Network/virtualNetworks",
-          "apiVersion": "2021-02-01",
-          "name": "[variables('vnetName')]",
-          "location": "[parameters('location')]",
-          "tags": "[variables('tags')]",
-          "properties": {
-              "addressSpace": {
-                  "addressPrefixes": [
-                      "[parameters('vnetAddressPrefix')]"
-                  ]
-              },
-              "subnets": [
-                  {
-                      "name": "[variables('snetName')]",
-                      "properties": {
-                          "addressPrefix": "[parameters('vnetAddressPrefix')]"
-                      }
-                  }
-              ]
-          }
-      }
-  ],
-  "outputs": {
-      "appUrl": {
-          "type": "array",
-          "copy": {
-              "count": "[variables('appCount')]",
-              "input": "[reference(variables('appId')[copyIndex()]).defaultHostName]"
-          }
-      },
-      "kvUrl": {
-          "type": "string",
-          "value": "[reference(variables('kvId')).vaultUri]"
-      },
-      "stBlobUrl": {
-          "type": "array",
-          "copy": {
-              "count": "[parameters('stCount')]",
-              "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.blob]"
-          }
-      },
-      "stFileUrl": {
-          "type": "array",
-          "copy": {
-              "count": "[parameters('stCount')]",
-              "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.file]"
-          }
-      },
-      "stQueueUrl": {
-          "type": "array",
-          "copy": {
-              "count": "[parameters('stCount')]",
-              "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.queue]"
-          }
-      },
-      "stTableUrl": {
-          "type": "array",
-          "copy": {
-              "count": "[parameters('stCount')]",
-              "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.table]"
-          }
-      }
-  }
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "prefix": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]"
+        },
+        "planKind": {
+            "type": "string",
+            "defaultValue": "linux",
+            "allowedValues": [
+                "app",
+                "linux"
+            ]
+        },
+        "planSku": {
+            "type": "string",
+            "defaultValue": "B1"
+        },
+        "planCapacity": {
+            "type": "int",
+            "defaultValue": 1,
+            "minValue": 1,
+            "maxValue": 10
+        },
+        "appDockerImageTags": {
+            "type": "array"
+        },
+        "appIdentity": {
+            "type": "string",
+            "defaultValue": "None",
+            "allowedValues": [
+                "None",
+                "SystemAssigned"
+            ]
+        },
+        "appAlwaysOn": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "appHttp20Enabled": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "appMinTlsVersion": {
+            "type": "string",
+            "defaultValue": "1.2",
+            "allowedValues": [
+                "1.0",
+                "1.1",
+                "1.2"
+            ]
+        },
+        "appFtpsState": {
+            "type": "string",
+            "defaultValue": "FtpsOnly",
+            "allowedValues": [
+                "AllAllowed",
+                "FtpsOnly",
+                "Disabled"
+            ]
+        },
+        "appClientAffinityEnabled": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "appHttpsOnly": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "appiKind": {
+            "type": "string",
+            "defaultValue": "web",
+            "allowedValues": [
+                "web",
+                "ios",
+                "other",
+                "store",
+                "java",
+                "phone"
+            ]
+        },
+        "appiType": {
+            "type": "string",
+            "defaultValue": "web",
+            "allowedValues": [
+                "web",
+                "other"
+            ]
+        },
+        "kvSku": {
+            "type": "string",
+            "defaultValue": "standard",
+            "allowedValues": [
+                "standard",
+                "premium"
+            ]
+        },
+        "kvAppPermissions": {
+            "type": "object"
+        },
+        "kvGroupId": {
+            "type": "string"
+        },
+        "kvGroupPermissions": {
+            "type": "object"
+        },
+        "stCount": {
+            "type": "int"
+        },
+        "stKind": {
+            "type": "string",
+            "defaultValue": "StorageV2",
+            "allowedValues": [
+                "Storage",
+                "StorageV2",
+                "BlobStorage",
+                "FileStorage",
+                "BlockBlobStorage"
+            ]
+        },
+        "stSku": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_ZRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Standard_GZRS",
+                "Standard_RAGZRS",
+                "Premium_LRS",
+                "Premium_ZRS"
+            ]
+        },
+        "stPublicAccess": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "stHttpsOnly": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "stTlsVersion": {
+            "type": "string",
+            "defaultValue": "TLS1_2",
+            "allowedValues": [
+                "TLS1_0",
+                "TLS1_1",
+                "TLS1_2"
+            ]
+        },
+        "vnetToggle": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "vnetAddressPrefix": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "prefixStripped": "[toLower(replace(parameters('prefix'), '-', ''))]",
+        "tags": "[resourceGroup().tags]",
+        "tenantId": "[subscription().tenantId]",
+        "planName": "[format('plan-{0}-001', parameters('prefix'))]",
+        "planId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
+        "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
+        "appCount": "[length(parameters('appDockerImageTags'))]",
+        "appiName": "[format('appi-{0}-001', parameters('prefix'))]",
+        "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
+        "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
+        "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
+        "kvFamily": "A",
+        "copy": [
+            {
+                "name": "appName",
+                "count": "[variables('appCount')]",
+                "input": "[format('app-{0}-{1}', parameters('prefix'), padLeft(copyIndex('appName', 1), 3, '0'))]"
+            },
+            {
+                "name": "appId",
+                "count": "[variables('appCount')]",
+                "input": "[resourceId('Microsoft.Web/sites', variables('appName')[copyIndex('appId')])]"
+            },
+            {
+                "name": "linuxFxVersion",
+                "count": "[variables('appCount')]",
+                "input": "[format('DOCKER|nginxdemos/hello:{0}', parameters('appDockerImageTags')[copyIndex('linuxFxVersion')])]"
+            },
+            {
+                "name": "stName",
+                "count": "[parameters('stCount')]",
+                "input": "[format('st{0}{1}', variables('prefixStripped'), padLeft(copyIndex('stName', 1), 3, '0'))]"
+            },
+            {
+                "name": "stId",
+                "count": "[parameters('stCount')]",
+                "input": "[resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex('stId')])]"
+            }
+        ],
+        "stContainerName": "[format('default/container{0}001', variables('prefixStripped'))]",
+        "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
+        "snetName": "[format('snet-{0}-001', parameters('prefix'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2021-01-15",
+            "name": "[variables('planName')]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('tags')]",
+            "kind": "[parameters('planKind')]",
+            "sku": {
+                "name": "[parameters('planSku')]",
+                "capacity": "[parameters('planCapacity')]"
+            },
+            "properties": {
+                "reserved": "[variables('planReserved')]"
+            }
+        },
+        {
+            "copy": {
+                "name": "sites",
+                "count": "[variables('appCount')]",
+                "mode": "parallel"
+            },
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2021-01-15",
+            "name": "[variables('appName')[copyIndex()]]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('tags')]",
+            "identity": {
+                "type": "[parameters('appIdentity')]"
+            },
+            "properties": {
+                "serverFarmId": "[variables('planId')]",
+                "siteConfig": {
+                    "linuxFxVersion": "[variables('linuxFxVersion')[copyIndex()]]",
+                    "alwaysOn": "[parameters('appAlwaysOn')]",
+                    "http20Enabled": "[parameters('appHttp20Enabled')]",
+                    "minTlsVersion": "[parameters('appMinTlsVersion')]",
+                    "ftpsState": "[parameters('appFtpsState')]"
+                },
+                "clientAffinityEnabled": "[parameters('appClientAffinityEnabled')]",
+                "httpsOnly": "[parameters('appHttpsOnly')]"
+            },
+            "dependsOn": [
+                "[variables('planId')]"
+            ],
+            "resources": [
+                {
+                    "type": "config",
+                    "apiVersion": "2021-01-15",
+                    "name": "appsettings",
+                    "location": "[parameters('location')]",
+                    "tags": "[variables('tags')]",
+                    "properties": {
+                        "KEYVAULT_URL": "[reference(variables('kvId')).vaultUri]",
+                        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[reference(variables('appiId')).ConnectionString]"
+                    },
+                    "dependsOn": [
+                        "[variables('appId')[copyIndex()]]",
+                        "[variables('kvId')]",
+                        "[variables('appiId')]"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Insights/components",
+            "apiVersion": "2020-02-02",
+            "name": "[variables('appiName')]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('tags')]",
+            "kind": "[parameters('appiKind')]",
+            "properties": {
+                "Application_Type": "[parameters('appiType')]"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2021-06-01-preview",
+            "name": "[variables('kvName')]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('tags')]",
+            "properties": {
+                "tenantId": "[variables('tenantId')]",
+                "sku": {
+                    "family": "[variables('kvFamily')]",
+                    "name": "[parameters('kvSku')]"
+                },
+                "copy": [
+                    {
+                        "name": "accessPolicies",
+                        "count": "[variables('appCount')]",
+                        "input": {
+                            "tenantId": "[variables('tenantId')]",
+                            "objectId": "[reference(variables('appId')[copyIndex('accessPolicies')],'2020-12-01','Full').identity.principalId]",
+                            "permissions": "[parameters('kvAppPermissions')]"
+                        }
+                    },
+                    {
+                        "name": "dependsOn",
+                        "count": "[variables('appCount')]",
+                        "input": "[variables('appId')[copyIndex('dependsOn')]]"
+                    }
+                ]
+            },
+            "resources": [
+                {
+                    "type": "accessPolicies",
+                    "apiVersion": "2021-06-01-preview",
+                    "name": "add",
+                    "properties": {
+                        "accessPolicies": [
+                            {
+                                "tenantId": "[variables('tenantId')]",
+                                "objectId": "[parameters('kvGroupId')]",
+                                "permissions": "[parameters('kvGroupPermissions')]"
+
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[variables('kvName')]"
+                    ]
+                }
+            ]
+        },
+        {
+            "copy": {
+                "name": "storageAccounts",
+                "count": "[parameters('stCount')]",
+                "mode": "parallel"
+            },
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2021-04-01",
+            "name": "[variables('stName')[copyIndex()]]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('tags')]",
+            "kind": "[parameters('stKind')]",
+            "sku": {
+                "name": "[parameters('stSku')]"
+            },
+            "properties": {
+                "allowBlobPublicAccess": "[parameters('stPublicAccess')]",
+                "supportsHttpsTrafficOnly": "[parameters('stHttpsOnly')]",
+                "minimumTlsVersion": "[parameters('stTlsVersion')]"
+            },
+            "resources": [
+                {
+                    "type": "blobServices/containers",
+                    "apiVersion": "2021-04-01",
+                    "name": "[variables('stContainerName')]",
+                    "location": "[parameters('location')]",
+                    "tags": "[variables('tags')]",
+                    "dependsOn": [
+                        "[variables('stId')[copyIndex()]]"
+                    ]
+                }
+            ]
+        },
+        {
+            "condition": "[parameters('vnetToggle')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2021-02-01",
+            "name": "[variables('vnetName')]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('tags')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetAddressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('snetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('vnetAddressPrefix')]"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "appUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('appCount')]",
+                "input": "[reference(variables('appId')[copyIndex()]).defaultHostName]"
+            }
+        },
+        "kvUrl": {
+            "type": "string",
+            "value": "[reference(variables('kvId')).vaultUri]"
+        },
+        "stBlobUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[parameters('stCount')]",
+                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.blob]"
+            }
+        },
+        "stFileUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[parameters('stCount')]",
+                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.file]"
+            }
+        },
+        "stQueueUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[parameters('stCount')]",
+                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.queue]"
+            }
+        },
+        "stTableUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[parameters('stCount')]",
+                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.table]"
+            }
+        }
+    }
 }

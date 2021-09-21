@@ -16,10 +16,52 @@ var appDockerImageTags = [
   'plain-text'
 ]
 
-var kvPermissions = {
+var kvAppPermissions = {
   secrets: [
     'Get'
     'List'
+  ]
+}
+
+var kvGroupId = 'cb321d77-5e1d-4fda-9d8c-3b6c4aa5e781'
+
+var kvGroupPermissions = {
+  keys: [
+    'Get'
+    'List'
+    'Update'
+    'Create'
+    'Import'
+    'Delete'
+    'Recover'
+    'Backup'
+    'Restore'
+  ]
+  secrets: [
+    'Get'
+    'List'
+    'Set'
+    'Delete'
+    'Recover'
+    'Backup'
+    'Restore'
+  ]
+  certificates: [
+    'Get'
+    'List'
+    'Update'
+    'Create'
+    'Import'
+    'Delete'
+    'Recover'
+    'Backup'
+    'Restore'
+    'ManageContacts'
+    'ManageIssuers'
+    'GetIssuers'
+    'ListIssuers'
+    'SetIssuers'
+    'DeleteIssuers'
   ]
 }
 
@@ -105,8 +147,10 @@ module kv 'modules/kv.bicep' = {
     accessPolicies: [for (appDockerImageTag, i) in appDockerImageTags: {
       tenantId: tenantId
       objectId: app[i].outputs.identity.principalId
-      permissions: kvPermissions
+      permissions: kvAppPermissions
     }]
+    objectId: kvGroupId
+    permissions: kvGroupPermissions
   }
 }
 

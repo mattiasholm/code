@@ -14,6 +14,8 @@ param skuFamily string = 'A'
 ])
 param skuName string = 'standard'
 param accessPolicies array = []
+param objectId string
+param permissions object
 
 resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
   name: name
@@ -26,6 +28,19 @@ resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
       name: skuName
     }
     accessPolicies: accessPolicies
+  }
+
+  resource ap 'accessPolicies' = {
+    name: 'add'
+    properties: {
+      accessPolicies: [
+        {
+          tenantId: tenantId
+          objectId: objectId
+          permissions: permissions
+        }
+      ]
+    }
   }
 }
 
