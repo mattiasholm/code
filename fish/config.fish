@@ -120,7 +120,7 @@ function gquick --argument-names message
     git push
 end
 
-function gba #--argument-names firstBranch secondBranch
+function gba
     switch (count $argv)
         case 0
             set firstBranch (git rev-parse --abbrev-ref HEAD)
@@ -133,6 +133,7 @@ function gba #--argument-names firstBranch secondBranch
             set secondBranch $argv[2]
         case '*'
             echo 'usage: gba [<second-branch> | <first-branch> <second-branch>]'
+            return
     end
 
     echo \nComparing branch \"$firstBranch\" to branch \"$secondBranch\":\n
@@ -148,7 +149,44 @@ function gba #--argument-names firstBranch secondBranch
 
 end
 
-# function pw
+function pw --argument-names passwordLength
+    if not test $passwordLength
+        set passwordLength 16
+    end
+
+    if test $passwordLength -lt 8
+        echo 'Password cannot be shorter than 8 characters'
+        return
+    end
+
+    set chars '@#$%&_+='
+
+    #
+
+    # Add logic
+    #function random_pwd
+    cat /dev/urandom | env LC_CTYPE=C tr -dc a-zA-Z0-9 | fold -w 18 | head -n 1 | tr -d '\n' | fold -w 3 | tr '\n' -
+    echo ''
+    #end
+    #     {
+    #         LC_ALL=C grep </dev/urandom -ao '[A-Za-z0-9]' |
+    #             head -n $(expr $passwordLength - 4)
+    #         echo ${chars:$((RANDOM % ${#chars})):1}
+    #         echo ${chars:$((RANDOM % ${#chars})):1}
+    #         echo ${chars:$((RANDOM % ${#chars})):1}
+    #         echo ${chars:$((RANDOM % ${#chars})):1}
+    #     } |
+    #         shuf |
+    #         tr -d '\n' |
+    #         pbcopy
+
+    #
+
+    echo "A random password with $passwordLength characters is now in clipboard"
+end
+
+
+
 
 function midi --argument-names abcFile transposeSteps
     if not test $abcFile

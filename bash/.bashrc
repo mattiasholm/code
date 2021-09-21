@@ -1,5 +1,5 @@
 export PATH="/usr/local/sbin:$PATH"
-export LSCOLORS="cxfxcxdxbxcgcdabagacad"
+export LSCOLORS='cxfxcxdxbxcgcdabagacad'
 export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
 
 alias -- -='cd -'
@@ -101,7 +101,7 @@ function ip() {
 
 function cpbak() {
     if [[ "$#" != 2 ]]; then
-        echo "usage: cpbak <sourceFile> <destinationFile>"
+        echo 'usage: cpbak <sourceFile> <destinationFile>'
         return
     fi
 
@@ -139,7 +139,7 @@ function gba() {
         secondBranch="$2"
         ;;
     *)
-        echo "usage: gba [<second-branch> | <first-branch> <second-branch>]"
+        echo 'usage: gba [<second-branch> | <first-branch> <second-branch>]'
         return
         ;;
     esac
@@ -149,30 +149,23 @@ function gba() {
     echo "BEHIND: $(git log --oneline "${firstBranch}".."${secondBranch}" | wc -l)"
     echo -e "AHEAD: \t$(git log --oneline "${secondBranch}".."${firstBranch}" | wc -l)"
 
-    echo -e "\nCOMMITS BEHIND:"
+    echo -e '\nCOMMITS BEHIND:'
     git log --oneline "${firstBranch}".."${secondBranch}"
 
-    echo -e "\nCOMMITS AHEAD:"
+    echo -e '\nCOMMITS AHEAD:'
     git log --oneline "${secondBranch}".."${firstBranch}"
-    echo ""
+    echo ''
 }
 
 function pw() {
-    case "$#" in
-    0)
-        passwordLength=16
-        ;;
-    1)
+    if [[ -z "$1" ]]; then
+        passwordLength='16'
+    else
         passwordLength="$1"
-        ;;
-    *)
-        echo "usage: genpass [<password-length>]"
-        return
-        ;;
-    esac
+    fi
 
     if [[ ${passwordLength} -lt 8 ]]; then
-        echo "Password cannot be shorter than 8 characters"
+        echo 'Password cannot be shorter than 8 characters'
         return
     fi
 
@@ -194,7 +187,7 @@ function pw() {
 
 function midi() {
     if [[ "$#" == 0 ]]; then
-        echo "usage: midi <file> [<transpose-steps>]"
+        echo 'usage: midi <file> [<transpose-steps>]'
         return
     fi
 
@@ -210,7 +203,7 @@ function midi() {
     case "${type}" in
     "barndance")
         tempo="160"
-        tmpFile=$(echo "${abcFile}" | sed 's/.abc/.mid/')
+        tmpFile="$(echo ${abcFile} | sed 's/.abc/.mid/')"
         cat "${abcFile}" | sed 's/barndance/hornpipe/' >"${tmpFile}"
         abcFile="${tmpFile}"
         ;;

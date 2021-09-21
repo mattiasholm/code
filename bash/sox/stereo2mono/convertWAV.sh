@@ -28,4 +28,4 @@ for file in ${inputDir}/*.wav; do
         sox "${file}" "${outputDir}/${basename}" channels 1
     fi
 done
-echo ""
+echo ''

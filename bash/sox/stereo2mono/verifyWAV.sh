@@ -33,4 +33,4 @@ for file in ${inputDir}/*.wav; do
         echo -e "\033[33m\n${basename} needs to be converted!\033[0m"
     fi
 done
-echo ""
+echo ''

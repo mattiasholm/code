@@ -16,7 +16,7 @@ function cloneRepos() {
     mkdir -p "${path}" &&
         cd "$_"
 
-    echo ""
+    echo ''
 
     for url in "${urls[@]}"; do
 
