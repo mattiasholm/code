@@ -16,6 +16,8 @@ param skuName string = 'standard'
 param accessPolicies array = []
 param objectId string
 param permissions object
+param secretName string
+param secretValue string
 
 resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
   name: name
@@ -42,6 +44,14 @@ resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
       ]
     }
   }
+
+  resource secret 'secrets' = {
+    name: secretName
+    properties: {
+      value: secretValue
+    }
+  }
 }
 
+output name string = kv.name
 output vaultUri string = kv.properties.vaultUri

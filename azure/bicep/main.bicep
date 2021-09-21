@@ -65,6 +65,8 @@ var kvGroupPermissions = {
   ]
 }
 
+var kvSecretName = 'appi-connectionString'
+
 var stCount = 3
 
 var vnetToggle = true
@@ -116,8 +118,8 @@ module appsettings 'modules/appsettings.bicep' = [for (appDockerImageTag, i) in 
   params: {
     name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
     properties: {
+      APPLICATIONINSIGHTS_CONNECTION_STRING: '@Microsoft.KeyVault(VaultName=${kv.outputs.name};SecretName=${kvSecretName})'
       KEYVAULT_URL: kv.outputs.vaultUri
-      APPLICATIONINSIGHTS_CONNECTION_STRING: appi.outputs.connectionString
     }
   }
 }]
@@ -151,6 +153,8 @@ module kv 'modules/kv.bicep' = {
     }]
     objectId: kvGroupId
     permissions: kvGroupPermissions
+    secretName: kvSecretName
+    secretValue: appi.outputs.connectionString
   }
 }
 
