@@ -113,7 +113,7 @@ function pw --argument-names length count
         return
     end
 
-    pwgen --capitalize --numerals --symbols --secure --ambiguous $length $count | pbcopy
+    pwgen --capitalize --numerals --symbols --secure --ambiguous $length $count | ghead -c -1 | pbcopy
     echo "$count random password(s) with $length characters added to clipboard"
 end
 
