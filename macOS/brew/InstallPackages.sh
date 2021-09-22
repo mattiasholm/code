@@ -9,28 +9,9 @@ userName="Mattias Holm"
 userEmail="mattias.holm@live.com"
 topLevel="$(git rev-parse --show-toplevel)"
 
-source "$topLevel/bash/.bashrc"
-.b
-
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
-brew install --cask iterm2
 touch ~/.hushlogin
 
-brew install bash
-
-if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/bash)" ]]; then
-    echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
-fi
-
-brew install fish
-
-if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/fish)" ]]; then
-    echo "/usr/local/bin/fish" | sudo tee -a /etc/shells
-fi
-
-chsh -s /usr/local/bin/fish
-sudo chsh -s /usr/local/bin/fish
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 echo "# sudo: auth account password session
 auth       sufficient     pam_tid.so
@@ -47,6 +28,37 @@ brew install grep
 brew install vim
 brew install jq
 brew install pwgen
+brew install gh
+brew install terraform
+brew install tflint
+brew install pulumi
+brew install python3
+brew install kubectl
+brew install kubectx
+brew install lastpass-cli
+brew install graphviz
+brew install p7zip
+brew install sox
+brew install abcmidi
+brew install timidity
+
+brew install bash
+source "$topLevel/bash/.bashrc"
+.b
+
+if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/bash)" ]]; then
+    echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
+fi
+
+brew install fish
+cp "$topLevel/fish/config.fish" ~/.config/fish/config.fish
+
+if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/fish)" ]]; then
+    echo "/usr/local/bin/fish" | sudo tee -a /etc/shells
+fi
+
+chsh -s /usr/local/bin/fish
+sudo chsh -s /usr/local/bin/fish
 
 brew install mas &&
     chmod +x "$(git rev-parse --show-toplevel)/macOS/mas/InstallApps.sh" &&
@@ -60,35 +72,15 @@ brew install git &&
     chmod +x "$(git rev-parse --show-toplevel)/git/cloneRepos.sh" &&
     "$(git rev-parse --show-toplevel)/git/cloneRepos.sh"
 
-brew install gh
-
-brew install --cask visual-studio-code &&
-    chmod +x "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh" &&
-    "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh"
-
-brew install python3
-
-brew install --cask powershell &&
-    pwsh "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"
-
 brew install azure-cli &&
     (
         az extension add --name azure-devops
         az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
     )
 
+brew install --cask iterm2
 brew install --cask dotnet-sdk
-brew install terraform
-brew install tflint
-brew install pulumi
-brew install kubectl
-brew install kubectx
-brew install lastpass-cli
-brew install graphviz
-brew install p7zip
-brew install sox
-brew install abcmidi
-brew install timidity
+brew install --cask postman
 brew install --cask balenaetcher
 brew install --cask owasp-zap
 brew install --cask azure-data-studio
@@ -111,3 +103,10 @@ brew install --cask plex-media-server
 brew install --cask obs
 brew install --cask openemu
 brew install --cask transmission
+
+brew install --cask visual-studio-code &&
+    chmod +x "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh" &&
+    "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh"
+
+brew install --cask powershell &&
+    pwsh "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"
