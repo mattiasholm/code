@@ -175,6 +175,7 @@
         "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "kvFamily": "A",
+        "kvSecretName": "appi-connectionString",
         "copy": [
             {
                 "name": "appName",
@@ -259,7 +260,7 @@
                     "location": "[parameters('location')]",
                     "tags": "[variables('tags')]",
                     "properties": {
-                        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[reference(variables('appiId')).connectionString]",
+                        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[format('@Microsoft.KeyVault(VaultName={0};SecretName={1})', variables('kvName'), variables('kvSecretName'))]",
                         "KEYVAULT_URL": "[reference(variables('kvId')).vaultUri]"
                     },
                     "dependsOn": [
@@ -326,7 +327,19 @@
                         ]
                     },
                     "dependsOn": [
-                        "[variables('kvName')]"
+                        "[variables('kvId')]"
+                    ]
+                },
+                {
+                    "type": "secrets",
+                    "apiVersion": "2021-06-01-preview",
+                    "name": "[variables('kvSecretName')]",
+                    "properties": {
+                        "value": "[reference(variables('appiId')).connectionString]"
+                    },
+                    "dependsOn": [
+                        "[variables('kvId')]",
+                        "[variables('appiId')]"
                     ]
                 }
             ]
