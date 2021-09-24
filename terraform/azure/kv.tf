@@ -42,24 +42,19 @@ resource "azurerm_key_vault_secret" "secret" {
 
 # 
 
-# data "azuread_service_principal" "sp" {
-#   # application_id = "${var.sp_id}"
-# displayName ??? sp-github-actions - bättre namn???
-# }
+data "azuread_service_principal" "sp" {
+  # display_name = "sp-github-actions"
+}
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
   key_vault_id = azurerm_key_vault.kv.id
   tenant_id    = local.tenantId
-  object_id    = "43cac245-ccb6-43bf-be52-5e6ba58267d8"
-  # object_id = data.azuread_service_principal.sp.id
+  # object_id    = "43cac245-ccb6-43bf-be52-5e6ba58267d8"
+  object_id = data.azuread_service_principal.sp.object_id
   secret_permissions = [
-    "Get",
-    # "List",
-    "Set",
+    # "Get",
+    # "Set",
     # "Delete",
-    # "Recover",
-    # "Backup",
-    # "Restore"
   ]
 }
 
