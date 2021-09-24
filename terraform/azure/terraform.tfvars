@@ -45,7 +45,14 @@ kvGroupKeyPermissions = [
   "Delete",
   "Recover",
   "Backup",
-  "Restore"
+  "Restore",
+  "Decrypt",
+  "Encrypt",
+  "UnwrapKey",
+  "WrapKey",
+  "Verify",
+  "Sign",
+  "Purge"
 ]
 kvGroupSecretPermissions = [
   "Get",
@@ -54,7 +61,8 @@ kvGroupSecretPermissions = [
   "Delete",
   "Recover",
   "Backup",
-  "Restore"
+  "Restore",
+  "Purge"
 ]
 kvGroupCertificatePermissions = [
   "Get",
@@ -71,7 +79,8 @@ kvGroupCertificatePermissions = [
   "GetIssuers",
   "ListIssuers",
   "SetIssuers",
-  "DeleteIssuers"
+  "DeleteIssuers",
+  "Purge"
 ]
 kvSpName = "sp-github-actions"
 kvSpSecretPermissions = [

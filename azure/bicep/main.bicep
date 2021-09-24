@@ -36,6 +36,13 @@ var kvGroupPermissions = {
     'Recover'
     'Backup'
     'Restore'
+    'Decrypt'
+    'Encrypt'
+    'UnwrapKey'
+    'WrapKey'
+    'Verify'
+    'Sign'
+    'Purge'
   ]
   secrets: [
     'Get'
@@ -45,6 +52,7 @@ var kvGroupPermissions = {
     'Recover'
     'Backup'
     'Restore'
+    'Purge'
   ]
   certificates: [
     'Get'
@@ -62,6 +70,7 @@ var kvGroupPermissions = {
     'ListIssuers'
     'SetIssuers'
     'DeleteIssuers'
+    'Purge'
   ]
 }
 
