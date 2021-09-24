@@ -17,7 +17,6 @@ resource "azurerm_key_vault" "kv" {
   tags                = var.tags
   tenant_id           = local.tenantId
   sku_name            = var.kvSku
-  # access_policy = []
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_app" {
@@ -49,4 +48,8 @@ resource "azurerm_key_vault_secret" "secret" {
   tags         = var.tags
   value        = azurerm_application_insights.appi.connection_string
   key_vault_id = azurerm_key_vault.kv.id
+  depends_on = [
+    azurerm_key_vault_access_policy.accesspolicy_group,
+    azurerm_key_vault_access_policy.accesspolicy_sp
+  ]
 }

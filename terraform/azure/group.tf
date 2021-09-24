@@ -8,7 +8,8 @@ resource "azuread_group" "group" {
   owners = [
     data.azuread_user.user[var.kvGroupOwner].id
   ]
-  security_enabled = true
+  security_enabled   = true
+  assignable_to_role = false
 }
 
 resource "azuread_group_member" "member" {

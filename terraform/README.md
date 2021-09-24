@@ -158,6 +158,11 @@ terraform state list
 terraform state rm <terraform-resource-type>.<resource-label>
 ```
 
+## Remove all resources from Terraform state:
+```shell
+terraform state rm $(terraform state list)
+```
+
 <br><br>
 
 ## Plan a Terraform destroy:
