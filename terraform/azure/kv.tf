@@ -29,3 +29,9 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_group" {
   secret_permissions      = var.kvGroupSecretPermissions
   certificate_permissions = var.kvGroupCertificatePermissions
 }
+
+resource "azurerm_key_vault_secret" "secret" {
+  name         = var.kvSecretName
+  value        = azurerm_application_insights.appi.connection_string
+  key_vault_id = azurerm_key_vault.kv.id
+}

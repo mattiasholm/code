@@ -122,6 +122,10 @@ variable "kvGroupCertificatePermissions" {
   type = list(string)
 }
 
+variable "kvSecretName" {
+  type = string
+}
+
 variable "stCount" {
   type = number
 }

@@ -73,6 +73,7 @@ kvGroupCertificatePermissions = [
   "SetIssuers",
   "DeleteIssuers"
 ]
+kvSecretName = "appi-connectionString"
 
 stCount        = 3
 stKind         = "StorageV2"

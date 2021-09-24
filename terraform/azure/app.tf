@@ -16,7 +16,7 @@ resource "azurerm_app_service" "app" {
     ftps_state       = var.appFtpsState
   }
   app_settings = {
-    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.appi.connection_string
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.kv.name};SecretName=${var.kvSecretName})"
     "KEYVAULT_URL"                          = azurerm_key_vault.kv.vault_uri
   }
   client_affinity_enabled = var.appClientAffinityEnabled
