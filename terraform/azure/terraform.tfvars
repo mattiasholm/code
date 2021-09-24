@@ -73,6 +73,11 @@ kvGroupCertificatePermissions = [
   "SetIssuers",
   "DeleteIssuers"
 ]
+kvSpName = "sp-github-actions"
+kvSpSecretPermissions = [
+  "Get",
+  "Set",
+]
 kvSecretName = "appi-connectionString"
 
 stCount        = 3

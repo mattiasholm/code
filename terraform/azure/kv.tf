@@ -4,6 +4,12 @@ locals {
 
 data "azurerm_client_config" "current" {}
 
+data "azuread_service_principal" "sp" {
+  display_name = var.kvSpName
+
+}
+
+
 resource "azurerm_key_vault" "kv" {
   name                = "kv-${var.prefix}-001"
   resource_group_name = azurerm_resource_group.rg.name
@@ -31,46 +37,16 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_group" {
   certificate_permissions = var.kvGroupCertificatePermissions
 }
 
+resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
+  key_vault_id       = azurerm_key_vault.kv.id
+  tenant_id          = local.tenantId
+  object_id          = data.azuread_service_principal.sp.object_id
+  secret_permissions = var.kvSpSecretPermissions
+}
+
 resource "azurerm_key_vault_secret" "secret" {
   name         = var.kvSecretName
   tags         = var.tags
   value        = azurerm_application_insights.appi.connection_string
   key_vault_id = azurerm_key_vault.kv.id
 }
-
-
-
-# 
-
-data "azuread_service_principal" "sp" {
-  display_name = "sp-github-actions"
-}
-
-resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = local.tenantId
-  # object_id    = "43cac245-ccb6-43bf-be52-5e6ba58267d8"
-  object_id = data.azuread_service_principal.sp.object_id
-  secret_permissions = [
-    # "Get",
-    # "Set",
-    # "Delete",
-  ]
-}
-
-# resource "azurerm_key_vault_access_policy" "accesspolicy_sp2" {
-#   key_vault_id = azurerm_key_vault.kv.id
-#   tenant_id    = local.tenantId
-#   object_id    = "aa855aa1-3243-4b29-b64e-ae6da5459b5f"
-#   secret_permissions = [
-#     "Get",
-#     "List",
-#     "Set",
-#     "Delete",
-#     "Recover",
-#     "Backup",
-#     "Restore"
-#   ]
-# }
-
-# 
