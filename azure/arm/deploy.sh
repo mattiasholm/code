@@ -41,7 +41,7 @@ function CreateResourceGroup() {
 }
 
 function Deploy() {
-    operations=("validate" "create")
+    operations=("validate" "what-if" "create")
 
     for operation in ${operations[@]}; do
         az deployment group $operation \
