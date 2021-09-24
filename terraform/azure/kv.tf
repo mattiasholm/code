@@ -36,3 +36,10 @@ resource "azurerm_key_vault_secret" "secret" {
   value        = azurerm_application_insights.appi.connection_string
   key_vault_id = azurerm_key_vault.kv.id
 }
+
+resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
+  key_vault_id       = azurerm_key_vault.kv.id
+  tenant_id          = local.tenantId
+  object_id          = "43cac245-ccb6-43bf-be52-5e6ba58267d8"
+  secret_permissions = var.kvAppSecretPermissions
+}
