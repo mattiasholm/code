@@ -43,7 +43,7 @@ resource "azurerm_key_vault_secret" "secret" {
 # 
 
 data "azuread_service_principal" "sp" {
-  # display_name = "sp-github-actions"
+  display_name = "sp-github-actions"
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
