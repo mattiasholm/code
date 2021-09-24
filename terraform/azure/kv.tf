@@ -54,12 +54,12 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
   # object_id = data.azuread_service_principal.sp.id
   secret_permissions = [
     "Get",
-    "List",
+    # "List",
     "Set",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore"
+    # "Delete",
+    # "Recover",
+    # "Backup",
+    # "Restore"
   ]
 }
 
