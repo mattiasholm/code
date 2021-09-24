@@ -47,6 +47,7 @@ resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
 
   resource secret 'secrets' = {
     name: secretName
+    tags: tags
     properties: {
       value: secretValue
     }
