@@ -37,6 +37,7 @@ resource "azurerm_key_vault_secret" "secret" {
   key_vault_id = azurerm_key_vault.kv.id
 }
 
+# 
 resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
   key_vault_id = azurerm_key_vault.kv.id
   tenant_id    = local.tenantId
@@ -51,3 +52,20 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
     "Restore"
   ]
 }
+
+resource "azurerm_key_vault_access_policy" "accesspolicy_sp2" {
+  key_vault_id = azurerm_key_vault.kv.id
+  tenant_id    = local.tenantId
+  object_id    = "aa855aa1-3243-4b29-b64e-ae6da5459b5f"
+  secret_permissions = [
+    "Get",
+    "List",
+    "Set",
+    "Delete",
+    "Recover",
+    "Backup",
+    "Restore"
+  ]
+}
+
+# 
