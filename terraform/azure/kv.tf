@@ -11,6 +11,7 @@ resource "azurerm_key_vault" "kv" {
   tags                = var.tags
   tenant_id           = local.tenantId
   sku_name            = var.kvSku
+  # access_policy = []
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_app" {
@@ -43,6 +44,7 @@ resource "azurerm_key_vault_secret" "secret" {
 
 # data "azuread_service_principal" "sp" {
 #   # application_id = "${var.sp_id}"
+# displayName ??? sp-github-actions - bättre namn???
 # }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
@@ -61,19 +63,19 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
   ]
 }
 
-resource "azurerm_key_vault_access_policy" "accesspolicy_sp2" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = local.tenantId
-  object_id    = "aa855aa1-3243-4b29-b64e-ae6da5459b5f"
-  secret_permissions = [
-    "Get",
-    "List",
-    "Set",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore"
-  ]
-}
+# resource "azurerm_key_vault_access_policy" "accesspolicy_sp2" {
+#   key_vault_id = azurerm_key_vault.kv.id
+#   tenant_id    = local.tenantId
+#   object_id    = "aa855aa1-3243-4b29-b64e-ae6da5459b5f"
+#   secret_permissions = [
+#     "Get",
+#     "List",
+#     "Set",
+#     "Delete",
+#     "Recover",
+#     "Backup",
+#     "Restore"
+#   ]
+# }
 
 # 
