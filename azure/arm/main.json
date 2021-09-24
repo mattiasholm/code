@@ -370,8 +370,6 @@
                     "type": "blobServices/containers",
                     "apiVersion": "2021-04-01",
                     "name": "[variables('stContainerName')]",
-                    "location": "[parameters('location')]",
-                    "tags": "[variables('tags')]",
                     "dependsOn": [
                         "[variables('stId')[copyIndex()]]"
                     ]
