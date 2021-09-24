@@ -11,6 +11,8 @@ resource "azurerm_key_vault" "kv" {
   tags                = var.tags
   tenant_id           = local.tenantId
   sku_name            = var.kvSku
+  # enable_rbac_authorization = true
+  enabled_for_template_deployment = true
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_app" {
@@ -37,9 +39,9 @@ resource "azurerm_key_vault_secret" "secret" {
   key_vault_id = azurerm_key_vault.kv.id
 }
 
-resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
-  key_vault_id       = azurerm_key_vault.kv.id
-  tenant_id          = local.tenantId
-  object_id          = "43cac245-ccb6-43bf-be52-5e6ba58267d8"
-  secret_permissions = var.kvAppSecretPermissions
-}
+# resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
+#   key_vault_id       = azurerm_key_vault.kv.id
+#   tenant_id          = local.tenantId
+#   object_id          = "43cac245-ccb6-43bf-be52-5e6ba58267d8"
+#   secret_permissions = var.kvAppSecretPermissions
+# }
