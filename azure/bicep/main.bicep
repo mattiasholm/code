@@ -23,7 +23,7 @@ var kvAppPermissions = {
   ]
 }
 
-var kvGroupId = 'cb321d77-5e1d-4fda-9d8c-3b6c4aa5e781'
+var kvGroupId = 'e810d50b-5f44-4e21-b1c9-eb89653cc2de'
 
 var kvGroupPermissions = {
   keys: [
