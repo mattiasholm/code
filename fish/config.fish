@@ -179,31 +179,30 @@ function midi --argument-names abcFile transposeSteps
     end
 
     set type (grep 'R:' $abcFile | sed 's/R://')
-    echo $type
 
     switch $type
-        case barndance
+        case 'barndance'
             set tempo 160
             set tmpFile (echo $abcFile | sed 's/.abc/.mid/')
             cat $abcFile | sed s/barndance/hornpipe/ >$tmpFile
             set abcFile $tmpFile
-        case hornpipe
+        case 'hornpipe'
             set tempo 150
-        case jig
+        case 'jig'
             set tempo 160
-        case march
+        case 'march'
             set tempo 160
-        case polka
+        case 'polka'
             set tempo 140
-        case reel
+        case 'reel'
             set tempo 170
-        case slide
+        case 'slide'
             set tempo 200
-        case slip jig
+        case 'slip jig'
             set tempo 170
-        case strathspey
+        case 'strathspey'
             set tempo 140
-        case waltz
+        case 'waltz'
             set tempo 90
         case '*'
             set tempo 120
