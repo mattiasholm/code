@@ -1,22 +1,21 @@
 """An Azure RM Python Pulumi program"""
 
 import pulumi
-from pulumi_azure_native import storage
 from pulumi_azure_native import resources
+from pulumi_azure_native import storage
 
-resource_group = resources.ResourceGroup('rg-holm-pulumi-')
+# rg = resources.ResourceGroup('rg-holm-pulumi-001',
+rg = resources.ResourceGroup('rg',
+                             resource_group_name='rg-holm-pulumi-001',
+                             # tags=[]
+                             #  opts=ResourceOptions(delete_before_replace=True
+                             )
 
-account = storage.StorageAccount('stholmpulumi',
-                                 resource_group_name=resource_group.name,
-                                 sku=storage.SkuArgs(
-                                     name=storage.SkuName.STANDARD_LRS,
-                                 ),
-                                 kind=storage.Kind.STORAGE_V2)
 
-primary_key = pulumi.Output.all(resource_group.name, account.name) \
-    .apply(lambda args: storage.list_storage_account_keys(
-        resource_group_name=args[0],
-        account_name=args[1]
-    )).apply(lambda accountKeys: accountKeys.keys[0].value)
-
-pulumi.export("primary_storage_key", primary_key)
+st = storage.StorageAccount('st',
+                            account_name='stholmpulumi001',
+                            resource_group_name=rg.name,
+                            sku=storage.SkuArgs(
+                                name=storage.SkuName.STANDARD_LRS,
+                            ),
+                            kind=storage.Kind.STORAGE_V2)

@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "terraform/azure/**"
-      - ".github/workflows/azure-tf.yml"
+      - ".github/workflows/azure-terraform.yml"
       - "!**.md"
 
   workflow_dispatch:

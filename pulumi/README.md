@@ -106,7 +106,7 @@ pulumi stack output
 pulumi stack output <name>
 ```
 
-## Create an empty stack:
+## Create a new stack:
 ```shell
 pulumi stack init <name>
 ```

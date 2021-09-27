@@ -1,4 +1,4 @@
-prefix   = "holm-tf"
+prefix   = "holm-terraform"
 location = "WestEurope"
 tags = {
   Application = "Terraform"
