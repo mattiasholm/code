@@ -33,19 +33,19 @@ tflint --init
 tflint
 ```
 
-## Run TFLint and output in compact format:
+## Output in compact format:
 ```shell
 tflint --format compact
 tflint -f compact
 ```
 
-## Run TFLint and output in JSON format:
+## Output in JSON format:
 ```shell
 tflint --format json
 tflint -f json
 ```
 
-## Run TFLint with a different config file than `.tflint.hcl`:
+## Use a different config file than `.tflint.hcl`:
 ```shell
 tflint --config <filename>
 tflint -c <filename>

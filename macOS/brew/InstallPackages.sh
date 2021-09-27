@@ -31,6 +31,7 @@ brew install pwgen
 brew install gh
 brew install terraform
 brew install tflint
+brew install checkov
 brew install pulumi
 brew install python3
 brew install kubectl
