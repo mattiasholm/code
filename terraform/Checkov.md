@@ -43,13 +43,13 @@ checkov -f <filename>
 
 ## Run only specific checks (comma-separated):
 ```shell
-checkov <subcommand> --check <name>
-checkov <subcommand> -c <name>
+checkov <subcommand> --check <id>
+checkov <subcommand> -c <id>
 ```
 
 ## Exclude specific checks (comma-separated):
 ```shell
-checkov <subcommand> --skip-check <name>
+checkov <subcommand> --skip-check <id>
 ```
 
 <br><br>
@@ -59,7 +59,7 @@ checkov <subcommand> --skip-check <name>
 checkov <subcommand> --compact
 ```
 
-## Output failed tests only:
+## Output failed checks only:
 ```shell
 checkov <subcommand> --quiet
 ```
