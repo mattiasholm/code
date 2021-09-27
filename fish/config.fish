@@ -1,5 +1,6 @@
 set --export PATH /usr/local/sbin $PATH
 set --export LSCOLORS cxfxcxdxbxcgcdabagacad
+set --export PULUMI_CONFIG_PASSPHRASE_FILE ~/.config/pulumi/passphrase
 
 set fish_greeting ''
 set fish_prompt_pwd_dir_length 0

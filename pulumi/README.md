@@ -49,28 +49,10 @@ pulumi logout
 
 <br><br>
 
-## Create new Pulumi project in working directory based on the specified template, accept default values:
+## Create new Pulumi project in working directory based on a specific template, accepting default values:
 ```shell
 pulumi new <template> --yes
 pulumi new <template> -y
-```
-
-## Prerequisites:
-
-### `Python`:
-
-#### First-time installation of virtual environment:
-```shell
-virtualenv -p python3 venv
-
-source venv/bin/activate
-
-pip3 install -r requirements.txt
-```
-
-#### Activate virtual environment after reopening shell:
-```shell
-source venv/bin/activate
 ```
 
 <br><br>
@@ -96,6 +78,12 @@ pulumi up --y
 pulumi destroy
 ```
 
+## Destroy current stack, skip confirmation prompt:
+```shell
+pulumi destroy --yes
+pulumi destroy -y
+```
+
 <br><br>
 
 ## List current stack:
@@ -108,24 +96,45 @@ pulumi stack
 pulumi stack ls
 ```
 
-## Switch the current workspace to a specific stack:
+## Show all outputs from current stack:
 ```shell
-pulumi stack select <stack-name>
+pulumi stack output
+```
+
+## Show a specific output from current stack:
+```shell
+pulumi stack output <name>
 ```
 
 ## Create an empty stack:
 ```shell
-pulumi stack init <stack-name>
+pulumi stack init <name>
 ```
 
-## Rename an existing stack:
+## Switch the current workspace to a specific stack:
+```shell
+pulumi stack select <name>
+```
+
+## Rename the current stack:
 ```shell
 pulumi stack rename <new-name>
 ```
 
-## Remove an existing stack:
+## Remove the current stack:
 ```shell
-pulumi stack rm <stack-name>
+pulumi stack rm
+```
+
+## Remove the current stack, skip confirmation prompt:
+```shell
+pulumi stack rm --yes
+pulumi stack rm -y
+```
+
+## Remove a specific stack:
+```shell
+pulumi stack rm <name>
 ```
 
 <br><br>
@@ -155,21 +164,22 @@ pulumi config set <key-name> <value> --secret
 pulumi config rm <key-name>
 ```
 
-## Update the local configuration based on the most recent deployment of the stack:
-```shell
-pulumi config refresh
-```
-
 <br><br>
 
-## Compares the current stack's resource state with the state known to exist in the actual cloud provider and modifies the stack's state accordingly:
+## Refresh the current stack's state, based on the actual state in the cloud:
 ```shell
 pulumi refresh
 ```
 
+## Refresh the current stack's state, based on the actual state in the cloud, skip confirmation prompt:
+```shell
+pulumi refresh --yes
+pulumi refresh -y
+```
+
 <br><br>
 
-## List history of all updates to a stack:
+## Show history of updates to current stack:
 ```shell
-pulumi history
+pulumi stack history
 ```

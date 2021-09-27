@@ -1,3 +1,6 @@
 name: azure-python
-runtime: python
-description: A minimal Azure Python Pulumi program
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A minimal Azure Native Python Pulumi program

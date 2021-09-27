@@ -1,4 +1,4 @@
-encryptionsalt: v1:F6hiyoITq48=:v1:GNCnwnP0jg+X0ubW:UfgsMc5hZMnHf1IOwB4uBFBTuZ4Ysw==
+encryptionsalt: v1:QNYwlWMAkzA=:v1:gOP9WWKPG8yJEBA8:MfkCccujlxaDTAJ9qeSKn+eqBr8A1Q==
 config:
-  azure:environment: public
-  azure:location: WestEurope
+  azure-native:location: WestEurope
+  azure-native:subscriptionId: 9b184a26-7fff-49ed-9230-d11d484ad51b
