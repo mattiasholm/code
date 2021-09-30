@@ -37,6 +37,7 @@ alias cl='clear'
 alias cx='chmod +x'
 
 alias azb='az bicep'
+alias azr='az rest'
 alias azli='az login'
 alias azlo='az logout'
 alias azls='az account list --output table'

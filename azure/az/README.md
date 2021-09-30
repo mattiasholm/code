@@ -79,14 +79,12 @@ az <subcommand> list --query [].<property>
 ## Make a custom REST API call to Azure Resource Manager (ARM):
 ```shell
 az rest --method <method> --uri <uri> --body <body>
-
 az rest -m <method> -u <uri> -b <body>
 ```
 
 ## Get AKS credentials (in order to run kubectl):
 ```shell
 az aks get-credentials --name <cluster-name> --resource-group <rg-name>
-
 az aks get-credentials -n <cluster-name> -g <rg-name>
 ```
 

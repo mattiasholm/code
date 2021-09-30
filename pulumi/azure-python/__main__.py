@@ -4,16 +4,19 @@ import pulumi
 from pulumi_azure_native import resources
 from pulumi_azure_native import storage
 
-# rg = resources.ResourceGroup('rg-holm-pulumi-001',
+prefix = 'holm-pulumi'
+prefixStripped = prefix.lower().replace('-', '')
+
 rg = resources.ResourceGroup('rg',
-                             resource_group_name='rg-holm-pulumi-001',
-                             # tags=[]
-                             #  opts=ResourceOptions(delete_before_replace=True
+                             resource_group_name='rg-{}-001'.format(prefix),
+                             #  tags='',
+                             opts=pulumi.resource.ResourceOptions(
+                                 delete_before_replace=True)
                              )
 
 
 st = storage.StorageAccount('st',
-                            account_name='stholmpulumi001',
+                            account_name='st{}001'.format(prefixStripped),
                             resource_group_name=rg.name,
                             sku=storage.SkuArgs(
                                 name=storage.SkuName.STANDARD_LRS,
