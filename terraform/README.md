@@ -155,7 +155,7 @@ terraform state list
 
 ## Remove a specific resource from Terraform state:
 ```shell
-terraform state rm <terraform-resource-type>.<resource-label>
+terraform state rm <terraform-resource-type>.<symbolic-name>
 ```
 
 ## Remove all resources from Terraform state:
@@ -184,7 +184,7 @@ terraform destroy --auto-approve
 
 ## Import an existing Azure resource into Terraform:
 ```shell
-terraform import <terraform-resource-type>.<resource-label> <azure-resource-id>
+terraform import <terraform-resource-type>.<symbolic-name> <azure-resource-id>
 ```
 
 <br><br>

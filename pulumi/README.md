@@ -183,3 +183,10 @@ pulumi refresh -y
 ```shell
 pulumi stack history
 ```
+
+<br><br>
+
+## Import an existing Azure resource into Pulumi:
+```shell
+pulumi import <pulumi-resource-type> <symbolic-name> <azure-resource-id>
+```
