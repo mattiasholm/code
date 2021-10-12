@@ -1,5 +1,0 @@
-AzureDiagnostics
-| where ResourceProvider == "MICROSOFT.NETWORK" and Category == "ApplicationGatewayAccessLog"
-| where httpStatus_d == 404
-| summarize count() by requestUri_s
-| order by count_ desc nulls last
