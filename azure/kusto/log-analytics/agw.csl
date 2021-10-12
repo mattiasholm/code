@@ -2,26 +2,26 @@
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog'
 | order by TimeGenerated
-| project ['Time generated'] = TimeGenerated, ['Client IP'] = clientIP_s, ['Host header'] = host_s, ['Request path'] = requestUri_s, ['Query strings'] = requestQuery_s, ['HTTP status'] = httpStatus_d, ['HTTP method'] = httpMethod_s, ['HTTP version'] = httpVersion_s, ['TLS enabled'] = sslEnabled_s, ['TLS version'] = sslProtocol_s, ['TLS cipher'] = sslCipher_s, ['Rule name'] = ruleName_s, ['Instance'] = instanceId_s, ['User agent'] = userAgent_s, ['Client port'] = clientPort_d, ['Time taken'] = timeTaken_d, ['Received bytes'] = receivedBytes_d, ['Sent bytes'] = sentBytes_d
+| project ['Time generated'] = TimeGenerated, ['Client IP'] = clientIP_s, ['Host header'] = host_s, ['Request path'] = requestUri_s, ['Query strings'] = requestQuery_s, ['HTTP status'] = httpStatus_d, ['HTTP method'] = httpMethod_s, ['HTTP version'] = httpVersion_s, ['TLS version'] = sslProtocol_s, ['TLS cipher'] = sslCipher_s, ['Rule name'] = ruleName_s, ['Instance'] = instanceId_s, ['User agent'] = userAgent_s, ['Client port'] = clientPort_d, ['Duration'] = timeTaken_d, ['Request size'] = receivedBytes_d, ['Response size'] = sentBytes_d
 
 // List only successful requests, ordered by time generated:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog' and httpStatus_d == 200
 | order by TimeGenerated
-| project ['Time generated'] = TimeGenerated, ['Client IP'] = clientIP_s, ['Host header'] = host_s, ['Request path'] = requestUri_s, ['Query strings'] = requestQuery_s, ['HTTP status'] = httpStatus_d, ['HTTP method'] = httpMethod_s, ['HTTP version'] = httpVersion_s, ['TLS enabled'] = sslEnabled_s, ['TLS version'] = sslProtocol_s, ['TLS cipher'] = sslCipher_s, ['Rule name'] = ruleName_s, ['Instance'] = instanceId_s, ['User agent'] = userAgent_s, ['Client port'] = clientPort_d, ['Time taken'] = timeTaken_d, ['Received bytes'] = receivedBytes_d, ['Sent bytes'] = sentBytes_d
+| project ['Time generated'] = TimeGenerated, ['Client IP'] = clientIP_s, ['Host header'] = host_s, ['Request path'] = requestUri_s, ['Query strings'] = requestQuery_s, ['HTTP status'] = httpStatus_d, ['HTTP method'] = httpMethod_s, ['HTTP version'] = httpVersion_s, ['TLS version'] = sslProtocol_s, ['TLS cipher'] = sslCipher_s, ['Rule name'] = ruleName_s, ['Instance'] = instanceId_s, ['User agent'] = userAgent_s, ['Client port'] = clientPort_d, ['Duration'] = timeTaken_d, ['Request size'] = receivedBytes_d, ['Response size'] = sentBytes_d
 
 // List only failed requests, ordered by time generated:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog' and httpStatus_d >= 400
 | order by TimeGenerated
-| project ['Time generated'] = TimeGenerated, ['Client IP'] = clientIP_s, ['Host header'] = host_s, ['Request path'] = requestUri_s, ['Query strings'] = requestQuery_s, ['HTTP status'] = httpStatus_d, ['HTTP method'] = httpMethod_s, ['HTTP version'] = httpVersion_s, ['TLS enabled'] = sslEnabled_s, ['TLS version'] = sslProtocol_s, ['TLS cipher'] = sslCipher_s, ['Rule name'] = ruleName_s, ['Instance'] = instanceId_s, ['User agent'] = userAgent_s, ['Client port'] = clientPort_d, ['Time taken'] = timeTaken_d, ['Received bytes'] = receivedBytes_d, ['Sent bytes'] = sentBytes_d
+| project ['Time generated'] = TimeGenerated, ['Client IP'] = clientIP_s, ['Host header'] = host_s, ['Request path'] = requestUri_s, ['Query strings'] = requestQuery_s, ['HTTP status'] = httpStatus_d, ['HTTP method'] = httpMethod_s, ['HTTP version'] = httpVersion_s, ['TLS version'] = sslProtocol_s, ['TLS cipher'] = sslCipher_s, ['Rule name'] = ruleName_s, ['Instance'] = instanceId_s, ['User agent'] = userAgent_s, ['Client port'] = clientPort_d, ['Duration'] = timeTaken_d, ['Request size'] = receivedBytes_d, ['Response size'] = sentBytes_d
 
 // List only requests from a specific IP, ordered by time generated:
 let ip = '127.0.0.1';
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog' and clientIP_s == ip
 | order by TimeGenerated
-| project ['Time generated'] = TimeGenerated, ['Client IP'] = clientIP_s, ['Host header'] = host_s, ['Request path'] = requestUri_s, ['Query strings'] = requestQuery_s, ['HTTP status'] = httpStatus_d, ['HTTP method'] = httpMethod_s, ['HTTP version'] = httpVersion_s, ['TLS enabled'] = sslEnabled_s, ['TLS version'] = sslProtocol_s, ['TLS cipher'] = sslCipher_s, ['Rule name'] = ruleName_s, ['Instance'] = instanceId_s, ['User agent'] = userAgent_s, ['Client port'] = clientPort_d, ['Time taken'] = timeTaken_d, ['Received bytes'] = receivedBytes_d, ['Sent bytes'] = sentBytes_d
+| project ['Time generated'] = TimeGenerated, ['Client IP'] = clientIP_s, ['Host header'] = host_s, ['Request path'] = requestUri_s, ['Query strings'] = requestQuery_s, ['HTTP status'] = httpStatus_d, ['HTTP method'] = httpMethod_s, ['HTTP version'] = httpVersion_s, ['TLS version'] = sslProtocol_s, ['TLS cipher'] = sslCipher_s, ['Rule name'] = ruleName_s, ['Instance'] = instanceId_s, ['User agent'] = userAgent_s, ['Client port'] = clientPort_d, ['Duration'] = timeTaken_d, ['Request size'] = receivedBytes_d, ['Response size'] = sentBytes_d
 
 // Count total number of requests:
 AzureDiagnostics
@@ -50,7 +50,7 @@ AzureDiagnostics
 
 // List most common HTTP errors:
 AzureDiagnostics
-| where Category == 'ApplicationGatewayAccessLog'
+| where Category == 'ApplicationGatewayAccessLog' and httpStatus_d >= 400
 | summarize count() by httpStatus_d
 | order by count_
 | project ['HTTP status'] = httpStatus_d, ['Number of requests'] = count_
@@ -62,7 +62,7 @@ AzureDiagnostics
 | order by count_
 | project ['HTTP status'] = httpStatus_d, ['Number of requests'] = count_, ['Request path'] = requestUri_s
 
-// Summarize a specific HTTP error by request path, ordered by count:
+// Summarize a specific HTTP status by request path, ordered by count:
 let httpStatus = 404;
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog' and httpStatus_d == httpStatus

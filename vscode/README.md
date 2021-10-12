@@ -49,6 +49,11 @@ code .
 
 `Windows` Ctrl+K+O
 
+## Save all open files:
+`Mac` Cmd+Alt+S
+
+`Windows` Ctrl+K + S
+
 ## Show/hide Explorer:
 `Mac` Cmd+B
 
@@ -145,8 +150,6 @@ code .
 `Mac` Alt+LeftMouseClick
 
 `Windows` Alt+LeftMouseClick
-
-
 
 <!--
 ## FYLL PÅ! GOOGLA EFTER FLER ANVÄNDBARA SHORTCUTS! Underlättar vardagen enormt!

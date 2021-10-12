@@ -16,43 +16,43 @@ dig -v
 
 ## Query `A` records:
 ```shell
-dig A <domain>
+dig a <domain>
 dig <domain>
 ```
 
 ## Query `AAAA` records:
 ```shell
-dig AAAA <domain>
+dig aaaa <domain>
 ```
 
 ## Query `CNAME` records:
 ```shell
-dig CNAME <domain>
+dig cname <domain>
 ```
 
 ## Query `MX` records:
 ```shell
-dig MX <domain>
+dig mx <domain>
 ```
 
 ## Query `TXT` records:
 ```shell
-dig TXT <domain>
+dig txt <domain>
 ```
 
 ## Query `SRV` records:
 ```shell
-dig SRV <domain>
+dig srv <domain>
 ```
 
 ## Query `NS` records:
 ```shell
-dig NS <domain>
+dig ns <domain>
 ```
 
 ## Query `SOA` records:
 ```shell
-dig SOA <domain>
+dig soa <domain>
 ```
 
 ## Query `PTR` records:
@@ -62,7 +62,7 @@ dig -x <ip-address>
 
 ## Query all DNS record types:
 ```shell
-dig ANY <domain>
+dig any <domain>
 ```
 
 <br><br>
@@ -99,7 +99,7 @@ dig
 
 ## List DNS servers for top-level domain `.se`:
 ```shell
-dig NS se.
+dig ns se.
 ```
 
 ## Find all authoritative DNS servers for a domain:
@@ -109,7 +109,7 @@ dig <domain> +nssearch
 
 ## Initiate a DNS zone transfer from a specific DNS server:
 ```shell
-dig AXFR <domain> @<dns-server>
+dig axfr <domain> @<dns-server>
 ```
 
 <br><br>
