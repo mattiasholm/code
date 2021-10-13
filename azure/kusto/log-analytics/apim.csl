@@ -2,26 +2,26 @@
 AzureDiagnostics
 | where Category == 'GatewayLogs'
 | order by TimeGenerated
-| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = url_s, ['HTTP status'] = responseCode_d, ['HTTP method'] = method_s, ['HTTP version'] = clientProtocol_s, ['TLS version'] = clientTlsVersion_s, ['Back-end URL'] = backendUrl_s, ['Back-end HTTP status'] = backendResponseCode_d, ['Back-end HTTP method'] = backendMethod_s, ['Back-end HTTP version'] = backendProtocol_s, ['API'] = apiId_s, ['API operation'] = operationId_s, ['APIM subscription'] = apimSubscriptionId_s, ['Duration'] = DurationMs, ['Client time'] = clientTime_d, ['Back-end time'] = backendTime_d, ['Request size'] = requestSize_d, ['Response size'] = responseSize_d
+| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = url_s, ['HTTP status'] = responseCode_d, ['HTTP method'] = method_s, ['HTTP version'] = clientProtocol_s, ['TLS version'] = clientTlsVersion_s, ['Back-end URL'] = backendUrl_s, ['Back-end HTTP status'] = backendResponseCode_d, ['Back-end HTTP method'] = backendMethod_s, ['Back-end HTTP version'] = backendProtocol_s, API = apiId_s, ['API operation'] = operationId_s, ['APIM subscription'] = apimSubscriptionId_s, Duration = DurationMs, ['Client time'] = clientTime_d, ['Back-end time'] = backendTime_d, ['Request size'] = requestSize_d, ['Response size'] = responseSize_d
 
 // List only successful requests, ordered by time generated:
 AzureDiagnostics
 | where Category == 'GatewayLogs' and (responseCode_d == 200 and backendResponseCode_d == 200)
 | order by TimeGenerated
-| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = url_s, ['HTTP status'] = responseCode_d, ['HTTP method'] = method_s, ['HTTP version'] = clientProtocol_s, ['TLS version'] = clientTlsVersion_s, ['Back-end URL'] = backendUrl_s, ['Back-end HTTP status'] = backendResponseCode_d, ['Back-end HTTP method'] = backendMethod_s, ['Back-end HTTP version'] = backendProtocol_s, ['API'] = apiId_s, ['API operation'] = operationId_s, ['APIM subscription'] = apimSubscriptionId_s, ['Duration'] = DurationMs, ['Client time'] = clientTime_d, ['Back-end time'] = backendTime_d, ['Request size'] = requestSize_d, ['Response size'] = responseSize_d
+| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = url_s, ['HTTP status'] = responseCode_d, ['HTTP method'] = method_s, ['HTTP version'] = clientProtocol_s, ['TLS version'] = clientTlsVersion_s, ['Back-end URL'] = backendUrl_s, ['Back-end HTTP status'] = backendResponseCode_d, ['Back-end HTTP method'] = backendMethod_s, ['Back-end HTTP version'] = backendProtocol_s, API = apiId_s, ['API operation'] = operationId_s, ['APIM subscription'] = apimSubscriptionId_s, Duration = DurationMs, ['Client time'] = clientTime_d, ['Back-end time'] = backendTime_d, ['Request size'] = requestSize_d, ['Response size'] = responseSize_d
 
 // List only failed requests, ordered by time generated:
 AzureDiagnostics
 | where Category == 'GatewayLogs' and (responseCode_d >= 400 or backendResponseCode_d >= 400)
 | order by TimeGenerated
-| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = url_s, ['HTTP status'] = responseCode_d, ['HTTP method'] = method_s, ['HTTP version'] = clientProtocol_s, ['TLS version'] = clientTlsVersion_s, ['Back-end URL'] = backendUrl_s, ['Back-end HTTP status'] = backendResponseCode_d, ['Back-end HTTP method'] = backendMethod_s, ['Back-end HTTP version'] = backendProtocol_s, ['API'] = apiId_s, ['API operation'] = operationId_s, ['APIM subscription'] = apimSubscriptionId_s, ['Duration'] = DurationMs, ['Client time'] = clientTime_d, ['Back-end time'] = backendTime_d, ['Request size'] = requestSize_d, ['Response size'] = responseSize_d
+| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = url_s, ['HTTP status'] = responseCode_d, ['HTTP method'] = method_s, ['HTTP version'] = clientProtocol_s, ['TLS version'] = clientTlsVersion_s, ['Back-end URL'] = backendUrl_s, ['Back-end HTTP status'] = backendResponseCode_d, ['Back-end HTTP method'] = backendMethod_s, ['Back-end HTTP version'] = backendProtocol_s, API = apiId_s, ['API operation'] = operationId_s, ['APIM subscription'] = apimSubscriptionId_s, Duration = DurationMs, ['Client time'] = clientTime_d, ['Back-end time'] = backendTime_d, ['Request size'] = requestSize_d, ['Response size'] = responseSize_d
 
 // List only requests from a specific APIM subscription, ordered by time generated:
 let apimSubscription = 'master';
 AzureDiagnostics
 | where Category == 'GatewayLogs' and apimSubscriptionId_s == apimSubscription
 | order by TimeGenerated
-| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = url_s, ['HTTP status'] = responseCode_d, ['HTTP method'] = method_s, ['HTTP version'] = clientProtocol_s, ['TLS version'] = clientTlsVersion_s, ['Back-end URL'] = backendUrl_s, ['Back-end HTTP status'] = backendResponseCode_d, ['Back-end HTTP method'] = backendMethod_s, ['Back-end HTTP version'] = backendProtocol_s, ['API'] = apiId_s, ['API operation'] = operationId_s, ['APIM subscription'] = apimSubscriptionId_s, ['Duration'] = DurationMs, ['Client time'] = clientTime_d, ['Back-end time'] = backendTime_d, ['Request size'] = requestSize_d, ['Response size'] = responseSize_d
+| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = url_s, ['HTTP status'] = responseCode_d, ['HTTP method'] = method_s, ['HTTP version'] = clientProtocol_s, ['TLS version'] = clientTlsVersion_s, ['Back-end URL'] = backendUrl_s, ['Back-end HTTP status'] = backendResponseCode_d, ['Back-end HTTP method'] = backendMethod_s, ['Back-end HTTP version'] = backendProtocol_s, API = apiId_s, ['API operation'] = operationId_s, ['APIM subscription'] = apimSubscriptionId_s, Duration = DurationMs, ['Client time'] = clientTime_d, ['Back-end time'] = backendTime_d, ['Request size'] = requestSize_d, ['Response size'] = responseSize_d
 
 // Count total number of requests:
 AzureDiagnostics
