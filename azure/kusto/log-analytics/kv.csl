@@ -1,0 +1,5 @@
+// List all requests, ordered by time generated:
+AzureDiagnostics
+| where Category == 'AuditEvent'
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = id_s, Status = ResultType, Operation = OperationName, ['Operation version'] = OperationVersion, ['User agent'] = clientInfo_s, ['Network authorized'] = isAddressAuthorized_b, ['Policy match'] = isAccessPolicyMatch_b, ['Client ID'] = identity_claim_appid_g, ['Object ID'] = identity_claim_oid_g, Duration = DurationMs
