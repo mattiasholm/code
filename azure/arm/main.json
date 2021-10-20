@@ -210,8 +210,7 @@
     "resources": [
         {
             "type": "Microsoft.Web/serverfarms",
-            // "apiVersion": "2021-01-15",
-            "apiVersion": "2015-08-01",
+            "apiVersion": "2021-01-15",
             "name": "[variables('planName')]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",

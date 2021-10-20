@@ -11,6 +11,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  runs-on: ubuntu-latest
+
 defaults:
   run:
     shell: bash
@@ -19,7 +22,7 @@ defaults:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.runs-on }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -27,16 +30,12 @@ jobs:
           submodules: recursive
 
       - name: Validate infrastructure
-        run: ./lint.sh
+        run: ./validate.sh
 
   release:
     name: Release
     needs: build
-    runs-on: ubuntu-latest
-    env:
-      appId: ${{ secrets.appId }}
-      password: ${{ secrets.password }}
-      tenant: ${{ secrets.tenant }}
+    runs-on: ${{ env.runs-on }}
 
     steps:
       - name: Check out repository
@@ -46,3 +45,7 @@ jobs:
 
       - name: Deploy infrastructure
         run: ./deploy.sh
+        env:
+          appId: ${{ secrets.appId }}
+          password: ${{ secrets.password }}
+          tenant: ${{ secrets.tenant }}
