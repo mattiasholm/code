@@ -1,0 +1,49 @@
+// List all requests, ordered by time generated:
+AzureDiagnostics
+| where Category == 'DataPlaneRequests'
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = clientIpAddress_s, ['Connection mode'] = connectionMode_s, ['HTTP status'] = statusCode_s, Operation = OperationName, ['Type'] = requestResourceType_s, Authentication = authTokenType_s, ['User agent'] = userAgent_s, Duration = duration_s, ['Request length'] = requestLength_s, ['Response length'] = responseLength_s, ['Request charge'] = requestCharge_s
+
+// List only successful requests, ordered by time generated:
+AzureDiagnostics
+| where Category == 'DataPlaneRequests' and statusCode_s == 200
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = clientIpAddress_s, ['Connection mode'] = connectionMode_s, ['HTTP status'] = statusCode_s, Operation = OperationName, ['Type'] = requestResourceType_s, Authentication = authTokenType_s, ['User agent'] = userAgent_s, Duration = duration_s, ['Request length'] = requestLength_s, ['Response length'] = responseLength_s, ['Request charge'] = requestCharge_s
+
+// List only failed requests, ordered by time generated:
+AzureDiagnostics
+| where Category == 'DataPlaneRequests' and toint(statusCode_s) >= 400
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = clientIpAddress_s, ['Connection mode'] = connectionMode_s, ['HTTP status'] = statusCode_s, Operation = OperationName, ['Type'] = requestResourceType_s, Authentication = authTokenType_s, ['User agent'] = userAgent_s, Duration = duration_s, ['Request length'] = requestLength_s, ['Response length'] = responseLength_s, ['Request charge'] = requestCharge_s
+
+// List only requests from a specific IP, ordered by time generated:
+let ip = '';
+AzureDiagnostics
+| where Category == 'DataPlaneRequests' and clientIpAddress_s == ip
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = clientIpAddress_s, ['Connection mode'] = connectionMode_s, ['HTTP status'] = statusCode_s, Operation = OperationName, ['Type'] = requestResourceType_s, Authentication = authTokenType_s, ['User agent'] = userAgent_s, Duration = duration_s, ['Request length'] = requestLength_s, ['Response length'] = responseLength_s, ['Request charge'] = requestCharge_s
+
+// Count total number of requests:
+AzureDiagnostics
+| where Category == 'DataPlaneRequests'
+| summarize count()
+| project ['Number of requests'] = count_
+
+// Count number of successful requests per IP, ordered by count:
+AzureDiagnostics
+| where Category == 'DataPlaneRequests'
+| summarize count() by clientIpAddress_s
+| order by count_
+| project ['Client IP'] = clientIpAddress_s, ['Number of requests'] = count_
+
+// Render a time chart of all requests:
+AzureDiagnostics
+| where Category == 'DataPlaneRequests'
+| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m)
+| render timechart
+
+// Render a time chart of successful requests, grouped by IP:
+AzureDiagnostics
+| where Category == 'DataPlaneRequests' and statusCode_s == 200
+| summarize ['Number of requests'] = count() by clientIpAddress_s, bin(TimeGenerated, 1m)
+| render timechart

@@ -2,4 +2,48 @@
 AzureDiagnostics
 | where Category == 'AuditEvent'
 | order by TimeGenerated
-| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = id_s, Status = ResultType, Operation = OperationName, ['Operation version'] = OperationVersion, ['User agent'] = clientInfo_s, ['Network authorized'] = isAddressAuthorized_b, ['Policy match'] = isAccessPolicyMatch_b, ['Client ID'] = identity_claim_appid_g, ['Object ID'] = identity_claim_oid_g, Duration = DurationMs
+| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = id_s, Status = ResultType, Operation = OperationName, ['Operation version'] = OperationVersion, ['Client info'] = clientInfo_s, ['Network authorized'] = isAddressAuthorized_b, ['Policy match'] = isAccessPolicyMatch_b, ['Client ID'] = identity_claim_appid_g, ['Object ID'] = identity_claim_oid_g, Duration = DurationMs
+
+// List only successful requests, ordered by time generated:
+AzureDiagnostics
+| where Category == 'AuditEvent' and ResultType == 'Success'
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = id_s, Status = ResultType, Operation = OperationName, ['Operation version'] = OperationVersion, ['Client info'] = clientInfo_s, ['Network authorized'] = isAddressAuthorized_b, ['Policy match'] = isAccessPolicyMatch_b, ['Client ID'] = identity_claim_appid_g, ['Object ID'] = identity_claim_oid_g, Duration = DurationMs
+
+// List only failed requests, ordered by time generated:
+AzureDiagnostics
+| where Category == 'AuditEvent' and ResultType != 'Success'
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = id_s, Status = ResultType, Operation = OperationName, ['Operation version'] = OperationVersion, ['Client info'] = clientInfo_s, ['Network authorized'] = isAddressAuthorized_b, ['Policy match'] = isAccessPolicyMatch_b, ['Client ID'] = identity_claim_appid_g, ['Object ID'] = identity_claim_oid_g, Duration = DurationMs
+
+// List only requests from a specific client ID, ordered by time generated:
+let clientId = '';
+AzureDiagnostics
+| where Category == 'AuditEvent' and identity_claim_appid_g == clientId
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = CallerIPAddress, URL = id_s, Status = ResultType, Operation = OperationName, ['Operation version'] = OperationVersion, ['Client info'] = clientInfo_s, ['Network authorized'] = isAddressAuthorized_b, ['Policy match'] = isAccessPolicyMatch_b, ['Client ID'] = identity_claim_appid_g, ['Object ID'] = identity_claim_oid_g, Duration = DurationMs
+
+// Count total number of requests:
+AzureDiagnostics
+| where Category == 'AuditEvent'
+| summarize count()
+| project ['Number of requests'] = count_
+
+// Count number of successful requests per client ID, ordered by count:
+AzureDiagnostics
+| where Category == 'AuditEvent'
+| summarize count() by identity_claim_appid_g
+| order by count_
+| project ['Client ID'] = identity_claim_appid_g, ['Number of requests'] = count_
+
+// Render a time chart of all requests:
+AzureDiagnostics
+| where Category == 'AuditEvent'
+| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m)
+| render timechart
+
+// Render a time chart of successful requests, grouped by client ID:
+AzureDiagnostics
+| where Category == 'AuditEvent' and ResultType == 'Success'
+| summarize ['Number of requests'] = count() by identity_claim_appid_g, bin(TimeGenerated, 1m)
+| render timechart

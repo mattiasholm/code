@@ -1,0 +1,46 @@
+// List all requests, ordered by time generated:
+AzureDiagnostics
+| where Category == 'OperationalLogs'
+| project Timestamp = EventTimeString_s, Caller = Caller_s, Event = EventName_s, Status = Status_s, Resource, ['Scale unit'] = ScaleUnit_s
+
+// List only successful requests, ordered by time generated:
+AzureDiagnostics
+| where Category == 'OperationalLogs' and Status_s == 'Succeeded'
+| project Timestamp = EventTimeString_s, Caller = Caller_s, Event = EventName_s, Status = Status_s, Resource, ['Scale unit'] = ScaleUnit_s
+
+// List only failed requests, ordered by time generated:
+AzureDiagnostics
+| where Category == 'OperationalLogs' and Status_s != 'Succeeded'
+| project Timestamp = EventTimeString_s, Caller = Caller_s, Event = EventName_s, Status = Status_s, Resource, ['Scale unit'] = ScaleUnit_s
+
+// List only requests to a specific Service Bus, ordered by time generated:
+let serviceBus = '';
+AzureDiagnostics
+| where Category == 'OperationalLogs' and Resource == serviceBus
+| order by TimeGenerated
+| project Timestamp = EventTimeString_s, Caller = Caller_s, Event = EventName_s, Status = Status_s, Resource, ['Scale unit'] = ScaleUnit_s
+
+// Count total number of requests:
+AzureDiagnostics
+| where Category == 'OperationalLogs'
+| summarize count()
+| project ['Number of requests'] = count_
+
+// Count number of successful requests per Service Bus, ordered by count:
+AzureDiagnostics
+| where Category == 'OperationalLogs'
+| summarize count() by Resource
+| order by count_
+| project Resource, ['Number of requests'] = count_
+
+// Render a time chart of all requests:
+AzureDiagnostics
+| where Category == 'OperationalLogs'
+| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m)
+| render timechart
+
+// Render a time chart of successful requests, grouped by Service Bus:
+AzureDiagnostics
+| where Category == 'OperationalLogs' and Status_s == 'Succeeded'
+| summarize ['Number of requests'] = count() by Resource, bin(TimeGenerated, 1m)
+| render timechart

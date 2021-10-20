@@ -1,0 +1,68 @@
+// List all requests, ordered by time generated:
+AppServiceHTTPLogs
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = CIp, Port = SPort, ['Host header'] = CsHost, ['Request path'] = CsUriStem, ['Query strings'] = CsUriQuery, ['HTTP status'] = ScStatus, ['HTTP method'] = CsMethod, ['User agent'] = UserAgent, Duration = TimeTaken, ['Request size'] = CsBytes, ['Response size'] = ScBytes
+
+// List only successful requests, ordered by time generated:
+AppServiceHTTPLogs
+| where ScStatus == 200
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = CIp, Port = SPort, ['Host header'] = CsHost, ['Request path'] = CsUriStem, ['Query strings'] = CsUriQuery, ['HTTP status'] = ScStatus, ['HTTP method'] = CsMethod, ['User agent'] = UserAgent, Duration = TimeTaken, ['Request size'] = CsBytes, ['Response size'] = ScBytes
+
+// List only failed requests, ordered by time generated:
+AppServiceHTTPLogs
+| where ScStatus >= 400
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = CIp, Port = SPort, ['Host header'] = CsHost, ['Request path'] = CsUriStem, ['Query strings'] = CsUriQuery, ['HTTP status'] = ScStatus, ['HTTP method'] = CsMethod, ['User agent'] = UserAgent, Duration = TimeTaken, ['Request size'] = CsBytes, ['Response size'] = ScBytes
+
+// List only requests to a specific App Service, ordered by time generated:
+let appService = '';
+AppServiceHTTPLogs
+| where CsHost == appService
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = CIp, Port = SPort, ['Host header'] = CsHost, ['Request path'] = CsUriStem, ['Query strings'] = CsUriQuery, ['HTTP status'] = ScStatus, ['HTTP method'] = CsMethod, ['User agent'] = UserAgent, Duration = TimeTaken, ['Request size'] = CsBytes, ['Response size'] = ScBytes
+
+// Count total number of requests:
+AppServiceHTTPLogs
+| summarize count()
+| project ['Number of requests'] = count_
+
+// Count number of successful requests per App Service, ordered by count:
+AppServiceHTTPLogs
+| where ScStatus == 200
+| summarize count() by CsHost
+| order by count_
+| project ['App service name'] = CsHost, ['Number of requests'] = count_
+
+// Render a time chart of all requests:
+AppServiceHTTPLogs
+| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m)
+| render timechart
+
+// Render a time chart of successful requests, grouped by App Service:
+AppServiceHTTPLogs
+| where ScStatus == 200
+| summarize ['Number of requests'] = count() by CsHost, bin(TimeGenerated, 1m)
+| render timechart
+
+// List most common HTTP errors:
+AppServiceHTTPLogs
+| where ScStatus >= 400
+| summarize count() by ScStatus
+| order by count_
+| project ['HTTP status'] = ScStatus, ['Number of requests'] = count_
+
+// List most common HTTP errors and the corresponding request path:
+AppServiceHTTPLogs
+| where ScStatus >= 400
+| summarize count() by ScStatus, CsUriStem
+| order by count_
+| project ['HTTP status'] = ScStatus, ['Number of requests'] = count_, ['Request path'] = CsUriStem
+
+// Summarize a specific HTTP status by request path, ordered by count:
+let httpStatus = 404;
+AppServiceHTTPLogs
+| where ScStatus == httpStatus
+| summarize count() by CsUriStem
+| order by count_
+| project ['Number of requests'] = count_, ['Request path'] = CsUriStem

@@ -1,0 +1,68 @@
+// List all requests, ordered by time generated:
+AppRequests
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = ClientIP, URL = Url, ['HTTP status'] = ResultCode, ['HTTP method'] = OperationName, ['App service name'] = AppRoleName, ['App service instance'] = AppRoleInstance, Duration = DurationMs
+
+// List only successful requests, ordered by time generated:
+AppRequests
+| where toint(ResultCode) == 200
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = ClientIP, URL = Url, ['HTTP status'] = ResultCode, ['HTTP method'] = OperationName, ['App service name'] = AppRoleName, ['App service instance'] = AppRoleInstance, Duration = DurationMs
+
+// List only failed requests, ordered by time generated:
+AppRequests
+| where toint(ResultCode) >= 400
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = ClientIP, URL = Url, ['HTTP status'] = ResultCode, ['HTTP method'] = OperationName, ['App service name'] = AppRoleName, ['App service instance'] = AppRoleInstance, Duration = DurationMs
+
+// List only requests to a specific App Service, ordered by time generated:
+let appService = '';
+AppRequests
+| where AppRoleName == appService
+| order by TimeGenerated
+| project Timestamp = TimeGenerated, ['Client IP'] = ClientIP, URL = Url, ['HTTP status'] = ResultCode, ['HTTP method'] = OperationName, ['App service name'] = AppRoleName, ['App service instance'] = AppRoleInstance, Duration = DurationMs
+
+// Count total number of requests:
+AppRequests
+| summarize count()
+| project ['Number of requests'] = count_
+
+// Count number of successful requests per App Service, ordered by count:
+AppRequests
+| where toint(ResultCode) == 200
+| summarize count() by AppRoleName
+| order by count_
+| project ['App service name'] = AppRoleName, ['Number of requests'] = count_
+
+// Render a time chart of all requests:
+AppRequests
+| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m)
+| render timechart
+
+// Render a time chart of successful requests, grouped by App Service:
+AppRequests
+| where toint(ResultCode) == 200
+| summarize ['Number of requests'] = count() by AppRoleName, bin(TimeGenerated, 1m)
+| render timechart
+
+// List most common HTTP errors:
+AppRequests
+| where toint(ResultCode) >= 400
+| summarize count() by ResultCode
+| order by count_
+| project ['HTTP status'] = ResultCode, ['Number of requests'] = count_
+
+// List most common HTTP errors and the corresponding request path:
+AppRequests
+| where toint(ResultCode) >= 400
+| summarize count() by ResultCode, Url
+| order by count_
+| project ['HTTP status'] = ResultCode, ['Number of requests'] = count_, URL = Url
+
+// Summarize a specific HTTP status by request path, ordered by count:
+let httpStatus = 404;
+AppRequests
+| where ResultCode == httpStatus
+| summarize count() by Url
+| order by count_
+| project ['Number of requests'] = count_, URL = Url
