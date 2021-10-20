@@ -39,10 +39,10 @@ jobs:
       tenant: ${{ secrets.tenant }}
 
     steps:
-      # - name: Check out repository
-      #   uses: actions/checkout@v2
-      #   with:
-      #     submodules: recursive
+      - name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - name: Deploy infrastructure
         run: ./deploy.sh
