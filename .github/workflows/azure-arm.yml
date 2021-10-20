@@ -11,9 +11,6 @@ on:
 
   workflow_dispatch:
 
-env:
-  runs-on: ubuntu-latest
-
 defaults:
   run:
     shell: bash
@@ -22,13 +19,8 @@ defaults:
 jobs:
   build:
     name: Build
-    runs-on: ${{ env.runs-on }}
+    runs-on: ubuntu-latest
     steps:
-      #
-      - name: ${{ env.runs-on }}
-        run: echo ${runs-on}
-      #
-
       - name: Check out repository
         uses: actions/checkout@v2
         with:
