@@ -44,8 +44,9 @@ jobs:
           submodules: recursive
 
       - name: Deploy infrastructure
-        env:
-          appId: ${{ secrets.appId }}
-          password: ${{ secrets.password }}
-          tenant: ${{ secrets.tenant }}
         run: ./deploy.sh
+        env:
+            foo: bar
+          # appId: ${{ secrets.appId }}
+          # password: ${{ secrets.password }}
+          # tenant: ${{ secrets.tenant }}
