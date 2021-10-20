@@ -22,7 +22,8 @@ defaults:
 jobs:
   build:
     name: Build
-    runs-on: ${{ env.runs-on }}
+    # runs-on: ${{ env.runs-on }}
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -35,7 +36,8 @@ jobs:
   release:
     name: Release
     needs: build
-    runs-on: ${{ env.runs-on }}
+    # runs-on: ${{ env.runs-on }}
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
@@ -46,7 +48,6 @@ jobs:
       - name: Deploy infrastructure
         run: ./deploy.sh
         env:
-            foo: bar
-          # appId: ${{ secrets.appId }}
-          # password: ${{ secrets.password }}
-          # tenant: ${{ secrets.tenant }}
+          appId: ${{ secrets.appId }}
+          password: ${{ secrets.password }}
+          tenant: ${{ secrets.tenant }}
