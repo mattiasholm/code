@@ -25,7 +25,7 @@ jobs:
     name: Build
     # runs-on: ${{ env.runs-on }}
     # runs-on: ubuntu-latest
-    runs-on: ${{ env.apa }}
+    runs-on: ${{ apa }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
