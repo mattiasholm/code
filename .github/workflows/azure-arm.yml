@@ -11,26 +11,33 @@ on:
 
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+    working-directory: azure/arm
+
 jobs:
-  deploy:
-    name: Deploy to Azure
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate infrastructure
+        run: ./lint.sh
+
+  release:
+    name: Release
+    needs: build
     runs-on: ubuntu-latest
     env:
-      working-directory: azure/arm
       appId: ${{ secrets.appId }}
       password: ${{ secrets.password }}
       tenant: ${{ secrets.tenant }}
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
+      # - name: Check out repository
+      #   uses: actions/checkout@v2
+      #   with:
+      #     submodules: recursive
 
-      - name: Run lint script
-        run: ./lint.sh
-        working-directory: ${{ env.working-directory }}
-
-      - name: Run deploy script
+      - name: Deploy infrastructure
         run: ./deploy.sh
-        working-directory: ${{ env.working-directory }}
