@@ -24,6 +24,11 @@ jobs:
     name: Build
     runs-on: ${{ env.runs-on }}
     steps:
+      #
+      - name: ${{ env.runs-on }}
+        run: echo ${runs-on}
+      #
+
       - name: Check out repository
         uses: actions/checkout@v2
         with:
