@@ -10,6 +10,7 @@
 
 /**/*.pyc
 /**/venv/
+/**/__pycache__/
 
 /**/stereo2mono/input/
 /**/stereo2mono/output/

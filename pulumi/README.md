@@ -29,6 +29,7 @@ pulumi login
 ```shell
 pulumi login --local
 pulumi login -l
+pulumi login file://~
 ```
 
 ## Log in to self-managed backend in cloud storage:
