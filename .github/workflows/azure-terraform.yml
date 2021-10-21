@@ -31,11 +31,9 @@ jobs:
 
       - name: Initialize TFLint
         run: tflint --init
-        working-directory: ${{ env.working-directory }}
 
       - name: Run TFLint
         run: tflint --format json
-        working-directory: ${{ env.working-directory }}
 
   release:
     name: Release
@@ -59,12 +57,9 @@ jobs:
         
       - name: Initialize Terraform
         run: terraform init -input=false
-        working-directory: ${{ env.working-directory }}
 
       - name: Plan Terraform
         run: terraform plan -out=tfplan -input=false
-        working-directory: ${{ env.working-directory }}
 
       - name: Apply Terraform
         run: terraform apply -input=false tfplan
-        working-directory: ${{ env.working-directory }}
