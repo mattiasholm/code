@@ -14,6 +14,7 @@ on:
   pull_request:
 
 env:
+  stack-name: dev
   work-dir: pulumi/azure-python
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
   ARM_CLIENT_ID: ${{ secrets.appId }}
@@ -36,7 +37,7 @@ jobs:
         uses: pulumi/actions@v3
         with:
           command: preview
-          stack-name: dev
+          stack-name: ${{ env.stack-name }}
           work-dir: ${{ env.work-dir }}
           refresh: true
 
@@ -53,5 +54,5 @@ jobs:
         uses: pulumi/actions@v3
         with:
           command: up
-          stack-name: dev
-          work-dir: pulumi/azure-python
+          stack-name: ${{ env.stack-name }}
+          work-dir: ${{ env.work-dir }}
