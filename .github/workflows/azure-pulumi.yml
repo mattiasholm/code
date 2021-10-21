@@ -37,7 +37,7 @@ jobs:
         with:
           command: preview
           stack-name: dev
-          work-dir: env.work-dir
+          work-dir: ${{ env.work-dir }}
           refresh: true
 
   release:
