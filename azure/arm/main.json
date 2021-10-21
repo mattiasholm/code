@@ -255,7 +255,7 @@
             "resources": [
                 {
                     "type": "config",
-                    "apiVersion": "2021-02-01'",
+                    "apiVersion": "2021-02-01",
                     "name": "appsettings",
                     "location": "[parameters('location')]",
                     "tags": "[variables('tags')]",
