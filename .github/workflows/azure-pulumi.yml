@@ -38,5 +38,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Placeholder
-        run: echo 'Placeholder'
+      - name: pulumi preview
+      - uses: pulumi/actions@v3
+        with:
+          command: preview
+          stack-name: dev
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
