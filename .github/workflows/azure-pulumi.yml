@@ -13,10 +13,13 @@ on:
 
   pull_request:
 
-defaults:
-  run:
-    shell: bash
-    working-directory: pulumi/azure-python
+env:
+  work-dir: pulumi/azure-python
+
+# defaults:
+#   run:
+#     shell: bash
+#     working-directory: pulumi/azure-python
 
 jobs:
   build:
@@ -43,5 +46,7 @@ jobs:
         with:
           command: preview
           stack-name: dev
+          work-dir: env.work-dir
+          refresh: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
