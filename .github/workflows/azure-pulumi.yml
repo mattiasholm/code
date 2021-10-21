@@ -16,10 +16,9 @@ on:
 env:
   work-dir: pulumi/azure-python
 
-# defaults:
-#   run:
-#     shell: bash
-#     working-directory: pulumi/azure-python
+defaults:
+  run:
+    shell: bash
 
 jobs:
   build:
@@ -41,12 +40,12 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: pulumi preview
+      - name: Preview Pulumi
         uses: pulumi/actions@v3
         with:
           command: preview
           stack-name: dev
-          work-dir: env.work-dir
+          work-dir: pulumi/azure-python
           refresh: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
