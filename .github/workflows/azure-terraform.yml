@@ -1,4 +1,4 @@
-name: Azure - Terraform
+name: Azure Terraform
 
 on:
   push:
