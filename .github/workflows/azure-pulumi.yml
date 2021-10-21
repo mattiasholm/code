@@ -40,13 +40,26 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+      - name: Refresh Pulumi
+        uses: pulumi/actions@v3
+        with:
+          command: refresh
+          stack-name: dev
+          work-dir: pulumi/azure-python
+
       - name: Preview Pulumi
         uses: pulumi/actions@v3
         with:
           command: preview
           stack-name: dev
           work-dir: pulumi/azure-python
-          refresh: true
+
+      - name: Up Pulumi
+        uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: dev
+          work-dir: pulumi/azure-python
     env:
       PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       ARM_CLIENT_ID: ${{ secrets.appId }}
