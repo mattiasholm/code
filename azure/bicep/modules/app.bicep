@@ -28,4 +28,3 @@ resource app 'Microsoft.Web/sites@2021-01-15' = {
 
 output defaultHostName string = app.properties.defaultHostName
 output identity object = app.identity
-// 
