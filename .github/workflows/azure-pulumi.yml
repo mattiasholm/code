@@ -15,6 +15,10 @@ on:
 
 env:
   work-dir: pulumi/azure-python
+  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+  ARM_CLIENT_ID: ${{ secrets.appId }}
+  ARM_CLIENT_SECRET: ${{ secrets.password }}
+  ARM_TENANT_ID: ${{ secrets.tenant }}
 
 defaults:
   run:
@@ -35,11 +39,6 @@ jobs:
           stack-name: dev
           work-dir: pulumi/azure-python
           refresh: true
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          ARM_CLIENT_ID: ${{ secrets.appId }}
-          ARM_CLIENT_SECRET: ${{ secrets.password }}
-          ARM_TENANT_ID: ${{ secrets.tenant }}
 
   release:
     name: Release
@@ -56,8 +55,3 @@ jobs:
           command: up
           stack-name: dev
           work-dir: pulumi/azure-python
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          ARM_CLIENT_ID: ${{ secrets.appId }}
-          ARM_CLIENT_SECRET: ${{ secrets.password }}
-          ARM_TENANT_ID: ${{ secrets.tenant }}
