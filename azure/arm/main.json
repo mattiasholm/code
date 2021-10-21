@@ -210,7 +210,7 @@
     "resources": [
         {
             "type": "Microsoft.Web/serverfarms",
-            "apiVersion": "2021-01-15",
+            "apiVersion": "2021-02-01",
             "name": "[variables('planName')]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
@@ -230,7 +230,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Web/sites",
-            "apiVersion": "2021-01-15",
+            "apiVersion": "2021-02-01",
             "name": "[variables('appName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
@@ -255,7 +255,7 @@
             "resources": [
                 {
                     "type": "config",
-                    "apiVersion": "2021-01-15",
+                    "apiVersion": "2021-02-01'",
                     "name": "appsettings",
                     "location": "[parameters('location')]",
                     "tags": "[variables('tags')]",
@@ -352,7 +352,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2021-04-01",
+            "apiVersion": "2021-06-01",
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
@@ -368,7 +368,7 @@
             "resources": [
                 {
                     "type": "blobServices/containers",
-                    "apiVersion": "2021-04-01",
+                    "apiVersion": "2021-06-01",
                     "name": "[variables('stContainerName')]",
                     "dependsOn": [
                         "[variables('stId')[copyIndex()]]"
@@ -379,7 +379,7 @@
         {
             "condition": "[parameters('vnetToggle')]",
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2021-02-01",
+            "apiVersion": "2021-03-01",
             "name": "[variables('vnetName')]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
