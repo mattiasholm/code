@@ -44,6 +44,6 @@ jobs:
       - name: Deploy infrastructure
         run: ./deploy.sh
         env:
-          appId: secrets.appId
-          password: secrets.password
-          tenant: secrets.tenant
+          appId: ${{ secrets.appId }}
+          password: ${{ secrets.password }}
+          tenant: ${{ secrets.tenant }}
