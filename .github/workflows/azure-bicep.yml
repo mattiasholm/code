@@ -1,4 +1,4 @@
-name: Azure Bicep
+name: Azure - Bicep
 
 on:
   push:
@@ -36,7 +36,6 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
