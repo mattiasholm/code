@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: pulumi preview
-      - uses: pulumi/actions@v3
+        uses: pulumi/actions@v3
         with:
           command: preview
           stack-name: dev
