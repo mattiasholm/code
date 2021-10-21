@@ -37,7 +37,7 @@ jobs:
         with:
           command: preview
           stack-name: dev
-          work-dir: pulumi/azure-python
+          work-dir: env.work-dir
           refresh: true
 
   release:
