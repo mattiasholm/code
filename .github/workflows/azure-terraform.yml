@@ -11,17 +11,17 @@ on:
 
   workflow_dispatch:
 
-jobs:
-  deploy:
-    name: Deploy to Azure
-    runs-on: ubuntu-latest
-    env:
-      working-directory: terraform/azure
-      ARM_CLIENT_ID: ${{ secrets.appId }}
-      ARM_CLIENT_SECRET: ${{ secrets.password }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.subscriptionId }}
-      ARM_TENANT_ID: ${{ secrets.tenant }}
+  pull_request:
 
+defaults:
+  run:
+    shell: bash
+    working-directory: terraform/azure
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -37,10 +37,25 @@ jobs:
         run: tflint --format json
         working-directory: ${{ env.working-directory }}
 
+  release:
+    name: Release
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+        env:
+          ARM_CLIENT_ID: ${{ secrets.appId }}
+          ARM_CLIENT_SECRET: ${{ secrets.password }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.subscriptionId }}
+          ARM_TENANT_ID: ${{ secrets.tenant }}
 
       - name: Initialize Terraform
         run: terraform init -input=false
