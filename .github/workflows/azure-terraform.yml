@@ -40,11 +40,11 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
-    env:
-          ARM_CLIENT_ID: ${{ secrets.appId }}
-          ARM_CLIENT_SECRET: ${{ secrets.password }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.subscriptionId }}
-          ARM_TENANT_ID: ${{ secrets.tenant }}
+    # env:
+    #       ARM_CLIENT_ID: ${{ secrets.appId }}
+    #       ARM_CLIENT_SECRET: ${{ secrets.password }}
+    #       ARM_SUBSCRIPTION_ID: ${{ secrets.subscriptionId }}
+    #       ARM_TENANT_ID: ${{ secrets.tenant }}
 
     steps:
       - name: Check out repository

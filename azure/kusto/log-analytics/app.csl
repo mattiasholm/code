@@ -55,14 +55,14 @@ AppServiceHTTPLogs
 // List most common HTTP errors and the corresponding request path:
 AppServiceHTTPLogs
 | where ScStatus >= 400
-| summarize count() by ScStatus, CsUriStem
+| summarize count() by ScStatus, CsUriStem, CsUriQuery
 | order by count_
-| project ['HTTP status'] = ScStatus, ['Number of requests'] = count_, ['Request path'] = CsUriStem
+| project ['HTTP status'] = ScStatus, ['Number of requests'] = count_, ['Request path'] = CsUriStem, ['Query strings'] = CsUriQuery
 
 // Summarize a specific HTTP status by request path, ordered by count:
 let httpStatus = 404;
 AppServiceHTTPLogs
 | where ScStatus == httpStatus
-| summarize count() by CsUriStem
+| summarize count() by CsUriStem, CsUriQuery
 | order by count_
-| project ['Number of requests'] = count_, ['Request path'] = CsUriStem
+| project ['Number of requests'] = count_, ['Request path'] = CsUriStem, ['Query strings'] = CsUriQuery
