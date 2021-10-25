@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "azure/bicep/**"
-      - ".github/workflows/azure-bicep.yml"
+      - ".github/workflows/azure-bicep2.yml"
       - "!**.md"
 
   workflow_dispatch:
