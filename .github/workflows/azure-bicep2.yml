@@ -14,7 +14,7 @@ on:
   pull_request:
 
 env:
-  template-file: azure/bicep/main.bicep
+  templateFile: azure/bicep/main.bicep
   location: WestEurope
 
 jobs:
@@ -31,4 +31,4 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Validate infrastructure
-        run: az deployment sub validate --template-file $template-file --location $location
+        run: az deployment sub validate --template-file $templateFile --location $location
