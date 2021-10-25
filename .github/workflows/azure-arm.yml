@@ -19,7 +19,8 @@ defaults:
     working-directory: azure/arm
 
 env:
-  templateFile: azure/arm/main.json
+  # templateFile: azure/arm/main.json
+  templateFile: main.json
   location: WestEurope
 
 jobs:
