@@ -19,9 +19,9 @@ defaults:
     working-directory: azure/arm
 
 env:
-  # templateFile: azure/arm/main.json
+  resourceGroup: rg-holm-arm-001
   templateFile: main.json
-  location: WestEurope
+  parameterFile: main.parameters.json
 
 jobs:
   build:
@@ -42,10 +42,10 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Validate deployment
-        run: az deployment sub validate --template-file $templateFile --location $location
+        run: az deployment sub validate --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
 
       - name: What-if deployment
-        run: az deployment sub what-if --template-file $templateFile --location $location
+        run: az deployment sub what-if --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
 
   release:
     name: Release
@@ -62,4 +62,4 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create deployment
-        run: az deployment sub create --template-file $templateFile --location $location
+        run: az deployment sub create --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
