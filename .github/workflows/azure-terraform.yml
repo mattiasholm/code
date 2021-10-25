@@ -58,6 +58,6 @@ jobs:
       - name: Apply Terraform
         run: terraform apply -input=false tfplan
     env:
-      ARM_CLIENT_ID: ${{ secrets.appId }}
-      ARM_CLIENT_SECRET: ${{ secrets.password }}
-      ARM_TENANT_ID: ${{ secrets.tenant }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
