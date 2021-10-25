@@ -45,9 +45,9 @@ function Deploy() {
 
     for operation in ${operations[@]}; do
         az deployment group $operation \
-            --resource-group $rgName \
             --template-file $templateFile \
-            --parameters @$parameterFile
+            --parameters @$parameterFile \
+            --resource-group $rgName
     done
 }
 
