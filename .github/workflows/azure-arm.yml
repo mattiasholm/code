@@ -42,10 +42,10 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Validate deployment
-        run: az deployment sub validate --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
+        run: az deployment group validate --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
 
       - name: What-if deployment
-        run: az deployment sub what-if --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
+        run: az deployment group what-if --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
 
   release:
     name: Release
@@ -62,4 +62,6 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create deployment
-        run: az deployment sub create --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
+        run: az deployment group create --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
+
+        # CREATE RG WHERE??? Testa initialDeploy!

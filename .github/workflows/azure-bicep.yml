@@ -13,8 +13,13 @@ on:
 
   pull_request:
 
+defaults:
+  run:
+    shell: bash
+    working-directory: azure/bicep
+
 env:
-  templateFile: azure/bicep/main.bicep
+  templateFile: main.bicep
   location: WestEurope
 
 jobs:
