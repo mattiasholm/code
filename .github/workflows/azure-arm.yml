@@ -21,7 +21,12 @@ defaults:
 env:
   resourceGroup: rg-holm-arm-001
   location: WestEurope
-  # tags: ???
+  tags: (
+    "Application=ARM"
+    "Company=Holm"
+    "Environment=Dev"
+    "Owner=mattias.holm@live.com"
+    )
   templateFile: main.json
   parameterFile: main.parameters.json
 
@@ -44,8 +49,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create resource group
-        run: az group create --name $resourceGroup --location $location
-        # --tags ${tags[*]}
+        run: az group create --name $resourceGroup --location $location --tags ${tags[*]}
 
       - name: Validate deployment
         run: az deployment group validate --template-file $templateFile --parameters @$parameterFile --resource-group $resourceGroup
