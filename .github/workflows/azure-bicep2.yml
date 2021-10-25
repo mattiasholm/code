@@ -30,5 +30,25 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Validate infrastructure
+      - name: Validate deployment
         run: az deployment sub validate --template-file $templateFile --location $location
+
+      - name: What-if deployment
+        run: az deployment sub what-if --template-file $templateFile --location $location
+
+  release:
+    name: Release
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create deployment
+        run: az deployment sub create --template-file $templateFile --location $location
