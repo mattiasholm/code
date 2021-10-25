@@ -92,3 +92,8 @@ az aks get-credentials -n <cluster-name> -g <rg-name>
 ```shell
 az ad sp create-for-rbac --name <name> --years <years> --role <role> --scopes <scope>
 ```
+
+## Reset secret for an existing Azure AD service principal:
+```shell
+az ad sp create-for-rbac --name <name>
+```
