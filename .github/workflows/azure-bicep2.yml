@@ -27,3 +27,11 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - run: az webapp list --query "[?state=='Running']"
+
+      - name: Deploy infrastructure
+        uses: azure/arm-deploy@v1
+        with:
+          # subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          # resourceGroupName: ${{ secrets.AZURE_RG }}
+          template: azure/bicep/main.bicep
+          # parameters: storageAccountType=Standard_LRS
