@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "azure/bicep/**"
-      - ".github/workflows/azure-bicep.yml"
+      - azure/bicep/**
+      - .github/workflows/azure-bicep.yml
       - "!**.md"
 
   workflow_dispatch:
@@ -43,7 +43,7 @@ jobs:
 
   release:
     name: Release
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == refs/heads/main && github.event_name != pull_request
     needs: build
     runs-on: ubuntu-latest
     steps:

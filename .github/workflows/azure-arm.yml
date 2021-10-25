@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "azure/arm/**"
-      - ".github/workflows/azure-arm.yml"
+      - azure/arm/**
+      - .github/workflows/azure-arm.yml
       - "!**.md"
 
   workflow_dispatch:
@@ -48,7 +48,6 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create resource group
-        # run: az group create --name $resourceGroup --location $location --tags ${tags[*]}
         run: az group create --name $resourceGroup --location $location --tags $tags
 
       - name: Validate deployment
@@ -59,7 +58,7 @@ jobs:
 
   release:
     name: Release
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == refs/heads/main && github.event_name != pull_request
     needs: build
     runs-on: ubuntu-latest
     steps:

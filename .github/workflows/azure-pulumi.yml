@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "pulumi/azure-python/**"
-      - ".github/workflows/azure-pulumi.yml"
+      - pulumi/azure-python/**
+      - .github/workflows/azure-pulumi.yml
       - "!**.md"
 
   workflow_dispatch:
@@ -39,7 +39,7 @@ jobs:
 
   release:
     name: Release
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == refs/heads/main && github.event_name != pull_request
     needs: build
     runs-on: ubuntu-latest
     steps:
