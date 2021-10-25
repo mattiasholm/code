@@ -21,7 +21,11 @@ defaults:
 env:
   resourceGroup: rg-holm-arm-001
   location: WestEurope
-  tags: Application=ARM Company=Holm Environment=Dev Owner=mattias.holm@live.com
+  tags: |
+    Application=ARM
+    Company=Holm
+    Environment=Dev
+    Owner=mattias.holm@live.com
   templateFile: main.json
   parameterFile: main.parameters.json
 
