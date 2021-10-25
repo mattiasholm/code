@@ -13,10 +13,10 @@ on:
 
   pull_request:
 
-# defaults:
-#   run:
-#     shell: bash
-#     working-directory: azure/arm
+defaults:
+  run:
+    shell: bash
+    working-directory: azure/arm
 
 env:
   templateFile: azure/arm/main.json
