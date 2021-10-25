@@ -13,10 +13,14 @@ on:
 
   pull_request:
 
-defaults:
-  run:
-    shell: bash
-    working-directory: azure/arm
+# defaults:
+#   run:
+#     shell: bash
+#     working-directory: azure/arm
+
+env:
+  templateFile: azure/arm/main.json
+  location: WestEurope
 
 jobs:
   build:
@@ -28,8 +32,19 @@ jobs:
         with:
           submodules: true
 
-      - name: Validate infrastructure
-        run: ./validate.sh
+      - name: Run arm-ttk
+        run: ./arm-ttk.sh
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Validate deployment
+        run: az deployment sub validate --template-file $templateFile --location $location
+
+      - name: What-if deployment
+        run: az deployment sub what-if --template-file $templateFile --location $location
 
   release:
     name: Release
@@ -40,9 +55,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Deploy infrastructure
-        run: ./deploy.sh
-        env:
-          appId: ${{ secrets.appId }}
-          password: ${{ secrets.password }}
-          tenant: ${{ secrets.tenant }}
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create deployment
+        run: az deployment sub create --template-file $templateFile --location $location
