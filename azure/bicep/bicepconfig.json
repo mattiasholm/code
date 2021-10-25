@@ -4,23 +4,26 @@
             "enabled": true,
             "verbose": false,
             "rules": {
+                "adminusername-should-not-be-literal": {
+                    "level": "error"
+                },
                 "no-hardcoded-env-urls": {
-                    "level": "warning"
+                    "level": "error"
                 },
                 "no-unused-params": {
-                    "level": "warning"
+                    "level": "error"
                 },
                 "no-unused-vars": {
-                    "level": "warning"
+                    "level": "error"
                 },
                 "prefer-interpolation": {
-                    "level": "warning"
+                    "level": "error"
                 },
                 "secure-parameter-default": {
                     "level": "error"
                 },
                 "simplify-interpolation": {
-                    "level": "warning"
+                    "level": "error"
                 }
             }
         }

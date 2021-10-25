@@ -21,10 +21,6 @@ env:
   ARM_CLIENT_SECRET: ${{ secrets.password }}
   ARM_TENANT_ID: ${{ secrets.tenant }}
 
-defaults:
-  run:
-    shell: bash
-
 jobs:
   build:
     name: Build

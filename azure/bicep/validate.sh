@@ -1,21 +1,44 @@
 #!/usr/bin/env bash
 
-set -e +x
+function Initialize() {
+    set -e +x
 
-path="./arm-ttk/arm-ttk/arm-ttk.psd1"
-templateFile="main.bicep"
+    subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
+    location="WestEurope"
+    templateFile="main.bicep"
+}
 
-bicep=false
-if [[ $templateFile =~ '.bicep' ]]; then
-    bicep=true
-    az bicep build --file $templateFile
-    templateFile=$(echo $templateFile | sed 's/.bicep$/.json/')
-fi
+function Login() {
+    if [[ $appId && $password && $tenant ]]; then
+        az login --service-principal --username $appId --password $password --tenant $tenant
+    else
+        set +e +x
+        az account set --subscription $subscriptionId 2>/dev/null
+        currentContext=$(az account show --query id --output tsv 2>/dev/null)
+        set -e +x
 
-command="Test-AzTemplate -MainTemplateFile $templateFile -TemplatePath $templateFile"
+        if [[ $currentContext != $subscriptionId ]]; then
+            az login
+        fi
+    fi
 
-pwsh -Command "Import-Module -FullyQualifiedName $path; $command; if (\$error.Count) { exit 1 }"
+    az account set --subscription $subscriptionId
+}
 
-if [[ $bicep == true ]]; then
-    rm $templateFile
-fi
+function Deploy() {
+    operations=("validate" "what-if")
+
+    for operation in ${operations[@]}; do
+        az deployment sub $operation \
+            --template-file $templateFile \
+            --location $location
+    done
+}
+
+function main() {
+    Initialize
+    Login
+    Deploy
+}
+
+main

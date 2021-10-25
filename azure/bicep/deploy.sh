@@ -26,7 +26,7 @@ function Login() {
 }
 
 function Deploy() {
-    operations=("validate" "what-if" "create")
+    operations=("create")
 
     for operation in ${operations[@]}; do
         az deployment sub $operation \

@@ -18,6 +18,11 @@ defaults:
     shell: bash
     working-directory: azure/bicep
 
+env:
+  appId: ${{ secrets.appId }}
+  password: ${{ secrets.password }}
+  tenant: ${{ secrets.tenant }}
+
 jobs:
   build:
     name: Build
@@ -25,8 +30,6 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-        with:
-          submodules: true
 
       - name: Validate infrastructure
         run: ./validate.sh
@@ -42,7 +45,3 @@ jobs:
 
       - name: Deploy infrastructure
         run: ./deploy.sh
-        env:
-          appId: ${{ secrets.appId }}
-          password: ${{ secrets.password }}
-          tenant: ${{ secrets.tenant }}
