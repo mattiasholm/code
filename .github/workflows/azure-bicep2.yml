@@ -13,6 +13,10 @@ on:
 
   pull_request:
 
+env:
+  template-file: azure/bicep/main.bicep
+  location: WestEurope
+
 jobs:
   build:
     name: Build
@@ -26,12 +30,5 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - run: az webapp list --query "[?state=='Running']"
-
-      - name: Deploy infrastructure
-        uses: azure/arm-deploy@v1
-        with:
-          # subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          # resourceGroupName: ${{ secrets.AZURE_RG }}
-          template: azure/bicep/main.bicep
-          # parameters: storageAccountType=Standard_LRS
+      - name: Validate infrastructure
+        run: az deployment sub validate --template-file $template-file --location $location
