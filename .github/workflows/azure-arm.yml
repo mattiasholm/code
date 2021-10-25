@@ -48,7 +48,8 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create resource group
-        run: az group create --name $resourceGroup --location $location --tags ${tags[*]}
+        # run: az group create --name $resourceGroup --location $location --tags ${tags[*]}
+        run: az group create --name $resourceGroup --location $location --tags $tags
 
       - name: Validate deployment
         run: az deployment group validate --template-file $templateFile --parameters @$parameterFile --resource-group $resourceGroup
