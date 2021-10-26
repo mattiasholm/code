@@ -3,52 +3,116 @@ trigger:
     include:
       - main
   paths:
-    exclude:
-      - .gitignore
-      - README.md
+    include:
+      - ci
+      - iac
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu-20.04
 
 variables:
-  workingDirectory: scripts
+  azureSubscription-tst: sub-tst
+  azureSubscription-stg: sub-stg
+  azureSubscription-prod: sub-prod
+  workingDirectory: iac
 
 stages:
-  - stage: test
-    variables:
-      - name: environment
-        value: $(System.StageName)
-      - group: test
+  - stage: build
+    displayName: Build
     jobs:
-      - deployment: Deploy
-        environment: test
+      - job: iac
+        displayName: Validate infrastructure
+        steps:
+          - task: AzureCLI@2
+            displayName: tst
+            inputs:
+              azureSubscription: $(azureSubscription-tst)
+              scriptType: bash
+              scriptPath: $(workingDirectory)/deploy.sh
+              arguments: tst --pipeline --validate
+              workingDirectory: $(workingDirectory)
+          - task: AzureCLI@2
+            displayName: stg
+            inputs:
+              azureSubscription: $(azureSubscription-stg)
+              scriptType: bash
+              scriptPath: $(workingDirectory)/deploy.sh
+              arguments: stg --pipeline --validate
+              workingDirectory: $(workingDirectory)
+          - task: AzureCLI@2
+            displayName: prod
+            inputs:
+              azureSubscription: $(azureSubscription-prod)
+              scriptType: bash
+              scriptPath: $(workingDirectory)/deploy.sh
+              arguments: prod --pipeline --validate
+              workingDirectory: $(workingDirectory)
+
+  - stage: tst
+    displayName: Deploy to tst
+    dependsOn: build
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    variables:
+      environment: $(System.StageName)
+    jobs:
+      - deployment: iac
+        displayName: Deploy infrastructure
+        environment: tst
         strategy:
           runOnce:
             deploy:
               steps:
                 - checkout: self
-                - bash: ./deploy.sh $(environment) --pipeline
-                  workingDirectory: $(workingDirectory)
-                  env:
-                    appId: $(appId)
-                    password: $(password)
-                    tenant: $(tenant)
-  - stage: prod
+                - task: AzureCLI@2
+                  inputs:
+                    azureSubscription: $(azureSubscription-tst)
+                    scriptType: bash
+                    scriptPath: $(workingDirectory)/deploy.sh
+                    arguments: $(environment) --pipeline
+                    workingDirectory: $(workingDirectory)
+
+  - stage: stg
+    displayName: Deploy to stg
+    dependsOn: tst
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
     variables:
-      - name: environment
-        value: $(System.StageName)
-      - group: prod
+      environment: $(System.StageName)
     jobs:
-      - deployment: Deploy
+      - deployment: iac
+        displayName: Deploy infrastructure
+        environment: stg
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - task: AzureCLI@2
+                  inputs:
+                    azureSubscription: $(azureSubscription-stg)
+                    scriptType: bash
+                    scriptPath: $(workingDirectory)/deploy.sh
+                    arguments: $(environment) --pipeline
+                    workingDirectory: $(workingDirectory)
+
+  - stage: prod
+    displayName: Deploy to prod
+    dependsOn: stg
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    variables:
+      environment: $(System.StageName)
+    jobs:
+      - deployment: iac
+        displayName: Deploy infrastructure
         environment: prod
         strategy:
           runOnce:
             deploy:
               steps:
                 - checkout: self
-                - bash: ./deploy.sh $(environment) --pipeline
-                  workingDirectory: $(workingDirectory)
-                  env:
-                    appId: $(appId)
-                    password: $(password)
-                    tenant: $(tenant)
+                - task: AzureCLI@2
+                  inputs:
+                    azureSubscription: $(azureSubscription-prod)
+                    scriptType: bash
+                    scriptPath: $(workingDirectory)/deploy.sh
+                    arguments: $(environment) --pipeline
+                    workingDirectory: $(workingDirectory)
