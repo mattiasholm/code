@@ -56,4 +56,4 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create deployment
-        run: az deployment sub create --template-file $templateFile --location $location
+        run: az deployment sub create --location $location --template-file $templateFile

@@ -51,10 +51,10 @@ jobs:
         run: az group create --name $resourceGroup --location $location --tags $tags
 
       - name: Validate deployment
-        run: az deployment group validate --template-file $templateFile --parameters @$parameterFile --resource-group $resourceGroup
+        run: az deployment group validate --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
 
       - name: What-if deployment
-        run: az deployment group what-if --template-file $templateFile --parameters @$parameterFile --resource-group $resourceGroup
+        run: az deployment group what-if --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
 
   release:
     name: Release
@@ -71,4 +71,4 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create deployment
-        run: az deployment group create --template-file $templateFile --parameters @$parameterFile --resource-group $resourceGroup
+        run: az deployment group create --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
