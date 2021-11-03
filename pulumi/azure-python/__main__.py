@@ -13,7 +13,7 @@ tags = {
     'Owner': 'mattias.holm@live.com'
 }
 
-rgName = 'rg-{}-001'.format(prefix)
+resourceGroup = 'rg-{}-001'.format(prefix)
 
 stName = 'st{}001'.format(prefixStripped)
 stKind = 'StorageV2'
@@ -24,7 +24,7 @@ stTlsVersion = 'TLS1_2'
 stContainerName = 'container{}001'.format(prefixStripped)
 
 rg = resources.ResourceGroup('rg',
-                             resource_group_name=rgName,
+                             resource_group_name=resourceGroup,
                              tags=tags
                              )
 

@@ -4,7 +4,7 @@ function Initialize() {
     set -e +x
 
     subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
-    rgName="rg-holm-arm-001"
+    resourceGroup="rg-holm-arm-001"
     location="WestEurope"
     tags=(
         "Application=ARM"
@@ -35,7 +35,7 @@ function Login() {
 
 function CreateResourceGroup() {
     az group create \
-        --name $rgName \
+        --name $resourceGroup \
         --location $location \
         --tags ${tags[*]}
 }
@@ -47,7 +47,7 @@ function Deploy() {
         az deployment group $operation \
             --template-file $templateFile \
             --parameters @$parameterFile \
-            --resource-group $rgName
+            --resource-group $resourceGroup
     done
 }
 
