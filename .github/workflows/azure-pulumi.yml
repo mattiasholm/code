@@ -53,7 +53,8 @@ jobs:
           # path: ~/.tflint.d/plugins
           path: /home/runner/.pulumi
           # key: ${{ matrix.os }}-pulumi-${{ hashFiles('requirements.txt') }}
-          key: ${{ matrix.os }}-${{ hashFiles('requirements.txt') }}
+          # key: ${{ matrix.os }}-${{ hashFiles('requirements.txt') }}
+          key: ${{ hashFiles('requirements.txt') }}
       #
 
       - name: Pulumi Up
