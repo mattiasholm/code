@@ -11,7 +11,7 @@ function SetVariables() {
         "Environment=Dev"
         "Owner=mattias.holm@live.com"
     )
-    operations=("create")
+    operations=("validate" "what-if")
     templateFile="main.json"
     parameterFile="main.parameters.json"
 }
