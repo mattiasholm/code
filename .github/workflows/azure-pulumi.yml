@@ -47,14 +47,15 @@ jobs:
         uses: actions/checkout@v2
 
       # Test with cache
-      - name: Cache Pulumi
+      - name: Cache # Bättre namn???
         uses: actions/cache@v2
         with:
           # path: ~/.tflint.d/plugins
-          path: /home/runner/.pulumi
+          path: /home/runner/.pulumi # Fler???
           # key: ${{ matrix.os }}-pulumi-${{ hashFiles('requirements.txt') }}
           # key: ${{ matrix.os }}-${{ hashFiles('requirements.txt') }}
-          key: ${{ hashFiles('requirements.txt') }}
+          # key: ${{ hashFiles('requirements.txt') }} # Funkar ej???
+          key: apa # Tmp hårdkodat!
       #
 
       - name: Pulumi Up
