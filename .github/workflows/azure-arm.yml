@@ -42,11 +42,11 @@ jobs:
 
       - name: Import arm-ttk
         shell: pwsh
-        run: Import-Module -FullyQualifiedName $module
+        run: Import-Module -FullyQualifiedName $Env:module
 
       - name: Run arm-ttk
         shell: pwsh
-        run: Test-AzTemplate -MainTemplateFile $templateFile -TemplatePath $templateFile
+        run: Test-AzTemplate -MainTemplateFile $Env:templateFile -TemplatePath $Env:templateFile
 
       - name: Log in to Azure
         uses: azure/login@v1
