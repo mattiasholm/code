@@ -46,24 +46,18 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      # Test with cache
       - name: Setup cache
         uses: actions/cache@v2
         with:
           path: |
             /home/runner/.pulumi
             /home/runner/.cache/pip
-          # key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
           # key: ${{ matrix.os }}-pulumi-${{ hashFiles('requirements.txt') }}
           # key: ${{ matrix.os }}-${{ hashFiles('requirements.txt') }}
           # key: ${{ hashFiles('requirements.txt') }} # Funkar ej???
-          key: apa # Tmp hårdkodat
+          # key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+          key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
 
-      # - name: ls
-      #   run: |
-      #     ls -la /home/runner/.pulumi
-      #     /home/runner/.cache/pip
-      #
       - name: Pulumi Up
         uses: pulumi/actions@v3
         with:
