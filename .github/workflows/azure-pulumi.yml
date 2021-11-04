@@ -22,20 +22,20 @@ env:
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
+  # build:
+  #   name: Build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repository
+  #       uses: actions/checkout@v2
 
-      - name: Pulumi Preview
-        uses: pulumi/actions@v3
-        with:
-          command: preview
-          stack-name: ${{ env.stack-name }}
-          work-dir: ${{ env.work-dir }}
-          refresh: true
+  #     - name: Pulumi Preview
+  #       uses: pulumi/actions@v3
+  #       with:
+  #         command: preview
+  #         stack-name: ${{ env.stack-name }}
+  #         work-dir: ${{ env.work-dir }}
+  #         refresh: true
 
   release:
     name: Release
@@ -64,10 +64,10 @@ jobs:
           work-dir: ${{ env.work-dir }}
 
       # Temporary test with consecutive deployment in the same job:
-      - name: Pulumi Up
-        uses: pulumi/actions@v3
-        with:
-          command: up
-          stack-name: ${{ env.stack-name }}
-          work-dir: ${{ env.work-dir }}
+      # - name: Pulumi Up
+      #   uses: pulumi/actions@v3
+      #   with:
+      #     command: up
+      #     stack-name: ${{ env.stack-name }}
+      #     work-dir: ${{ env.work-dir }}
       #
