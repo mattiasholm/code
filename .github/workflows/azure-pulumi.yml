@@ -49,9 +49,10 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: |
-            /home/runner/.pulumi
-            /home/runner/.cache/pip
+          path: /home/runner/.cache/pip
+          # path: |
+          #   /home/runner/.pulumi
+          #   /home/runner/.cache/pip
           # key: ${{ matrix.os }}-pulumi-${{ hashFiles('requirements.txt') }}
           # key: ${{ matrix.os }}-${{ hashFiles('requirements.txt') }}
           # key: ${{ hashFiles('requirements.txt') }} # Funkar ej???
