@@ -47,15 +47,23 @@ jobs:
         uses: actions/checkout@v2
 
       # Test with cache
-      - name: Cache # Bättre namn???
+      - name: ls
+        run: |
+          ls -la /home/runner/
+          ls -la /home/runner/.pulumi
+          ls -la /home/runner/.cache
+
+      - name: Setup cache
         uses: actions/cache@v2
         with:
-          # path: ~/.tflint.d/plugins
-          path: /home/runner/.pulumi # Fler???
+          # path: /home/runner/.pulumi
+          path: |
+            /home/runner/.pulumi
+            /home/runner/.cache
           # key: ${{ matrix.os }}-pulumi-${{ hashFiles('requirements.txt') }}
           # key: ${{ matrix.os }}-${{ hashFiles('requirements.txt') }}
           # key: ${{ hashFiles('requirements.txt') }} # Funkar ej???
-          key: apa # Tmp hårdkodat!
+          key: apa # Tmp hårdkodat
       #
 
       - name: Pulumi Up
@@ -64,12 +72,4 @@ jobs:
           command: up
           stack-name: ${{ env.stack-name }}
           work-dir: ${{ env.work-dir }}
-
-      # Temporary test with consecutive deployment in the same job:
-      # - name: Pulumi Up
-      #   uses: pulumi/actions@v3
-      #   with:
-      #     command: up
-      #     stack-name: ${{ env.stack-name }}
-      #     work-dir: ${{ env.work-dir }}
-      #
+F
