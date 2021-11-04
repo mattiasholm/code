@@ -46,6 +46,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+      # Test with cache
+      - name: Cache Pulumi
+        uses: actions/cache@v2
+        with:
+          # path: ~/.tflint.d/plugins
+          path: /home/runner/.pulumi
+          # key: ${{ matrix.os }}-pulumi-${{ hashFiles('requirements.txt') }}
+          key: ${{ matrix.os }}-${{ hashFiles('requirements.txt') }}
+      #
+
       - name: Pulumi Up
         uses: pulumi/actions@v3
         with:
@@ -60,3 +70,4 @@ jobs:
           command: up
           stack-name: ${{ env.stack-name }}
           work-dir: ${{ env.work-dir }}
+      #
