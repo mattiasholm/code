@@ -72,4 +72,3 @@ jobs:
           command: up
           stack-name: ${{ env.stack-name }}
           work-dir: ${{ env.work-dir }}
-F
