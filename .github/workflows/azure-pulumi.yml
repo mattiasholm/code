@@ -61,11 +61,11 @@ jobs:
           # key: ${{ hashFiles('requirements.txt') }} # Funkar ej???
           key: apa # Tmp hårdkodat
 
-      - name: ls
-        run: |
-          ls -la /home/runner/
-          ls -la /home/runner/.pulumi
-          ls -la /home/runner/.cache
+      # - name: ls
+      #   run: |
+      #     ls -la /home/runner/
+      #     ls -la /home/runner/.pulumi
+      #     ls -la /home/runner/.cache
       #
       - name: Pulumi Up
         uses: pulumi/actions@v3
