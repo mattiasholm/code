@@ -50,11 +50,9 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          # path: /home/runner/.cache
-          # /home/runner/.cache/pip/wheels
           path: |
             /home/runner/.pulumi
-            /home/runner/.cache
+            /home/runner/.cache/pip
           # key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
           # key: ${{ matrix.os }}-pulumi-${{ hashFiles('requirements.txt') }}
           # key: ${{ matrix.os }}-${{ hashFiles('requirements.txt') }}
@@ -63,9 +61,8 @@ jobs:
 
       - name: ls
         run: |
-          ls -la /home/runner/
           ls -la /home/runner/.pulumi
-          ls -la /home/runner/.cache
+          /home/runner/.cache/pip
       #
       - name: Pulumi Up
         uses: pulumi/actions@v3
