@@ -8,13 +8,10 @@ function SetVariables() {
     templateFile="main.bicep"
 }
 
-function SetContext() {
-    az account set --subscription $subscriptionId
-}
-
 function Deploy() {
     for operation in ${operations[@]}; do
         az deployment sub $operation \
+            --subscription $subscriptionId \
             --location $location \
             --template-file $templateFile
     done
@@ -22,7 +19,6 @@ function Deploy() {
 
 function main() {
     SetVariables
-    SetContext
     Deploy
 }
 

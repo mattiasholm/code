@@ -16,10 +16,6 @@ function SetVariables() {
     parameterFile="main.parameters.json"
 }
 
-function SetContext() {
-    az account set --subscription $subscriptionId
-}
-
 function CreateResourceGroup() {
     az group create \
         --name $resourceGroup \
@@ -30,6 +26,7 @@ function CreateResourceGroup() {
 function Deploy() {
     for operation in ${operations[@]}; do
         az deployment group $operation \
+            --subscription $subscriptionId \
             --resource-group $resourceGroup \
             --template-file $templateFile \
             --parameters @$parameterFile
@@ -38,7 +35,6 @@ function Deploy() {
 
 function main() {
     SetVariables
-    SetContext
     CreateResourceGroup
     Deploy
 }
