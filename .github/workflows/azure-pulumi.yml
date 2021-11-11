@@ -14,7 +14,8 @@ on:
   pull_request:
 
 env:
-  stack: dev
+  stack-name: dev
+  stack: dev # Tmp
   work-dir: pulumi/azure-python
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -33,9 +34,10 @@ jobs:
   #       uses: pulumi/actions@v3
   #       with:
   #         command: preview
-  #         stack-name: ${{ env.stack }}
+  #         stack-name: ${{ env.stack-name }}
   #         work-dir: ${{ env.work-dir }}
   #         refresh: true
+  #         # comment-on-pr: true
 
   release:
     name: Release
@@ -60,13 +62,14 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
 
       - name: Pulumi Up
-        uses: pulumi/actions@v3
-        with:
-          command: up
-          stack-name: ${{ env.stack }}
-          work-dir: ${{ env.work-dir }}
-
-      - name: Test bash
         run: pulumi up --stack $stack --yes #--refresh
         shell: bash
         working-directory: ${{ env.work-dir }}
+
+      - name: Pulumi Up
+        uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: ${{ env.stack-name }}
+          work-dir: ${{ env.work-dir }}
+          # refresh: false
