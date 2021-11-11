@@ -49,13 +49,13 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Terraform Initialize
+      - name: Initialize Terraform
         run: terraform init -input=false
 
-      - name: Terraform Plan
+      - name: Plan Terraform
         run: terraform plan -out=tfplan -input=false
 
-      - name: Terraform Apply
+      - name: Apply Terraform
         run: terraform apply -input=false tfplan
     env:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
