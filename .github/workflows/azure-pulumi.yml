@@ -26,20 +26,20 @@ env:
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
+  # build:
+  #   name: Build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repository
+  #       uses: actions/checkout@v2
 
-      - name: Pulumi Preview
-        run: pulumi preview --stack $stack --refresh #--yes
+  #     - name: Pulumi Preview
+  #       run: pulumi preview --stack $stack --refresh #--yes
 
   release:
     name: Release
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: build
+    # needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
