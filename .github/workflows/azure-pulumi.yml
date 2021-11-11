@@ -59,14 +59,14 @@ jobs:
           # key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
           key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
 
-      - name: Test bash
-        run: pulumi up --stack $stack --yes
-        shell: bash
-        working-directory: ${{ env.work-dir }}
-
       - name: Pulumi Up
         uses: pulumi/actions@v3
         with:
           command: up
           stack-name: ${{ env.stack }}
           work-dir: ${{ env.work-dir }}
+
+      - name: Test bash
+        run: pulumi up --stack $stack --yes #--refresh
+        shell: bash
+        working-directory: ${{ env.work-dir }}
