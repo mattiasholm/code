@@ -36,14 +36,6 @@ jobs:
       - name: Pulumi Preview
         run: pulumi preview --stack $stack --refresh #--yes
 
-      - name: Pulumi Preview
-        uses: pulumi/actions@v3
-        with:
-          command: preview
-          stack-name: ${{ env.stack-name }}
-          work-dir: ${{ env.work-dir }}
-          refresh: true
-
   release:
     name: Release
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
