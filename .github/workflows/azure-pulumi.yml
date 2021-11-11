@@ -60,7 +60,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
 
       - name: Test bash
-        run: pulumi up --stack $stack-name --yes
+        run: pulumi up --stack ${stack-name} --yes
         shell: bash
         working-directory: ${{ env.work-dir }}
 
