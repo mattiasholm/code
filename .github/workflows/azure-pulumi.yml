@@ -62,7 +62,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ hashFiles('./pulumi/azure-python/__main__.py') }}-${{ hashFiles('./pulumi/azure-python/requirements.txt') }}
+          # key: ${{ hashFiles('./pulumi/azure-python/__main__.py') }}-${{ hashFiles('./pulumi/azure-python/requirements.txt') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
 
       # - name: Setup cache
       #   uses: actions/cache@v2
