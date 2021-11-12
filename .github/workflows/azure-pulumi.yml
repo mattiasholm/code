@@ -45,9 +45,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: TEST
-        run: echo "var:$pythonLocation" ; ls -la pulumi/azure-python/venv/
-
       - name: Setup cache
         uses: actions/cache@v2
         with:
