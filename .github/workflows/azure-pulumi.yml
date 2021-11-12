@@ -48,22 +48,12 @@ jobs:
       # - name: Setup cache
       #   uses: actions/cache@v2
       #   with:
-      #     path: /home/runner/.cache/pip
+      #     # path: ~/.cache/pip
       #     # path: |
-      #     #   /home/runner/.pulumi
-      #     #   /home/runner/.cache/pip
-      #     # key: ${{ matrix.os }}-pulumi-${{ hashFiles('requirements.txt') }}
-      #     # key: ${{ matrix.os }}-${{ hashFiles('requirements.txt') }}
-      #     # key: ${{ hashFiles('requirements.txt') }} # Funkar ej???
-      #     # key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-      #     key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
-
-      - name: Setup cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          # key: ${{ hashFiles('./pulumi/azure-python/__main__.py') }}-${{ hashFiles('./pulumi/azure-python/requirements.txt') }}
-          key: ${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
+      #     #   ~/.pulumi
+      #     #   ~/.cache/pip
+      #     key: ${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
+      #     # key: ${{ runner.os }}-${{ hashFiles('./pulumi/azure-python/requirements.txt') }}
 
       # - name: Setup cache
       #   uses: actions/cache@v2
