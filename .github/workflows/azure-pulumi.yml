@@ -57,8 +57,7 @@ jobs:
           #   ~/.pulumi
           # key: ${{ runner.os }}-pulumi-${{ hashFiles('${{ env.path }}/requirements.txt') }}
           # key: ${{ runner.os }}-pulumi-${{ hashFiles('${{ env.path }}/requirements.txt') }}
-          key: ${{ runner.os }}-pulumi-${{ hashFiles(format('{0}/{1}', env.path, requirements.txt))) }}
-          # key: ${{ format('{0}-pulumi-{1}', runner.os, hashFiles(format('{0}/requirements.txt'', env.path))) }}
+          key: ${{ runner.os }}-pulumi-${{ hashFiles(format('{0}/requirements.txt', env.path))) }}
           # restore-keys: ${{ runner.os }}-pip-
           # restore-keys: ${{ runner.os }}-test
 
