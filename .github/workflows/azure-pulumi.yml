@@ -34,7 +34,7 @@ jobs:
   #       uses: actions/checkout@v2
 
   #     - name: Pulumi Preview
-  #       run: pulumi preview --stack $stack --refresh --yes
+  #       run: pulumi preview --refresh --stack $stack --yes
 
   release:
     name: Release
@@ -57,6 +57,18 @@ jobs:
       #     # key: ${{ hashFiles('requirements.txt') }} # Funkar ej???
       #     # key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       #     key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ hashFiles('__main__.py') }}-${{ hashFiles('requirements.txt') }}
+
+      # - name: Setup cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.pythonLocation }}
+      #     key: ${{ env.pythonLocation }}-${{ hashFiles('__main__.py') }}-${{ hashFiles('requirements.txt') }}
 
       - name: Pulumi Up
         run: pulumi up --stack $stack --yes
