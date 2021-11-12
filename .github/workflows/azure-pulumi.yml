@@ -50,20 +50,17 @@ jobs:
       #   with:
       #     path: ~/.cache/pip
       #     # path: |
-      #     #   ~/.pulumi
       #     #   ~/.cache/pip
+      #     #   ~/.pulumi
+      #     #   /usr/bin/python3
       #     key: ${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
-      #     # key: ${{ runner.os }}-${{ hashFiles('./pulumi/azure-python/requirements.txt') }}
 
-      # - name: Setup cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ${{ env.pythonLocation }}
-      #     key: ${{ env.pythonLocation }}-${{ hashFiles('**/requirements.txt') }}
-      #     # key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: /usr/bin/python3
+          key: /usr/bin/python3-${{ hashFiles('**/requirements.txt') }}
+          # key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
 
       - name: Pulumi Up
         run: pulumi up --stack $stack --yes
-
-      - name: test
-        run: which python ; which python3
