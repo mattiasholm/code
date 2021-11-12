@@ -16,7 +16,7 @@ on:
 defaults:
   run:
     shell: bash
-    working-directory: terraform/azure
+    working-directory: pulumi/azure-python
 
 env:
   stack: dev
