@@ -45,22 +45,30 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      # - name: Setup cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ~/.cache/pip
-      #     # path: |
-      #     #   ~/.cache/pip
-      #     #   ~/.pulumi
-      #     #   /usr/bin/python3
-      #     key: ${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
-
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          path: /usr/bin/python3
-          key: /usr/bin/python3-${{ hashFiles('**/requirements.txt') }}
-          # key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+          # path: ~/.cache/pip
+          path: ./venv/
+          # path: |
+          #   ~/.cache/pip
+          # ./venv/
+          #   ~/.pulumi
+          #   /usr/bin/python3
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          # key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
+          # key: ${{ runner.os }}-pulumi-${{ hashFiles('**/requirements.txt') }}
+          # restore-keys: |
+          #   ${{ runner.os }}-pip-
+
+      # - name: Setup cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.pythonLocation }}
+      #     key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+      #     # key: ${{ env.pythonLocation }}-${{ hashFiles('**/requirements.txt') }}
+      #     # key: /usr/bin/python3-${{ hashFiles('setup.py') }}-${{ hashFiles('**/requirements.txt') }}
+      #     # key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
 
       - name: Pulumi Up
         run: pulumi up --stack $stack --yes
