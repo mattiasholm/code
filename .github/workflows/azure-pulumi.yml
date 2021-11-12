@@ -55,12 +55,12 @@ jobs:
       #     key: ${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
       #     # key: ${{ runner.os }}-${{ hashFiles('./pulumi/azure-python/requirements.txt') }}
 
-      - name: Setup cache
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ env.pythonLocation }}-${{ hashFiles('**/requirements.txt') }}
-          # key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+      # - name: Setup cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.pythonLocation }}
+      #     key: ${{ env.pythonLocation }}-${{ hashFiles('**/requirements.txt') }}
+      #     # key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
 
       - name: Pulumi Up
         run: pulumi up --stack $stack --yes
