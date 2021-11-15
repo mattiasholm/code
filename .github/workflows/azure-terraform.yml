@@ -39,8 +39,10 @@ jobs:
         run: terraform init
 
       - name: Terraform Validate
-        # run: terraform validate -no-color
         run: terraform validate
+
+      - name: Plan Terraform
+        run: terraform plan #-out=tfplan -input=false
       #
 
       # - name: Setup TFLint
