@@ -48,6 +48,13 @@ jobs:
 
       - name: Plan Terraform
         run: terraform plan -out=tfplan #-input=false
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          # name: tfplan
+          path: tfplan
+
       #
 
       # - name: Setup TFLint
