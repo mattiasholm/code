@@ -33,14 +33,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ env.path }}/venv/
-          key: ${{ runner.os }}-pulumi-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
+          key: ${{ runner.os }}-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
       - name: Pulumi Preview
         uses: pulumi/actions@v3
         with:
           command: preview
-          stack-name: ${{ env.stack }}
           work-dir: ${{ env.path }}
+          stack-name: ${{ env.stack }}
           refresh: true
 
   release:
@@ -56,11 +56,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ env.path }}/venv/
-          key: ${{ runner.os }}-pulumi-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
+          key: ${{ runner.os }}-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
       - name: Pulumi Up
         uses: pulumi/actions@v3
         with:
           command: up
-          stack-name: ${{ env.stack }}
           work-dir: ${{ env.path }}
+          stack-name: ${{ env.stack }}
