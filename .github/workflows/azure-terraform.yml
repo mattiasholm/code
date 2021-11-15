@@ -47,7 +47,7 @@ jobs:
         run: terraform validate
 
       - name: Plan Terraform
-        run: terraform plan #-out=tfplan -input=false
+        run: terraform plan -out=tfplan #-input=false
       #
 
       # - name: Setup TFLint
@@ -73,11 +73,11 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Initialize Terraform
+      - name: Terraform Initialize
         run: terraform init -input=false
 
-      - name: Plan Terraform
-        run: terraform plan -out=tfplan -input=false
+      # - name: Plan Terraform
+      #   run: terraform plan -out=tfplan -input=false
 
-      - name: Apply Terraform
-        run: terraform apply -input=false tfplan
+      - name: Terraform Apply
+        run: terraform apply #-input=false tfplan
