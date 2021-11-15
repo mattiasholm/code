@@ -50,7 +50,7 @@ jobs:
       - name: Plan Terraform
         run: terraform plan -out=tfplan #-input=false
 
-      - name: Upload artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: tfplan
@@ -75,10 +75,15 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Download artifacts
+      - name: TEST
+        run: ls -la
+
+      - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          path: ${{ env.path }}
+          name: tfplan
+          # path: ${{ env.path }}
+          path: ${{ env.path }}/tfplan
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
