@@ -41,7 +41,7 @@ jobs:
           key: ${{ runner.os }}-pulumi-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
       - name: Pulumi Preview
-        run: pulumi preview --refresh --stack $stack --yes
+        run: pulumi preview --refresh --stack $stack
 
   release:
     name: Release
