@@ -26,6 +26,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+      #
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+      #
+
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v1
 
