@@ -1,8 +1,5 @@
 targetScope = 'subscription'
 
-param test string
-output test string = test
-
 var prefix = 'holm-bicep'
 var prefixStripped = toLower(replace(prefix, '-', ''))
 var location = deployment().location
