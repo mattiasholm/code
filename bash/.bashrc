@@ -35,6 +35,7 @@ alias t='terraform'
 
 alias cl='clear'
 alias cx='chmod +x'
+alias er='echo $?'
 
 alias azb='az bicep'
 alias azr='az rest'

@@ -30,6 +30,7 @@ alias t='terraform'
 
 alias cl='clear'
 alias cx='chmod +x'
+alias er='echo $status'
 alias fc='fish_config'
 
 alias azb='az bicep'
