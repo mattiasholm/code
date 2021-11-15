@@ -53,7 +53,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          # name: tfplan
+          name: tfplan
           path: ${{ env.path }}/tfplan
       #
 
@@ -88,4 +88,4 @@ jobs:
 
       - name: Terraform Apply
         # run: terraform apply -input=false tfplan
-        run: terraform apply #tfplan
+        run: terraform apply tfplan
