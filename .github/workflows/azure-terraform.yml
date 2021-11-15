@@ -32,14 +32,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      #
+      - name: Terraform Format
+        run: terraform fmt -check
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-      - name: Terraform Format
-        run: terraform fmt -check
 
       - name: Terraform Initialize
         run: terraform init
@@ -55,7 +54,6 @@ jobs:
         with:
           name: tfplan
           path: ${{ env.path }}/tfplan
-      #
 
   release:
     name: Release
@@ -72,10 +70,10 @@ jobs:
           name: tfplan
           path: ${{ env.path }}
 
-      # - name: Setup Terraform
-      #   uses: hashicorp/setup-terraform@v1
-      #   with:
-      #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       # - name: Terraform Initialize
       #   run: terraform init
