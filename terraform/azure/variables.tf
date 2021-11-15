@@ -1,3 +1,7 @@
+variable "apa" {
+  type = string
+}
+
 variable "prefix" {
   type = string
 }
