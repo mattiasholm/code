@@ -13,11 +13,6 @@ on:
 
   pull_request:
 
-defaults:
-  run:
-    shell: bash
-    working-directory: pulumi/azure-python
-
 env:
   path: pulumi/azure-python
   stack: dev
@@ -41,7 +36,12 @@ jobs:
           key: ${{ runner.os }}-pulumi-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
       - name: Pulumi Preview
-        run: pulumi preview --refresh --stack $stack
+        uses: pulumi/actions@v3
+        with:
+          command: preview
+          stack-name: ${{ env.stack }}
+          work-dir: ${{ env.path }}
+          refresh: true
 
   release:
     name: Release
@@ -59,4 +59,8 @@ jobs:
           key: ${{ runner.os }}-pulumi-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
       - name: Pulumi Up
-        run: pulumi up --stack $stack --yes
+        uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: ${{ env.stack }}
+          work-dir: ${{ env.path }}
