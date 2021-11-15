@@ -27,20 +27,8 @@ env:
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
 jobs:
-  # build:
-  #   name: Build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check out repository
-  #       uses: actions/checkout@v2
-
-  #     - name: Pulumi Preview
-  #       run: pulumi preview --refresh --stack $stack --yes
-
-  release:
-    name: Release
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    # needs: build
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -49,25 +37,26 @@ jobs:
       - name: Setup cache
         uses: actions/cache@v2
         with:
-          # path: ${{ env.path }}/venv/
-          path: |
-            ${{ env.path }}/venv/
-            ~/.cache/pip
-            ~/.pulumi
-          # key: ${{ runner.os }}-pulumi-${{ hashFiles('${{ env.path }}/requirements.txt') }}
-          # key: ${{ runner.os }}-pulumi-${{ hashFiles('${{ env.path }}/requirements.txt') }}
+          path: ${{ env.path }}/venv/
           key: ${{ runner.os }}-pulumi-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
-          # restore-keys: ${{ runner.os }}-pip-
-          # restore-keys: ${{ runner.os }}-test
 
-      # - name: Setup cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ${{ env.pythonLocation }}
-      #     key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
-      #     # key: ${{ env.pythonLocation }}-${{ hashFiles('**/requirements.txt') }}
-      #     # key: /usr/bin/python3-${{ hashFiles('setup.py') }}-${{ hashFiles('**/requirements.txt') }}
-      #     # key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+      - name: Pulumi Preview
+        run: pulumi preview --refresh --stack $stack --yes
+
+  release:
+    name: Release
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.path }}/venv/
+          key: ${{ runner.os }}-pulumi-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
       - name: Pulumi Up
         run: pulumi up --stack $stack --yes
