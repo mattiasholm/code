@@ -19,6 +19,7 @@ defaults:
     working-directory: terraform/azure
 
 env:
+  path: terraform/azure
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -53,8 +54,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           # name: tfplan
-          path: tfplan
-
+          path: ${{ env.path }}/tfplan
       #
 
       # - name: Setup TFLint
@@ -87,4 +87,5 @@ jobs:
       #   run: terraform plan -out=tfplan -input=false
 
       - name: Terraform Apply
-        run: terraform apply #-input=false tfplan
+        # run: terraform apply -input=false tfplan
+        run: terraform apply #tfplan
