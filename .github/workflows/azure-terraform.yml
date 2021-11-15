@@ -18,6 +18,9 @@ defaults:
     shell: bash
     working-directory: terraform/azure
 
+env:
+  path: terraform/azure
+
 jobs:
   build:
     name: Build
@@ -43,6 +46,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
+
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.path }}/.terraform/
+          key: ${{ runner.os }}-${{ hashFiles(format('{0}/main.tf', env.path)) }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
