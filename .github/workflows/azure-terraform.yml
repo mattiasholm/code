@@ -79,4 +79,4 @@ jobs:
         run: terraform init -input=false
 
       - name: Terraform Apply
-        run: terraform apply tfplan -input=false
+        run: terraform apply -input=false tfplan
