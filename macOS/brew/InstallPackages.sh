@@ -29,6 +29,7 @@ brew install vim
 brew install jq
 brew install pwgen
 brew install gh
+brew tap azure/bicep && brew install bicep
 brew install terraform
 brew install tflint
 brew install checkov
