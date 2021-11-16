@@ -28,24 +28,24 @@ stages:
             inputs:
               azureSubscription: $(azureSubscription-tst)
               scriptType: bash
-              scriptPath: $(workingDirectory)/deploy.sh
-              arguments: tst --pipeline --validate
+              scriptPath: $(workingDirectory)/validate.sh
+              arguments: tst
               workingDirectory: $(workingDirectory)
           - task: AzureCLI@2
             displayName: stg
             inputs:
               azureSubscription: $(azureSubscription-stg)
               scriptType: bash
-              scriptPath: $(workingDirectory)/deploy.sh
-              arguments: stg --pipeline --validate
+              scriptPath: $(workingDirectory)/validate.sh
+              arguments: stg
               workingDirectory: $(workingDirectory)
           - task: AzureCLI@2
             displayName: prod
             inputs:
               azureSubscription: $(azureSubscription-prod)
               scriptType: bash
-              scriptPath: $(workingDirectory)/deploy.sh
-              arguments: prod --pipeline --validate
+              scriptPath: $(workingDirectory)/validate.sh
+              arguments: prod
               workingDirectory: $(workingDirectory)
 
   - stage: tst
@@ -68,13 +68,13 @@ stages:
                     azureSubscription: $(azureSubscription-tst)
                     scriptType: bash
                     scriptPath: $(workingDirectory)/deploy.sh
-                    arguments: $(environment) --pipeline
+                    arguments: $(environment)
                     workingDirectory: $(workingDirectory)
 
   - stage: stg
     displayName: Deploy to stg
     dependsOn: tst
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
     variables:
       environment: $(System.StageName)
     jobs:
@@ -91,13 +91,13 @@ stages:
                     azureSubscription: $(azureSubscription-stg)
                     scriptType: bash
                     scriptPath: $(workingDirectory)/deploy.sh
-                    arguments: $(environment) --pipeline
+                    arguments: $(environment)
                     workingDirectory: $(workingDirectory)
 
   - stage: prod
     displayName: Deploy to prod
     dependsOn: stg
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
     variables:
       environment: $(System.StageName)
     jobs:
@@ -114,5 +114,5 @@ stages:
                     azureSubscription: $(azureSubscription-prod)
                     scriptType: bash
                     scriptPath: $(workingDirectory)/deploy.sh
-                    arguments: $(environment) --pipeline
+                    arguments: $(environment)
                     workingDirectory: $(workingDirectory)
