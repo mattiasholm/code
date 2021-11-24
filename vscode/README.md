@@ -7,7 +7,17 @@
 code .
 ```
 
-<br><br>
+<br>
+
+## Open command palette:
+`Mac` Cmd+Shift+P
+
+`Windows` Ctrl+Shift+P
+
+## Navigate to any file in workspace by typing its name:
+`Mac` Cmd+P
+
+`Windows` Ctrl+P
 
 ## Toggle word wrap:
 `Mac` Alt+Z

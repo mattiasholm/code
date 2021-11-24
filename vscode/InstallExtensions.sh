@@ -9,6 +9,7 @@ exts=(
     "ms-azuretools.vscode-bicep"
     "msazurermtools.azurerm-vscode-tools"
     "hashicorp.terraform"
+    "ms-python.python"
     "ms-python.vscode-pylance"
     "josin.kusto-syntax-highlighting"
     "ms-azure-devops.azure-pipelines"

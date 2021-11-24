@@ -1,3 +1,10 @@
 config:
   azure-native:location: WestEurope
   azure-native:subscriptionId: 9b184a26-7fff-49ed-9230-d11d484ad51b
+
+  azure-python:prefix: holm-pulumi
+  azure-python:tags:
+    Application: Pulumi
+    Company: Holm
+    Environment: Dev
+    Owner: mattias.holm@live.com

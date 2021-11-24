@@ -1,23 +1,26 @@
 {
     "recommendations": [
         "foxundermoon.shell-format",
+        "bmalehorn.vscode-fish",
         "ms-vscode.powershell",
-        "ms-python.vscode-pylance",
         "ms-azuretools.vscode-bicep",
         "msazurermtools.azurerm-vscode-tools",
         "hashicorp.terraform",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "josin.kusto-syntax-highlighting",
+        "ms-azure-devops.azure-pipelines",
         "ms-azuretools.vscode-docker",
         "ms-mssql.mssql",
-        "josin.kusto-syntax-highlighting",
         "redhat.vscode-yaml",
         "dotjoshjohnson.xml",
         "mechatroner.rainbow-csv",
-        "softaware.abc-music",
         "yzhang.markdown-all-in-one",
         "bierner.markdown-emoji",
         "bierner.markdown-footnotes",
         "waderyan.gitblame",
         "gurumukhi.selected-lines-count",
-        "ms-vsliveshare.vsliveshare"
+        "ms-vsliveshare.vsliveshare",
+        "softaware.abc-music"
     ]
 }

@@ -1,0 +1,3 @@
+{
+    "python.defaultInterpreterPath": "${workspaceFolder}/pulumi/azure-python/venv/bin/python"
+}
