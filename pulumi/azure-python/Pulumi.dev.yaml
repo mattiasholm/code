@@ -8,3 +8,10 @@ config:
     Company: Holm
     Environment: Dev
     Owner: mattias.holm@live.com
+
+  azure-python:st:
+    kind: StorageV2
+    sku: Standard_LRS
+    publicAccess: false
+    httpsOnly: true
+    tlsVersion: TLS1_2

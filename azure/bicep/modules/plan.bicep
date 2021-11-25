@@ -6,10 +6,10 @@ param tags object = resourceGroup().tags
   'linux'
 ])
 param kind string = 'linux'
-param skuName string = 'B1'
+param sku string = 'B1'
 @minValue(1)
 @maxValue(10)
-param skuCapacity int = 1
+param capacity int = 1
 
 var reserved = kind == 'linux' ? true : false
 
@@ -19,8 +19,8 @@ resource plan 'Microsoft.Web/serverfarms@2021-02-01' = {
   tags: tags
   kind: kind
   sku: {
-    name: skuName
-    capacity: skuCapacity
+    name: sku
+    capacity: capacity
   }
   properties: {
     reserved: reserved

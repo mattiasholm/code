@@ -1,16 +1,19 @@
 // List all requests, ordered by time generated:
 AzureDiagnostics
 | where Category == 'OperationalLogs'
+| order by TimeGenerated
 | project Timestamp = EventTimeString_s, Caller = Caller_s, Event = EventName_s, Status = Status_s, Resource, ['Scale unit'] = ScaleUnit_s, Properties = EventProperties_s
 
 // List only successful requests, ordered by time generated:
 AzureDiagnostics
 | where Category == 'OperationalLogs' and Status_s == 'Succeeded'
+| order by TimeGenerated
 | project Timestamp = EventTimeString_s, Caller = Caller_s, Event = EventName_s, Status = Status_s, Resource, ['Scale unit'] = ScaleUnit_s, Properties = EventProperties_s
 
 // List only failed requests, ordered by time generated:
 AzureDiagnostics
 | where Category == 'OperationalLogs' and Status_s != 'Succeeded'
+| order by TimeGenerated
 | project Timestamp = EventTimeString_s, Caller = Caller_s, Event = EventName_s, Status = Status_s, Resource, ['Scale unit'] = ScaleUnit_s, Properties = EventProperties_s
 
 // List only requests to a specific Service Bus, ordered by time generated:

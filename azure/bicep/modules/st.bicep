@@ -21,7 +21,7 @@ param kind string = 'StorageV2'
   'Premium_LRS'
   'Premium_ZRS'
 ])
-param skuName string = 'Standard_LRS'
+param sku string = 'Standard_LRS'
 param allowBlobPublicAccess bool = false
 param supportsHttpsTrafficOnly bool = true
 @allowed([
@@ -38,7 +38,7 @@ resource st 'Microsoft.Storage/storageAccounts@2021-06-01' = {
   tags: tags
   kind: kind
   sku: {
-    name: skuName
+    name: sku
   }
   properties: {
     allowBlobPublicAccess: allowBlobPublicAccess

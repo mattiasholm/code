@@ -5,19 +5,16 @@ param location string = resourceGroup().location
 param tags object = resourceGroup().tags
 param tenantId string = subscription().tenantId
 @allowed([
-  'A'
-])
-param skuFamily string = 'A'
-@allowed([
   'standard'
   'premium'
 ])
-param skuName string = 'standard'
+param sku string = 'standard'
 param accessPolicies array = []
 param objectId string
 param permissions object
-param secretName string
-param secretValue string
+param secrets array
+
+var family = 'A'
 
 resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
   name: name
@@ -26,8 +23,8 @@ resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
   properties: {
     tenantId: tenantId
     sku: {
-      family: skuFamily
-      name: skuName
+      family: family
+      name: sku
     }
     accessPolicies: accessPolicies
   }
@@ -45,13 +42,13 @@ resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
     }
   }
 
-  resource secret 'secrets' = {
-    name: secretName
+  resource secret 'secrets' = [for secret in secrets: {
+    name: secret.name
     tags: tags
     properties: {
-      value: secretValue
+      value: secret.value
     }
-  }
+  }]
 }
 
 output name string = kv.name

@@ -87,7 +87,7 @@ kvSpSecretPermissions = [
   "Get",
   "Set",
 ]
-kvSecretName = "appi-connectionString"
+kvSecretName = "appiConnectionString"
 
 stCount        = 3
 stKind         = "StorageV2"

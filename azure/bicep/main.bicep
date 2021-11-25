@@ -1,31 +1,77 @@
 targetScope = 'subscription'
 
-var prefix = 'holm-bicep'
-var prefixStripped = toLower(replace(prefix, '-', ''))
-var location = deployment().location
-var tags = {
+param prefix string = 'holm-bicep'
+param tags object = {
   Application: 'Bicep'
   Company: 'Holm'
   Environment: 'Dev'
   Owner: 'mattias.holm@live.com'
 }
-var tenantId = subscription().tenantId
 
-var appDockerImageTags = [
+@allowed([
+  'app'
+  'linux'
+])
+param planKind string = 'linux'
+param planSku string = 'B1'
+@minValue(1)
+@maxValue(10)
+param planCapacity int = 1
+
+param appDockerImageTags array = [
   'latest'
   'plain-text'
 ]
+@allowed([
+  'None'
+  'SystemAssigned'
+])
+param appIdentity string = 'SystemAssigned' //'None'
+param appAlwaysOn bool = true
+param appHttp20Enabled bool = true
+@allowed([
+  '1.0'
+  '1.1'
+  '1.2'
+])
+param appMinTlsVersion string = '1.2'
+@allowed([
+  'AllAllowed'
+  'FtpsOnly'
+  'Disabled'
+])
+param appFtpsState string = 'FtpsOnly'
+param appClientAffinityEnabled bool = false
+param appHttpsOnly bool = true
 
-var kvAppPermissions = {
+@allowed([
+  'web'
+  'ios'
+  'other'
+  'store'
+  'java'
+  'phone'
+])
+param appiKind string = 'web'
+@allowed([
+  'web'
+  'other'
+])
+param appiType string = 'web'
+
+@allowed([
+  'standard'
+  'premium'
+])
+param kvSku string = 'standard'
+param kvAppPermissions object = {
   secrets: [
     'Get'
     'List'
   ]
 }
-
-var kvGroupId = 'e810d50b-5f44-4e21-b1c9-eb89653cc2de'
-
-var kvGroupPermissions = {
+param kvGroupId string = 'e810d50b-5f44-4e21-b1c9-eb89653cc2de'
+param kvGroupPermissions object = {
   keys: [
     'Get'
     'List'
@@ -74,12 +120,42 @@ var kvGroupPermissions = {
   ]
 }
 
-var kvSecretName = 'appi-connectionString'
+param stCount int = 3
+@allowed([
+  'Storage'
+  'StorageV2'
+  'BlobStorage'
+  'FileStorage'
+  'BlockBlobStorage'
+])
+param stKind string = 'StorageV2'
+@allowed([
+  'Standard_LRS'
+  'Standard_ZRS'
+  'Standard_GRS'
+  'Standard_RAGRS'
+  'Standard_GZRS'
+  'Standard_RAGZRS'
+  'Premium_LRS'
+  'Premium_ZRS'
+])
+param stSku string = 'Standard_LRS'
+param stPublicAccess bool = false
+param stHttpsOnly bool = true
+@allowed([
+  'TLS1_0'
+  'TLS1_1'
+  'TLS1_2'
+])
+param stTlsVersion string = 'TLS1_2'
 
-var stCount = 3
+param vnetToggle bool = true
+param vnetAddressPrefix string = '10.0.0.0/24'
 
-var vnetToggle = true
-var vnetAddressPrefix = '10.0.0.0/24'
+var prefixStripped = toLower(replace(prefix, '-', ''))
+var location = deployment().location
+var tenantId = subscription().tenantId
+var kvSecretName = 'appiConnectionString'
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: 'rg-${prefix}-001'
@@ -94,9 +170,9 @@ module plan 'modules/plan.bicep' = {
     name: 'plan-${prefix}-001'
     location: location
     tags: tags
-    kind: 'linux'
-    skuName: 'B1'
-    skuCapacity: 1
+    kind: planKind
+    sku: planSku
+    capacity: planCapacity
   }
 }
 
@@ -107,17 +183,17 @@ module app 'modules/app.bicep' = [for (appDockerImageTag, i) in appDockerImageTa
     name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
     location: location
     tags: tags
-    identityType: 'SystemAssigned'
+    identityType: appIdentity
     serverFarmId: plan.outputs.id
     siteConfig: {
       linuxFxVersion: 'DOCKER|nginxdemos/hello:${appDockerImageTag}'
-      alwaysOn: true
-      http20Enabled: true
-      minTlsVersion: '1.2'
-      ftpsState: 'FtpsOnly'
+      alwaysOn: appAlwaysOn
+      http20Enabled: appHttp20Enabled
+      minTlsVersion: appMinTlsVersion
+      ftpsState: appFtpsState
     }
-    clientAffinityEnabled: false
-    httpsOnly: true
+    clientAffinityEnabled: appClientAffinityEnabled
+    httpsOnly: appHttpsOnly
   }
 }]
 
@@ -140,8 +216,8 @@ module appi 'modules/appi.bicep' = {
     name: 'appi-${prefix}-001'
     location: location
     tags: tags
-    kind: 'web'
-    Application_Type: 'web'
+    kind: appiKind
+    Application_Type: appiType
   }
 }
 
@@ -153,8 +229,7 @@ module kv 'modules/kv.bicep' = {
     location: location
     tags: tags
     tenantId: tenantId
-    skuFamily: 'A'
-    skuName: 'standard'
+    sku: kvSku
     accessPolicies: [for (appDockerImageTag, i) in appDockerImageTags: {
       tenantId: tenantId
       objectId: app[i].outputs.identity.principalId
@@ -162,8 +237,12 @@ module kv 'modules/kv.bicep' = {
     }]
     objectId: kvGroupId
     permissions: kvGroupPermissions
-    secretName: kvSecretName
-    secretValue: appi.outputs.connectionString
+    secrets: [
+      {
+        name: kvSecretName
+        value: appi.outputs.connectionString
+      }
+    ]
   }
 }
 
@@ -174,11 +253,11 @@ module st 'modules/st.bicep' = [for i in range(0, stCount): {
     name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
     location: location
     tags: tags
-    kind: 'StorageV2'
-    skuName: 'Standard_LRS'
-    allowBlobPublicAccess: false
-    supportsHttpsTrafficOnly: true
-    minimumTlsVersion: 'TLS1_2'
+    kind: stKind
+    sku: stSku
+    allowBlobPublicAccess: stPublicAccess
+    supportsHttpsTrafficOnly: stHttpsOnly
+    minimumTlsVersion: stTlsVersion
     containerName: 'container${prefixStripped}001'
   }
 }]
