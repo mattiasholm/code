@@ -284,19 +284,7 @@ output appUrl array = [for (appDockerImageTag, i) in appDockerImageTags: {
 
 output kvUrl string = kv.outputs.vaultUri
 
-output stBlobUrl array = [for i in range(0, stCount): {
+output stUrl array = [for i in range(0, stCount): {
   name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
-  blobUrl: st[i].outputs.primaryEndpoints.blob
-}]
-output stFileUrl array = [for i in range(0, stCount): {
-  name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
-  fileUrl: st[i].outputs.primaryEndpoints.file
-}]
-output stQueueUrl array = [for i in range(0, stCount): {
-  name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
-  queueUrl: st[i].outputs.primaryEndpoints.queue
-}]
-output stTableUrl array = [for i in range(0, stCount): {
-  name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
-  tableUrl: st[i].outputs.primaryEndpoints.table
+  url: st[i].outputs.primaryEndpoints
 }]

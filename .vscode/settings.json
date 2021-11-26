@@ -1,3 +1,5 @@
 {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
     "python.defaultInterpreterPath": "${workspaceFolder}/pulumi/azure-python/venv/bin/python"
 }

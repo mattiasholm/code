@@ -413,32 +413,11 @@
             "type": "string",
             "value": "[reference(variables('kvId')).vaultUri]"
         },
-        "stBlobUrl": {
+        "stUrl": {
             "type": "array",
             "copy": {
                 "count": "[parameters('stCount')]",
-                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.blob]"
-            }
-        },
-        "stFileUrl": {
-            "type": "array",
-            "copy": {
-                "count": "[parameters('stCount')]",
-                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.file]"
-            }
-        },
-        "stQueueUrl": {
-            "type": "array",
-            "copy": {
-                "count": "[parameters('stCount')]",
-                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.queue]"
-            }
-        },
-        "stTableUrl": {
-            "type": "array",
-            "copy": {
-                "count": "[parameters('stCount')]",
-                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints.table]"
+                "input": "[reference(variables('stId')[copyIndex()]).primaryEndpoints]"
             }
         }
     }

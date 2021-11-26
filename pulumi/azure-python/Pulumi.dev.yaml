@@ -9,9 +9,9 @@ config:
     Environment: Dev
     Owner: mattias.holm@live.com
 
-  azure-python:st:
-    kind: StorageV2
-    sku: Standard_LRS
-    publicAccess: false
-    httpsOnly: true
-    tlsVersion: TLS1_2
+  # azure-python:stCount: 3
+  azure-python:stKind: StorageV2
+  azure-python:stSku: Standard_LRS
+  azure-python:stPublicAccess: false
+  azure-python:stHttpsOnly: true
+  azure-python:stTlsVersion: TLS1_2
