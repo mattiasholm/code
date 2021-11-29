@@ -9,8 +9,7 @@ prefixStripped = prefix.replace('-', '').lower()
 tags = config.get_object('tags')
 
 stCount = config.get_int('stCount') or 1
-# for i in range(0, stCount):
-#     print(i)
+
 stKind = config.get('stKind') or 'StorageV2'
 stSku = config.get('stSku') or 'Standard_LRS'
 stPublicAccess = config.get_bool('stPublicAccess') or False
@@ -22,23 +21,24 @@ rg = resources.ResourceGroup('rg',
                              tags=tags
                              )
 
-st = storage.StorageAccount('st',
-                            account_name=f'st{prefixStripped}001',
-                            resource_group_name=rg.name,
-                            tags=tags,
-                            kind=stKind,
-                            sku=storage.SkuArgs(
-                                name=stSku,
-                            ),
-                            allow_blob_public_access=stPublicAccess,
-                            enable_https_traffic_only=stHttpsOnly,
-                            minimum_tls_version=stTlsVersion
-                            )
+for i in range(0, stCount):
+    st = storage.StorageAccount(f'st{i}',
+                                account_name=f'st{prefixStripped}{str(i + 1).zfill(3)}',
+                                resource_group_name=rg.name,
+                                tags=tags,
+                                kind=stKind,
+                                sku=storage.SkuArgs(
+                                    name=stSku,
+                                ),
+                                allow_blob_public_access=stPublicAccess,
+                                enable_https_traffic_only=stHttpsOnly,
+                                minimum_tls_version=stTlsVersion
+                                )
 
-storage.BlobContainer('container',
-                      container_name=f'container{prefixStripped}001',
-                      account_name=st.name,
-                      resource_group_name=rg.name,
-                      )
+    storage.BlobContainer(f'container{i}',
+                          container_name=f'container{prefixStripped}001',
+                          account_name=st.name,
+                          resource_group_name=rg.name,
+                          )
 
-pulumi.export('stUrl', st.primary_endpoints)
+    pulumi.export(f'stUrl{i}', st.primary_endpoints)
