@@ -9,6 +9,10 @@ config:
     Environment: Dev
     Owner: mattias.holm@live.com
 
+  azure-python:planKind: linux
+  azure-python:planSku: B1
+  azure-python:planCapacity: 1
+
   azure-python:stCount: 3
   azure-python:stKind: StorageV2
   azure-python:stSku: Standard_LRS
