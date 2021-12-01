@@ -1,5 +1,5 @@
 resource "azurerm_app_service" "app" {
-  for_each            = { for i, appDockerImageTag in var.appDockerImageTags : appDockerImageTag => i }
+  for_each            = { for i, appDockerTag in var.appDockerTags : appDockerTag => i }
   name                = "app-${var.prefix}-${format("%03d", each.value + 1)}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location

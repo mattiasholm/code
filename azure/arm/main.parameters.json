@@ -14,7 +14,7 @@
     "planCapacity": {
       "value": 1
     },
-    "appDockerImageTags": {
+    "appDockerTags": {
       "value": [
         "latest",
         "plain-text"

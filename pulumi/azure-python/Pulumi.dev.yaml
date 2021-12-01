@@ -13,6 +13,15 @@ config:
   azure-python:planSku: B1
   azure-python:planCapacity: 1
 
+  azure-python:appDockerImage: nginxdemos/hello:latest
+  azure-python:appIdentity: SystemAssigned
+  azure-python:appAlwaysOn: true
+  azure-python:appHttp20Enabled: true
+  azure-python:appMinTlsVersion: "1.2"
+  azure-python:appFtpsState: FtpsOnly
+  azure-python:appClientAffinityEnabled: false
+  azure-python:appHttpsOnly: true
+
   azure-python:stCount: 3
   azure-python:stKind: StorageV2
   azure-python:stSku: Standard_LRS

@@ -12,7 +12,7 @@ planTier     = "Basic"
 planSize     = "B1"
 planCapacity = 1
 
-appDockerImageTags = [
+appDockerTags = [
   "latest",
   "plain-text"
 ]

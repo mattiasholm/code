@@ -18,7 +18,7 @@ param planSku string = 'B1'
 @maxValue(10)
 param planCapacity int = 1
 
-param appDockerImageTags array = [
+param appDockerTags array = [
   'latest'
   'plain-text'
 ]
@@ -176,7 +176,7 @@ module plan 'modules/plan.bicep' = {
   }
 }
 
-module app 'modules/app.bicep' = [for (appDockerImageTag, i) in appDockerImageTags: {
+module app 'modules/app.bicep' = [for (appDockerTag, i) in appDockerTags: {
   name: 'app${i}'
   scope: rg
   params: {
@@ -186,7 +186,7 @@ module app 'modules/app.bicep' = [for (appDockerImageTag, i) in appDockerImageTa
     identityType: appIdentity
     serverFarmId: plan.outputs.id
     siteConfig: {
-      linuxFxVersion: 'DOCKER|nginxdemos/hello:${appDockerImageTag}'
+      linuxFxVersion: 'DOCKER|nginxdemos/hello:${appDockerTag}'
       alwaysOn: appAlwaysOn
       http20Enabled: appHttp20Enabled
       minTlsVersion: appMinTlsVersion
@@ -197,7 +197,7 @@ module app 'modules/app.bicep' = [for (appDockerImageTag, i) in appDockerImageTa
   }
 }]
 
-module appsettings 'modules/appsettings.bicep' = [for (appDockerImageTag, i) in appDockerImageTags: {
+module appsettings 'modules/appsettings.bicep' = [for (appDockerTag, i) in appDockerTags: {
   name: 'appsettings${i}'
   scope: rg
   params: {
@@ -230,7 +230,7 @@ module kv 'modules/kv.bicep' = {
     tags: tags
     tenantId: tenantId
     sku: kvSku
-    accessPolicies: [for (appDockerImageTag, i) in appDockerImageTags: {
+    accessPolicies: [for (appDockerTag, i) in appDockerTags: {
       tenantId: tenantId
       objectId: app[i].outputs.identity.principalId
       permissions: kvAppPermissions
@@ -277,7 +277,7 @@ module vnet 'modules/vnet.bicep' = if (vnetToggle) {
   }
 }
 
-output appUrl array = [for (appDockerImageTag, i) in appDockerImageTags: {
+output appUrl array = [for (appDockerTag, i) in appDockerTags: {
   name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
   url: app[i].outputs.defaultHostName
 }]

@@ -33,7 +33,7 @@ variable "planCapacity" {
   }
 }
 
-variable "appDockerImageTags" {
+variable "appDockerTags" {
   type = list(string)
 }
 variable "appIdentity" {
