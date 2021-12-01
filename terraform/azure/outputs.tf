@@ -1,5 +1,5 @@
 output "appUrl" {
-  value = [for app in azurerm_app_service.app : app.default_site_hostname]
+  value = [for app in azurerm_app_service.app : "https://${app.default_site_hostname}/"]
 }
 
 output "kvUrl" {

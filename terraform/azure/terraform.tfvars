@@ -12,9 +12,9 @@ planTier     = "Basic"
 planSize     = "B1"
 planCapacity = 1
 
-appDockerTags = [
-  "latest",
-  "plain-text"
+appDockerImages = [
+  "nginxdemos/hello:latest",
+  "nginxdemos/hello:plain-text"
 ]
 appIdentity              = "SystemAssigned"
 appAlwaysOn              = true

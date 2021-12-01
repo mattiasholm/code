@@ -18,9 +18,9 @@ param planSku string = 'B1'
 @maxValue(10)
 param planCapacity int = 1
 
-param appDockerTags array = [
-  'latest'
-  'plain-text'
+param appDockerImages array = [
+  'nginxdemos/hello:latest'
+  'nginxdemos/hello:plain-text'
 ]
 @allowed([
   'None'
@@ -176,7 +176,7 @@ module plan 'modules/plan.bicep' = {
   }
 }
 
-module app 'modules/app.bicep' = [for (appDockerTag, i) in appDockerTags: {
+module app 'modules/app.bicep' = [for (appDockerImage, i) in appDockerImages: {
   name: 'app${i}'
   scope: rg
   params: {
@@ -186,7 +186,7 @@ module app 'modules/app.bicep' = [for (appDockerTag, i) in appDockerTags: {
     identityType: appIdentity
     serverFarmId: plan.outputs.id
     siteConfig: {
-      linuxFxVersion: 'DOCKER|nginxdemos/hello:${appDockerTag}'
+      linuxFxVersion: 'DOCKER|${appDockerImage}'
       alwaysOn: appAlwaysOn
       http20Enabled: appHttp20Enabled
       minTlsVersion: appMinTlsVersion
@@ -197,7 +197,7 @@ module app 'modules/app.bicep' = [for (appDockerTag, i) in appDockerTags: {
   }
 }]
 
-module appsettings 'modules/appsettings.bicep' = [for (appDockerTag, i) in appDockerTags: {
+module appsettings 'modules/appsettings.bicep' = [for (appDockerImage, i) in appDockerImages: {
   name: 'appsettings${i}'
   scope: rg
   params: {
@@ -230,7 +230,7 @@ module kv 'modules/kv.bicep' = {
     tags: tags
     tenantId: tenantId
     sku: kvSku
-    accessPolicies: [for (appDockerTag, i) in appDockerTags: {
+    accessPolicies: [for (appDockerImage, i) in appDockerImages: {
       tenantId: tenantId
       objectId: app[i].outputs.identity.principalId
       permissions: kvAppPermissions
@@ -277,9 +277,9 @@ module vnet 'modules/vnet.bicep' = if (vnetToggle) {
   }
 }
 
-output appUrl array = [for (appDockerTag, i) in appDockerTags: {
+output appUrl array = [for (appDockerImage, i) in appDockerImages: {
   name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
-  url: app[i].outputs.defaultHostName
+  url: 'https://${app[i].outputs.defaultHostName}/'
 }]
 
 output kvUrl string = kv.outputs.vaultUri
