@@ -42,11 +42,11 @@
             "type": "bool",
             "defaultValue": true
         },
-        "appHttp20Enabled": {
+        "appHttp2": {
             "type": "bool",
             "defaultValue": true
         },
-        "appMinTlsVersion": {
+        "appTlsVersion": {
             "type": "string",
             "defaultValue": "1.2",
             "allowedValues": [
@@ -64,7 +64,7 @@
                 "Disabled"
             ]
         },
-        "appClientAffinityEnabled": {
+        "appClientAffinity": {
             "type": "bool",
             "defaultValue": false
         },
@@ -243,11 +243,11 @@
                 "siteConfig": {
                     "linuxFxVersion": "[variables('linuxFxVersion')[copyIndex()]]",
                     "alwaysOn": "[parameters('appAlwaysOn')]",
-                    "http20Enabled": "[parameters('appHttp20Enabled')]",
-                    "minTlsVersion": "[parameters('appMinTlsVersion')]",
+                    "http20Enabled": "[parameters('appHttp2')]",
+                    "minTlsVersion": "[parameters('appTlsVersion')]",
                     "ftpsState": "[parameters('appFtpsState')]"
                 },
-                "clientAffinityEnabled": "[parameters('appClientAffinityEnabled')]",
+                "clientAffinityEnabled": "[parameters('appClientAffinity')]",
                 "httpsOnly": "[parameters('appHttpsOnly')]"
             },
             "dependsOn": [

@@ -11,14 +11,14 @@ resource "azurerm_app_service" "app" {
   site_config {
     linux_fx_version = "DOCKER|${each.key}"
     always_on        = var.appAlwaysOn
-    http2_enabled    = var.appHttp20Enabled
-    min_tls_version  = var.appMinTlsVersion
+    http2_enabled    = var.appHttp2
+    min_tls_version  = var.appTlsVersion
     ftps_state       = var.appFtpsState
   }
   app_settings = {
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.kv.name};SecretName=${var.kvSecretName})"
     "KEYVAULT_URL"                          = azurerm_key_vault.kv.vault_uri
   }
-  client_affinity_enabled = var.appClientAffinityEnabled
+  client_affinity_enabled = var.appClientAffinity
   https_only              = var.appHttpsOnly
 }

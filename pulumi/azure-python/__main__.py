@@ -15,10 +15,10 @@ planReserved = True if planKind == 'linux' else False
 appDockerImages = config.require_object('appDockerImages')
 appIdentity = config.get('appIdentity') or 'None'
 appAlwaysOn = config.get_bool('appAlwaysOn') or True
-appHttp20Enabled = config.get_bool('appHttp20Enabled') or True
-appMinTlsVersion = config.get('appMinTlsVersion') or '1.2'
+appHttp2 = config.get_bool('appHttp2') or True
+appTlsVersion = config.get('appTlsVersion') or '1.2'
 appFtpsState = config.get('appFtpsState') or 'FtpsOnly'
-appClientAffinityEnabled = config.get_bool('appClientAffinityEnabled') or False
+appClientAffinity = config.get_bool('appClientAffinity') or False
 appHttpsOnly = config.get_bool('appHttpsOnly') or True
 
 appiKind = config.get('appiKind') or 'web'
@@ -64,21 +64,30 @@ for i, appDockerImage in enumerate(appDockerImages):
         site_config=web.SiteConfigArgs(
             linux_fx_version=f'DOCKER|{appDockerImage}',
             always_on=appAlwaysOn,
-            http20_enabled=appHttp20Enabled,
-            min_tls_version=appMinTlsVersion,
-            ftps_state=appFtpsState
+            http20_enabled=appHttp2,
+            # min_tls_version=appTlsVersion,
+            min_tls_version=web.SupportedTlsVersions(appTlsVersion),
+            # ftps_state=appFtpsState,
+            ftps_state=web.FtpsState(appFtpsState),
+            app_settings=[
+                web.NameValuePairArgs(
+                    name="APPLICATIONINSIGHTS_CONNECTION_STRING", value='placeholder'),
+                web.NameValuePairArgs(
+                    name="KEYVAULT_URL", value='placeholder')
+            ],
         ),
-        client_affinity_enabled=appClientAffinityEnabled,
+        client_affinity_enabled=appClientAffinity,
         https_only=appHttpsOnly
     ))
 
-insights.Component(
+appi = insights.Component(
     'appi',
     resource_name_=f'appi-{prefix}-001',
     resource_group_name=rg.name,
     tags=tags,
     kind=appiKind,
-    application_type=appiType
+    # application_type=appiType
+    application_type=insights.ApplicationType(appiType)
 )
 
 st = []
@@ -88,13 +97,16 @@ for i in range(0, stCount):
         account_name=f'st{prefixStripped}{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
         tags=tags,
-        kind=stKind,
+        # kind=stKind,
+        kind=storage.Kind(stKind),
         sku=storage.SkuArgs(
-            name=stSku
+            # name=stSku
+            name=storage.SkuName(stSku)
         ),
         allow_blob_public_access=stPublicAccess,
         enable_https_traffic_only=stHttpsOnly,
-        minimum_tls_version=stTlsVersion
+        # minimum_tls_version=stTlsVersion
+        minimum_tls_version=storage.MinimumTlsVersion(stTlsVersion)
     ))
 
     storage.BlobContainer(

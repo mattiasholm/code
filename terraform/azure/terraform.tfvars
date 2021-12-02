@@ -16,13 +16,13 @@ appDockerImages = [
   "nginxdemos/hello:latest",
   "nginxdemos/hello:plain-text"
 ]
-appIdentity              = "SystemAssigned"
-appAlwaysOn              = true
-appHttp20Enabled         = true
-appMinTlsVersion         = "1.2"
-appFtpsState             = "FtpsOnly"
-appClientAffinityEnabled = false
-appHttpsOnly             = true
+appIdentity       = "SystemAssigned"
+appAlwaysOn       = true
+appHttp2          = true
+appTlsVersion     = "1.2"
+appFtpsState      = "FtpsOnly"
+appClientAffinity = false
+appHttpsOnly      = true
 
 appiType = "web"
 

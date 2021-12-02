@@ -26,16 +26,16 @@
     "appAlwaysOn": {
       "value": true
     },
-    "appHttp20Enabled": {
+    "appHttp2": {
       "value": true
     },
-    "appMinTlsVersion": {
+    "appTlsVersion": {
       "value": "1.2"
     },
     "appFtpsState": {
       "value": "FtpsOnly"
     },
-    "appClientAffinityEnabled": {
+    "appClientAffinity": {
       "value": false
     },
     "appHttpsOnly": {

@@ -18,10 +18,10 @@ config:
     - nginxdemos/hello:plain-text
   azure-python:appIdentity: SystemAssigned
   azure-python:appAlwaysOn: true
-  azure-python:appHttp20Enabled: true
-  azure-python:appMinTlsVersion: "1.2"
+  azure-python:appHttp2: true
+  azure-python:appTlsVersion: "1.2"
   azure-python:appFtpsState: FtpsOnly
-  azure-python:appClientAffinityEnabled: false
+  azure-python:appClientAffinity: false
   azure-python:appHttpsOnly: true
 
   azure-python:appiKind: web

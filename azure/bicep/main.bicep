@@ -28,20 +28,20 @@ param appDockerImages array = [
 ])
 param appIdentity string = 'SystemAssigned' //'None'
 param appAlwaysOn bool = true
-param appHttp20Enabled bool = true
+param appHttp2 bool = true
 @allowed([
   '1.0'
   '1.1'
   '1.2'
 ])
-param appMinTlsVersion string = '1.2'
+param appTlsVersion string = '1.2'
 @allowed([
   'AllAllowed'
   'FtpsOnly'
   'Disabled'
 ])
 param appFtpsState string = 'FtpsOnly'
-param appClientAffinityEnabled bool = false
+param appClientAffinity bool = false
 param appHttpsOnly bool = true
 
 @allowed([
@@ -188,11 +188,11 @@ module app 'modules/app.bicep' = [for (appDockerImage, i) in appDockerImages: {
     siteConfig: {
       linuxFxVersion: 'DOCKER|${appDockerImage}'
       alwaysOn: appAlwaysOn
-      http20Enabled: appHttp20Enabled
-      minTlsVersion: appMinTlsVersion
+      http20Enabled: appHttp2
+      minTlsVersion: appTlsVersion
       ftpsState: appFtpsState
     }
-    clientAffinityEnabled: appClientAffinityEnabled
+    clientAffinityEnabled: appClientAffinity
     httpsOnly: appHttpsOnly
   }
 }]

@@ -48,15 +48,15 @@ variable "appAlwaysOn" {
   type    = bool
   default = true
 }
-variable "appHttp20Enabled" {
+variable "appHttp2" {
   type    = bool
   default = true
 }
-variable "appMinTlsVersion" {
+variable "appTlsVersion" {
   type    = string
   default = "1.2"
   validation {
-    condition     = var.appMinTlsVersion == "1.0" || var.appMinTlsVersion == "1.1" || var.appMinTlsVersion == "1.2"
+    condition     = var.appTlsVersion == "1.0" || var.appTlsVersion == "1.1" || var.appTlsVersion == "1.2"
     error_message = "Invalid value for variable."
   }
 }
@@ -68,7 +68,7 @@ variable "appFtpsState" {
     error_message = "Invalid value for variable."
   }
 }
-variable "appClientAffinityEnabled" {
+variable "appClientAffinity" {
   type    = bool
   default = false
 }
