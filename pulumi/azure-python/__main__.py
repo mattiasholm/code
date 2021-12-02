@@ -1,5 +1,5 @@
 import pulumi
-from pulumi_azure_native import resources, web, storage
+from pulumi_azure_native import resources, web, storage, insights
 
 config = pulumi.Config()
 
@@ -21,6 +21,9 @@ appFtpsState = config.get('appFtpsState') or 'FtpsOnly'
 appClientAffinityEnabled = config.get_bool('appClientAffinityEnabled') or False
 appHttpsOnly = config.get_bool('appHttpsOnly') or True
 
+appiKind = config.get('appiKind') or 'web'
+appiType = config.get('appiType') or 'web'
+
 stCount = config.get_int('stCount') or 1
 stKind = config.get('stKind') or 'StorageV2'
 stSku = config.get('stSku') or 'Standard_LRS'
@@ -28,64 +31,78 @@ stPublicAccess = config.get_bool('stPublicAccess') or False
 stHttpsOnly = config.get_bool('stHttpsOnly') or True
 stTlsVersion = config.get('stTlsVersion') or 'TLS1_2'
 
-rg = resources.ResourceGroup('rg',
-                             resource_group_name=f'rg-{prefix}-001',
-                             tags=tags
-                             )
+rg = resources.ResourceGroup(
+    'rg',
+    resource_group_name=f'rg-{prefix}-001',
+    tags=tags
+)
 
-plan = web.AppServicePlan('plan',
-                          name=f'plan-{prefix}-001',
-                          resource_group_name=rg.name,
-                          tags=tags,
-                          kind=planKind,
-                          sku=web.SkuDescriptionArgs(
-                              name=planSku,
-                              capacity=planCapacity
-                          ),
-                          reserved=planReserved
-                          )
+plan = web.AppServicePlan(
+    'plan',
+    name=f'plan-{prefix}-001',
+    resource_group_name=rg.name,
+    tags=tags,
+    kind=planKind,
+    sku=web.SkuDescriptionArgs(
+        name=planSku,
+        capacity=planCapacity
+    ),
+    reserved=planReserved
+)
 
 app = []
 for i, appDockerImage in enumerate(appDockerImages):
-    app.append(web.WebApp(f'app{i}',
-                          name=f'app-{prefix}-{str(i + 1).zfill(3)}',
-                          resource_group_name=rg.name,
-                          tags=tags,
-                          server_farm_id=plan.name,
-                          identity=web.ManagedServiceIdentityArgs(
-                               type=appIdentity
-                          ),
-                          site_config=web.SiteConfigArgs(
-                              linux_fx_version=f'DOCKER|{appDockerImage}',
-                              always_on=appAlwaysOn,
-                              http20_enabled=appHttp20Enabled,
-                              min_tls_version=appMinTlsVersion,
-                              ftps_state=appFtpsState
-                          ),
-                          client_affinity_enabled=appClientAffinityEnabled,
-                          https_only=appHttpsOnly
-                          ))
+    app.append(web.WebApp(
+        f'app{i}',
+        name=f'app-{prefix}-{str(i + 1).zfill(3)}',
+        resource_group_name=rg.name,
+        tags=tags,
+        server_farm_id=plan.name,
+        identity=web.ManagedServiceIdentityArgs(
+            type=appIdentity
+        ),
+        site_config=web.SiteConfigArgs(
+            linux_fx_version=f'DOCKER|{appDockerImage}',
+            always_on=appAlwaysOn,
+            http20_enabled=appHttp20Enabled,
+            min_tls_version=appMinTlsVersion,
+            ftps_state=appFtpsState
+        ),
+        client_affinity_enabled=appClientAffinityEnabled,
+        https_only=appHttpsOnly
+    ))
+
+insights.Component(
+    'appi',
+    resource_name_=f'appi-{prefix}-001',
+    resource_group_name=rg.name,
+    tags=tags,
+    kind=appiKind,
+    application_type=appiType
+)
 
 st = []
 for i in range(0, stCount):
-    st.append(storage.StorageAccount(f'st{i}',
-                                     account_name=f'st{prefixStripped}{str(i + 1).zfill(3)}',
-                                     resource_group_name=rg.name,
-                                     tags=tags,
-                                     kind=stKind,
-                                     sku=storage.SkuArgs(
-                                         name=stSku
-                                     ),
-                                     allow_blob_public_access=stPublicAccess,
-                                     enable_https_traffic_only=stHttpsOnly,
-                                     minimum_tls_version=stTlsVersion
-                                     ))
+    st.append(storage.StorageAccount(
+        f'st{i}',
+        account_name=f'st{prefixStripped}{str(i + 1).zfill(3)}',
+        resource_group_name=rg.name,
+        tags=tags,
+        kind=stKind,
+        sku=storage.SkuArgs(
+            name=stSku
+        ),
+        allow_blob_public_access=stPublicAccess,
+        enable_https_traffic_only=stHttpsOnly,
+        minimum_tls_version=stTlsVersion
+    ))
 
-    storage.BlobContainer(f'container{i}',
-                          container_name=f'container{prefixStripped}001',
-                          account_name=st[i].name,
-                          resource_group_name=rg.name
-                          )
+    storage.BlobContainer(
+        f'container{i}',
+        container_name=f'container{prefixStripped}001',
+        account_name=st[i].name,
+        resource_group_name=rg.name
+    )
 
 pulumi.export('appUrl', [pulumi.Output.concat(
     'https://', app.default_host_name, '/') for app in app])

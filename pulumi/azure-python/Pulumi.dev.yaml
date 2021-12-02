@@ -24,6 +24,9 @@ config:
   azure-python:appClientAffinityEnabled: false
   azure-python:appHttpsOnly: true
 
+  azure-python:appiKind: web
+  azure-python:appiType: web
+
   azure-python:stCount: 3
   azure-python:stKind: StorageV2
   azure-python:stSku: Standard_LRS
