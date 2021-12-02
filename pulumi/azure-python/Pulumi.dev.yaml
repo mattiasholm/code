@@ -13,7 +13,9 @@ config:
   azure-python:planSku: B1
   azure-python:planCapacity: 1
 
-  azure-python:appDockerImage: nginxdemos/hello:latest
+  azure-python:appDockerImages:
+    - nginxdemos/hello:latest
+    - nginxdemos/hello:plain-text
   azure-python:appIdentity: SystemAssigned
   azure-python:appAlwaysOn: true
   azure-python:appHttp20Enabled: true

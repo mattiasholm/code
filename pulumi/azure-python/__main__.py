@@ -12,7 +12,7 @@ planSku = config.get('planSku') or 'B1'
 planCapacity = config.get_int('planCapacity') or 1
 planReserved = True if planKind == 'linux' else False
 
-appDockerImage = config.require('appDockerImage')
+appDockerImages = config.require_object('appDockerImages')
 appIdentity = config.get('appIdentity') or 'None'
 appAlwaysOn = config.get_bool('appAlwaysOn') or True
 appHttp20Enabled = config.get_bool('appHttp20Enabled') or True
@@ -45,23 +45,26 @@ plan = web.AppServicePlan('plan',
                           reserved=planReserved
                           )
 
-app = web.WebApp('app',
-                 name=f'app-{prefix}-001',
-                 resource_group_name=rg.name,
-                 server_farm_id=plan.name,
-                 identity=web.ManagedServiceIdentityArgs(
-                     type=appIdentity
-                 ),
-                 site_config=web.SiteConfigArgs(
-                     linux_fx_version=f'DOCKER|{appDockerImage}',
-                     always_on=appAlwaysOn,
-                     http20_enabled=appHttp20Enabled,
-                     min_tls_version=appMinTlsVersion,
-                     ftps_state=appFtpsState
-                 ),
-                 client_affinity_enabled=appClientAffinityEnabled,
-                 https_only=appHttpsOnly
-                 )
+app = []
+for i, appDockerImage in enumerate(appDockerImages):
+    app.append(web.WebApp(f'app{i}',
+                          name=f'app-{prefix}-{str(i + 1).zfill(3)}',
+                          resource_group_name=rg.name,
+                          tags=tags,
+                          server_farm_id=plan.name,
+                          identity=web.ManagedServiceIdentityArgs(
+                               type=appIdentity
+                          ),
+                          site_config=web.SiteConfigArgs(
+                              linux_fx_version=f'DOCKER|{appDockerImage}',
+                              always_on=appAlwaysOn,
+                              http20_enabled=appHttp20Enabled,
+                              min_tls_version=appMinTlsVersion,
+                              ftps_state=appFtpsState
+                          ),
+                          client_affinity_enabled=appClientAffinityEnabled,
+                          https_only=appHttpsOnly
+                          ))
 
 st = []
 for i in range(0, stCount):
@@ -84,7 +87,7 @@ for i in range(0, stCount):
                           resource_group_name=rg.name
                           )
 
-pulumi.export('appUrl', pulumi.Output.concat(
-    'https://', app.default_host_name, '/'))
+pulumi.export('appUrl', [pulumi.Output.concat(
+    'https://', app.default_host_name, '/') for app in app])
 
-pulumi.export('stUrl', [x.primary_endpoints for x in st])
+pulumi.export('stUrl', [st.primary_endpoints for st in st])
