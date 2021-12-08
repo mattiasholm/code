@@ -49,9 +49,6 @@ config:
     - Verify
     - Sign
     - Purge
-    - GetRotationPolicy
-    - Rotate
-    - SetRotationPolicy
   azure-python:kvGroupSecretPermissions:
     - Get
     - List

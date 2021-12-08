@@ -52,10 +52,7 @@ kvGroupKeyPermissions = [
   "WrapKey",
   "Verify",
   "Sign",
-  "Purge",
-  "GetRotationPolicy",
-  "Rotate",
-  "SetRotationPolicy"
+  "Purge"
 ]
 kvGroupSecretPermissions = [
   "Get",
