@@ -19,13 +19,18 @@ config:
   azure-python:appIdentity: SystemAssigned
   azure-python:appAlwaysOn: true
   azure-python:appHttp2: true
-  azure-python:appTlsVersion: "1.2"
+  azure-python:appTlsVersion: 1.2
   azure-python:appFtpsState: FtpsOnly
   azure-python:appClientAffinity: false
   azure-python:appHttpsOnly: true
 
   azure-python:appiKind: web
   azure-python:appiType: web
+
+  azure-python:kvSku: standard
+  azure-python:kvAppPermissions:
+    - Get
+    - List
 
   azure-python:stCount: 3
   azure-python:stKind: StorageV2

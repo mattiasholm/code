@@ -1,11 +1,12 @@
 import pulumi
-from pulumi_azure_native import resources, web, storage, insights
+from pulumi_azure_native import authorization, resources, web, insights, keyvault, storage
 
 config = pulumi.Config()
 
 prefix = config.require('prefix')
 prefixStripped = prefix.replace('-', '').lower()
 tags = config.get_object('tags')
+tenantId = authorization.get_client_config().tenant_id
 
 planKind = config.get('planKind') or 'linux'
 planSku = config.get('planSku') or 'B1'
@@ -23,6 +24,10 @@ appHttpsOnly = config.get_bool('appHttpsOnly') or True
 
 appiKind = config.get('appiKind') or 'web'
 appiType = config.get('appiType') or 'web'
+
+kvFamily = 'A'
+kvSku = config.get('kvSku') or 'standard'
+kvAppPermissions = config.get_object('kvAppPermissions')
 
 stCount = config.get_int('stCount') or 1
 stKind = config.get('stKind') or 'StorageV2'
@@ -50,31 +55,30 @@ plan = web.AppServicePlan(
     reserved=planReserved
 )
 
-app = []
+apps = []
 for i, appDockerImage in enumerate(appDockerImages):
-    app.append(web.WebApp(
+    apps.append(web.WebApp(
         f'app{i}',
         name=f'app-{prefix}-{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
         tags=tags,
         server_farm_id=plan.name,
         identity=web.ManagedServiceIdentityArgs(
-            type=appIdentity
+            type=web.ManagedServiceIdentityType(appIdentity)
         ),
         site_config=web.SiteConfigArgs(
             linux_fx_version=f'DOCKER|{appDockerImage}',
             always_on=appAlwaysOn,
             http20_enabled=appHttp2,
-            # min_tls_version=appTlsVersion,
             min_tls_version=web.SupportedTlsVersions(appTlsVersion),
-            # ftps_state=appFtpsState,
+            scm_min_tls_version=web.SupportedTlsVersions(appTlsVersion),
             ftps_state=web.FtpsState(appFtpsState),
             app_settings=[
                 web.NameValuePairArgs(
                     name="APPLICATIONINSIGHTS_CONNECTION_STRING", value='placeholder'),
                 web.NameValuePairArgs(
                     name="KEYVAULT_URL", value='placeholder')
-            ],
+            ]
         ),
         client_affinity_enabled=appClientAffinity,
         https_only=appHttpsOnly
@@ -86,37 +90,59 @@ appi = insights.Component(
     resource_group_name=rg.name,
     tags=tags,
     kind=appiKind,
-    # application_type=appiType
     application_type=insights.ApplicationType(appiType)
 )
 
-st = []
+kv = keyvault.Vault(
+    'kv',
+    vault_name=f'kv-{prefix}-001',
+    resource_group_name=rg.name,
+    tags=tags,
+    properties=keyvault.VaultPropertiesArgs(
+        tenant_id=tenantId,
+        sku=keyvault.SkuArgs(
+            family=keyvault.SkuFamily(kvFamily),
+            name=keyvault.SkuName(kvSku)
+        ),
+        access_policies=[
+            keyvault.AccessPolicyEntryArgs(
+                tenant_id=tenantId,
+                object_id=app.identity.principal_id,
+                permissions=keyvault.PermissionsArgs(
+                    secrets=kvAppPermissions
+                )
+            )
+            for app in apps
+        ]
+    )
+)
+
+sts = []
 for i in range(0, stCount):
-    st.append(storage.StorageAccount(
+    sts.append(storage.StorageAccount(
         f'st{i}',
         account_name=f'st{prefixStripped}{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
         tags=tags,
-        # kind=stKind,
         kind=storage.Kind(stKind),
         sku=storage.SkuArgs(
-            # name=stSku
             name=storage.SkuName(stSku)
         ),
         allow_blob_public_access=stPublicAccess,
         enable_https_traffic_only=stHttpsOnly,
-        # minimum_tls_version=stTlsVersion
         minimum_tls_version=storage.MinimumTlsVersion(stTlsVersion)
     ))
 
     storage.BlobContainer(
         f'container{i}',
         container_name=f'container{prefixStripped}001',
-        account_name=st[i].name,
+        account_name=sts[i].name,
         resource_group_name=rg.name
     )
 
 pulumi.export('appUrl', [pulumi.Output.concat(
-    'https://', app.default_host_name, '/') for app in app])
+    'https://', app.default_host_name, '/') for app in apps])
 
-pulumi.export('stUrl', [st.primary_endpoints for st in st])
+pulumi.export('kvUrl', kv.properties.vault_uri)
+
+pulumi.export('stUrl', [st.primary_endpoints for st in sts])

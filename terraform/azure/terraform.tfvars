@@ -27,7 +27,7 @@ appHttpsOnly      = true
 appiType = "web"
 
 kvSku = "standard"
-kvAppSecretPermissions = [
+kvAppPermissions = [
   "Get",
   "List",
 ]

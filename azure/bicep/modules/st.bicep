@@ -1,4 +1,3 @@
-@minLength(3)
 @maxLength(24)
 param name string
 param location string = resourceGroup().location

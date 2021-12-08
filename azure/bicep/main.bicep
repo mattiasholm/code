@@ -190,6 +190,7 @@ module app 'modules/app.bicep' = [for (appDockerImage, i) in appDockerImages: {
       alwaysOn: appAlwaysOn
       http20Enabled: appHttp2
       minTlsVersion: appTlsVersion
+      scmMinTlsVersion: appTlsVersion
       ftpsState: appFtpsState
     }
     clientAffinityEnabled: appClientAffinity

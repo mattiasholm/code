@@ -245,6 +245,7 @@
                     "alwaysOn": "[parameters('appAlwaysOn')]",
                     "http20Enabled": "[parameters('appHttp2')]",
                     "minTlsVersion": "[parameters('appTlsVersion')]",
+                    "scmMinTlsVersion": "[parameters('appTlsVersion')]",
                     "ftpsState": "[parameters('appFtpsState')]"
                 },
                 "clientAffinityEnabled": "[parameters('appClientAffinity')]",
