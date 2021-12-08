@@ -32,6 +32,7 @@ kvGroupId = config.require('kvGroupId')
 kvGroupKeyPermissions = config.get_object('kvGroupKeyPermissions')
 kvGroupSecretPermissions = config.get_object('kvGroupSecretPermissions')
 kvGroupCertPermissions = config.get_object('kvGroupCertPermissions')
+kvSecretName = 'appiConnectionString'
 
 stCount = config.get_int('stCount') or 1
 stKind = config.get('stKind') or 'StorageV2'
@@ -128,6 +129,17 @@ kv = keyvault.Vault(
                 )
             )
         ]
+    )
+)
+
+keyvault.Secret(
+    'secret',
+    secret_name=kvSecretName,
+    vault_name=kv.name,
+    resource_group_name=rg.name,
+    tags=tags,
+    properties=keyvault.SecretPropertiesArgs(
+        value=appi.connection_string
     )
 )
 
