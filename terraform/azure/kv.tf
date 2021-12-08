@@ -24,7 +24,7 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_app" {
   key_vault_id       = azurerm_key_vault.kv.id
   tenant_id          = local.tenantId
   object_id          = azurerm_app_service.app[each.key].identity.0.principal_id
-  secret_permissions = var.kvAppPermissions
+  secret_permissions = var.kvAppSecretPermissions
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_group" {
@@ -33,7 +33,7 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_group" {
   object_id               = azuread_group.group.id
   key_permissions         = var.kvGroupKeyPermissions
   secret_permissions      = var.kvGroupSecretPermissions
-  certificate_permissions = var.kvGroupCertificatePermissions
+  certificate_permissions = var.kvGroupCertPermissions
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {

@@ -28,9 +28,56 @@ config:
   azure-python:appiType: web
 
   azure-python:kvSku: standard
-  azure-python:kvAppPermissions:
+  azure-python:kvAppSecretPermissions:
     - Get
     - List
+  azure-python:kvGroupId: e810d50b-5f44-4e21-b1c9-eb89653cc2de
+  azure-python:kvGroupKeyPermissions:
+    - Get
+    - List
+    - Update
+    - Create
+    - Import
+    - Delete
+    - Recover
+    - Backup
+    - Restore
+    - Decrypt
+    - Encrypt
+    - UnwrapKey
+    - WrapKey
+    - Verify
+    - Sign
+    - Purge
+    - GetRotationPolicy
+    - Rotate
+    - SetRotationPolicy
+  azure-python:kvGroupSecretPermissions:
+    - Get
+    - List
+    - Set
+    - Delete
+    - Recover
+    - Backup
+    - Restore
+    - Purge
+  azure-python:kvGroupCertPermissions:
+    - Get
+    - List
+    - Update
+    - Create
+    - Import
+    - Delete
+    - Recover
+    - Backup
+    - Restore
+    - ManageContacts
+    - ManageIssuers
+    - GetIssuers
+    - ListIssuers
+    - SetIssuers
+    - DeleteIssuers
+    - Purge
 
   azure-python:stCount: 3
   azure-python:stKind: StorageV2

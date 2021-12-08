@@ -27,7 +27,7 @@ appHttpsOnly      = true
 appiType = "web"
 
 kvSku = "standard"
-kvAppPermissions = [
+kvAppSecretPermissions = [
   "Get",
   "List",
 ]
@@ -52,7 +52,10 @@ kvGroupKeyPermissions = [
   "WrapKey",
   "Verify",
   "Sign",
-  "Purge"
+  "Purge",
+  "GetRotationPolicy",
+  "Rotate",
+  "SetRotationPolicy"
 ]
 kvGroupSecretPermissions = [
   "Get",
@@ -64,7 +67,7 @@ kvGroupSecretPermissions = [
   "Restore",
   "Purge"
 ]
-kvGroupCertificatePermissions = [
+kvGroupCertPermissions = [
   "Get",
   "List",
   "Update",

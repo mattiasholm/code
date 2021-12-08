@@ -89,6 +89,9 @@ param kvGroupPermissions object = {
     'Verify'
     'Sign'
     'Purge'
+    'GetRotationPolicy'
+    'Rotate'
+    'SetRotationPolicy'
   ]
   secrets: [
     'Get'

@@ -27,7 +27,11 @@ appiType = config.get('appiType') or 'web'
 
 kvFamily = 'A'
 kvSku = config.get('kvSku') or 'standard'
-kvAppPermissions = config.get_object('kvAppPermissions')
+kvAppSecretPermissions = config.get_object('kvAppSecretPermissions')
+kvGroupId = config.require('kvGroupId')
+kvGroupKeyPermissions = config.get_object('kvGroupKeyPermissions')
+kvGroupSecretPermissions = config.get_object('kvGroupSecretPermissions')
+kvGroupCertPermissions = config.get_object('kvGroupCertPermissions')
 
 stCount = config.get_int('stCount') or 1
 stKind = config.get('stKind') or 'StorageV2'
@@ -109,10 +113,20 @@ kv = keyvault.Vault(
                 tenant_id=tenantId,
                 object_id=app.identity.principal_id,
                 permissions=keyvault.PermissionsArgs(
-                    secrets=kvAppPermissions
+                    secrets=kvAppSecretPermissions
                 )
             )
             for app in apps
+        ] + [
+            keyvault.AccessPolicyEntryArgs(
+                tenant_id=tenantId,
+                object_id=kvGroupId,
+                permissions=keyvault.PermissionsArgs(
+                    keys=kvGroupKeyPermissions,
+                    secrets=kvGroupSecretPermissions,
+                    certificates=kvGroupCertPermissions
+                )
+            )
         ]
     )
 )
