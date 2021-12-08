@@ -1,5 +1,6 @@
 import pulumi
 from pulumi_azure_native import authorization, resources, web, insights, keyvault, storage
+import pulumi_azuread as azuread
 
 config = pulumi.Config()
 
@@ -28,7 +29,8 @@ appiType = config.get('appiType') or 'web'
 kvFamily = 'A'
 kvSku = config.get('kvSku') or 'standard'
 kvAppSecretPermissions = config.get_object('kvAppSecretPermissions')
-kvGroupId = config.require('kvGroupId')
+kvGroupName = config.require('kvGroupName')
+kvGroupId = azuread.get_group(display_name=kvGroupName).object_id
 kvGroupKeyPermissions = config.get_object('kvGroupKeyPermissions')
 kvGroupSecretPermissions = config.get_object('kvGroupSecretPermissions')
 kvGroupCertPermissions = config.get_object('kvGroupCertPermissions')
