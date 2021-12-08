@@ -150,7 +150,7 @@ param stHttpsOnly bool = true
 param stTlsVersion string = 'TLS1_2'
 
 param vnetToggle bool = true // false
-param vnetAddressPrefix string = ''
+param vnetAddressPrefix string = '10.0.0.0/24' // ''
 
 var prefixStripped = toLower(replace(prefix, '-', ''))
 var location = deployment().location
