@@ -68,15 +68,15 @@ for i, appDockerImage in enumerate(appDockerImages):
         tags=tags,
         server_farm_id=plan.name,
         identity=web.ManagedServiceIdentityArgs(
-            type=web.ManagedServiceIdentityType(appIdentity)
+            type=appIdentity
         ),
         site_config=web.SiteConfigArgs(
             linux_fx_version=f'DOCKER|{appDockerImage}',
             always_on=appAlwaysOn,
             http20_enabled=appHttp2,
-            min_tls_version=web.SupportedTlsVersions(appTlsVersion),
-            scm_min_tls_version=web.SupportedTlsVersions(appTlsVersion),
-            ftps_state=web.FtpsState(appFtpsState),
+            min_tls_version=appTlsVersion,
+            scm_min_tls_version=appTlsVersion,
+            ftps_state=appFtpsState,
             app_settings=[
                 web.NameValuePairArgs(
                     name="APPLICATIONINSIGHTS_CONNECTION_STRING", value='placeholder'),
@@ -94,7 +94,7 @@ appi = insights.Component(
     resource_group_name=rg.name,
     tags=tags,
     kind=appiKind,
-    application_type=insights.ApplicationType(appiType)
+    application_type=appiType
 )
 
 kv = keyvault.Vault(
@@ -105,8 +105,8 @@ kv = keyvault.Vault(
     properties=keyvault.VaultPropertiesArgs(
         tenant_id=tenantId,
         sku=keyvault.SkuArgs(
-            family=keyvault.SkuFamily(kvFamily),
-            name=keyvault.SkuName(kvSku)
+            family=kvFamily,
+            name=kvSku
         ),
         access_policies=[
             keyvault.AccessPolicyEntryArgs(
@@ -138,13 +138,13 @@ for i in range(0, stCount):
         account_name=f'st{prefixStripped}{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
         tags=tags,
-        kind=storage.Kind(stKind),
+        kind=stKind,
         sku=storage.SkuArgs(
-            name=storage.SkuName(stSku)
+            name=stSku
         ),
         allow_blob_public_access=stPublicAccess,
         enable_https_traffic_only=stHttpsOnly,
-        minimum_tls_version=storage.MinimumTlsVersion(stTlsVersion)
+        minimum_tls_version=stTlsVersion
     ))
 
     storage.BlobContainer(
