@@ -26,7 +26,7 @@ param appDockerImages array = [
   'None'
   'SystemAssigned'
 ])
-param appIdentity string = 'SystemAssigned' //'None'
+param appIdentity string = 'SystemAssigned' // 'None'
 param appAlwaysOn bool = true
 param appHttp2 bool = true
 @allowed([
@@ -149,8 +149,8 @@ param stHttpsOnly bool = true
 ])
 param stTlsVersion string = 'TLS1_2'
 
-param vnetToggle bool = true
-param vnetAddressPrefix string = '10.0.0.0/24'
+param vnetToggle bool = true // false
+param vnetAddressPrefix string = ''
 
 var prefixStripped = toLower(replace(prefix, '-', ''))
 var location = deployment().location

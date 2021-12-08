@@ -180,8 +180,9 @@ variable "stTlsVersion" {
 
 variable "vnetToggle" {
   type    = bool
-  default = true
+  default = false
 }
 variable "vnetAddressPrefix" {
-  type = string
+  type    = string
+  default = ""
 }

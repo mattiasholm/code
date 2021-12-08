@@ -156,10 +156,11 @@
         },
         "vnetToggle": {
             "type": "bool",
-            "defaultValue": true
+            "defaultValue": false
         },
         "vnetAddressPrefix": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "variables": {

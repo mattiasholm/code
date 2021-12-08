@@ -1,5 +1,5 @@
 import pulumi
-from pulumi_azure_native import authorization, resources, web, insights, keyvault, storage
+from pulumi_azure_native import authorization, resources, web, insights, keyvault, storage, network
 import pulumi_azuread as azuread
 
 config = pulumi.Config()
@@ -43,6 +43,9 @@ stPublicAccess = config.get_bool('stPublicAccess') or False
 stHttpsOnly = config.get_bool('stHttpsOnly') or True
 stTlsVersion = config.get('stTlsVersion') or 'TLS1_2'
 
+vnetToggle = config.get_bool('vnetToggle') or False
+vnetAddressPrefix = config.get('vnetAddressPrefix')
+
 rg = resources.ResourceGroup(
     'rg',
     resource_group_name=f'rg-{prefix}-001',
@@ -82,9 +85,9 @@ for i, appDockerImage in enumerate(appDockerImages):
             ftps_state=appFtpsState,
             app_settings=[
                 web.NameValuePairArgs(
-                    name="APPLICATIONINSIGHTS_CONNECTION_STRING", value='placeholder'),
+                    name='APPLICATIONINSIGHTS_CONNECTION_STRING', value='placeholder'),
                 web.NameValuePairArgs(
-                    name="KEYVAULT_URL", value='placeholder')
+                    name='KEYVAULT_URL', value='placeholder')
             ]
         ),
         client_affinity_enabled=appClientAffinity,
@@ -166,6 +169,25 @@ for i in range(0, stCount):
         container_name=f'container{prefixStripped}001',
         account_name=sts[i].name,
         resource_group_name=rg.name
+    )
+
+if vnetToggle:
+    network.VirtualNetwork(
+        'vnet',
+        virtual_network_name=f'vnet-{prefix}-001',
+        resource_group_name=rg.name,
+        tags=tags,
+        address_space=network.AddressSpaceArgs(
+            address_prefixes=[
+                vnetAddressPrefix
+            ]
+        ),
+        subnets=[
+            network.SubnetArgs(
+                name=f'snet-{prefix}-001',
+                address_prefix=vnetAddressPrefix
+            )
+        ]
     )
 
 pulumi.export('appUrl', [pulumi.Output.concat(
