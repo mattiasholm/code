@@ -8,9 +8,8 @@
 /**/.terraform.lock.hcl
 /**/tfplan
 
-/**/*.pyc
-/**/venv/
 /**/__pycache__/
+/**/venv/
 
 /**/stereo2mono/input/
 /**/stereo2mono/output/
