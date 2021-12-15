@@ -15,10 +15,10 @@ plan = web.AppServicePlan(
     resource_group_name=rg.name,
     tags=config.tags,
     kind=config.planKind,
-    sku=web.SkuDescriptionArgs(
-        name=config.planSku,
-        capacity=config.planCapacity
-    ),
+    sku={
+        'name': config.planSku,
+        'capacity': config.planCapacity
+    },
     reserved=config.planReserved
 )
 
@@ -30,17 +30,17 @@ for i, appDockerImage in enumerate(config.appDockerImages):
         resource_group_name=rg.name,
         tags=config.tags,
         server_farm_id=plan.name,
-        identity=web.ManagedServiceIdentityArgs(
-            type=config.appIdentity
-        ),
-        site_config=web.SiteConfigArgs(
-            linux_fx_version=f'DOCKER|{appDockerImage}',
-            always_on=config.appAlwaysOn,
-            http20_enabled=config.appHttp2,
-            min_tls_version=config.appTlsVersion,
-            scm_min_tls_version=config.appTlsVersion,
-            ftps_state=config.appFtpsState
-        ),
+        identity={
+            "type": config.appIdentity
+        },
+        site_config={
+            'linux_fx_version': f'DOCKER|{appDockerImage}',
+            'always_on': config.appAlwaysOn,
+            'http20_enabled': config.appHttp2,
+            'min_tls_version': config.appTlsVersion,
+            'scm_min_tls_version': config.appTlsVersion,
+            'ftps_state': config.appFtpsState
+        },
         client_affinity_enabled=config.appClientAffinity,
         https_only=config.appHttpsOnly
     )
@@ -60,33 +60,33 @@ kv = keyvault.Vault(
     vault_name=f'kv-{config.prefix}-001',
     resource_group_name=rg.name,
     tags=config.tags,
-    properties=keyvault.VaultPropertiesArgs(
-        tenant_id=config.tenantId,
-        sku=keyvault.SkuArgs(
-            family=config.kvFamily,
-            name=config.kvSku
-        ),
-        access_policies=[
-            keyvault.AccessPolicyEntryArgs(
-                tenant_id=config.tenantId,
-                object_id=app.identity.principal_id,
-                permissions=keyvault.PermissionsArgs(
-                    secrets=config.kvAppSecretPermissions
-                )
-            )
+    properties={
+        'tenant_id': config.tenantId,
+        'sku': {
+            'family': config.kvFamily,
+            'name': config.kvSku
+        },
+        'access_policies': [
+            {
+                'tenant_id': config.tenantId,
+                'object_id': app.identity.principal_id,
+                'permissions': {
+                    'secrets': config.kvAppSecretPermissions
+                }
+            }
             for app in apps
         ] + [
-            keyvault.AccessPolicyEntryArgs(
-                tenant_id=config.tenantId,
-                object_id=config.kvGroupId,
-                permissions=keyvault.PermissionsArgs(
-                    keys=config.kvGroupKeyPermissions,
-                    secrets=config.kvGroupSecretPermissions,
-                    certificates=config.kvGroupCertPermissions
-                )
-            )
+            {
+                'tenant_id': config.tenantId,
+                'object_id': config.kvGroupId,
+                'permissions': {
+                    'keys': config.kvGroupKeyPermissions,
+                    'secrets': config.kvGroupSecretPermissions,
+                    'certificates': config.kvGroupCertPermissions
+                }
+            }
         ]
-    )
+    }
 )
 
 for i, app in enumerate(apps):
@@ -106,9 +106,9 @@ keyvault.Secret(
     vault_name=kv.name,
     resource_group_name=rg.name,
     tags=config.tags,
-    properties=keyvault.SecretPropertiesArgs(
-        value=appi.connection_string
-    )
+    properties={
+        'value': appi.connection_string
+    }
 )
 
 sts = []
@@ -119,9 +119,9 @@ for i in range(0, config.stCount):
         resource_group_name=rg.name,
         tags=config.tags,
         kind=config.stKind,
-        sku=storage.SkuArgs(
-            name=config.stSku
-        ),
+        sku={
+            'name': config.stSku
+        },
         allow_blob_public_access=config.stPublicAccess,
         enable_https_traffic_only=config.stHttpsOnly,
         minimum_tls_version=config.stTlsVersion
@@ -141,16 +141,16 @@ if config.vnetToggle:
         virtual_network_name=f'vnet-{config.prefix}-001',
         resource_group_name=rg.name,
         tags=config.tags,
-        address_space=network.AddressSpaceArgs(
-            address_prefixes=[
+        address_space={
+            'address_prefixes': [
                 config.vnetAddressPrefix
             ]
-        ),
+        },
         subnets=[
-            network.SubnetArgs(
-                name=f'snet-{config.prefix}-001',
-                address_prefix=config.vnetAddressPrefix
-            )
+            {
+                'name': f'snet-{config.prefix}-001',
+                'address_prefix': config.vnetAddressPrefix
+            }
         ]
     )
 
