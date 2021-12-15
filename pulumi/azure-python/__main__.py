@@ -31,7 +31,7 @@ for i, appDockerImage in enumerate(config.appDockerImages):
         tags=config.tags,
         server_farm_id=plan.name,
         identity={
-            "type": config.appIdentity
+            'type': config.appIdentity
         },
         site_config={
             'linux_fx_version': f'DOCKER|{appDockerImage}',
