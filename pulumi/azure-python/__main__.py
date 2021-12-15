@@ -24,7 +24,7 @@ plan = web.AppServicePlan(
 
 apps = []
 for i, appDockerImage in enumerate(config.appDockerImages):
-    apps.append(web.WebApp(
+    app = web.WebApp(
         f'app{i}',
         name=f'app-{config.prefix}-{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
@@ -39,17 +39,12 @@ for i, appDockerImage in enumerate(config.appDockerImages):
             http20_enabled=config.appHttp2,
             min_tls_version=config.appTlsVersion,
             scm_min_tls_version=config.appTlsVersion,
-            ftps_state=config.appFtpsState,
-            app_settings=[
-                # web.NameValuePairArgs(
-                #     name='APPLICATIONINSIGHTS_CONNECTION_STRING', value=f'@Microsoft.KeyVault(VaultName={kv.name};SecretName={config.kvSecretName})'),
-                # web.NameValuePairArgs(
-                #     name='KEYVAULT_URL', value=kv.properties.vault_uri)
-            ]
+            ftps_state=config.appFtpsState
         ),
         client_affinity_enabled=config.appClientAffinity,
         https_only=config.appHttpsOnly
-    ))
+    )
+    apps.append(app)
 
 appi = insights.Component(
     'appi',
@@ -94,6 +89,17 @@ kv = keyvault.Vault(
     )
 )
 
+for i, app in enumerate(apps):
+    web.WebAppApplicationSettings(
+        f'appsettings{i}',
+        name=app.name,
+        resource_group_name=rg.name,
+        properties={
+            'APPLICATIONINSIGHTS_CONNECTION_STRING': pulumi.Output.concat('@Microsoft.KeyVault(VaultName=', kv.name, ';SecretName=', config.kvSecretName, ')'),
+            'KEYVAULT_URL': kv.properties.vault_uri
+        }
+    )
+
 keyvault.Secret(
     'secret',
     secret_name=config.kvSecretName,
@@ -107,7 +113,7 @@ keyvault.Secret(
 
 sts = []
 for i in range(0, config.stCount):
-    sts.append(storage.StorageAccount(
+    st = storage.StorageAccount(
         f'st{i}',
         account_name=f'st{config.prefixStripped}{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
@@ -119,12 +125,13 @@ for i in range(0, config.stCount):
         allow_blob_public_access=config.stPublicAccess,
         enable_https_traffic_only=config.stHttpsOnly,
         minimum_tls_version=config.stTlsVersion
-    ))
+    )
+    sts.append(st)
 
     storage.BlobContainer(
         f'container{i}',
         container_name=f'container{config.prefixStripped}001',
-        account_name=sts[i].name,
+        account_name=st.name,
         resource_group_name=rg.name
     )
 
@@ -153,8 +160,3 @@ pulumi.export('appUrl', [pulumi.Output.concat(
 pulumi.export('kvUrl', kv.properties.vault_uri)
 
 pulumi.export('stUrl', [st.primary_endpoints for st in sts])
-
-# pulumi.export('APPLICATIONINSIGHTS_CONNECTION_STRING', pulumi.Output.concat(
-#     '@Microsoft.KeyVault(VaultName=', kv.name, ';SecretName=', config.kvSecretName, ')'))
-
-# pulumi.export('KEYVAULT_URL', kv.properties.vault_uri)
