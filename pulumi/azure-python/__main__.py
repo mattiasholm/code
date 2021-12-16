@@ -1,6 +1,5 @@
 import pulumi
 from pulumi_azure_native import resources, web, insights, keyvault, storage, network
-
 import config
 
 rg = resources.ResourceGroup(
