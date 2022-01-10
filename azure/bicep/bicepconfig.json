@@ -10,10 +10,16 @@
                 "no-hardcoded-env-urls": {
                     "level": "error"
                 },
+                "no-unnecessary-dependson": {
+                    "level": "error"
+                },
                 "no-unused-params": {
                     "level": "error"
                 },
                 "no-unused-vars": {
+                    "level": "error"
+                },
+                "outputs-should-not-contain-secrets": {
                     "level": "error"
                 },
                 "prefer-interpolation": {
@@ -23,6 +29,12 @@
                     "level": "error"
                 },
                 "simplify-interpolation": {
+                    "level": "error"
+                },
+                "use-protectedsettings-for-commandtoexecute-secrets": {
+                    "level": "error"
+                },
+                "use-stable-vm-image": {
                     "level": "error"
                 }
             }
