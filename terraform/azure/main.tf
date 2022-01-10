@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.0.0"
+  required_version = "~> 1.1.0"
 
   backend "remote" {
     organization = "mattiasholm"
@@ -12,12 +12,12 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.81.0"
+      version = "~> 2.91.0"
     }
 
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 2.7.0"
+      version = "~> 2.14.0"
     }
   }
 }
