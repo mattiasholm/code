@@ -15,6 +15,7 @@ exts=(
     "ms-azure-devops.azure-pipelines"
     "ms-azuretools.vscode-docker"
     "ms-mssql.mssql"
+    "gsgben.fortigate-fortios-syntax"
     "redhat.vscode-yaml"
     "dotjoshjohnson.xml"
     "mechatroner.rainbow-csv"
