@@ -15,7 +15,7 @@ foreach ($TagValue in $TagValues) {
     Start-AzVM -Name $VM.Name -ResourceGroupName $VM.ResourceGroupName
   }
 
-  if ($null -eq $VMs) {
+  if ($null -eq $VMs) {
     "-"
   }
   ""

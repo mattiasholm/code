@@ -113,7 +113,7 @@ sudo scutil --set ComputerName <hostname>
 
 ## Copy to clipboard:
 ```shell
-<command> | pbcopy
+<command> | pbcopy
 ```
 
 ## Paste from clipboard:

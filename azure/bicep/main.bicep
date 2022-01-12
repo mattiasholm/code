@@ -1,5 +1,6 @@
 targetScope = 'subscription'
 
+@maxLength(17)
 param prefix string = 'holm-bicep'
 param tags object = {
   Application: 'Bicep'

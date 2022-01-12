@@ -3,7 +3,8 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "prefix": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 17
         },
         "location": {
             "type": "string",

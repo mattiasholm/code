@@ -1,6 +1,7 @@
 import pulumi
 from pulumi_azure_native import authorization
 import pulumi_azuread as azuread
+from ipaddress import ip_network
 
 config = pulumi.Config()
 
@@ -45,3 +46,14 @@ stTlsVersion = config.get('stTlsVersion') or 'TLS1_2'
 
 vnetToggle = config.get_bool('vnetToggle') or False
 vnetAddressPrefix = config.get('vnetAddressPrefix')
+
+if len(prefix) > 17:
+    raise ValueError(f"'{prefix}' is longer than 17")
+
+network = ip_network(vnetAddressPrefix)
+
+if not network.is_private:
+    raise ValueError(f"'{vnetAddressPrefix}' is not a private network")
+
+if network.prefixlen > 24:
+    raise ValueError(f"'{vnetAddressPrefix}' is smaller than /24")

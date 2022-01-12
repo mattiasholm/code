@@ -154,7 +154,7 @@ function gba
             set firstBranch $argv[1]
             set secondBranch $argv[2]
         case '*'
-            echo 'usage: gba [<second-branch> | <first-branch> <second-branch>]'
+            echo 'usage: gba [<second-branch> | <first-branch> <second-branch>]'
             return
     end
 

@@ -165,7 +165,7 @@ function gba() {
         secondBranch="$2"
         ;;
     *)
-        echo 'usage: gba [<second-branch> | <first-branch> <second-branch>]'
+        echo 'usage: gba [<second-branch> | <first-branch> <second-branch>]'
         return
         ;;
     esac

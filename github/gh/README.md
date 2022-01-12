@@ -393,44 +393,44 @@ gh workflow list -a
 
 ## Show a specific GitHub Actions workflow:
 ```shell
-gh workflow view <id | name | filename>
+gh workflow view <id | name | filename>
 ```
 
 ## Show a specific GitHub Actions workflow in YAML:
 ```shell
-gh workflow view <id | name | filename> --yaml
-gh workflow view <id | name | filename> -y
+gh workflow view <id | name | filename> --yaml
+gh workflow view <id | name | filename> -y
 ```
 
 ## Show a specific GitHub Actions workflow in a browser:
 ```shell
-gh workflow view <id | name | filename> --web
-gh workflow view <id | name | filename> -w
+gh workflow view <id | name | filename> --web
+gh workflow view <id | name | filename> -w
 ```
 
 <br><br>
 
 ## Enable a specific GitHub Actions workflow:
 ```shell
-gh workflow enable <id | name | filename>
+gh workflow enable <id | name | filename>
 ```
 
 ## Disable a specific GitHub Actions workflow:
 ```shell
-gh workflow disable <id | name | filename>
+gh workflow disable <id | name | filename>
 ```
 
 <br><br>
 
 ## Run a specific GitHub Actions workflow:
 ```shell
-gh workflow run <id | name | filename>
+gh workflow run <id | name | filename>
 ```
 
 ## Run a specific GitHub Actions workflow in a specific branch or tag:
 ```shell
-gh workflow run <id | name | filename> --ref <branch-name | tag-name>
-gh workflow run <id | name | filename> -r <branch-name | tag-name>
+gh workflow run <id | name | filename> --ref <branch-name | tag-name>
+gh workflow run <id | name | filename> -r <branch-name | tag-name>
 ```
 
 <br><br>
@@ -448,8 +448,8 @@ gh run list -R <github-account>/<repo-name>
 
 ## List runs for a specific GitHub Actions workflow:
 ```shell
-gh run list --workflow <id | name | filename>
-gh run list -w <id | name | filename>
+gh run list --workflow <id | name | filename>
+gh run list -w <id | name | filename>
 ```
 
 <br><br>

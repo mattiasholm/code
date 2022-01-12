@@ -3,4 +3,4 @@ ResourceContainers
 | order by name asc
 | project name, type
 | limit 5
-| union (Resources | order by name asc | project name, type | limit 5)
+| union (Resources | order by name asc | project name, type | limit 5)
