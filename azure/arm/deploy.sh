@@ -20,7 +20,8 @@ function CreateResourceGroup() {
     az group create \
         --name $resourceGroup \
         --location $location \
-        --tags ${tags[*]}
+        --tags ${tags[*]} \
+        --subscription $subscriptionId
 }
 
 function Deploy() {
