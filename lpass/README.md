@@ -123,17 +123,17 @@ lpass duplicate <id>
 
 <br><br>
 
-## Export entire vault to standard output (use with caution!);
+## Export entire vault to standard output:
 ```shell
 lpass export
 ```
 
-## Export entire vault to a CSV file (use with caution!):
+## Export entire vault to a CSV file:
 ```shell
 lpass export > <path>
 ```
 
-## Export only entries that match a specific pattern (use with caution!);
+## Export only entries that match a specific pattern:
 ```shell
 lpass export | grep -- <pattern>
 ```

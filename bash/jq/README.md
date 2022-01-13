@@ -36,7 +36,7 @@ cat <filename> | jq .<key-name> | jq --raw-output 'to_entries|map("\(.key)=\"\(.
 cat <filename> | jq .<key-name> | jq -r 'to_entries|map("\(.key)=\"\(.value|tostring)\"")|.[]'
 ```
 
-## Get all elements of an array;
+## Get all elements of an array:
 ```shell
 cat <filename> | jq ".<key-name> | .[]"
 cat <filename> | jq .<key-name> | jq .[]
