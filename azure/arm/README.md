@@ -1,5 +1,7 @@
 [![Azure ARM](https://github.com/mattiasholm/code/actions/workflows/azure-arm.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-arm.yml)
 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmattiasholm%2Fcode%2Fmain%2Fazure%2Farm%2Fmain.json)
+
 # Cheat Sheet - ARM
 
 <br>
