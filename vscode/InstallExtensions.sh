@@ -22,6 +22,7 @@ exts=(
     "yzhang.markdown-all-in-one"
     "bierner.markdown-emoji"
     "bierner.markdown-footnotes"
+    "tht13.html-preview-vscode"
     "waderyan.gitblame"
     "gurumukhi.selected-lines-count"
     "ms-vsliveshare.vsliveshare"
