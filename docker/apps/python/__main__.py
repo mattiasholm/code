@@ -4,8 +4,6 @@
 
 
 def greeting(name):
-
-    #    print("Hello world!")
     print("Hello {0}!".format(name))
 
 

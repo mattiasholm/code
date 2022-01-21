@@ -6,7 +6,11 @@
 https://blog.logrocket.com/how-to-run-sql-server-in-a-docker-container/
 
 ## Provision mssql with Docker Compose YAML file:
+```shell
 docker-compose up -d
+```
 
 ## Connect to mssql:
-mssql -u sa -p WSsqE9yGiNsG
+```shell
+mssql -u sa -p <password>
+```
