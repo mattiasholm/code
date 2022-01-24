@@ -77,6 +77,7 @@ brew install git &&
 
 brew install azure-cli &&
     (
+        az init
         az extension add --name azure-devops
         az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
     )

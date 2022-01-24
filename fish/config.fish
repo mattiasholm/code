@@ -29,6 +29,7 @@ alias p='pulumi'
 alias t='terraform'
 
 alias cl='clear'
+alias cls='clear'
 alias cx='chmod +x'
 alias er='echo $status'
 alias fc='fish_config'
