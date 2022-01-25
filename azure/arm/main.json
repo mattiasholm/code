@@ -288,7 +288,7 @@
         },
         {
             "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2021-06-01-preview",
+            "apiVersion": "2021-10-01",
             "name": "[variables('kvName')]",
             "location": "[parameters('location')]",
             "tags": "[variables('tags')]",
@@ -318,7 +318,7 @@
             "resources": [
                 {
                     "type": "accessPolicies",
-                    "apiVersion": "2021-06-01-preview",
+                    "apiVersion": "2021-10-01",
                     "name": "add",
                     "properties": {
                         "accessPolicies": [
@@ -335,7 +335,7 @@
                 },
                 {
                     "type": "secrets",
-                    "apiVersion": "2021-06-01-preview",
+                    "apiVersion": "2021-10-01",
                     "name": "[variables('kvSecretName')]",
                     "tags": "[variables('tags')]",
                     "properties": {

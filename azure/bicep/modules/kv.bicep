@@ -15,7 +15,7 @@ param secrets array
 
 var family = 'A'
 
-resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
+resource kv 'Microsoft.KeyVault/vaults@2021-10-01' = {
   name: name
   location: location
   tags: tags
