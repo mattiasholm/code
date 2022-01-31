@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - pulumi/azure-typescript/**
-      - .github/workflows/azure-pulumi.yml
+      - .github/workflows/azure-typescript.yml
       - "!**.md"
 
   workflow_dispatch:
