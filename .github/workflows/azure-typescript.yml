@@ -36,11 +36,11 @@ jobs:
       - name: Install dependencies
         run: npm install --production
 
-      # - name: Setup cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ${{ env.path }}/node_modules/
-      #     key: ${{ runner.os }}-${{ hashFiles(format('{0}/package.json', env.path)) }}
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.path }}/node_modules/
+          key: ${{ runner.os }}-${{ hashFiles(format('{0}/package.json', env.path)) }}
 
       - name: Pulumi Preview
         uses: pulumi/actions@v3
@@ -62,11 +62,11 @@ jobs:
       - name: Install dependencies
         run: npm install --production
 
-      # - name: Setup cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ${{ env.path }}/node_modules/
-      #     key: ${{ runner.os }}-${{ hashFiles(format('{0}/package.json', env.path)) }}
+      - name: Setup cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.path }}/node_modules/
+          key: ${{ runner.os }}-${{ hashFiles(format('{0}/package.json', env.path)) }}
 
       - name: Pulumi Up
         uses: pulumi/actions@v3
