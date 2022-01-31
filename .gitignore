@@ -11,5 +11,7 @@
 /**/__pycache__/
 /**/venv/
 
+/**/node_modules/
+
 /**/stereo2mono/input/
 /**/stereo2mono/output/

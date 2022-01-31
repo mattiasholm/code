@@ -1,0 +1,88 @@
+config:
+  azure-native:location: WestEurope
+  azure-native:subscriptionId: 9b184a26-7fff-49ed-9230-d11d484ad51b
+  azure-native:tenantId: 9e042b3b-36c4-4b99-8236-728c73166cd9
+
+  azure-typescript:prefix: holm-typescript
+  azure-typescript:tags:
+    Application: TypeScript
+    Company: Holm
+    Environment: Dev
+    Owner: mattias.holm@live.com
+
+  azure-typescript:planKind: linux
+  azure-typescript:planSku: B1
+  azure-typescript:planCapacity: 1
+
+  azure-typescript:appDockerImages:
+    - nginxdemos/hello:latest
+    - nginxdemos/hello:plain-text
+  azure-typescript:appIdentity: SystemAssigned
+  azure-typescript:appAlwaysOn: true
+  azure-typescript:appHttp2: true
+  azure-typescript:appTlsVersion: 1.2
+  azure-typescript:appFtpsState: FtpsOnly
+  azure-typescript:appClientAffinity: false
+  azure-typescript:appHttpsOnly: true
+
+  azure-typescript:appiKind: web
+  azure-typescript:appiType: web
+
+  azure-typescript:kvSku: standard
+  azure-typescript:kvAppSecretPermissions:
+    - Get
+    - List
+  azure-typescript:kvGroupName: AzureRBAC-KeyVault
+  azure-typescript:kvGroupKeyPermissions:
+    - Get
+    - List
+    - Update
+    - Create
+    - Import
+    - Delete
+    - Recover
+    - Backup
+    - Restore
+    - Decrypt
+    - Encrypt
+    - UnwrapKey
+    - WrapKey
+    - Verify
+    - Sign
+    - Purge
+  azure-typescript:kvGroupSecretPermissions:
+    - Get
+    - List
+    - Set
+    - Delete
+    - Recover
+    - Backup
+    - Restore
+    - Purge
+  azure-typescript:kvGroupCertPermissions:
+    - Get
+    - List
+    - Update
+    - Create
+    - Import
+    - Delete
+    - Recover
+    - Backup
+    - Restore
+    - ManageContacts
+    - ManageIssuers
+    - GetIssuers
+    - ListIssuers
+    - SetIssuers
+    - DeleteIssuers
+    - Purge
+
+  azure-typescript:stCount: 3
+  azure-typescript:stKind: StorageV2
+  azure-typescript:stSku: Standard_LRS
+  azure-typescript:stPublicAccess: false
+  azure-typescript:stHttpsOnly: true
+  azure-typescript:stTlsVersion: TLS1_2
+
+  azure-typescript:vnetToggle: true
+  azure-typescript:vnetAddressPrefix: 10.0.0.0/24

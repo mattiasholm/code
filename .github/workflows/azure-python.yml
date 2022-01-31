@@ -1,4 +1,4 @@
-name: Azure Pulumi
+name: Azure Python
 
 on:
   push:

@@ -3,9 +3,9 @@ config:
   azure-native:subscriptionId: 9b184a26-7fff-49ed-9230-d11d484ad51b
   azure-native:tenantId: 9e042b3b-36c4-4b99-8236-728c73166cd9
 
-  azure-python:prefix: holm-pulumi
+  azure-python:prefix: holm-python
   azure-python:tags:
-    Application: Pulumi
+    Application: Python
     Company: Holm
     Environment: Dev
     Owner: mattias.holm@live.com
