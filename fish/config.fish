@@ -182,7 +182,7 @@ function midi --argument-names abcFile transposeSteps
         set transposeSteps 0
     end
 
-    set type (grep 'R:' $abcFile | sed 's/R://')
+    set type (grep 'R:' $abcFile --max-count 1 | sed 's/R://')
 
     switch $type
         case barndance

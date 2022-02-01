@@ -197,7 +197,7 @@ function midi() {
     fi
 
     abcFile="$1"
-    type=$(grep "R:" "$abcFile" | sed 's/R://')
+    type=$(grep "R:" "$abcFile" --max-count 1 | sed 's/R://')
 
     case "$type" in
     "barndance")
