@@ -207,7 +207,7 @@ function midi --argument-names abcFile transposeSteps
         case strathspey
             set tempo 140
         case waltz
-            set tempo 90
+            set tempo 100
         case '*'
             set tempo 120
             echo (set_color bryellow) WARNING: Tune type \"$type\" not recognized (set_color normal)
