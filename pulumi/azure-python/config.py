@@ -1,14 +1,14 @@
 import pulumi
-from pulumi_azure_native import authorization
+import pulumi_azure_native as azure
 import pulumi_azuread as azuread
-from ipaddress import ip_network
+import ipaddress
 
 config = pulumi.Config()
 
 prefix = config.require('prefix')
 prefixStripped = prefix.replace('-', '').lower()
 tags = config.get_object('tags')
-tenantId = authorization.get_client_config().tenant_id
+tenantId = azure.authorization.get_client_config().tenant_id
 
 planKind = config.get('planKind') or 'linux'
 planSku = config.get('planSku') or 'B1'
@@ -50,7 +50,7 @@ vnetAddressPrefix = config.get('vnetAddressPrefix')
 if len(prefix) > 17:
     raise ValueError(f"'{prefix}' is longer than 17")
 
-network = ip_network(vnetAddressPrefix)
+network = ipaddress.ip_network(vnetAddressPrefix)
 
 if not network.is_private:
     raise ValueError(f"'{vnetAddressPrefix}' is not a private network")

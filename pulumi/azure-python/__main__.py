@@ -1,14 +1,14 @@
 import pulumi
-from pulumi_azure_native import resources, web, insights, keyvault, storage, network
+import pulumi_azure_native as azure
 import config
 
-rg = resources.ResourceGroup(
+rg = azure.resources.ResourceGroup(
     'rg',
     resource_group_name=f'rg-{config.prefix}-001',
     tags=config.tags
 )
 
-plan = web.AppServicePlan(
+plan = azure.web.AppServicePlan(
     'plan',
     name=f'plan-{config.prefix}-001',
     resource_group_name=rg.name,
@@ -23,7 +23,7 @@ plan = web.AppServicePlan(
 
 apps = []
 for i, appDockerImage in enumerate(config.appDockerImages):
-    app = web.WebApp(
+    app = azure.web.WebApp(
         f'app{i}',
         name=f'app-{config.prefix}-{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
@@ -45,7 +45,7 @@ for i, appDockerImage in enumerate(config.appDockerImages):
     )
     apps.append(app)
 
-appi = insights.Component(
+appi = azure.insights.Component(
     'appi',
     resource_name_=f'appi-{config.prefix}-001',
     resource_group_name=rg.name,
@@ -54,7 +54,7 @@ appi = insights.Component(
     application_type=config.appiType
 )
 
-kv = keyvault.Vault(
+kv = azure.keyvault.Vault(
     'kv',
     vault_name=f'kv-{config.prefix}-001',
     resource_group_name=rg.name,
@@ -89,7 +89,7 @@ kv = keyvault.Vault(
 )
 
 for i, app in enumerate(apps):
-    web.WebAppApplicationSettings(
+    azure.web.WebAppApplicationSettings(
         f'appsettings{i}',
         name=app.name,
         resource_group_name=rg.name,
@@ -99,7 +99,7 @@ for i, app in enumerate(apps):
         }
     )
 
-keyvault.Secret(
+azure.keyvault.Secret(
     'secret',
     secret_name=config.kvSecretName,
     vault_name=kv.name,
@@ -112,7 +112,7 @@ keyvault.Secret(
 
 sts = []
 for i in range(0, config.stCount):
-    st = storage.StorageAccount(
+    st = azure.storage.StorageAccount(
         f'st{i}',
         account_name=f'st{config.prefixStripped}{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
@@ -127,7 +127,7 @@ for i in range(0, config.stCount):
     )
     sts.append(st)
 
-    storage.BlobContainer(
+    azure.storage.BlobContainer(
         f'container{i}',
         container_name=f'container{config.prefixStripped}001',
         account_name=st.name,
@@ -135,7 +135,7 @@ for i in range(0, config.stCount):
     )
 
 if config.vnetToggle:
-    network.VirtualNetwork(
+    azure.network.VirtualNetwork(
         'vnet',
         virtual_network_name=f'vnet-{config.prefix}-001',
         resource_group_name=rg.name,
