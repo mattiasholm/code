@@ -85,8 +85,7 @@ kvGroupCertPermissions = [
 kvSpName = "sp-github-actions"
 kvSpSecretPermissions = [
   "Get",
-  "Set",
-  "Delete"
+  "Set"
 ]
 kvSecretName = "appi-connectionString"
 
