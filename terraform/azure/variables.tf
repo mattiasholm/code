@@ -139,7 +139,8 @@ variable "kvSecretName" {
 }
 
 variable "stCount" {
-  type = number
+  type    = number
+  default = 1
 }
 variable "stKind" {
   type    = string

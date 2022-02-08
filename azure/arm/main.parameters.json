@@ -59,7 +59,7 @@
       }
     },
     "kvGroupId": {
-      "value": "e810d50b-5f44-4e21-b1c9-eb89653cc2de"
+      "value": "037f6242-0587-4d8e-80f4-b31ee868aa4b"
     },
     "kvGroupPermissions": {
       "value": {
@@ -112,7 +112,7 @@
       }
     },
     "stCount": {
-      "value": 3
+      "value": 2
     },
     "stKind": {
       "value": "StorageV2"

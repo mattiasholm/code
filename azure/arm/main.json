@@ -111,7 +111,8 @@
             "type": "object"
         },
         "stCount": {
-            "type": "int"
+            "type": "int",
+            "defaultValue": 1
         },
         "stKind": {
             "type": "string",
@@ -174,11 +175,11 @@
         "appCount": "[length(parameters('appDockerImages'))]",
         "appiName": "[format('appi-{0}-001', parameters('prefix'))]",
         "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
-        "appiConnectionString": "[format('@Microsoft.KeyVault(VaultName={0};SecretName={1})', variables('kvName'), variables('kvSecretName'))]",
+        "appi-connectionString": "[format('@Microsoft.KeyVault(VaultName={0};SecretName={1})', variables('kvName'), variables('kvSecretName'))]",
         "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "kvFamily": "A",
-        "kvSecretName": "appiConnectionString",
+        "kvSecretName": "appi-connectionString",
         "copy": [
             {
                 "name": "appName",
@@ -264,7 +265,7 @@
                     "location": "[parameters('location')]",
                     "tags": "[variables('tags')]",
                     "properties": {
-                        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[variables('appiConnectionString')]",
+                        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[variables('appi-connectionString')]",
                         "KEYVAULT_URL": "[reference(variables('kvId')).vaultUri]"
                     },
                     "dependsOn": [

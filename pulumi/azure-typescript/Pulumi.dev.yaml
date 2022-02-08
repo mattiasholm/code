@@ -77,7 +77,7 @@ config:
     - DeleteIssuers
     - Purge
 
-  azure-typescript:stCount: 3
+  azure-typescript:stCount: 2
   azure-typescript:stKind: StorageV2
   azure-typescript:stSku: Standard_LRS
   azure-typescript:stPublicAccess: false

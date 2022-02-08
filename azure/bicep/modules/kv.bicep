@@ -9,8 +9,6 @@ param tenantId string = subscription().tenantId
 ])
 param sku string = 'standard'
 param accessPolicies array = []
-param objectId string
-param permissions object
 param secrets array
 
 var family = 'A'
@@ -26,19 +24,6 @@ resource kv 'Microsoft.KeyVault/vaults@2021-10-01' = {
       name: sku
     }
     accessPolicies: accessPolicies
-  }
-
-  resource ap 'accessPolicies' = {
-    name: 'add'
-    properties: {
-      accessPolicies: [
-        {
-          tenantId: tenantId
-          objectId: objectId
-          permissions: permissions
-        }
-      ]
-    }
   }
 
   resource secret 'secrets' = [for secret in secrets: {

@@ -35,7 +35,7 @@ kvGroupId = azuread.get_group(display_name=kvGroupName).object_id
 kvGroupKeyPermissions = config.get_object('kvGroupKeyPermissions')
 kvGroupSecretPermissions = config.get_object('kvGroupSecretPermissions')
 kvGroupCertPermissions = config.get_object('kvGroupCertPermissions')
-kvSecretName = 'appiConnectionString'
+kvSecretName = 'appi-connectionString'
 
 stCount = config.get_int('stCount') or 1
 stKind = config.get('stKind') or 'StorageV2'

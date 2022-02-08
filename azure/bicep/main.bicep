@@ -9,50 +9,6 @@ param tags object = {
   Owner: 'mattias.holm@live.com'
 }
 
-@allowed([
-  'app'
-  'linux'
-])
-param planKind string = 'linux'
-param planSku string = 'B1'
-@minValue(1)
-@maxValue(10)
-param planCapacity int = 1
-
-param appDockerImages array = [
-  'nginxdemos/hello:latest'
-  'nginxdemos/hello:plain-text'
-]
-@allowed([
-  'None'
-  'SystemAssigned'
-])
-param appIdentity string = 'SystemAssigned' // 'None'
-param appAlwaysOn bool = true
-param appHttp2 bool = true
-@allowed([
-  '1.0'
-  '1.1'
-  '1.2'
-])
-param appTlsVersion string = '1.2'
-@allowed([
-  'AllAllowed'
-  'FtpsOnly'
-  'Disabled'
-])
-param appFtpsState string = 'FtpsOnly'
-param appClientAffinity bool = false
-param appHttpsOnly bool = true
-
-@allowed([
-  'web'
-  'ios'
-  'other'
-  'store'
-  'java'
-  'phone'
-])
 param appiKind string = 'web'
 @allowed([
   'web'
@@ -65,14 +21,8 @@ param appiType string = 'web'
   'premium'
 ])
 param kvSku string = 'standard'
-param kvAppPermissions object = {
-  secrets: [
-    'Get'
-    'List'
-  ]
-}
-param kvGroupId string = 'e810d50b-5f44-4e21-b1c9-eb89653cc2de'
-param kvGroupPermissions object = {
+param kvObjectId string = '037f6242-0587-4d8e-80f4-b31ee868aa4b'
+param kvPermissions object = {
   keys: [
     'Get'
     'List'
@@ -121,7 +71,17 @@ param kvGroupPermissions object = {
   ]
 }
 
-param stCount int = 3
+param pipLabels array = [
+  'foo'
+  'bar'
+]
+@allowed([
+  'Basic'
+  'Standard'
+])
+param pipSku string = 'Basic'
+
+param stCount int = 2 // 1
 @allowed([
   'Storage'
   'StorageV2'
@@ -156,60 +116,12 @@ param vnetAddressPrefix string = '10.0.0.0/24' // ''
 var prefixStripped = toLower(replace(prefix, '-', ''))
 var location = deployment().location
 var tenantId = subscription().tenantId
-var kvSecretName = 'appiConnectionString'
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: 'rg-${prefix}-001'
   location: location
   tags: tags
 }
-
-module plan 'modules/plan.bicep' = {
-  name: 'plan'
-  scope: rg
-  params: {
-    name: 'plan-${prefix}-001'
-    location: location
-    tags: tags
-    kind: planKind
-    sku: planSku
-    capacity: planCapacity
-  }
-}
-
-module app 'modules/app.bicep' = [for (appDockerImage, i) in appDockerImages: {
-  name: 'app${i}'
-  scope: rg
-  params: {
-    name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
-    location: location
-    tags: tags
-    identityType: appIdentity
-    serverFarmId: plan.outputs.id
-    siteConfig: {
-      linuxFxVersion: 'DOCKER|${appDockerImage}'
-      alwaysOn: appAlwaysOn
-      http20Enabled: appHttp2
-      minTlsVersion: appTlsVersion
-      scmMinTlsVersion: appTlsVersion
-      ftpsState: appFtpsState
-    }
-    clientAffinityEnabled: appClientAffinity
-    httpsOnly: appHttpsOnly
-  }
-}]
-
-module appsettings 'modules/appsettings.bicep' = [for (appDockerImage, i) in appDockerImages: {
-  name: 'appsettings${i}'
-  scope: rg
-  params: {
-    name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
-    properties: {
-      APPLICATIONINSIGHTS_CONNECTION_STRING: '@Microsoft.KeyVault(VaultName=${kv.outputs.name};SecretName=${kvSecretName})'
-      KEYVAULT_URL: kv.outputs.vaultUri
-    }
-  }
-}]
 
 module appi 'modules/appi.bicep' = {
   name: 'appi'
@@ -232,21 +144,33 @@ module kv 'modules/kv.bicep' = {
     tags: tags
     tenantId: tenantId
     sku: kvSku
-    accessPolicies: [for (appDockerImage, i) in appDockerImages: {
-      tenantId: tenantId
-      objectId: app[i].outputs.identity.principalId
-      permissions: kvAppPermissions
-    }]
-    objectId: kvGroupId
-    permissions: kvGroupPermissions
+    accessPolicies: [
+      {
+        tenantId: tenantId
+        objectId: kvObjectId
+        permissions: kvPermissions
+      }
+    ]
     secrets: [
       {
-        name: kvSecretName
+        name: 'appi-connectionString'
         value: appi.outputs.connectionString
       }
     ]
   }
 }
+
+module pip 'modules/pip.bicep' = [for (pipLabel, i) in pipLabels: {
+  name: 'pip${i}'
+  scope: rg
+  params: {
+    name: 'pip-${prefix}-${padLeft(i + 1, 3, '0')}'
+    location: location
+    tags: tags
+    sku: pipSku
+    domainNameLabel: '${pipLabel}-${prefix}'
+  }
+}]
 
 module st 'modules/st.bicep' = [for i in range(0, stCount): {
   name: 'st${i}'
@@ -279,12 +203,12 @@ module vnet 'modules/vnet.bicep' = if (vnetToggle) {
   }
 }
 
-output appUrl array = [for (appDockerImage, i) in appDockerImages: {
-  name: 'app-${prefix}-${padLeft(i + 1, 3, '0')}'
-  url: 'https://${app[i].outputs.defaultHostName}/'
-}]
-
 output kvUrl string = kv.outputs.vaultUri
+
+output pipUrl array = [for (pipLabel, i) in pipLabels: {
+  name: 'pip-${prefix}-${padLeft(i + 1, 3, '0')}'
+  url: 'https://${pip[i].outputs.fqdn}/'
+}]
 
 output stUrl array = [for i in range(0, stCount): {
   name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'

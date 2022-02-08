@@ -77,7 +77,7 @@ config:
     - DeleteIssuers
     - Purge
 
-  azure-python:stCount: 3
+  azure-python:stCount: 2
   azure-python:stKind: StorageV2
   azure-python:stSku: Standard_LRS
   azure-python:stPublicAccess: false
