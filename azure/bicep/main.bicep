@@ -9,6 +9,14 @@ param tags object = {
   Owner: 'mattias.holm@live.com'
 }
 
+@allowed([
+  'web'
+  'ios'
+  'other'
+  'store'
+  'java'
+  'phone'
+])
 param appiKind string = 'web'
 @allowed([
   'web'

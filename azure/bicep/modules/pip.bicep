@@ -1,6 +1,10 @@
 param name string
 param location string = resourceGroup().location
 param tags object = resourceGroup().tags
+@allowed([
+  'Basic'
+  'Standard'
+])
 param sku string = 'Basic'
 param domainNameLabel string
 

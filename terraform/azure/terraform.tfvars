@@ -86,6 +86,7 @@ kvSpName = "sp-github-actions"
 kvSpSecretPermissions = [
   "Get",
   "Set",
+  "Delete"
 ]
 kvSecretName = "appi-connectionString"
 
