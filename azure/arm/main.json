@@ -224,8 +224,8 @@
             "properties": {
                 "dnsSettings": {
                     "domainNameLabel": "[variables('pipDomainNameLabel')[copyIndex()]]",
-                    "publicIPAllocationMethod": "[parameters('pipAllocation')]"
-                }
+                },
+                "publicIPAllocationMethod": "[parameters('pipAllocation')]"
             }
         },
         {
