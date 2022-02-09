@@ -10,69 +10,6 @@
             "type": "string",
             "defaultValue": "[resourceGroup().location]"
         },
-        "planKind": {
-            "type": "string",
-            "defaultValue": "linux",
-            "allowedValues": [
-                "app",
-                "linux"
-            ]
-        },
-        "planSku": {
-            "type": "string",
-            "defaultValue": "B1"
-        },
-        "planCapacity": {
-            "type": "int",
-            "defaultValue": 1,
-            "minValue": 1,
-            "maxValue": 10
-        },
-        "appDockerImages": {
-            "type": "array"
-        },
-        "appIdentity": {
-            "type": "string",
-            "defaultValue": "None",
-            "allowedValues": [
-                "None",
-                "SystemAssigned"
-            ]
-        },
-        "appAlwaysOn": {
-            "type": "bool",
-            "defaultValue": true
-        },
-        "appHttp2": {
-            "type": "bool",
-            "defaultValue": true
-        },
-        "appTlsVersion": {
-            "type": "string",
-            "defaultValue": "1.2",
-            "allowedValues": [
-                "1.0",
-                "1.1",
-                "1.2"
-            ]
-        },
-        "appFtpsState": {
-            "type": "string",
-            "defaultValue": "FtpsOnly",
-            "allowedValues": [
-                "AllAllowed",
-                "FtpsOnly",
-                "Disabled"
-            ]
-        },
-        "appClientAffinity": {
-            "type": "bool",
-            "defaultValue": false
-        },
-        "appHttpsOnly": {
-            "type": "bool",
-            "defaultValue": true
-        },
         "appiKind": {
             "type": "string",
             "defaultValue": "web",
@@ -101,14 +38,23 @@
                 "premium"
             ]
         },
-        "kvAppPermissions": {
-            "type": "object"
-        },
-        "kvGroupId": {
+        "kvObjectId": {
             "type": "string"
         },
-        "kvGroupPermissions": {
+        "kvPermissions": {
             "type": "object"
+        },
+        "pipLabels": {
+            "type": "array"
+        },
+        "pipSku": {
+            "type": "string",
+            "defaultValue": "Basic",
+            "allowedValues": [
+                "Basic",
+                "Standard"
+            ]
+
         },
         "stCount": {
             "type": "int",
@@ -169,32 +115,31 @@
         "prefixStripped": "[toLower(replace(parameters('prefix'), '-', ''))]",
         "tags": "[resourceGroup().tags]",
         "tenantId": "[subscription().tenantId]",
-        "planName": "[format('plan-{0}-001', parameters('prefix'))]",
-        "planId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
-        "planReserved": "[if(equals(parameters('planKind'), 'linux'), true(), false())]",
-        "appCount": "[length(parameters('appDockerImages'))]",
         "appiName": "[format('appi-{0}-001', parameters('prefix'))]",
         "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
-        "appi-connectionString": "[format('@Microsoft.KeyVault(VaultName={0};SecretName={1})', variables('kvName'), variables('kvSecretName'))]",
         "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "kvFamily": "A",
         "kvSecretName": "appi-connectionString",
+        "pipCount": "[length(parameters('pipLabels'))]",
+        "stContainerName": "[format('default/container{0}001', variables('prefixStripped'))]",
+        "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
+        "snetName": "[format('snet-{0}-001', parameters('prefix'))]",
         "copy": [
             {
-                "name": "appName",
-                "count": "[variables('appCount')]",
-                "input": "[format('app-{0}-{1}', parameters('prefix'), padLeft(copyIndex('appName', 1), 3, '0'))]"
+                "name": "pipName",
+                "count": "[variables('pipCount')]",
+                "input": "[format('pip-{0}-{1}', parameters('prefix'), padLeft(copyIndex('pipName', 1), 3, '0'))]"
             },
             {
-                "name": "appId",
-                "count": "[variables('appCount')]",
-                "input": "[resourceId('Microsoft.Web/sites', variables('appName')[copyIndex('appId')])]"
+                "name": "pipId",
+                "count": "[variables('pipCount')]",
+                "input": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipName')[copyIndex('pipId')])]"
             },
             {
-                "name": "linuxFxVersion",
-                "count": "[variables('appCount')]",
-                "input": "[format('DOCKER|{0}', parameters('appDockerImages')[copyIndex('linuxFxVersion')])]"
+                "name": "pipDomainNameLabel",
+                "count": "[variables('pipCount')]",
+                "input": "[format('{0}-{1}', parameters('pipLabels')[copyIndex('pipDomainNameLabel')], parameters('prefix'))]"
             },
             {
                 "name": "stName",
@@ -206,76 +151,9 @@
                 "count": "[parameters('stCount')]",
                 "input": "[resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex('stId')])]"
             }
-        ],
-        "stContainerName": "[format('default/container{0}001', variables('prefixStripped'))]",
-        "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
-        "snetName": "[format('snet-{0}-001', parameters('prefix'))]"
+        ]
     },
     "resources": [
-        {
-            "type": "Microsoft.Web/serverfarms",
-            "apiVersion": "2021-02-01",
-            "name": "[variables('planName')]",
-            "location": "[parameters('location')]",
-            "tags": "[variables('tags')]",
-            "kind": "[parameters('planKind')]",
-            "sku": {
-                "name": "[parameters('planSku')]",
-                "capacity": "[parameters('planCapacity')]"
-            },
-            "properties": {
-                "reserved": "[variables('planReserved')]"
-            }
-        },
-        {
-            "copy": {
-                "name": "sites",
-                "count": "[variables('appCount')]",
-                "mode": "parallel"
-            },
-            "type": "Microsoft.Web/sites",
-            "apiVersion": "2021-02-01",
-            "name": "[variables('appName')[copyIndex()]]",
-            "location": "[parameters('location')]",
-            "tags": "[variables('tags')]",
-            "identity": {
-                "type": "[parameters('appIdentity')]"
-            },
-            "properties": {
-                "serverFarmId": "[variables('planId')]",
-                "siteConfig": {
-                    "linuxFxVersion": "[variables('linuxFxVersion')[copyIndex()]]",
-                    "alwaysOn": "[parameters('appAlwaysOn')]",
-                    "http20Enabled": "[parameters('appHttp2')]",
-                    "minTlsVersion": "[parameters('appTlsVersion')]",
-                    "scmMinTlsVersion": "[parameters('appTlsVersion')]",
-                    "ftpsState": "[parameters('appFtpsState')]"
-                },
-                "clientAffinityEnabled": "[parameters('appClientAffinity')]",
-                "httpsOnly": "[parameters('appHttpsOnly')]"
-            },
-            "dependsOn": [
-                "[variables('planId')]"
-            ],
-            "resources": [
-                {
-                    "type": "config",
-                    "apiVersion": "2021-02-01",
-                    "name": "appsettings",
-                    "location": "[parameters('location')]",
-                    "tags": "[variables('tags')]",
-                    "properties": {
-                        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[variables('appi-connectionString')]",
-                        "KEYVAULT_URL": "[reference(variables('kvId')).vaultUri]"
-                    },
-                    "dependsOn": [
-                        "[variables('appId')[copyIndex()]]",
-                        "[variables('kvId')]",
-                        "[variables('appiId')]"
-                    ]
-                }
-            ]
-        },
         {
             "type": "Microsoft.Insights/components",
             "apiVersion": "2020-02-02",
@@ -299,41 +177,15 @@
                     "family": "[variables('kvFamily')]",
                     "name": "[parameters('kvSku')]"
                 },
-                "copy": [
+                "accessPolicies": [
                     {
-                        "name": "accessPolicies",
-                        "count": "[variables('appCount')]",
-                        "input": {
-                            "tenantId": "[variables('tenantId')]",
-                            "objectId": "[reference(variables('appId')[copyIndex('accessPolicies')],'2020-12-01','Full').identity.principalId]",
-                            "permissions": "[parameters('kvAppPermissions')]"
-                        }
-                    },
-                    {
-                        "name": "dependsOn",
-                        "count": "[variables('appCount')]",
-                        "input": "[variables('appId')[copyIndex('dependsOn')]]"
+                        "tenantId": "[variables('tenantId')]",
+                        "objectId": "[parameters('kvObjectId')]",
+                        "permissions": "[parameters('kvPermissions')]"
                     }
                 ]
             },
             "resources": [
-                {
-                    "type": "accessPolicies",
-                    "apiVersion": "2021-10-01",
-                    "name": "add",
-                    "properties": {
-                        "accessPolicies": [
-                            {
-                                "tenantId": "[variables('tenantId')]",
-                                "objectId": "[parameters('kvGroupId')]",
-                                "permissions": "[parameters('kvGroupPermissions')]"
-                            }
-                        ]
-                    },
-                    "dependsOn": [
-                        "[variables('kvId')]"
-                    ]
-                },
                 {
                     "type": "secrets",
                     "apiVersion": "2021-10-01",
@@ -348,6 +200,26 @@
                     ]
                 }
             ]
+        },
+        {
+            "copy": {
+                "name": "publicIPAddresses",
+                "count": "[variables('pipCount')]",
+                "mode": "parallel"
+            },
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2021-05-01",
+            "name": "[variables('pipName')[copyIndex()]]",
+            "location": "[parameters('location')]",
+            "tags": "[variables('tags')]",
+            "sku": {
+                "name": "[parameters('pipSku')]"
+            },
+            "properties": {
+                "dnsSettings": {
+                    "domainNameLabel": "[variables('pipDomainNameLabel')[copyIndex()]]"
+                }
+            }
         },
         {
             "copy": {
@@ -405,11 +277,11 @@
         }
     ],
     "outputs": {
-        "appUrl": {
+        "pipUrl": {
             "type": "array",
             "copy": {
-                "count": "[variables('appCount')]",
-                "input": "[format('https://{0}/', reference(variables('appId')[copyIndex()]).defaultHostName)]"
+                "count": "[variables('pipCount')]",
+                "input": "[format('https://{0}/', reference(variables('pipId')[copyIndex()]).dnsSettings.fqdn)]"
             }
         },
         "kvUrl": {

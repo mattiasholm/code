@@ -77,7 +77,7 @@ kv = azure.keyvault.Vault(
         ] + [
             {
                 'tenant_id': config.tenantId,
-                'object_id': config.kvGroupId,
+                'object_id': config.kvObjectId,
                 'permissions': {
                     'keys': config.kvGroupKeyPermissions,
                     'secrets': config.kvGroupSecretPermissions,

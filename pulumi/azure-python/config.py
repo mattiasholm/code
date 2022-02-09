@@ -31,7 +31,7 @@ kvFamily = 'A'
 kvSku = config.get('kvSku') or 'standard'
 kvAppSecretPermissions = config.get_object('kvAppSecretPermissions')
 kvGroupName = config.require('kvGroupName')
-kvGroupId = azuread.get_group(display_name=kvGroupName).object_id
+kvObjectId = azuread.get_group(display_name=kvGroupName).object_id
 kvGroupKeyPermissions = config.get_object('kvGroupKeyPermissions')
 kvGroupSecretPermissions = config.get_object('kvGroupSecretPermissions')
 kvGroupCertPermissions = config.get_object('kvGroupCertPermissions')

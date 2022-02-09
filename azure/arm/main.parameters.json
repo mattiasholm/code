@@ -5,42 +5,6 @@
     "prefix": {
       "value": "holm-arm"
     },
-    "planKind": {
-      "value": "linux"
-    },
-    "planSku": {
-      "value": "B1"
-    },
-    "planCapacity": {
-      "value": 1
-    },
-    "appDockerImages": {
-      "value": [
-        "nginxdemos/hello:latest",
-        "nginxdemos/hello:plain-text"
-      ]
-    },
-    "appIdentity": {
-      "value": "SystemAssigned"
-    },
-    "appAlwaysOn": {
-      "value": true
-    },
-    "appHttp2": {
-      "value": true
-    },
-    "appTlsVersion": {
-      "value": "1.2"
-    },
-    "appFtpsState": {
-      "value": "FtpsOnly"
-    },
-    "appClientAffinity": {
-      "value": false
-    },
-    "appHttpsOnly": {
-      "value": true
-    },
     "appiKind": {
       "value": "web"
     },
@@ -50,18 +14,10 @@
     "kvSku": {
       "value": "standard"
     },
-    "kvAppPermissions": {
-      "value": {
-        "secrets": [
-          "Get",
-          "List"
-        ]
-      }
-    },
-    "kvGroupId": {
+    "kvObjectId": {
       "value": "037f6242-0587-4d8e-80f4-b31ee868aa4b"
     },
-    "kvGroupPermissions": {
+    "kvPermissions": {
       "value": {
         "keys": [
           "Get",
@@ -110,6 +66,15 @@
           "Purge"
         ]
       }
+    },
+    "pipLabels": {
+      "value": [
+        "foo",
+        "bar"
+      ]
+    },
+    "pipSku": {
+      "value": "Basic"
     },
     "stCount": {
       "value": 2
