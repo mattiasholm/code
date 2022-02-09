@@ -223,7 +223,7 @@
             },
             "properties": {
                 "dnsSettings": {
-                    "domainNameLabel": "[variables('pipDomainNameLabel')[copyIndex()]]",
+                    "domainNameLabel": "[variables('pipDomainNameLabel')[copyIndex()]]"
                 },
                 "publicIPAllocationMethod": "[parameters('pipAllocation')]"
             }
