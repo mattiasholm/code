@@ -6,9 +6,7 @@ data "azurerm_client_config" "current" {}
 
 data "azuread_service_principal" "sp" {
   display_name = var.kvSpName
-
 }
-
 
 resource "azurerm_key_vault" "kv" {
   name                = "kv-${var.prefix}-001"
@@ -17,14 +15,6 @@ resource "azurerm_key_vault" "kv" {
   tags                = var.tags
   tenant_id           = local.tenantId
   sku_name            = var.kvSku
-}
-
-resource "azurerm_key_vault_access_policy" "accesspolicy_app" {
-  for_each           = azurerm_app_service.app
-  key_vault_id       = azurerm_key_vault.kv.id
-  tenant_id          = local.tenantId
-  object_id          = azurerm_app_service.app[each.key].identity.0.principal_id
-  secret_permissions = var.kvAppSecretPermissions
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_group" {
@@ -44,7 +34,7 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
 }
 
 resource "azurerm_key_vault_secret" "secret" {
-  name         = var.kvSecretName
+  name         = "appi-connectionString"
   tags         = var.tags
   value        = azurerm_application_insights.appi.connection_string
   key_vault_id = azurerm_key_vault.kv.id

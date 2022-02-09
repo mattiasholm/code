@@ -12,75 +12,6 @@ variable "tags" {
   type = map(any)
 }
 
-variable "planKind" {
-  type    = string
-  default = "linux"
-  validation {
-    condition     = var.planKind == "app" || var.planKind == "linux"
-    error_message = "Invalid value for variable."
-  }
-}
-variable "planTier" {
-  type    = string
-  default = "Basic"
-}
-variable "planSize" {
-  type    = string
-  default = "B1"
-}
-variable "planCapacity" {
-  type    = number
-  default = 1
-  validation {
-    condition     = var.planCapacity >= 1 && var.planCapacity <= 10
-    error_message = "Invalid value for variable."
-  }
-}
-
-variable "appDockerImages" {
-  type = list(string)
-}
-variable "appIdentity" {
-  type    = string
-  default = "None"
-  validation {
-    condition     = var.appIdentity == "None" || var.appIdentity == "SystemAssigned"
-    error_message = "Invalid value for variable."
-  }
-}
-variable "appAlwaysOn" {
-  type    = bool
-  default = true
-}
-variable "appHttp2" {
-  type    = bool
-  default = true
-}
-variable "appTlsVersion" {
-  type    = string
-  default = "1.2"
-  validation {
-    condition     = var.appTlsVersion == "1.0" || var.appTlsVersion == "1.1" || var.appTlsVersion == "1.2"
-    error_message = "Invalid value for variable."
-  }
-}
-variable "appFtpsState" {
-  type    = string
-  default = "FtpsOnly"
-  validation {
-    condition     = var.appFtpsState == "AllAllowed" || var.appFtpsState == "FtpsOnly" || var.appFtpsState == "Disabled"
-    error_message = "Invalid value for variable."
-  }
-}
-variable "appClientAffinity" {
-  type    = bool
-  default = false
-}
-variable "appHttpsOnly" {
-  type    = bool
-  default = true
-}
-
 variable "appiType" {
   type    = string
   default = "web"
@@ -98,44 +29,49 @@ variable "kvSku" {
     error_message = "Invalid value for variable."
   }
 }
-variable "kvAppSecretPermissions" {
-  type = list(string)
-}
-
 variable "kvGroupName" {
   type = string
 }
-
 variable "kvGroupOwner" {
   type = string
 }
-
 variable "kvGroupMembers" {
   type = list(string)
 }
-
 variable "kvGroupKeyPermissions" {
   type = list(string)
 }
-
 variable "kvGroupSecretPermissions" {
   type = list(string)
 }
-
 variable "kvGroupCertPermissions" {
   type = list(string)
 }
-
 variable "kvSpName" {
   type = string
 }
-
 variable "kvSpSecretPermissions" {
   type = list(string)
 }
 
-variable "kvSecretName" {
-  type = string
+variable "pipLabels" {
+  type = list(string)
+}
+variable "pipSku" {
+  type    = string
+  default = "Basic"
+  validation {
+    condition     = var.pipSku == "Basic" || var.pipSku == "Standard"
+    error_message = "Invalid value for variable."
+  }
+}
+variable "pipAllocation" {
+  type    = string
+  default = "Dynamic"
+  validation {
+    condition     = var.pipAllocation == "Dynamic" || var.pipAllocation == "Static"
+    error_message = "Invalid value for variable."
+  }
 }
 
 variable "stCount" {

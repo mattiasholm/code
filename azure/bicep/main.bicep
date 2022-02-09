@@ -88,6 +88,11 @@ param pipLabels array = [
   'Standard'
 ])
 param pipSku string = 'Basic'
+@allowed([
+  'Dynamic'
+  'Static'
+])
+param pipAllocation string = 'Dynamic'
 
 param stCount int = 2 // 1
 @allowed([
@@ -177,6 +182,7 @@ module pip 'modules/pip.bicep' = [for (pipLabel, i) in pipLabels: {
     tags: tags
     sku: pipSku
     domainNameLabel: '${pipLabel}-${prefix}'
+    publicIPAllocationMethod: pipAllocation
   }
 }]
 

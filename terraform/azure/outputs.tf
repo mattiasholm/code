@@ -1,9 +1,9 @@
-output "appUrl" {
-  value = [for app in azurerm_app_service.app : "https://${app.default_site_hostname}/"]
-}
-
 output "kvUrl" {
   value = azurerm_key_vault.kv.vault_uri
+}
+
+output "pipUrl" {
+  value = [for pip in azurerm_public_ip.pip : "https://${pip.fqdn}/"]
 }
 
 output "stUrl" {

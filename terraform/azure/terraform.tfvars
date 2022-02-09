@@ -7,30 +7,9 @@ tags = {
   Owner       = "mattias.holm@live.com"
 }
 
-planKind     = "linux"
-planTier     = "Basic"
-planSize     = "B1"
-planCapacity = 1
-
-appDockerImages = [
-  "nginxdemos/hello:latest",
-  "nginxdemos/hello:plain-text"
-]
-appIdentity       = "SystemAssigned"
-appAlwaysOn       = true
-appHttp2          = true
-appTlsVersion     = "1.2"
-appFtpsState      = "FtpsOnly"
-appClientAffinity = false
-appHttpsOnly      = true
-
 appiType = "web"
 
-kvSku = "standard"
-kvAppSecretPermissions = [
-  "Get",
-  "List",
-]
+kvSku        = "standard"
 kvGroupName  = "AzureRBAC-KeyVault"
 kvGroupOwner = "mattias.holm@azronnieb3it.onmicrosoft.com"
 kvGroupMembers = [
@@ -87,7 +66,13 @@ kvSpSecretPermissions = [
   "Get",
   "Set"
 ]
-kvSecretName = "appi-connectionString"
+
+pipLabels = [
+  "foo",
+  "bar"
+]
+pipSku        = "Basic"
+pipAllocation = "Dynamic"
 
 stCount        = 2
 stKind         = "StorageV2"

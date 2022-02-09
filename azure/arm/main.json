@@ -56,6 +56,14 @@
             ]
 
         },
+        "pipAllocation": {
+            "type": "string",
+            "defaultValue": "Dynamic",
+            "allowedValues": [
+                "Dynamic",
+                "Static"
+            ]
+        },
         "stCount": {
             "type": "int",
             "defaultValue": 1
@@ -119,8 +127,6 @@
         "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
         "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
-        "kvFamily": "A",
-        "kvSecretName": "appi-connectionString",
         "pipCount": "[length(parameters('pipLabels'))]",
         "stContainerName": "[format('default/container{0}001', variables('prefixStripped'))]",
         "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
@@ -174,7 +180,7 @@
             "properties": {
                 "tenantId": "[variables('tenantId')]",
                 "sku": {
-                    "family": "[variables('kvFamily')]",
+                    "family": "A",
                     "name": "[parameters('kvSku')]"
                 },
                 "accessPolicies": [
@@ -189,7 +195,7 @@
                 {
                     "type": "secrets",
                     "apiVersion": "2021-10-01",
-                    "name": "[variables('kvSecretName')]",
+                    "name": "appi-connectionString",
                     "tags": "[variables('tags')]",
                     "properties": {
                         "value": "[reference(variables('appiId')).connectionString]"
@@ -217,7 +223,8 @@
             },
             "properties": {
                 "dnsSettings": {
-                    "domainNameLabel": "[variables('pipDomainNameLabel')[copyIndex()]]"
+                    "domainNameLabel": "[variables('pipDomainNameLabel')[copyIndex()]]",
+                    "publicIPAllocationMethod": "[parameters('pipAllocation')]"
                 }
             }
         },

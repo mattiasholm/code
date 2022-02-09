@@ -76,6 +76,9 @@
     "pipSku": {
       "value": "Basic"
     },
+    "pipAllocation": {
+      "value": "Dynamic"
+    },
     "stCount": {
       "value": 2
     },
