@@ -10,28 +10,10 @@ config:
     Environment: Dev
     Owner: mattias.holm@live.com
 
-  azure-python:planKind: linux
-  azure-python:planSku: B1
-  azure-python:planCapacity: 1
-
-  azure-python:appDockerImages:
-    - nginxdemos/hello:latest
-    - nginxdemos/hello:plain-text
-  azure-python:appIdentity: SystemAssigned
-  azure-python:appAlwaysOn: true
-  azure-python:appHttp2: true
-  azure-python:appTlsVersion: 1.2
-  azure-python:appFtpsState: FtpsOnly
-  azure-python:appClientAffinity: false
-  azure-python:appHttpsOnly: true
-
   azure-python:appiKind: web
   azure-python:appiType: web
 
   azure-python:kvSku: standard
-  azure-python:kvAppSecretPermissions:
-    - Get
-    - List
   azure-python:kvGroupName: AzureRBAC-KeyVault
   azure-python:kvGroupKeyPermissions:
     - Get
@@ -76,6 +58,12 @@ config:
     - SetIssuers
     - DeleteIssuers
     - Purge
+
+  azure-python:pipLabels:
+    - foo
+    - bar
+  azure-python:pipSku: Basic
+  azure-python:pipAllocation: Dynamic
 
   azure-python:stCount: 2
   azure-python:stKind: StorageV2

@@ -6,12 +6,12 @@ param tags object = resourceGroup().tags
   'Standard'
 ])
 param sku string = 'Basic'
-param domainNameLabel string
 @allowed([
   'Dynamic'
   'Static'
 ])
 param publicIPAllocationMethod string = 'Dynamic'
+param domainNameLabel string
 
 resource pip 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
   name: name
@@ -21,10 +21,10 @@ resource pip 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
     name: sku
   }
   properties: {
+    publicIPAllocationMethod: publicIPAllocationMethod
     dnsSettings: {
       domainNameLabel: domainNameLabel
     }
-    publicIPAllocationMethod: publicIPAllocationMethod
   }
 }
 

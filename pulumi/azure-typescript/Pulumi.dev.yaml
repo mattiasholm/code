@@ -10,28 +10,10 @@ config:
     Environment: Dev
     Owner: mattias.holm@live.com
 
-  azure-typescript:planKind: linux
-  azure-typescript:planSku: B1
-  azure-typescript:planCapacity: 1
-
-  azure-typescript:appDockerImages:
-    - nginxdemos/hello:latest
-    - nginxdemos/hello:plain-text
-  azure-typescript:appIdentity: SystemAssigned
-  azure-typescript:appAlwaysOn: true
-  azure-typescript:appHttp2: true
-  azure-typescript:appTlsVersion: 1.2
-  azure-typescript:appFtpsState: FtpsOnly
-  azure-typescript:appClientAffinity: false
-  azure-typescript:appHttpsOnly: true
-
   azure-typescript:appiKind: web
   azure-typescript:appiType: web
 
   azure-typescript:kvSku: standard
-  azure-typescript:kvAppSecretPermissions:
-    - Get
-    - List
   azure-typescript:kvGroupName: AzureRBAC-KeyVault
   azure-typescript:kvGroupKeyPermissions:
     - Get
@@ -76,6 +58,12 @@ config:
     - SetIssuers
     - DeleteIssuers
     - Purge
+
+  azure-typescript:pipLabels:
+    - foo
+    - bar
+  azure-typescript:pipSku: Basic
+  azure-typescript:pipAllocation: Dynamic
 
   azure-typescript:stCount: 2
   azure-typescript:stKind: StorageV2

@@ -181,8 +181,8 @@ module pip 'modules/pip.bicep' = [for (pipLabel, i) in pipLabels: {
     location: location
     tags: tags
     sku: pipSku
-    domainNameLabel: '${pipLabel}-${prefix}'
     publicIPAllocationMethod: pipAllocation
+    domainNameLabel: '${pipLabel}-${prefix}'
   }
 }]
 

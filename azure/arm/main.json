@@ -222,10 +222,10 @@
                 "name": "[parameters('pipSku')]"
             },
             "properties": {
+                "publicIPAllocationMethod": "[parameters('pipAllocation')]",
                 "dnsSettings": {
                     "domainNameLabel": "[variables('pipDomainNameLabel')[copyIndex()]]"
-                },
-                "publicIPAllocationMethod": "[parameters('pipAllocation')]"
+                }
             }
         },
         {

@@ -5,6 +5,6 @@ resource "azurerm_public_ip" "pip" {
   location            = var.location
   tags                = var.tags
   sku                 = var.pipSku
-  domain_name_label   = "${each.key}-${var.prefix}"
   allocation_method   = var.pipAllocation
+  domain_name_label   = "${each.key}-${var.prefix}"
 }
