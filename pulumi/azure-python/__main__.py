@@ -1,17 +1,14 @@
-from os import access
-from typing import KeysView
-from unicodedata import name
 import pulumi
-import pulumi_azure_native as azure
+from pulumi_azure_native import resources, insights, keyvault, network, storage
 import config
 
-rg = azure.resources.ResourceGroup(
+rg = resources.ResourceGroup(
     'rg',
     resource_group_name=f'rg-{config.prefix}-001',
     tags=config.tags
 )
 
-appi = azure.insights.Component(
+appi = insights.Component(
     'appi',
     resource_name_=f'appi-{config.prefix}-001',
     resource_group_name=rg.name,
@@ -20,22 +17,22 @@ appi = azure.insights.Component(
     application_type=config.appiType
 )
 
-kv = azure.keyvault.Vault(
+kv = keyvault.Vault(
     'kv',
     vault_name=f'kv-{config.prefix}-001',
     resource_group_name=rg.name,
     tags=config.tags,
-    properties=azure.keyvault.VaultPropertiesArgs(
+    properties=keyvault.VaultPropertiesArgs(
         tenant_id=config.tenantId,
-        sku=azure.keyvault.SkuArgs(
+        sku=keyvault.SkuArgs(
             family='A',
             name=config.kvSku
         ),
         access_policies=[
-            azure.keyvault.AccessPolicyEntryArgs(
+            keyvault.AccessPolicyEntryArgs(
                 tenant_id=config.tenantId,
                 object_id=config.kvObjectId,
-                permissions=azure.keyvault.PermissionsArgs(
+                permissions=keyvault.PermissionsArgs(
                     keys=config.kvGroupKeyPermissions,
                     secrets=config.kvGroupSecretPermissions,
                     certificates=config.kvGroupCertPermissions
@@ -45,29 +42,29 @@ kv = azure.keyvault.Vault(
     )
 )
 
-azure.keyvault.Secret(
+keyvault.Secret(
     'secret',
     secret_name='appi-connectionString',
     vault_name=kv.name,
     resource_group_name=rg.name,
     tags=config.tags,
-    properties=azure.keyvault.SecretPropertiesArgs(
+    properties=keyvault.SecretPropertiesArgs(
         value=appi.connection_string
     )
 )
 
 pips = []
 for i, pipLabel in enumerate(config.pipLabels):
-    pip = azure.network.PublicIPAddress(
+    pip = network.PublicIPAddress(
         f'pip{i}',
         public_ip_address_name=f'pip-{config.prefix}-{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
         tags=config.tags,
-        sku=azure.network.PublicIPAddressSkuArgs(
+        sku=network.PublicIPAddressSkuArgs(
             name=config.pipSku
         ),
         public_ip_allocation_method=config.pipAllocation,
-        dns_settings=azure.network.PublicIPAddressDnsSettingsArgs(
+        dns_settings=network.PublicIPAddressDnsSettingsArgs(
             domain_name_label=f'{pipLabel}-{config.prefix}'
         )
     )
@@ -75,13 +72,13 @@ for i, pipLabel in enumerate(config.pipLabels):
 
 sts = []
 for i in range(0, config.stCount):
-    st = azure.storage.StorageAccount(
+    st = storage.StorageAccount(
         f'st{i}',
         account_name=f'st{config.prefixStripped}{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
         tags=config.tags,
         kind=config.stKind,
-        sku=azure.storage.SkuArgs(
+        sku=storage.SkuArgs(
             name=config.stSku
         ),
         allow_blob_public_access=config.stPublicAccess,
@@ -90,7 +87,7 @@ for i in range(0, config.stCount):
     )
     sts.append(st)
 
-    azure.storage.BlobContainer(
+    storage.BlobContainer(
         f'container{i}',
         container_name=f'container{config.prefixStripped}001',
         account_name=st.name,
@@ -98,18 +95,18 @@ for i in range(0, config.stCount):
     )
 
 if config.vnetToggle:
-    azure.network.VirtualNetwork(
+    network.VirtualNetwork(
         'vnet',
         virtual_network_name=f'vnet-{config.prefix}-001',
         resource_group_name=rg.name,
         tags=config.tags,
-        address_space=azure.network.AddressSpaceArgs(
+        address_space=network.AddressSpaceArgs(
             address_prefixes=[
                 config.vnetAddressPrefix
             ]
         ),
         subnets=[
-            azure.network.SubnetArgs(
+            network.SubnetArgs(
                 name=f'snet-{config.prefix}-001',
                 address_prefix=config.vnetAddressPrefix
             )

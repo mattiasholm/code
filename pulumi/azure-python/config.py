@@ -1,5 +1,5 @@
 import pulumi
-import pulumi_azure_native as azure
+from pulumi_azure_native import authorization
 import pulumi_azuread as azuread
 import ipaddress
 
@@ -8,7 +8,7 @@ config = pulumi.Config()
 prefix = config.require('prefix')
 prefixStripped = prefix.replace('-', '').lower()
 tags = config.get_object('tags')
-tenantId = azure.authorization.get_client_config().tenant_id
+tenantId = authorization.get_client_config().tenant_id
 
 appiKind = config.get('appiKind') or 'web'
 appiType = config.get('appiType') or 'web'
