@@ -215,6 +215,9 @@ function midi() {
     "march")
         tempo="160"
         ;;
+    "mazurka")
+        tempo="160"
+        ;;
     "polka")
         tempo="140"
         ;;

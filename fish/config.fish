@@ -196,6 +196,8 @@ function midi --argument-names abcFile transposeSteps
             set tempo 160
         case march
             set tempo 160
+        case mazurka
+            set tempo 160
         case polka
             set tempo 140
         case reel
