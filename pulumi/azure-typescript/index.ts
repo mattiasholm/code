@@ -6,13 +6,18 @@ const config = new pulumi.Config()
 
 const prefix = config.require('prefix')
 const prefixStripped = prefix.replace('-', '').toLowerCase()
-const tags: undefined = config.getObject('tags') // {[key: string]: string} https://www.pulumi.com/registry/packages/azure-native/api-docs/resources/tagatscope/
+const tags: undefined = config.getObject('tags') // {[key: string]: string}
 const tenantId = pulumi.output(authorization.getClientConfig()).tenantId
 
 const appiKind = config.get('appiKind') || 'web'
 const appiType = config.get('appiType') || 'web'
 
 const kvSku: keyvault.SkuName = config.get('kvSku') || 'standard'
+const kvGroupName = config.require('kvGroupName')
+const kvObjectId = pulumi.output(azuread.getGroup({ displayName: kvGroupName })).objectId
+const kvGroupKeyPermissions: undefined = config.getObject('kvGroupKeyPermissions') // string[]
+const kvGroupSecretPermissions: undefined = config.getObject('kvGroupSecretPermissions') // string[]
+const kvGroupCertPermissions: undefined = config.getObject('kvGroupCertPermissions') // string[]
 
 const rg = new resources.ResourceGroup('rg', {
     resourceGroupName: `rg-${prefix}-001`,
@@ -37,7 +42,27 @@ const kv = new keyvault.Vault('kv', {
             family: 'A',
             name: kvSku
         },
-        accessPolicies: []
+        accessPolicies: [
+            {
+                tenantId: tenantId,
+                objectId: kvObjectId,
+                permissions: {
+                    keys: kvGroupKeyPermissions,
+                    secrets: kvGroupSecretPermissions,
+                    certificates: kvGroupCertPermissions
+                }
+            }
+        ]
+    }
+})
+
+new keyvault.Secret('secret', {
+    secretName: 'appi-connectionString',
+    vaultName: kv.name,
+    resourceGroupName: rg.name,
+    tags: tags,
+    properties: {
+        value: appi.connectionString
     }
 })
 
