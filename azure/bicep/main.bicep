@@ -29,7 +29,7 @@ param appiType string = 'web'
   'premium'
 ])
 param kvSku string = 'standard'
-param kvObjectId string = '037f6242-0587-4d8e-80f4-b31ee868aa4b'
+param kvObjectId string = 'e1d37e09-c819-457e-9b93-44b8c784f539'
 param kvPermissions object = {
   keys: [
     'Get'

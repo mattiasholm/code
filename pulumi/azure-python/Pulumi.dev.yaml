@@ -14,8 +14,8 @@ config:
   azure-python:appiType: web
 
   azure-python:kvSku: standard
-  azure-python:kvGroupName: AzureRBAC-KeyVault
-  azure-python:kvGroupKeyPermissions:
+  azure-python:kvUsername: mattias.holm@azronnieb3it.onmicrosoft.com
+  azure-python:kvKeyPermissions:
     - Get
     - List
     - Update
@@ -32,7 +32,7 @@ config:
     - Verify
     - Sign
     - Purge
-  azure-python:kvGroupSecretPermissions:
+  azure-python:kvSecretPermissions:
     - Get
     - List
     - Set
@@ -41,7 +41,7 @@ config:
     - Backup
     - Restore
     - Purge
-  azure-python:kvGroupCertPermissions:
+  azure-python:kvCertificatePermissions:
     - Get
     - List
     - Update

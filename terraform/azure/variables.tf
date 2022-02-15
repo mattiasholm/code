@@ -29,22 +29,16 @@ variable "kvSku" {
     error_message = "Invalid value for variable."
   }
 }
-variable "kvGroupName" {
+variable "kvUsername" {
   type = string
 }
-variable "kvGroupOwner" {
-  type = string
-}
-variable "kvGroupMembers" {
+variable "kvKeyPermissions" {
   type = list(string)
 }
-variable "kvGroupKeyPermissions" {
+variable "kvSecretPermissions" {
   type = list(string)
 }
-variable "kvGroupSecretPermissions" {
-  type = list(string)
-}
-variable "kvGroupCertPermissions" {
+variable "kvCertificatePermissions" {
   type = list(string)
 }
 variable "kvSpName" {

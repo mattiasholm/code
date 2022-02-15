@@ -13,11 +13,11 @@ const appiKind = config.get('appiKind') || 'web'
 const appiType = config.get('appiType') || 'web'
 
 const kvSku: keyvault.SkuName = config.get('kvSku') || 'standard'
-const kvGroupName = config.require('kvGroupName')
-const kvObjectId = pulumi.output(azuread.getGroup({ displayName: kvGroupName })).objectId
-const kvGroupKeyPermissions: undefined = config.getObject('kvGroupKeyPermissions') // string[]
-const kvGroupSecretPermissions: undefined = config.getObject('kvGroupSecretPermissions') // string[]
-const kvGroupCertPermissions: undefined = config.getObject('kvGroupCertPermissions') // string[]
+const kvUsername = config.require('kvUsername')
+const kvObjectId = pulumi.output(azuread.getUser({ userPrincipalName: kvUsername })).objectId
+const kvKeyPermissions: undefined = config.getObject('kvKeyPermissions') // string[]
+const kvSecretPermissions: undefined = config.getObject('kvSecretPermissions') // string[]
+const kvCertificatePermissions: undefined = config.getObject('kvCertificatePermissions') // string[]
 
 const rg = new resources.ResourceGroup('rg', {
     resourceGroupName: `rg-${prefix}-001`,
@@ -47,9 +47,9 @@ const kv = new keyvault.Vault('kv', {
                 tenantId: tenantId,
                 objectId: kvObjectId,
                 permissions: {
-                    keys: kvGroupKeyPermissions,
-                    secrets: kvGroupSecretPermissions,
-                    certificates: kvGroupCertPermissions
+                    keys: kvKeyPermissions,
+                    secrets: kvSecretPermissions,
+                    certificates: kvCertificatePermissions
                 }
             }
         ]

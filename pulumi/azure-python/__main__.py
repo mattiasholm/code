@@ -33,9 +33,9 @@ kv = keyvault.Vault(
                 tenant_id=config.tenantId,
                 object_id=config.kvObjectId,
                 permissions=keyvault.PermissionsArgs(
-                    keys=config.kvGroupKeyPermissions,
-                    secrets=config.kvGroupSecretPermissions,
-                    certificates=config.kvGroupCertPermissions
+                    keys=config.kvKeyPermissions,
+                    secrets=config.kvSecretPermissions,
+                    certificates=config.kvCertificatePermissions
                 )
             )
         ]

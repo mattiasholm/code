@@ -14,11 +14,11 @@ appiKind = config.get('appiKind') or 'web'
 appiType = config.get('appiType') or 'web'
 
 kvSku = config.get('kvSku') or 'standard'
-kvGroupName = config.require('kvGroupName')
-kvObjectId = azuread.get_group(display_name=kvGroupName).object_id
-kvGroupKeyPermissions = config.get_object('kvGroupKeyPermissions')
-kvGroupSecretPermissions = config.get_object('kvGroupSecretPermissions')
-kvGroupCertPermissions = config.get_object('kvGroupCertPermissions')
+kvUsername = config.require('kvUsername')
+kvObjectId = azuread.get_user(user_principal_name=kvUsername).object_id
+kvKeyPermissions = config.get_object('kvKeyPermissions')
+kvSecretPermissions = config.get_object('kvSecretPermissions')
+kvCertificatePermissions = config.get_object('kvCertificatePermissions')
 
 pipLabels = config.require_object('pipLabels')
 pipSku = config.get('pipSku') or 'Basic'

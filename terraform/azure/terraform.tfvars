@@ -9,13 +9,9 @@ tags = {
 
 appiType = "web"
 
-kvSku        = "standard"
-kvGroupName  = "AzureRBAC-KeyVault"
-kvGroupOwner = "mattias.holm@azronnieb3it.onmicrosoft.com"
-kvGroupMembers = [
-  "mattias.holm@azronnieb3it.onmicrosoft.com"
-]
-kvGroupKeyPermissions = [
+kvSku      = "standard"
+kvUsername = "mattias.holm@azronnieb3it.onmicrosoft.com"
+kvKeyPermissions = [
   "Get",
   "List",
   "Update",
@@ -33,7 +29,7 @@ kvGroupKeyPermissions = [
   "Sign",
   "Purge"
 ]
-kvGroupSecretPermissions = [
+kvSecretPermissions = [
   "Get",
   "List",
   "Set",
@@ -43,7 +39,7 @@ kvGroupSecretPermissions = [
   "Restore",
   "Purge"
 ]
-kvGroupCertPermissions = [
+kvCertificatePermissions = [
   "Get",
   "List",
   "Update",

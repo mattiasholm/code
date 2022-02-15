@@ -14,8 +14,8 @@ config:
   azure-typescript:appiType: web
 
   azure-typescript:kvSku: standard
-  azure-typescript:kvGroupName: AzureRBAC-KeyVault
-  azure-typescript:kvGroupKeyPermissions:
+  azure-typescript:kvUsername: mattias.holm@azronnieb3it.onmicrosoft.com
+  azure-typescript:kvKeyPermissions:
     - Get
     - List
     - Update
@@ -32,7 +32,7 @@ config:
     - Verify
     - Sign
     - Purge
-  azure-typescript:kvGroupSecretPermissions:
+  azure-typescript:kvSecretPermissions:
     - Get
     - List
     - Set
@@ -41,7 +41,7 @@ config:
     - Backup
     - Restore
     - Purge
-  azure-typescript:kvGroupCertPermissions:
+  azure-typescript:kvCertificatePermissions:
     - Get
     - List
     - Update
