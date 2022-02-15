@@ -57,7 +57,7 @@ kvCertificatePermissions = [
   "DeleteIssuers",
   "Purge"
 ]
-kvSpName = "sp-holm-github-001"
+kvSpName = "sp-holm-001"
 kvSpSecretPermissions = [
   "Get",
   "Set"
