@@ -1,4 +1,4 @@
-name: Azure Python
+name: Azure Pulumi
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - pulumi/azure-python/**
-      - .github/workflows/azure-python.yml
+      - .github/workflows/azure-pulumi.yml
       - "!**.md"
 
   workflow_dispatch:

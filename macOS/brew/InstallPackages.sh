@@ -36,7 +36,6 @@ brew install checkov
 brew install terrascan
 brew install pulumi
 brew install python3
-brew install node
 brew install kubectl
 brew install kubectx
 brew install lastpass-cli
