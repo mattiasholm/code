@@ -2,6 +2,11 @@
 
 <br>
 
+## Chocolatey packages:
+https://chocolatey.org/packages
+
+<br><br>
+
 ## Install Chocolatey:
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
@@ -19,11 +24,6 @@ choco -v
 ```powershell
 choco upgrade chocolatey
 ```
-
-<br>
-
-## Chocolatey packages:
-https://chocolatey.org/packages
 
 <br><br>
 
