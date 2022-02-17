@@ -435,6 +435,11 @@ git commit --all
 git commit -a
 ```
 
+## Create an empty commit, i.e. without any actual changes:
+```shell
+git commit --allow-empty
+```
+
 <br><br>
 
 ## Push locally committed changes to `origin`:
