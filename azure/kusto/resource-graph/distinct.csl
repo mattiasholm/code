@@ -2,8 +2,6 @@ Resources
 | order by type asc
 | distinct type
 
-
-
 Resources
 | order by type asc
 | summarize by type

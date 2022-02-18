@@ -2,8 +2,6 @@ Resources
 | where type =~ 'Microsoft.Compute/virtualMachines'
 | summarize count() by tostring(properties.storageProfile.osDisk.osType)
 
-
-
 Resources
 | where type =~ 'Microsoft.Compute/virtualMachines'
 | order by name asc

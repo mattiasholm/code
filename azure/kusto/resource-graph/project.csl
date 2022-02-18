@@ -3,13 +3,9 @@ Resources
 | project name, type, resourceGroup, location
 | limit 100
 
-
-
 Resources
 | top 5 by name desc
 | project-away id, tenantId, subscriptionId
-
-
 
 Resources
 | order by name asc

@@ -1,7 +1,7 @@
 ﻿{
-    "SqlServer": "?",
-    "SqlDatabase": "??",
-    "SqlUserID": "???",
-    "SqlPassword": "????",
-    "DpmServer": "?????"
+    "SqlServer": "XXX",
+    "SqlDatabase": "XXX",
+    "SqlUserID": "XXX",
+    "SqlPassword": "XXX",
+    "DpmServer": "XXX"
 }
