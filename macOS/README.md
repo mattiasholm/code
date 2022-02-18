@@ -5,41 +5,26 @@
 >## **GUI**
 
 ## Show hidden files in Finder:
-```
-Cmd+Shift+.
-```
+<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>.</kbd>
 
 ## Go to folder:
-```
-Cmd+Shift+G
-```
+<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd>
 
 ## Go to Home (~):
-```
-Cmd+Shift+H
-```
+<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd>
 
 ## Force quit applications:
-```
-Cmd+Alt+Esc
-```
+<kbd>Cmd</kbd>+<kbd>Alt</kbd>+<kbd>Esc</kbd>
 
 ## Take a screenshot of entire screen:
-```
-Cmd+Shift+3
-```
+<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>3</kbd>
 
 ## Take a screenshot of selection:
-```
-Cmd+Shift+4
-```
+<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>4</kbd>
 
 ## Empty recycle bin:
-```
-Cmd+Alt+Shift+Del
-```
+<kbd>Cmd</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Del</kbd>
 
-<br><br>
 <br><br>
 
 >## **TERMINAL**

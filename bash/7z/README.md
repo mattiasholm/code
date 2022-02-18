@@ -1,4 +1,4 @@
-# Cheat Sheet - p7zip
+# Cheat Sheet - 7z
 
 <br>
 

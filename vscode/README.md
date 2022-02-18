@@ -10,158 +10,153 @@ code .
 <br>
 
 ## Open command palette:
-`Mac` Cmd+Shift+P
+`Mac` <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
 
-`Windows` Ctrl+Shift+P
+`Windows` <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
 
 ## Navigate to any file in workspace by typing its name:
-`Mac` Cmd+P
+`Mac` <kbd>Cmd</kbd>+<kbd>P</kbd>
 
-`Windows` Ctrl+P
+`Windows` <kbd>Ctrl</kbd>+<kbd>P</kbd>
 
 ## Toggle word wrap:
-`Mac` Alt+Z
+`Mac` <kbd>Alt</kbd>+<kbd>Z</kbd>
 
-`Windows` Alt+Z
+`Windows` <kbd>Alt</kbd>+<kbd>Z</kbd>
 
 ## Go to line:
-`Mac` Ctrl+G
+`Mac` <kbd>Ctrl</kbd>+<kbd>G</kbd>
 
-`Windows` Ctrl+G
+`Windows` <kbd>Ctrl</kbd>+<kbd>G</kbd>
 
 ## Format code:
-`Mac` Alt+Shift+F
+`Mac` <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd>
 
-`Windows` Alt+Shift+F
+`Windows` <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd>
 
 ## Select language mode:
-`Mac` Cmd+K + M
+`Mac` <kbd>Cmd</kbd>+<kbd>K</kbd> + <kbd>M</kbd>
 
-`Windows` Ctrl+K + M
+`Windows` <kbd>Ctrl</kbd>+<kbd>K</kbd> + <kbd>M</kbd>
 
 ## Select color theme:
-`Mac` Cmd+K + Cmd+T
+`Mac` <kbd>Cmd</kbd>+<kbd>K</kbd> + <kbd>Cmd</kbd>+<kbd>T</kbd>
 
-`Windows` Ctrl+K + Ctrl+T
+`Windows` <kbd>Ctrl</kbd>+<kbd>K</kbd> + <kbd>Ctrl</kbd>+<kbd>T</kbd>
 
 ## Select current line, regardless of cursor position (simply repeat `L` to select multiple lines):
-`Mac` Cmd+L
+`Mac` <kbd>Cmd</kbd>+<kbd>L</kbd>
 
-`Windows` Ctrl+L
+`Windows` <kbd>Ctrl</kbd>+<kbd>L</kbd>
 
 ## Select entire word, regardless of cursor position:
-`Mac` Cmd+D
+`Mac` <kbd>Cmd</kbd>+<kbd>D</kbd>
 
-`Windows` Ctrl+D
+`Windows` <kbd>Ctrl</kbd>+<kbd>D</kbd>
 
 ## Open folder:
-`Mac` Cmd+K+O
+`Mac` <kbd>Cmd</kbd>+<kbd>K</kbd>+<kbd>O</kbd>
 
-`Windows` Ctrl+K+O
+`Windows` <kbd>Ctrl</kbd>+<kbd>K</kbd>+<kbd>O</kbd>
 
 ## Save all open files:
-`Mac` Cmd+Alt+S
+`Mac` <kbd>Cmd</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd>
 
-`Windows` Ctrl+K + S
+`Windows` <kbd>Ctrl</kbd>+<kbd>K</kbd> + <kbd>S</kbd>
 
 ## Show/hide Explorer:
-`Mac` Cmd+B
+`Mac` <kbd>Cmd</kbd>+<kbd>B</kbd>
 
-`Windows` Ctrl+B
+`Windows` <kbd>Ctrl</kbd>+<kbd>B</kbd>
 
 ## Show/hide Problems: 
-`Mac` Cmd+Shift+M
+`Mac` <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>
 
-`Windows` Ctrl+Shift+M
+`Windows` <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>
 
 ## Run active file or selected code block in integrated terminal:
-`Mac` Shift+Enter
+`Mac` <kbd>Shift</kbd>+<kbd>Enter</kbd>
 
-`Windows` Shift+Enter
+`Windows` <kbd>Shift</kbd>+<kbd>Enter</kbd>
 
 <br><br>
 
 ## Remove current line or selected code block (without adding it to clipboard):
-`Mac` Cmd+Shift+K
+`Mac` <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>K</kbd>
 
-`Windows` Ctrl+Shift+K
+`Windows` <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>K</kbd>
 
 ## Comment out current line or selected code block:
-`Mac` Cmd+Shift+7
+`Mac` <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>7</kbd>
 
-`Windows` Shift+Alt+A 
+`Windows` <kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd>
 
 ## Move current line or selected code block up or down (without using copy/paste):
-`Mac` Alt+↑ | Alt+↓
+`Mac` <kbd>Alt</kbd>+<kbd>↑</kbd> | <kbd>Alt</kbd>+<kbd>↓</kbd>
 
-`Windows` Alt+↑ | Alt+↓
+`Windows` <kbd>Alt</kbd>+<kbd>↑</kbd> | <kbd>Alt</kbd>+<kbd>↓</kbd>
 
-## Add a new line below and move cursor there (equivalent to vim `o`):
-`Mac` Cmd+Enter
+## Add a new line below and move cursor there:
+`Mac` <kbd>Cmd</kbd>+<kbd>Enter</kbd>
 
-`Windows` Ctrl+Enter
+`Windows` <kbd>Ctrl</kbd>+<kbd>Enter</kbd>
 
 ## Copy current line and paste it above or below without adding to clipboard:
-`Mac` Alt+Shift+↑ | Alt+Shift+↓
+`Mac` <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>↑</kbd> | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>↓</kbd>
 
-`Windows` Alt+Shift+↑ | Alt+Shift+↓
+`Windows` <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>↑</kbd> | <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>↓</kbd>
 
 <br><br>
 
 ## Markdown preview:
-`Mac` Cmd+Shift+V
+`Mac` <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>
 
-`Windows` Ctrl+Shift+V
+`Windows` <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd>
 
 ## Delete matching brackets:
-`Mac` Cmd+Shift+Alt+I
+`Mac` <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd>
 
-`Windows` Ctrl+Shift+Alt+I
+`Windows` <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd>
 
 ## Replace tabs with spaces:
-`Mac` Ctrl+T+U + Enter
+`Mac` <kbd>Ctrl</kbd>+<kbd>T</kbd>+<kbd>U</kbd> + <kbd>Enter</kbd>
 
-`Windows` Ctrl+T+U + Enter
+`Windows` <kbd>Ctrl</kbd>+<kbd>T</kbd>+<kbd>U</kbd> + <kbd>Enter</kbd>
 
 ## Replace spaces with tabs:
-`Mac` Ctrl+T+T + Enter
+`Mac` <kbd>Ctrl</kbd>+<kbd>T</kbd>+<kbd>T</kbd> + <kbd>Enter</kbd>
 
-`Windows` Ctrl+T+T + Enter
+`Windows` <kbd>Ctrl</kbd>+<kbd>T</kbd>+<kbd>T</kbd> + <kbd>Enter</kbd>
 
 
 <br><br>
 
 ## Add next occurrence to selection:
-`Mac` Cmd+D
+`Mac` <kbd>Cmd</kbd>+<kbd>D</kbd>
 
-`Windows` Ctrl+D
+`Windows` <kbd>Ctrl</kbd>+<kbd>D</kbd>
 
 ## Add all occurrences to selection:
-`Mac` Cmd+Shift+L
+`Mac` <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd>
 
-`Windows` Ctrl+Shift+L
+`Windows` <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd>
 
-## Add cursor above:
-`Mac` Cmd+Alt+↑
+## Add additional cursor above:
+`Mac` <kbd>Cmd</kbd>+<kbd>Alt</kbd>+<kbd>↑</kbd>
 
-`Windows` Ctrl+Alt+↑
+`Windows` <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>↑</kbd>
 
 ## Add additional cursor below:
-`Mac` Cmd+Alt+↓
+`Mac` <kbd>Cmd</kbd>+<kbd>Alt</kbd>+<kbd>↓</kbd>
 
-`Windows` Ctrl+Alt+↓
+`Windows` <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>↓</kbd>
 
 ## Add additional cursor to line ends:
-`Mac` Alt+Shift+I
+`Mac` <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd>
 
-`Windows` Alt+Shift+I
+`Windows` <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd>
 
 ## Add additional cursor where mouse is:
-`Mac` Alt+LeftMouseClick
+`Mac` <kbd>Alt</kbd>+<kbd>LeftMouseClick</kbd>
 
-`Windows` Alt+LeftMouseClick
-
-<!--
-## FYLL PÅ! GOOGLA EFTER FLER ANVÄNDBARA SHORTCUTS! Underlättar vardagen enormt!
-Eventuellt byt ut till hotkey-ikoner när ändå håller på: <kbd>⌘F</kbd>
--->
+`Windows` <kbd>Alt</kbd>+<kbd>LeftMouseClick</kbd>
