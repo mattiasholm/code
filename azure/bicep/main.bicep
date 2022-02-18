@@ -2,6 +2,7 @@ targetScope = 'subscription'
 
 @maxLength(17)
 param prefix string = 'holm-bicep'
+param location string = deployment().location
 param tags object = {
   Application: 'Bicep'
   Company: 'Holm'
@@ -127,7 +128,6 @@ param vnetToggle bool = true // false
 param vnetAddressPrefix string = '10.0.0.0/24' // ''
 
 var prefixStripped = toLower(replace(prefix, '-', ''))
-var location = deployment().location
 var tenantId = subscription().tenantId
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
