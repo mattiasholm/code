@@ -80,6 +80,10 @@ param kvPermissions object = {
   ]
 }
 
+param pdnszName string = 'holm.io'
+param pdnszRegistration bool = false
+param pdnszTtl int = 3600
+
 param pipLabels array = [
   'foo'
   'bar'
@@ -170,6 +174,23 @@ module kv 'modules/kv.bicep' = {
         value: appi.outputs.connectionString
       }
     ]
+  }
+}
+
+module pdnsz 'modules/pdnsz.bicep' = {
+  name: 'pdnsz'
+  scope: rg
+  params: {
+    name: pdnszName
+    tags: tags
+    vnetName: vnet.outputs.name
+    vnetId: vnet.outputs.id
+    registrationEnabled: pdnszRegistration
+    ttl: pdnszTtl
+    cnameRecords: [for (pipLabel, i) in pipLabels: {
+      name: pipLabel
+      cname: pip[i].outputs.fqdn
+    }]
   }
 }
 

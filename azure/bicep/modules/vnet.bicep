@@ -1,5 +1,5 @@
 param name string
-param location string = resourceGroup().location
+param location string
 param tags object = resourceGroup().tags
 param addressPrefixes array
 param snetName string
@@ -23,3 +23,6 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-03-01' = {
     ]
   }
 }
+
+output id string = vnet.id
+output name string = vnet.name

@@ -10,6 +10,10 @@
             "type": "string",
             "defaultValue": "[resourceGroup().location]"
         },
+        "tags": {
+            "type": "object",
+            "defaultValue": "[resourceGroup().tags]"
+        },
         "appiKind": {
             "type": "string",
             "defaultValue": "web",
@@ -121,7 +125,6 @@
     },
     "variables": {
         "prefixStripped": "[toLower(replace(parameters('prefix'), '-', ''))]",
-        "tags": "[resourceGroup().tags]",
         "tenantId": "[subscription().tenantId]",
         "appiName": "[format('appi-{0}-001', parameters('prefix'))]",
         "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
@@ -165,7 +168,7 @@
             "apiVersion": "2020-02-02",
             "name": "[variables('appiName')]",
             "location": "[parameters('location')]",
-            "tags": "[variables('tags')]",
+            "tags": "[parameters('tags')]",
             "kind": "[parameters('appiKind')]",
             "properties": {
                 "Application_Type": "[parameters('appiType')]"
@@ -176,7 +179,7 @@
             "apiVersion": "2021-10-01",
             "name": "[variables('kvName')]",
             "location": "[parameters('location')]",
-            "tags": "[variables('tags')]",
+            "tags": "[parameters('tags')]",
             "properties": {
                 "tenantId": "[variables('tenantId')]",
                 "sku": {
@@ -196,7 +199,7 @@
                     "type": "secrets",
                     "apiVersion": "2021-10-01",
                     "name": "appi-connectionString",
-                    "tags": "[variables('tags')]",
+                    "tags": "[parameters('tags')]",
                     "properties": {
                         "value": "[reference(variables('appiId')).connectionString]"
                     },
@@ -217,7 +220,7 @@
             "apiVersion": "2021-05-01",
             "name": "[variables('pipName')[copyIndex()]]",
             "location": "[parameters('location')]",
-            "tags": "[variables('tags')]",
+            "tags": "[parameters('tags')]",
             "sku": {
                 "name": "[parameters('pipSku')]"
             },
@@ -238,7 +241,7 @@
             "apiVersion": "2021-06-01",
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[parameters('location')]",
-            "tags": "[variables('tags')]",
+            "tags": "[parameters('tags')]",
             "kind": "[parameters('stKind')]",
             "sku": {
                 "name": "[parameters('stSku')]"
@@ -265,7 +268,7 @@
             "apiVersion": "2021-03-01",
             "name": "[variables('vnetName')]",
             "location": "[parameters('location')]",
-            "tags": "[variables('tags')]",
+            "tags": "[parameters('tags')]",
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
@@ -284,16 +287,16 @@
         }
     ],
     "outputs": {
+        "kvUrl": {
+            "type": "string",
+            "value": "[reference(variables('kvId')).vaultUri]"
+        },
         "pipUrl": {
             "type": "array",
             "copy": {
                 "count": "[variables('pipCount')]",
                 "input": "[format('https://{0}/', reference(variables('pipId')[copyIndex()]).dnsSettings.fqdn)]"
             }
-        },
-        "kvUrl": {
-            "type": "string",
-            "value": "[reference(variables('kvId')).vaultUri]"
         },
         "stUrl": {
             "type": "array",

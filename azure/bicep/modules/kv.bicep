@@ -1,6 +1,6 @@
 @maxLength(24)
 param name string
-param location string = resourceGroup().location
+param location string
 param tags object = resourceGroup().tags
 param tenantId string = subscription().tenantId
 @allowed([
