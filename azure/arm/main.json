@@ -48,6 +48,17 @@
         "kvPermissions": {
             "type": "object"
         },
+        "pdnszName": {
+            "type": "string"
+        },
+        "pdnszRegistration": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "pdnszTtl": {
+            "type": "int",
+            "defaultValue": 3600
+        },
         "pipLabels": {
             "type": "array"
         },
@@ -130,11 +141,18 @@
         "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
         "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
+        "pdnszId": "[resourceId('Microsoft.Network/privateDnsZones', parameters('pdnszName'))]",
         "pipCount": "[length(parameters('pipLabels'))]",
         "stContainerName": "[format('default/container{0}001', variables('prefixStripped'))]",
         "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
+        "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
         "snetName": "[format('snet-{0}-001', parameters('prefix'))]",
         "copy": [
+            {
+                "name": "pdnszCname",
+                "count": "[variables('pipCount')]",
+                "input": "[format('{0}/{1}', parameters('pdnszName'), parameters('pipLabels')[copyIndex('pdnszCname')])]"
+            },
             {
                 "name": "pipName",
                 "count": "[variables('pipCount')]",
@@ -146,9 +164,9 @@
                 "input": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipName')[copyIndex('pipId')])]"
             },
             {
-                "name": "pipDomainNameLabel",
+                "name": "pipLabel",
                 "count": "[variables('pipCount')]",
-                "input": "[format('{0}-{1}', parameters('pipLabels')[copyIndex('pipDomainNameLabel')], parameters('prefix'))]"
+                "input": "[format('{0}-{1}', parameters('pipLabels')[copyIndex('pipLabel')], parameters('prefix'))]"
             },
             {
                 "name": "stName",
@@ -211,6 +229,51 @@
             ]
         },
         {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2020-06-01",
+            "name": "[parameters('pdnszName')]",
+            "location": "global",
+            "tags": "[parameters('tags')]",
+            "resources": [
+                {
+                    "type": "virtualNetworkLinks",
+                    "apiVersion": "2020-06-01",
+                    "name": "[variables('vnetName')]",
+                    "location": "global",
+                    "properties": {
+                        "virtualNetwork": {
+                            "id": "[variables('vnetId')]"
+                        },
+                        "registrationEnabled": "[parameters('pdnszRegistration')]"
+                    },
+                    "dependsOn": [
+                        "[variables('pdnszId')]",
+                        "[variables('vnetId')]"
+                    ]
+                }
+            ]
+        },
+        {
+            "copy": {
+                "name": "publicIPAddresses",
+                "count": "[variables('pipCount')]",
+                "mode": "parallel"
+            },
+            "type": "Microsoft.Network/privateDnsZones/CNAME",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('pdnszCname')[copyIndex()]]",
+            "properties": {
+                "ttl": "[parameters('pdnszTtl')]",
+                "cnameRecord": {
+                    "cname": "[reference(variables('pipId')[copyIndex()]).dnsSettings.fqdn]"
+                }
+            },
+            "dependsOn": [
+                "[variables('pdnszId')]",
+                "[variables('pipId')[copyIndex()]]"
+            ]
+        },
+        {
             "copy": {
                 "name": "publicIPAddresses",
                 "count": "[variables('pipCount')]",
@@ -227,7 +290,7 @@
             "properties": {
                 "publicIPAllocationMethod": "[parameters('pipAllocation')]",
                 "dnsSettings": {
-                    "domainNameLabel": "[variables('pipDomainNameLabel')[copyIndex()]]"
+                    "domainNameLabel": "[variables('pipLabel')[copyIndex()]]"
                 }
             }
         },

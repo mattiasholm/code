@@ -67,6 +67,15 @@
         ]
       }
     },
+    "pdnszName": {
+      "value": "holm.io"
+    },
+    "pdnszRegistration": {
+      "value": false
+    },
+    "pdnszTtl": {
+      "value": 3600
+    },
     "pipLabels": {
       "value": [
         "foo",
