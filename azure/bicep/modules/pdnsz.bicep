@@ -34,3 +34,5 @@ resource pdnsz 'Microsoft.Network/privateDnsZones@2020-06-01' = {
     }
   }]
 }
+
+output fqdn array = [for (cnameRecord, i) in cnameRecords: pdnsz::cname[i].properties.fqdn]

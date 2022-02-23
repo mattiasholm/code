@@ -240,12 +240,8 @@ module vnet 'modules/vnet.bicep' = if (vnetToggle) {
 
 output kvUrl string = kv.outputs.vaultUri
 
-output pipUrl array = [for (pipLabel, i) in pipLabels: {
-  name: 'pip-${prefix}-${padLeft(i + 1, 3, '0')}'
-  url: 'https://${pip[i].outputs.fqdn}/'
-}]
+output pdnszUrl array = pdnsz.outputs.fqdn
 
-output stUrl array = [for i in range(0, stCount): {
-  name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
-  url: st[i].outputs.primaryEndpoints
-}]
+output pipUrl array = [for (pipLabel, i) in pipLabels: 'https://${pip[i].outputs.fqdn}/']
+
+output stUrl array = [for i in range(0, stCount): st[i].outputs.primaryEndpoints]
