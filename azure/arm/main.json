@@ -236,6 +236,7 @@
             "tags": "[parameters('tags')]",
             "resources": [
                 {
+                    "condition": "[parameters('vnetToggle')]",
                     "type": "virtualNetworkLinks",
                     "apiVersion": "2020-06-01",
                     "name": "[variables('vnetName')]",
