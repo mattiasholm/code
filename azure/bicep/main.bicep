@@ -183,14 +183,22 @@ module pdnsz 'modules/pdnsz.bicep' = {
   params: {
     name: pdnszName
     tags: tags
-    vnetName: vnet.outputs.name
-    vnetId: vnet.outputs.id
-    registrationEnabled: pdnszRegistration
     ttl: pdnszTtl
     cnameRecords: [for (pipLabel, i) in pipLabels: {
       name: pipLabel
       cname: pip[i].outputs.fqdn
     }]
+  }
+}
+
+module link 'modules/link.bicep' = if (vnetToggle) {
+  name: 'link'
+  scope: rg
+  params: {
+    name: vnet.outputs.name
+    pdnszName: pdnszName
+    vnetId: vnet.outputs.id
+    registrationEnabled: pdnszRegistration
   }
 }
 
