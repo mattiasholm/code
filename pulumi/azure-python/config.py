@@ -37,10 +37,11 @@ vnetAddressPrefix = config.get('vnetAddressPrefix')
 if len(prefix) > 17:
     raise ValueError(f"'{prefix}' is longer than 17")
 
-network = ipaddress.ip_network(vnetAddressPrefix)
+if vnetToggle:
+    network = ipaddress.ip_network(vnetAddressPrefix)
 
-if not network.is_private:
-    raise ValueError(f"'{vnetAddressPrefix}' is not a private network")
+    if not network.is_private:
+        raise ValueError(f"'{vnetAddressPrefix}' is not a private network")
 
-if network.prefixlen > 24:
-    raise ValueError(f"'{vnetAddressPrefix}' is smaller than /24")
+    if network.prefixlen > 24:
+        raise ValueError(f"'{vnetAddressPrefix}' is smaller than /24")
