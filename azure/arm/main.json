@@ -143,15 +143,20 @@
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "pdnszId": "[resourceId('Microsoft.Network/privateDnsZones', parameters('pdnszName'))]",
         "pipCount": "[length(parameters('pipLabels'))]",
-        "stContainerName": "[format('default/container{0}001', variables('prefixStripped'))]",
+        "containerName": "[format('default/container{0}001', variables('prefixStripped'))]",
         "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
         "snetName": "[format('snet-{0}-001', parameters('prefix'))]",
         "copy": [
             {
-                "name": "pdnszCname",
+                "name": "cnameName",
                 "count": "[variables('pipCount')]",
-                "input": "[format('{0}/{1}', parameters('pdnszName'), parameters('pipLabels')[copyIndex('pdnszCname')])]"
+                "input": "[format('{0}/{1}', parameters('pdnszName'), parameters('pipLabels')[copyIndex('cnameName')])]"
+            },
+            {
+                "name": "cnameId",
+                "count": "[variables('pipCount')]",
+                "input": "[resourceId('Microsoft.Network/privateDnsZones/CNAME', variables('cnameName')[copyIndex('cnameId')])]"
             },
             {
                 "name": "pipName",
@@ -262,7 +267,7 @@
             },
             "type": "Microsoft.Network/privateDnsZones/CNAME",
             "apiVersion": "2020-06-01",
-            "name": "[variables('pdnszCname')[copyIndex()]]",
+            "name": "[variables('cnameName')[copyIndex()]]",
             "properties": {
                 "ttl": "[parameters('pdnszTtl')]",
                 "cnameRecord": {
@@ -319,7 +324,7 @@
                 {
                     "type": "blobServices/containers",
                     "apiVersion": "2021-06-01",
-                    "name": "[variables('stContainerName')]",
+                    "name": "[variables('containerName')]",
                     "dependsOn": [
                         "[variables('stId')[copyIndex()]]"
                     ]
@@ -354,6 +359,13 @@
         "kvUrl": {
             "type": "string",
             "value": "[reference(variables('kvId')).vaultUri]"
+        },
+        "pdnszUrl": {
+            "type": "array",
+            "copy": {
+                "count": "[variables('pipCount')]",
+                "input": "[reference(variables('cnameId')[copyIndex()]).properties.fqdn]"
+            }
         },
         "pipUrl": {
             "type": "array",
