@@ -63,6 +63,10 @@ kvSpSecretPermissions = [
   "Set"
 ]
 
+pdnszName         = "holm.io"
+pdnszRegistration = false
+pdnszTtl          = 3600
+
 pipLabels = [
   "foo",
   "bar"

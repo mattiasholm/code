@@ -2,6 +2,10 @@ output "kvUrl" {
   value = azurerm_key_vault.kv.vault_uri
 }
 
+output "pdnszUrl" {
+  value = [for cname in azurerm_private_dns_cname_record.cname : cname.fqdn]
+}
+
 output "pipUrl" {
   value = [for pip in azurerm_public_ip.pip : "https://${pip.fqdn}/"]
 }

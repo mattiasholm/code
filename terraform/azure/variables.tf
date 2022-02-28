@@ -48,6 +48,18 @@ variable "kvSpSecretPermissions" {
   type = list(string)
 }
 
+variable "pdnszName" {
+  type = string
+}
+variable "pdnszRegistration" {
+  type    = bool
+  default = false
+}
+variable "pdnszTtl" {
+  type    = number
+  default = 3600
+}
+
 variable "pipLabels" {
   type = list(string)
 }
