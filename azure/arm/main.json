@@ -156,7 +156,7 @@
             {
                 "name": "cnameId",
                 "count": "[variables('pipCount')]",
-                "input": "[resourceId('Microsoft.Network/privateDnsZones/CNAME', variables('cnameName')[copyIndex('cnameId')])]"
+                "input": "[resourceId('Microsoft.Network/privateDnsZones/CNAME', parameters('pdnszName'), parameters('pipLabels')[copyIndex('cnameId')])]"
             },
             {
                 "name": "pipName",
@@ -364,7 +364,7 @@
             "type": "array",
             "copy": {
                 "count": "[variables('pipCount')]",
-                "input": "[reference(variables('cnameId')[copyIndex()]).properties.fqdn]"
+                "input": "[reference(variables('cnameId')[copyIndex()]).fqdn]"
             }
         },
         "pipUrl": {
