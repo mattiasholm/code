@@ -23,6 +23,13 @@ AzureDiagnostics
 | order by timeStamp_t
 | project Timestamp = timeStamp_t, ['Client IP'] = clientIP_s, ['Host header'] = host_s, ['Request path'] = requestUri_s, ['Query strings'] = requestQuery_s, ['HTTP status'] = httpStatus_d, ['HTTP method'] = httpMethod_s, ['HTTP version'] = httpVersion_s, ['TLS version'] = sslProtocol_s, ['TLS cipher'] = sslCipher_s, ['Rule name'] = ruleName_s, Instance = instanceId_s, ['User agent'] = userAgent_s, ['Client port'] = clientPort_d, Duration = timeTaken_d, ['Request size'] = receivedBytes_d, ['Response size'] = sentBytes_d
 
+// List only requests to a specific hostname, ordered by time generated:
+let hostname = 'sub.domain.tld';
+AzureDiagnostics
+| where Category == 'ApplicationGatewayAccessLog' and host_s == hostname
+| order by timeStamp_t
+| project Timestamp = timeStamp_t, ['Client IP'] = clientIP_s, ['Host header'] = host_s, ['Request path'] = requestUri_s, ['Query strings'] = requestQuery_s, ['HTTP status'] = httpStatus_d, ['HTTP method'] = httpMethod_s, ['HTTP version'] = httpVersion_s, ['TLS version'] = sslProtocol_s, ['TLS cipher'] = sslCipher_s, ['Rule name'] = ruleName_s, Instance = instanceId_s, ['User agent'] = userAgent_s, ['Client port'] = clientPort_d, Duration = timeTaken_d, ['Request size'] = receivedBytes_d, ['Response size'] = sentBytes_d
+
 // Count total number of requests:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog'
@@ -45,7 +52,7 @@ AzureDiagnostics
 // Render a time chart of successful requests, grouped by API:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog' and httpStatus_d == 200
-| summarize ['Number of requests'] = count() by api=extract('^(/[^/]*/)', 0, requestUri_s), bin(timeStamp_t, 1m)
+| summarize ['Number of requests'] = count() by bin(timeStamp_t, 1m), api=extract('^(/[^/]*/)', 0, requestUri_s)
 | render timechart
 
 // List most common HTTP errors:
