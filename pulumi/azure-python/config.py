@@ -20,6 +20,10 @@ kvKeyPermissions = config.get_object('kvKeyPermissions')
 kvSecretPermissions = config.get_object('kvSecretPermissions')
 kvCertificatePermissions = config.get_object('kvCertificatePermissions')
 
+pdnszName = config.require('pdnszName')
+pdnszRegistration = config.get_bool('pdnszRegistration') or False
+pdnszTtl = config.get_int('pdnszTtl') or 3600
+
 pipLabels = config.require_object('pipLabels')
 pipSku = config.get('pipSku') or 'Basic'
 pipAllocation = config.get('pipAllocation') or 'Dynamic'

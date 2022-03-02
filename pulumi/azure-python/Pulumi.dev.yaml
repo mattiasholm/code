@@ -59,6 +59,10 @@ config:
     - DeleteIssuers
     - Purge
 
+  azure-python:pdnszName: holm.io
+  azure-python:pdnszRegistration: false
+  azure-python:pdnszTtl: 3600
+
   azure-python:pipLabels:
     - foo
     - bar

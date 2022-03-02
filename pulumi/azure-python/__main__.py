@@ -53,7 +53,16 @@ keyvault.Secret(
     )
 )
 
+pdnsz = network.PrivateZone(
+    'pdnsz',
+    private_zone_name=config.pdnszName,
+    resource_group_name=rg.name,
+    location='global',
+    tags=config.tags
+)
+
 pips = []
+cnames = []
 for i, pipLabel in enumerate(config.pipLabels):
     pip = network.PublicIPAddress(
         f'pip{i}',
@@ -69,6 +78,19 @@ for i, pipLabel in enumerate(config.pipLabels):
         )
     )
     pips.append(pip)
+
+    cname = network.PrivateRecordSet(
+        f'cname{i}',
+        relative_record_set_name=pipLabel,
+        private_zone_name=pdnsz.name,
+        resource_group_name=rg.name,
+        ttl=config.pdnszTtl,
+        record_type='CNAME',
+        cname_record=network.CnameRecordArgs(
+            cname=pip.dns_settings.fqdn
+        )
+    )
+    cnames.append(cname)
 
 sts = []
 for i in range(0, config.stCount):
@@ -95,7 +117,7 @@ for i in range(0, config.stCount):
     )
 
 if config.vnetToggle:
-    network.VirtualNetwork(
+    vnet = network.VirtualNetwork(
         'vnet',
         virtual_network_name=f'vnet-{config.prefix}-001',
         resource_group_name=rg.name,
@@ -113,7 +135,21 @@ if config.vnetToggle:
         ]
     )
 
+    network.VirtualNetworkLink(
+        'link',
+        virtual_network_link_name=vnet.name,
+        private_zone_name=pdnsz.name,
+        resource_group_name=rg.name,
+        location='global',
+        virtual_network=network.SubResourceArgs(
+            id=vnet.id
+        ),
+        registration_enabled=config.pdnszRegistration
+    )
+
 pulumi.export('kvUrl', kv.properties.vault_uri)
+
+pulumi.export('pdnszUrl', [cname.fqdn for cname in cnames])
 
 pulumi.export('pipUrl', [pulumi.Output.concat(
     'https://', pip.dns_settings.fqdn, '/') for pip in pips])
