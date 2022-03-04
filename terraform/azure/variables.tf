@@ -125,10 +125,6 @@ variable "stTlsVersion" {
   }
 }
 
-variable "vnetToggle" {
-  type    = bool
-  default = false
-}
 variable "vnetAddressPrefix" {
   type    = string
   default = ""

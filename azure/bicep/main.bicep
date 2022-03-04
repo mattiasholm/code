@@ -128,7 +128,6 @@ param stHttpsOnly bool = true
 ])
 param stTlsVersion string = 'TLS1_2'
 
-param vnetToggle bool = true // false
 param vnetAddressPrefix string = '10.0.0.0/24' // ''
 
 var prefixStripped = toLower(replace(prefix, '-', ''))
@@ -183,22 +182,14 @@ module pdnsz 'modules/pdnsz.bicep' = {
   params: {
     name: pdnszName
     tags: tags
+    vnetName: empty(vnetAddressPrefix) ? 'null' : vnet.outputs.name
+    vnetId: empty(vnetAddressPrefix) ? '' : vnet.outputs.id
+    registrationEnabled: pdnszRegistration
     ttl: pdnszTtl
     cnameRecords: [for (pipLabel, i) in pipLabels: {
       name: pipLabel
       cname: pip[i].outputs.fqdn
     }]
-  }
-}
-
-module link 'modules/link.bicep' = if (vnetToggle) {
-  name: 'link'
-  scope: rg
-  params: {
-    name: vnet.outputs.name
-    pdnszName: pdnszName
-    vnetId: vnet.outputs.id
-    registrationEnabled: pdnszRegistration
   }
 }
 
@@ -231,7 +222,7 @@ module st 'modules/st.bicep' = [for i in range(0, stCount): {
   }
 }]
 
-module vnet 'modules/vnet.bicep' = if (vnetToggle) {
+module vnet 'modules/vnet.bicep' = if (!empty(vnetAddressPrefix)) {
   name: 'vnet'
   scope: rg
   params: {

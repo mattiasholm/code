@@ -116,7 +116,7 @@ for i in range(0, config.stCount):
         resource_group_name=rg.name
     )
 
-if config.vnetToggle:
+if config.vnetAddressPrefix:
     vnet = network.VirtualNetwork(
         'vnet',
         virtual_network_name=f'vnet-{config.prefix}-001',

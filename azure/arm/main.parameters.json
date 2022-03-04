@@ -106,9 +106,6 @@
     "stTlsVersion": {
       "value": "TLS1_2"
     },
-    "vnetToggle": {
-      "value": true
-    },
     "vnetAddressPrefix": {
       "value": "10.0.0.0/24"
     }

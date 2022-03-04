@@ -76,5 +76,4 @@ config:
   azure-python:stHttpsOnly: true
   azure-python:stTlsVersion: TLS1_2
 
-  azure-python:vnetToggle: true
   azure-python:vnetAddressPrefix: 10.0.0.0/24

@@ -125,10 +125,6 @@
                 "TLS1_2"
             ]
         },
-        "vnetToggle": {
-            "type": "bool",
-            "defaultValue": false
-        },
         "vnetAddressPrefix": {
             "type": "string",
             "defaultValue": ""
@@ -241,7 +237,7 @@
             "tags": "[parameters('tags')]",
             "resources": [
                 {
-                    "condition": "[parameters('vnetToggle')]",
+                    "condition": "[not(empty(parameters('vnetAddressPrefix')))]",
                     "type": "virtualNetworkLinks",
                     "apiVersion": "2020-06-01",
                     "name": "[variables('vnetName')]",
@@ -332,7 +328,7 @@
             ]
         },
         {
-            "condition": "[parameters('vnetToggle')]",
+            "condition": "[not(empty(parameters('vnetAddressPrefix')))]",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2021-03-01",
             "name": "[variables('vnetName')]",

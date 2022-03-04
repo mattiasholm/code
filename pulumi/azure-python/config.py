@@ -35,13 +35,12 @@ stPublicAccess = config.get_bool('stPublicAccess') or False
 stHttpsOnly = config.get_bool('stHttpsOnly') or True
 stTlsVersion = config.get('stTlsVersion') or 'TLS1_2'
 
-vnetToggle = config.get_bool('vnetToggle') or False
 vnetAddressPrefix = config.get('vnetAddressPrefix')
 
 if len(prefix) > 17:
     raise ValueError(f"'{prefix}' is longer than 17")
 
-if vnetToggle:
+if vnetAddressPrefix:
     network = ipaddress.ip_network(vnetAddressPrefix)
 
     if not network.is_private:

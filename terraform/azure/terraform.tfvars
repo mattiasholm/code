@@ -82,5 +82,4 @@ stPublicAccess = false
 stHttpsOnly    = true
 stTlsVersion   = "TLS1_2"
 
-vnetToggle        = true
 vnetAddressPrefix = "10.0.0.0/24"
