@@ -9,7 +9,8 @@ variable "location" {
   type = string
 }
 variable "tags" {
-  type = map(any)
+  type    = map(any)
+  default = {}
 }
 
 variable "appiType" {
