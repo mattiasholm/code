@@ -1,0 +1,121 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "prefix": {
+      "value": "holm-bicep"
+    },
+    "tags": {
+      "value": {
+        "Application": "Bicep",
+        "Company": "Holm",
+        "Environment": "Dev",
+        "Owner": "mattias.holm@live.com"
+      }
+    },
+    "appiKind": {
+      "value": "web"
+    },
+    "appiType": {
+      "value": "web"
+    },
+    "kvSku": {
+      "value": "standard"
+    },
+    "kvObjectId": {
+      "value": "e1d37e09-c819-457e-9b93-44b8c784f539"
+    },
+    "kvPermissions": {
+      "value": {
+        "keys": [
+          "Get",
+          "List",
+          "Update",
+          "Create",
+          "Import",
+          "Delete",
+          "Recover",
+          "Backup",
+          "Restore",
+          "Decrypt",
+          "Encrypt",
+          "UnwrapKey",
+          "WrapKey",
+          "Verify",
+          "Sign",
+          "Purge"
+        ],
+        "secrets": [
+          "Get",
+          "List",
+          "Set",
+          "Delete",
+          "Recover",
+          "Backup",
+          "Restore",
+          "Purge"
+        ],
+        "certificates": [
+          "Get",
+          "List",
+          "Update",
+          "Create",
+          "Import",
+          "Delete",
+          "Recover",
+          "Backup",
+          "Restore",
+          "ManageContacts",
+          "ManageIssuers",
+          "GetIssuers",
+          "ListIssuers",
+          "SetIssuers",
+          "DeleteIssuers",
+          "Purge"
+        ]
+      }
+    },
+    "pdnszName": {
+      "value": "holm.io"
+    },
+    "pdnszRegistration": {
+      "value": false
+    },
+    "pdnszTtl": {
+      "value": 3600
+    },
+    "pipLabels": {
+      "value": [
+        "foo",
+        "bar"
+      ]
+    },
+    "pipSku": {
+      "value": "Basic"
+    },
+    "pipAllocation": {
+      "value": "Dynamic"
+    },
+    "stCount": {
+      "value": 2
+    },
+    "stKind": {
+      "value": "StorageV2"
+    },
+    "stSku": {
+      "value": "Standard_LRS"
+    },
+    "stPublicAccess": {
+      "value": false
+    },
+    "stHttpsOnly": {
+      "value": true
+    },
+    "stTlsVersion": {
+      "value": "TLS1_2"
+    },
+    "vnetAddressPrefix": {
+      "value": "10.0.0.0/24"
+    }
+  }
+}

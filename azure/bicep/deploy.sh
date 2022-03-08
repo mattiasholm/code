@@ -6,6 +6,7 @@ function SetVariables() {
     location="WestEurope"
     operations=("create")
     templateFile="main.bicep"
+    parameterFile="main.parameters.json"
 }
 
 function Deploy() {
@@ -13,7 +14,8 @@ function Deploy() {
         az deployment sub $operation \
             --subscription $subscriptionId \
             --location $location \
-            --template-file $templateFile
+            --template-file $templateFile \
+            --parameters @$parameterFile
     done
 }
 

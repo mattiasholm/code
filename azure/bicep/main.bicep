@@ -1,134 +1,33 @@
 targetScope = 'subscription'
 
 @maxLength(17)
-param prefix string = 'holm-bicep'
+param prefix string
 param location string = deployment().location
-param tags object = {
-  Application: 'Bicep'
-  Company: 'Holm'
-  Environment: 'Dev'
-  Owner: 'mattias.holm@live.com'
-}
+param tags object = {}
 
-@allowed([
-  'web'
-  'ios'
-  'other'
-  'store'
-  'java'
-  'phone'
-])
-param appiKind string = 'web'
-@allowed([
-  'web'
-  'other'
-])
-param appiType string = 'web'
+param appiKind string
+param appiType string
 
-@allowed([
-  'standard'
-  'premium'
-])
-param kvSku string = 'standard'
-param kvObjectId string = 'e1d37e09-c819-457e-9b93-44b8c784f539'
-param kvPermissions object = {
-  keys: [
-    'Get'
-    'List'
-    'Update'
-    'Create'
-    'Import'
-    'Delete'
-    'Recover'
-    'Backup'
-    'Restore'
-    'Decrypt'
-    'Encrypt'
-    'UnwrapKey'
-    'WrapKey'
-    'Verify'
-    'Sign'
-    'Purge'
-  ]
-  secrets: [
-    'Get'
-    'List'
-    'Set'
-    'Delete'
-    'Recover'
-    'Backup'
-    'Restore'
-    'Purge'
-  ]
-  certificates: [
-    'Get'
-    'List'
-    'Update'
-    'Create'
-    'Import'
-    'Delete'
-    'Recover'
-    'Backup'
-    'Restore'
-    'ManageContacts'
-    'ManageIssuers'
-    'GetIssuers'
-    'ListIssuers'
-    'SetIssuers'
-    'DeleteIssuers'
-    'Purge'
-  ]
-}
+param kvSku string
+param kvObjectId string
+param kvPermissions object
 
-param pdnszName string = 'holm.io'
-param pdnszRegistration bool = false
-param pdnszTtl int = 3600
+param pdnszName string
+param pdnszRegistration bool
+param pdnszTtl int
 
-param pipLabels array = [
-  'foo'
-  'bar'
-]
-@allowed([
-  'Basic'
-  'Standard'
-])
-param pipSku string = 'Basic'
-@allowed([
-  'Dynamic'
-  'Static'
-])
-param pipAllocation string = 'Dynamic'
+param pipLabels array
+param pipSku string
+param pipAllocation string
 
-param stCount int = 2 // 1
-@allowed([
-  'Storage'
-  'StorageV2'
-  'BlobStorage'
-  'FileStorage'
-  'BlockBlobStorage'
-])
-param stKind string = 'StorageV2'
-@allowed([
-  'Standard_LRS'
-  'Standard_ZRS'
-  'Standard_GRS'
-  'Standard_RAGRS'
-  'Standard_GZRS'
-  'Standard_RAGZRS'
-  'Premium_LRS'
-  'Premium_ZRS'
-])
-param stSku string = 'Standard_LRS'
-param stPublicAccess bool = false
-param stHttpsOnly bool = true
-@allowed([
-  'TLS1_0'
-  'TLS1_1'
-  'TLS1_2'
-])
-param stTlsVersion string = 'TLS1_2'
+param stCount int = 1
+param stKind string
+param stSku string
+param stPublicAccess bool
+param stHttpsOnly bool
+param stTlsVersion string
 
-param vnetAddressPrefix string = '10.0.0.0/24' // ''
+param vnetAddressPrefix string = ''
 
 var prefixStripped = toLower(replace(prefix, '-', ''))
 var tenantId = subscription().tenantId
