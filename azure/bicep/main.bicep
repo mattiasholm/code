@@ -5,29 +5,12 @@ param prefix string
 param location string = deployment().location
 param tags object = {}
 
-param appiKind string
-param appiType string
-
-param kvSku string
-param kvObjectId string
-param kvPermissions object
-
-param pdnszName string
-param pdnszRegistration bool
-param pdnszTtl int
-
-param pipLabels array
-param pipSku string
-param pipAllocation string
-
-param stCount int = 1
-param stKind string
-param stSku string
-param stPublicAccess bool
-param stHttpsOnly bool
-param stTlsVersion string
-
-param vnetAddressPrefix string = ''
+param appiConfig object
+param kvConfig object
+param pdnszConfig object
+param pipConfig object
+param stConfig object
+param vnetConfig object = {}
 
 var prefixStripped = toLower(replace(prefix, '-', ''))
 var tenantId = subscription().tenantId
@@ -45,8 +28,8 @@ module appi 'modules/appi.bicep' = {
     name: 'appi-${prefix}-001'
     location: location
     tags: tags
-    kind: appiKind
-    Application_Type: appiType
+    kind: appiConfig.kind
+    Application_Type: appiConfig.type
   }
 }
 
@@ -58,12 +41,12 @@ module kv 'modules/kv.bicep' = {
     location: location
     tags: tags
     tenantId: tenantId
-    sku: kvSku
+    sku: kvConfig.sku
     accessPolicies: [
       {
         tenantId: tenantId
-        objectId: kvObjectId
-        permissions: kvPermissions
+        objectId: kvConfig.objectId
+        permissions: kvConfig.permissions
       }
     ]
     secrets: [
@@ -79,49 +62,49 @@ module pdnsz 'modules/pdnsz.bicep' = {
   name: 'pdnsz'
   scope: rg
   params: {
-    name: pdnszName
+    name: pdnszConfig.name
     tags: tags
-    vnetName: empty(vnetAddressPrefix) ? 'null' : vnet.outputs.name
-    vnetId: empty(vnetAddressPrefix) ? '' : vnet.outputs.id
-    registrationEnabled: pdnszRegistration
-    ttl: pdnszTtl
-    cnameRecords: [for (pipLabel, i) in pipLabels: {
-      name: pipLabel
+    vnetName: empty(vnetConfig) ? 'null' : vnet.outputs.name
+    vnetId: empty(vnetConfig) ? '' : vnet.outputs.id
+    registrationEnabled: pdnszConfig.registration
+    ttl: pdnszConfig.ttl
+    cnameRecords: [for (label, i) in pipConfig.labels: {
+      name: label
       cname: pip[i].outputs.fqdn
     }]
   }
 }
 
-module pip 'modules/pip.bicep' = [for (pipLabel, i) in pipLabels: {
+module pip 'modules/pip.bicep' = [for (label, i) in pipConfig.labels: {
   name: 'pip${i}'
   scope: rg
   params: {
     name: 'pip-${prefix}-${padLeft(i + 1, 3, '0')}'
     location: location
     tags: tags
-    sku: pipSku
-    publicIPAllocationMethod: pipAllocation
-    domainNameLabel: '${pipLabel}-${prefix}'
+    sku: pipConfig.sku
+    publicIPAllocationMethod: pipConfig.allocation
+    domainNameLabel: '${label}-${prefix}'
   }
 }]
 
-module st 'modules/st.bicep' = [for i in range(0, stCount): {
+module st 'modules/st.bicep' = [for i in range(0, stConfig.count): {
   name: 'st${i}'
   scope: rg
   params: {
     name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
     location: location
     tags: tags
-    kind: stKind
-    sku: stSku
-    allowBlobPublicAccess: stPublicAccess
-    supportsHttpsTrafficOnly: stHttpsOnly
-    minimumTlsVersion: stTlsVersion
+    kind: stConfig.kind
+    sku: stConfig.sku
+    allowBlobPublicAccess: stConfig.publicAccess
+    supportsHttpsTrafficOnly: stConfig.httpsOnly
+    minimumTlsVersion: stConfig.tlsVersion
     containerName: 'container${prefixStripped}001'
   }
 }]
 
-module vnet 'modules/vnet.bicep' = if (!empty(vnetAddressPrefix)) {
+module vnet 'modules/vnet.bicep' = if (!empty(vnetConfig)) {
   name: 'vnet'
   scope: rg
   params: {
@@ -129,10 +112,10 @@ module vnet 'modules/vnet.bicep' = if (!empty(vnetAddressPrefix)) {
     location: location
     tags: tags
     addressPrefixes: [
-      vnetAddressPrefix
+      vnetConfig.addressPrefix
     ]
     snetName: 'snet-${prefix}-001'
-    snetAddressPrefix: vnetAddressPrefix
+    snetAddressPrefix: vnetConfig.addressPrefix
   }
 }
 
@@ -140,6 +123,6 @@ output kvUrl string = kv.outputs.vaultUri
 
 output pdnszUrl array = pdnsz.outputs.fqdn
 
-output pipUrl array = [for (pipLabel, i) in pipLabels: 'https://${pip[i].outputs.fqdn}/']
+output pipUrl array = [for (label, i) in pipConfig.labels: 'https://${pip[i].outputs.fqdn}/']
 
-output stUrl array = [for i in range(0, stCount): st[i].outputs.primaryEndpoints]
+output stUrl array = [for i in range(0, stConfig.count): st[i].outputs.primaryEndpoints]
