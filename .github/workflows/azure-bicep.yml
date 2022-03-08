@@ -20,6 +20,7 @@ defaults:
 env:
   location: WestEurope
   templateFile: main.bicep
+  parameterFile: main.parameters.json
 
 jobs:
   build:
@@ -35,10 +36,10 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Validate deployment
-        run: az deployment sub validate --location $location --template-file $templateFile
+        run: az deployment sub validate --location $location --template-file $templateFile --parameters @$parameterFile
 
       - name: What-if deployment
-        run: az deployment sub what-if --location $location --template-file $templateFile
+        run: az deployment sub what-if --location $location --template-file $templateFile --parameters @$parameterFile
 
   release:
     name: Release
@@ -55,4 +56,4 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create deployment
-        run: az deployment sub create --location $location --template-file $templateFile
+        run: az deployment sub create --location $location --template-file $templateFile --parameters @$parameterFile
