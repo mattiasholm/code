@@ -43,6 +43,8 @@ alias azr='az rest'
 alias azli='az login'
 alias azlo='az logout'
 alias azls='az account list --output table'
+alias azsh='az account show --output table'
+alias azset='az account set --subscription'
 alias azlog='az monitor activity-log list --correlation-id'
 
 alias cdg='cd $(git rev-parse --show-toplevel)'
