@@ -15,86 +15,74 @@
     },
     "config": {
       "value": {
-        "appi": {
-          "kind": "web",
-          "type": "web"
-        },
-        "kv": {
-          "sku": "standard",
-          "objectId": "e1d37e09-c819-457e-9b93-44b8c784f539",
-          "permissions": {
-            "keys": [
-              "Get",
-              "List",
-              "Update",
-              "Create",
-              "Import",
-              "Delete",
-              "Recover",
-              "Backup",
-              "Restore",
-              "Decrypt",
-              "Encrypt",
-              "UnwrapKey",
-              "WrapKey",
-              "Verify",
-              "Sign",
-              "Purge"
-            ],
-            "secrets": [
-              "Get",
-              "List",
-              "Set",
-              "Delete",
-              "Recover",
-              "Backup",
-              "Restore",
-              "Purge"
-            ],
-            "certificates": [
-              "Get",
-              "List",
-              "Update",
-              "Create",
-              "Import",
-              "Delete",
-              "Recover",
-              "Backup",
-              "Restore",
-              "ManageContacts",
-              "ManageIssuers",
-              "GetIssuers",
-              "ListIssuers",
-              "SetIssuers",
-              "DeleteIssuers",
-              "Purge"
-            ]
-          }
-        },
-        "pdnsz": {
-          "name": "holm.io",
-          "registration": false,
-          "ttl": 3600
-        },
-        "pip": {
-          "labels": [
-            "foo",
-            "bar"
+        "appiKind": "web",
+        "appiType": "web",
+        "kvSku": "standard",
+        "kvObjectId": "e1d37e09-c819-457e-9b93-44b8c784f539",
+        "kvPermissions": {
+          "keys": [
+            "Get",
+            "List",
+            "Update",
+            "Create",
+            "Import",
+            "Delete",
+            "Recover",
+            "Backup",
+            "Restore",
+            "Decrypt",
+            "Encrypt",
+            "UnwrapKey",
+            "WrapKey",
+            "Verify",
+            "Sign",
+            "Purge"
           ],
-          "sku": "Basic",
-          "allocation": "Dynamic"
+          "secrets": [
+            "Get",
+            "List",
+            "Set",
+            "Delete",
+            "Recover",
+            "Backup",
+            "Restore",
+            "Purge"
+          ],
+          "certificates": [
+            "Get",
+            "List",
+            "Update",
+            "Create",
+            "Import",
+            "Delete",
+            "Recover",
+            "Backup",
+            "Restore",
+            "ManageContacts",
+            "ManageIssuers",
+            "GetIssuers",
+            "ListIssuers",
+            "SetIssuers",
+            "DeleteIssuers",
+            "Purge"
+          ]
         },
-        "st": {
-          "count": 2,
-          "kind": "StorageV2",
-          "sku": "Standard_LRS",
-          "publicAccess": false,
-          "httpsOnly": true,
-          "tlsVersion": "TLS1_2"
-        },
-        "vnet": {
-          "addressPrefix": "10.0.0.0/24"
-        }
+        "pdnszName": "holm.io",
+        "pdnszRegistration": false,
+        "pdnszTtl": 3600,
+        "pipLabels": [
+          "foo",
+          "bar"
+        ],
+        "pipSku": "Basic",
+        "pipAllocation": "Dynamic",
+        "stCount": 2,
+        "stKind": "StorageV2",
+        "stSku": "Standard_LRS",
+        "stPublicAccess": false,
+        "stHttpsOnly": true,
+        "stTlsVersion": "TLS1_2",
+        "vnetAddressPrefix": "10.0.0.0/24"
       }
     }
   }

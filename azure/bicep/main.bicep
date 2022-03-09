@@ -22,8 +22,8 @@ module appi 'modules/appi.bicep' = {
     name: 'appi-${prefix}-001'
     location: location
     tags: tags
-    kind: config.appi.kind
-    Application_Type: config.appi.type
+    kind: config.appiKind
+    Application_Type: config.appiType
   }
 }
 
@@ -35,12 +35,12 @@ module kv 'modules/kv.bicep' = {
     location: location
     tags: tags
     tenantId: tenantId
-    sku: config.kv.sku
+    sku: config.kvSku
     accessPolicies: [
       {
         tenantId: tenantId
-        objectId: config.kv.objectId
-        permissions: config.kv.permissions
+        objectId: config.kvObjectId
+        permissions: config.kvPermissions
       }
     ]
     secrets: [
@@ -56,49 +56,49 @@ module pdnsz 'modules/pdnsz.bicep' = {
   name: 'pdnsz'
   scope: rg
   params: {
-    name: config.pdnsz.name
+    name: config.pdnszName
     tags: tags
-    vnetName: empty(config.vnet) ? 'null' : vnet.outputs.name
-    vnetId: empty(config.vnet) ? '' : vnet.outputs.id
-    registrationEnabled: config.pdnsz.registration
-    ttl: config.pdnsz.ttl
-    cnameRecords: [for (label, i) in config.pip.labels: {
+    vnetName: empty(config.vnetAddressPrefix) ? 'null' : vnet.outputs.name
+    vnetId: empty(config.vnetAddressPrefix) ? '' : vnet.outputs.id
+    registrationEnabled: config.pdnszRegistration
+    ttl: config.pdnszTtl
+    cnameRecords: [for (label, i) in config.pipLabels: {
       name: label
       cname: pip[i].outputs.fqdn
     }]
   }
 }
 
-module pip 'modules/pip.bicep' = [for (label, i) in config.pip.labels: {
+module pip 'modules/pip.bicep' = [for (label, i) in config.pipLabels: {
   name: 'pip${i}'
   scope: rg
   params: {
     name: 'pip-${prefix}-${padLeft(i + 1, 3, '0')}'
     location: location
     tags: tags
-    sku: config.pip.sku
-    publicIPAllocationMethod: config.pip.allocation
+    sku: config.pipSku
+    publicIPAllocationMethod: config.pipAllocation
     domainNameLabel: '${label}-${prefix}'
   }
 }]
 
-module st 'modules/st.bicep' = [for i in range(0, config.st.count): {
+module st 'modules/st.bicep' = [for i in range(0, config.stCount): {
   name: 'st${i}'
   scope: rg
   params: {
     name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
     location: location
     tags: tags
-    kind: config.st.kind
-    sku: config.st.sku
-    allowBlobPublicAccess: config.st.publicAccess
-    supportsHttpsTrafficOnly: config.st.httpsOnly
-    minimumTlsVersion: config.st.tlsVersion
+    kind: config.stKind
+    sku: config.stSku
+    allowBlobPublicAccess: config.stPublicAccess
+    supportsHttpsTrafficOnly: config.stHttpsOnly
+    minimumTlsVersion: config.stTlsVersion
     containerName: 'container${prefixStripped}001'
   }
 }]
 
-module vnet 'modules/vnet.bicep' = if (!empty(config.vnet)) {
+module vnet 'modules/vnet.bicep' = if (!empty(config.vnetAddressPrefix)) {
   name: 'vnet'
   scope: rg
   params: {
@@ -106,10 +106,10 @@ module vnet 'modules/vnet.bicep' = if (!empty(config.vnet)) {
     location: location
     tags: tags
     addressPrefixes: [
-      config.vnet.addressPrefix
+      config.vnetAddressPrefix
     ]
     snetName: 'snet-${prefix}-001'
-    snetAddressPrefix: config.vnet.addressPrefix
+    snetAddressPrefix: config.vnetAddressPrefix
   }
 }
 
@@ -117,6 +117,6 @@ output kvUrl string = kv.outputs.vaultUri
 
 output pdnszUrl array = pdnsz.outputs.fqdn
 
-output pipUrl array = [for (label, i) in config.pip.labels: 'https://${pip[i].outputs.fqdn}/']
+output pipUrl array = [for (label, i) in config.pipLabels: 'https://${pip[i].outputs.fqdn}/']
 
-output stUrl array = [for i in range(0, config.st.count): st[i].outputs.primaryEndpoints]
+output stUrl array = [for i in range(0, config.stCount): st[i].outputs.primaryEndpoints]
