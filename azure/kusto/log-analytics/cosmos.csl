@@ -27,23 +27,23 @@ AzureDiagnostics
 AzureDiagnostics
 | where Category == 'DataPlaneRequests'
 | summarize count()
-| project ['Number of requests'] = count_
+| project Count = count_
 
 // Count number of successful requests per IP, ordered by count:
 AzureDiagnostics
 | where Category == 'DataPlaneRequests'
 | summarize count() by clientIpAddress_s
 | order by count_
-| project ['Client IP'] = clientIpAddress_s, ['Number of requests'] = count_
+| project ['Client IP'] = clientIpAddress_s, Count = count_
 
 // Render a time chart of all requests:
 AzureDiagnostics
 | where Category == 'DataPlaneRequests'
-| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m)
+| summarize Count = count() by bin(TimeGenerated, 1m)
 | render timechart
 
 // Render a time chart of successful requests, grouped by IP:
 AzureDiagnostics
 | where Category == 'DataPlaneRequests' and statusCode_s == 200
-| summarize ['Number of requests'] = count() by clientIpAddress_s, bin(TimeGenerated, 1m)
+| summarize Count = count() by clientIpAddress_s, bin(TimeGenerated, 1m)
 | render timechart

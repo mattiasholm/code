@@ -2,38 +2,38 @@
 AzureDiagnostics
 | where Category == 'ApplicationGatewayFirewallLog'
 | order by timeStamp_t
-| project Timestamp = timeStamp_t, ['Client IP'] = clientIp_s, ['Host header'] = hostname_s, ['Request path'] = requestUri_s, Action = action_s, Message, ['Rule name'] = ruleId_s, ['Rule type'] = ruleSetType_s, Scope = policyScopeName_s, Instance = instanceId_s
+| project Timestamp = timeStamp_t, ['Client IP'] = clientIp_s, ['Host header'] = hostname_s, ['Request path'] = requestUri_s, Action = action_s, Message, Rule = ruleId_s, ['Rule type'] = ruleSetType_s, Scope = policyScopeName_s, Instance = instanceId_s
 
 // List only matched requests, ordered by time generated:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayFirewallLog' and action_s == 'Matched'
 | order by timeStamp_t
-| project Timestamp = timeStamp_t, ['Client IP'] = clientIp_s, ['Host header'] = hostname_s, ['Request path'] = requestUri_s, Action = action_s, Message, ['Rule name'] = ruleId_s, ['Rule type'] = ruleSetType_s, Scope = policyScopeName_s, Instance = instanceId_s
+| project Timestamp = timeStamp_t, ['Client IP'] = clientIp_s, ['Host header'] = hostname_s, ['Request path'] = requestUri_s, Action = action_s, Message, Rule = ruleId_s, ['Rule type'] = ruleSetType_s, Scope = policyScopeName_s, Instance = instanceId_s
 
 // List only blocked requests, ordered by time generated:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayFirewallLog' and action_s == 'Blocked'
 | order by timeStamp_t
-| project Timestamp = timeStamp_t, ['Client IP'] = clientIp_s, ['Host header'] = hostname_s, ['Request path'] = requestUri_s, Action = action_s, Message, ['Rule name'] = ruleId_s, ['Rule type'] = ruleSetType_s, Scope = policyScopeName_s, Instance = instanceId_s
+| project Timestamp = timeStamp_t, ['Client IP'] = clientIp_s, ['Host header'] = hostname_s, ['Request path'] = requestUri_s, Action = action_s, Message, Rule = ruleId_s, ['Rule type'] = ruleSetType_s, Scope = policyScopeName_s, Instance = instanceId_s
 
 // List only requests from a specific IP, ordered by time generated:
 let ip = '127.0.0.1';
 AzureDiagnostics
 | where Category == 'ApplicationGatewayFirewallLog' and clientIp_s == ip
 | order by timeStamp_t
-| project Timestamp = timeStamp_t, ['Client IP'] = clientIp_s, ['Host header'] = hostname_s, ['Request path'] = requestUri_s, Action = action_s, Message, ['Rule name'] = ruleId_s, ['Rule type'] = ruleSetType_s, Scope = policyScopeName_s, Instance = instanceId_s
+| project Timestamp = timeStamp_t, ['Client IP'] = clientIp_s, ['Host header'] = hostname_s, ['Request path'] = requestUri_s, Action = action_s, Message, Rule = ruleId_s, ['Rule type'] = ruleSetType_s, Scope = policyScopeName_s, Instance = instanceId_s
 
 // List only requests to a specific hostname, ordered by time generated:
 let hostname = 'sub.domain.tld';
 AzureDiagnostics
 | where Category == 'ApplicationGatewayFirewallLog' and hostname_s == hostname
 | order by timeStamp_t
-| project Timestamp = timeStamp_t, ['Client IP'] = clientIp_s, ['Host header'] = hostname_s, ['Request path'] = requestUri_s, Action = action_s, Message, ['Rule name'] = ruleId_s, ['Rule type'] = ruleSetType_s, Scope = policyScopeName_s, Instance = instanceId_s
+| project Timestamp = timeStamp_t, ['Client IP'] = clientIp_s, ['Host header'] = hostname_s, ['Request path'] = requestUri_s, Action = action_s, Message, Rule = ruleId_s, ['Rule type'] = ruleSetType_s, Scope = policyScopeName_s, Instance = instanceId_s
 
 // Render a time chart of all requests, grouped by action:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayFirewallLog'
-| summarize ['Number of requests'] = count() by bin(timeStamp_t, 1m), action_s
+| summarize Count = count() by bin(timeStamp_t, 1m), action_s
 | render timechart
 
 // List most common WAF rules and the corresponding message:
@@ -41,4 +41,4 @@ AzureDiagnostics
 | where Category == 'ApplicationGatewayFirewallLog'
 | summarize count() by ruleId_s, Message
 | order by count_
-| project ['Rule name'] = ruleId_s, ['Number of requests'] = count_, Message
+| project Rule = ruleId_s, Count = count_, Message

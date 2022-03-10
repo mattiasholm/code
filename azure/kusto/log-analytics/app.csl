@@ -25,24 +25,24 @@ AppServiceHTTPLogs
 // Count total number of requests:
 AppServiceHTTPLogs
 | summarize count()
-| project ['Number of requests'] = count_
+| project Count = count_
 
 // Count number of successful requests per App Service, ordered by count:
 AppServiceHTTPLogs
 | where ScStatus == 200
 | summarize count() by CsHost
 | order by count_
-| project ['App service name'] = CsHost, ['Number of requests'] = count_
+| project ['App service name'] = CsHost, Count = count_
 
 // Render a time chart of all requests:
 AppServiceHTTPLogs
-| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m)
+| summarize Count = count() by bin(TimeGenerated, 1m)
 | render timechart
 
 // Render a time chart of successful requests, grouped by App Service:
 AppServiceHTTPLogs
 | where ScStatus == 200
-| summarize ['Number of requests'] = count() by CsHost, bin(TimeGenerated, 1m)
+| summarize Count = count() by CsHost, bin(TimeGenerated, 1m)
 | render timechart
 
 // List most common HTTP errors:
@@ -50,14 +50,14 @@ AppServiceHTTPLogs
 | where ScStatus >= 400
 | summarize count() by ScStatus
 | order by count_
-| project ['HTTP status'] = ScStatus, ['Number of requests'] = count_
+| project ['HTTP status'] = ScStatus, Count = count_
 
 // List most common HTTP errors and the corresponding request path:
 AppServiceHTTPLogs
 | where ScStatus >= 400
 | summarize count() by ScStatus, CsUriStem, CsUriQuery
 | order by count_
-| project ['HTTP status'] = ScStatus, ['Number of requests'] = count_, ['Request path'] = CsUriStem, ['Query strings'] = CsUriQuery
+| project ['HTTP status'] = ScStatus, Count = count_, ['Request path'] = CsUriStem, ['Query strings'] = CsUriQuery
 
 // Summarize a specific HTTP status by request path, ordered by count:
 let httpStatus = 404;
@@ -65,4 +65,4 @@ AppServiceHTTPLogs
 | where ScStatus == httpStatus
 | summarize count() by CsUriStem, CsUriQuery
 | order by count_
-| project ['Number of requests'] = count_, ['Request path'] = CsUriStem, ['Query strings'] = CsUriQuery
+| project Count = count_, ['Request path'] = CsUriStem, ['Query strings'] = CsUriQuery

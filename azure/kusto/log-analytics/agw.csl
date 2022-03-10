@@ -34,25 +34,25 @@ AzureDiagnostics
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog'
 | summarize count()
-| project ['Number of requests'] = count_
+| project Count = count_
 
 // Count number of successful requests per API, ordered by count:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog' and httpStatus_d == 200
 | summarize count() by api=extract('^(/[^/]*/)', 0, requestUri_s)
 | order by count_
-| project API = api, ['Number of requests'] = count_
+| project API = api, Count = count_
 
 // Render a time chart of all requests:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog'
-| summarize ['Number of requests'] = count() by bin(timeStamp_t, 1m)
+| summarize Count = count() by bin(timeStamp_t, 1m)
 | render timechart
 
 // Render a time chart of successful requests, grouped by API:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog' and httpStatus_d == 200
-| summarize ['Number of requests'] = count() by bin(timeStamp_t, 1m), api=extract('^(/[^/]*/)', 0, requestUri_s)
+| summarize Count = count() by bin(timeStamp_t, 1m), api=extract('^(/[^/]*/)', 0, requestUri_s)
 | render timechart
 
 // List most common HTTP errors:
@@ -60,14 +60,14 @@ AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog' and httpStatus_d >= 400
 | summarize count() by httpStatus_d
 | order by count_
-| project ['HTTP status'] = httpStatus_d, ['Number of requests'] = count_
+| project ['HTTP status'] = httpStatus_d, Count = count_
 
 // List most common HTTP errors and the corresponding request path:
 AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog' and httpStatus_d >= 400
 | summarize count() by httpStatus_d, requestUri_s
 | order by count_
-| project ['HTTP status'] = httpStatus_d, ['Number of requests'] = count_, ['Request path'] = requestUri_s
+| project ['HTTP status'] = httpStatus_d, Count = count_, ['Request path'] = requestUri_s
 
 // Summarize a specific HTTP status by request path, ordered by count:
 let httpStatus = 404;
@@ -75,4 +75,4 @@ AzureDiagnostics
 | where Category == 'ApplicationGatewayAccessLog' and httpStatus_d == httpStatus
 | summarize count() by requestUri_s
 | order by count_
-| project ['Number of requests'] = count_, ['Request path'] = requestUri_s
+| project Count = count_, ['Request path'] = requestUri_s

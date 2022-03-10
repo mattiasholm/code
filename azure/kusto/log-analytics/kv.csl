@@ -27,23 +27,23 @@ AzureDiagnostics
 AzureDiagnostics
 | where Category == 'AuditEvent'
 | summarize count()
-| project ['Number of requests'] = count_
+| project Count = count_
 
 // Count number of successful requests per client ID, ordered by count:
 AzureDiagnostics
 | where Category == 'AuditEvent'
 | summarize count() by identity_claim_appid_g
 | order by count_
-| project ['Client ID'] = identity_claim_appid_g, ['Number of requests'] = count_
+| project ['Client ID'] = identity_claim_appid_g, Count = count_
 
 // Render a time chart of all requests:
 AzureDiagnostics
 | where Category == 'AuditEvent'
-| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m)
+| summarize Count = count() by bin(TimeGenerated, 1m)
 | render timechart
 
 // Render a time chart of successful requests, grouped by client ID:
 AzureDiagnostics
 | where Category == 'AuditEvent' and ResultType == 'Success'
-| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m), identity_claim_appid_g
+| summarize Count = count() by bin(TimeGenerated, 1m), identity_claim_appid_g
 | render timechart

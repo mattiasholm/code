@@ -25,24 +25,24 @@ AppRequests
 // Count total number of requests:
 AppRequests
 | summarize count()
-| project ['Number of requests'] = count_
+| project Count = count_
 
 // Count number of successful requests per App Service, ordered by count:
 AppRequests
 | where toint(ResultCode) == 200
 | summarize count() by AppRoleName
 | order by count_
-| project ['App service name'] = AppRoleName, ['Number of requests'] = count_
+| project ['App service name'] = AppRoleName, Count = count_
 
 // Render a time chart of all requests:
 AppRequests
-| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m)
+| summarize Count = count() by bin(TimeGenerated, 1m)
 | render timechart
 
 // Render a time chart of successful requests, grouped by App Service:
 AppRequests
 | where toint(ResultCode) == 200
-| summarize ['Number of requests'] = count() by AppRoleName, bin(TimeGenerated, 1m)
+| summarize Count = count() by AppRoleName, bin(TimeGenerated, 1m)
 | render timechart
 
 // List most common HTTP errors:
@@ -50,14 +50,14 @@ AppRequests
 | where toint(ResultCode) >= 400
 | summarize count() by ResultCode
 | order by count_
-| project ['HTTP status'] = ResultCode, ['Number of requests'] = count_
+| project ['HTTP status'] = ResultCode, Count = count_
 
 // List most common HTTP errors and the corresponding request path:
 AppRequests
 | where toint(ResultCode) >= 400
 | summarize count() by ResultCode, Url
 | order by count_
-| project ['HTTP status'] = ResultCode, ['Number of requests'] = count_, URL = Url
+| project ['HTTP status'] = ResultCode, Count = count_, URL = Url
 
 // Summarize a specific HTTP status by request path, ordered by count:
 let httpStatus = 404;
@@ -65,4 +65,4 @@ AppRequests
 | where ResultCode == httpStatus
 | summarize count() by Url
 | order by count_
-| project ['Number of requests'] = count_, URL = Url
+| project Count = count_, URL = Url

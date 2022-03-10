@@ -27,25 +27,25 @@ AzureDiagnostics
 AzureDiagnostics
 | where Category == 'GatewayLogs'
 | summarize count()
-| project ['Number of requests'] = count_
+| project Count = count_
 
 // Count number of successful requests per APIM subscription, ordered by count:
 AzureDiagnostics
 | where Category == 'GatewayLogs' and responseCode_d == 200
 | summarize count() by apimSubscriptionId_s
 | order by count_
-| project ['APIM subscription'] = apimSubscriptionId_s, ['Number of requests'] = count_
+| project ['APIM subscription'] = apimSubscriptionId_s, Count = count_
 
 // Render a time chart of all requests:
 AzureDiagnostics
 | where Category == 'GatewayLogs'
-| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m)
+| summarize Count = count() by bin(TimeGenerated, 1m)
 | render timechart
 
 // Render a time chart of successful requests, grouped by APIM subscription:
 AzureDiagnostics
 | where Category == 'GatewayLogs' and responseCode_d == 200
-| summarize ['Number of requests'] = count() by bin(TimeGenerated, 1m), apimSubscriptionId_s
+| summarize Count = count() by bin(TimeGenerated, 1m), apimSubscriptionId_s
 | render timechart
 
 // List most common HTTP errors:
@@ -53,14 +53,14 @@ AzureDiagnostics
 | where Category == 'GatewayLogs' and responseCode_d >= 400
 | summarize count() by responseCode_d
 | order by count_
-| project ['HTTP status'] = responseCode_d, ['Number of requests'] = count_
+| project ['HTTP status'] = responseCode_d, Count = count_
 
 // List most common HTTP errors and the corresponding request path:
 AzureDiagnostics
 | where Category == 'GatewayLogs' and responseCode_d >= 400
 | summarize count() by responseCode_d, url_s
 | order by count_
-| project ['HTTP status'] = responseCode_d, ['Number of requests'] = count_, URL = url_s
+| project ['HTTP status'] = responseCode_d, Count = count_, URL = url_s
 
 // Summarize a specific HTTP status by request path, ordered by count:
 let httpStatus = 404;
@@ -68,4 +68,4 @@ AzureDiagnostics
 | where Category == 'GatewayLogs' and responseCode_d == httpStatus
 | summarize count() by url_s
 | order by count_
-| project ['Number of requests'] = count_, URL = url_s
+| project Count = count_, URL = url_s
