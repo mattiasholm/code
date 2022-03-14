@@ -62,14 +62,14 @@ module pdnsz 'modules/pdnsz.bicep' = {
     vnetId: contains(config, 'vnetAddressPrefix') ? vnet.outputs.id : ''
     registrationEnabled: config.pdnszRegistration
     ttl: config.pdnszTtl
-    cnameRecords: [for (label, i) in config.pipLabels: {
-      name: label
+    cnameRecords: [for (pipLabel, i) in config.pipLabels: {
+      name: pipLabel
       cname: pip[i].outputs.fqdn
     }]
   }
 }
 
-module pip 'modules/pip.bicep' = [for (label, i) in config.pipLabels: {
+module pip 'modules/pip.bicep' = [for (pipLabel, i) in config.pipLabels: {
   name: 'pip${i}'
   scope: rg
   params: {
@@ -78,7 +78,7 @@ module pip 'modules/pip.bicep' = [for (label, i) in config.pipLabels: {
     tags: tags
     sku: config.pipSku
     publicIPAllocationMethod: config.pipAllocation
-    domainNameLabel: '${label}-${prefix}'
+    domainNameLabel: '${pipLabel}-${prefix}'
   }
 }]
 
@@ -115,5 +115,5 @@ module vnet 'modules/vnet.bicep' = if (contains(config, 'vnetAddressPrefix')) {
 
 output kvUrl string = kv.outputs.vaultUri
 output pdnszUrl array = pdnsz.outputs.fqdn
-output pipUrl array = [for (label, i) in config.pipLabels: 'https://${pip[i].outputs.fqdn}/']
+output pipUrl array = [for (pipLabel, i) in config.pipLabels: 'https://${pip[i].outputs.fqdn}/']
 output stUrl array = [for i in range(0, config.stCount): st[i].outputs.primaryEndpoints]
