@@ -58,8 +58,8 @@ module pdnsz 'modules/pdnsz.bicep' = {
   params: {
     name: config.pdnszName
     tags: tags
-    vnetName: empty(config.vnetAddressPrefix) ? 'null' : vnet.outputs.name
-    vnetId: empty(config.vnetAddressPrefix) ? '' : vnet.outputs.id
+    vnetName: vnet.outputs.name
+    vnetId: contains(config, 'vnetAddressPrefix') ? vnet.outputs.id : ''
     registrationEnabled: config.pdnszRegistration
     ttl: config.pdnszTtl
     cnameRecords: [for (label, i) in config.pipLabels: {
@@ -98,7 +98,7 @@ module st 'modules/st.bicep' = [for i in range(0, config.stCount): {
   }
 }]
 
-module vnet 'modules/vnet.bicep' = if (!empty(config.vnetAddressPrefix)) {
+module vnet 'modules/vnet.bicep' = if (contains(config, 'vnetAddressPrefix')) {
   name: 'vnet'
   scope: rg
   params: {
@@ -114,9 +114,6 @@ module vnet 'modules/vnet.bicep' = if (!empty(config.vnetAddressPrefix)) {
 }
 
 output kvUrl string = kv.outputs.vaultUri
-
 output pdnszUrl array = pdnsz.outputs.fqdn
-
 output pipUrl array = [for (label, i) in config.pipLabels: 'https://${pip[i].outputs.fqdn}/']
-
 output stUrl array = [for i in range(0, config.stCount): st[i].outputs.primaryEndpoints]

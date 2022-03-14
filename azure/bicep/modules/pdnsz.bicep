@@ -1,7 +1,7 @@
 param name string
 param tags object = resourceGroup().tags
-param vnetName string = 'null'
-param vnetId string = ''
+param vnetName string
+param vnetId string
 param registrationEnabled bool = false
 param ttl int = 3600
 param cnameRecords array = []
