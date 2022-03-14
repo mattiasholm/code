@@ -7,12 +7,13 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 
 $userName = "Mattias Holm"
 $userEmail = "mattias.holm@live.com"
+$topLevel = git rev-parse --show-toplevel
 
 choco install -y vscode
 choco install -y microsoft-windows-terminal
 choco install -y git ; git config --global user.name $userName ; git config --global user.email $userEmail ; git config --global credential.helper wincred ; git config --global init.defaultBranch main
-choco install -y powershell-core ; pwsh "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"
-powershell "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"
+choco install -y powershell-core ; pwsh "$topLevel/pwsh/InstallModules.ps1"
+powershell "$topLevel/pwsh/InstallModules.ps1"
 choco install -y azure-cli ; az extension add --name azure-devops ; az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
 choco install -y terraform
 choco install -y pulumi

@@ -61,6 +61,8 @@ alias bi='brew install'
 alias bu='brew upgrade'
 alias bun='brew uninstall'
 
+alias pwsh='pwsh -NoLogo'
+
 alias gcl='git clone'
 alias gf='git fetch'
 alias gp='git pull'

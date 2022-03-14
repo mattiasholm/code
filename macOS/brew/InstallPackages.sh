@@ -64,16 +64,16 @@ chsh -s /usr/local/bin/fish
 sudo chsh -s /usr/local/bin/fish
 
 brew install mas &&
-    chmod +x "$(git rev-parse --show-toplevel)/macOS/mas/InstallApps.sh" &&
-    "$(git rev-parse --show-toplevel)/macOS/mas/InstallApps.sh"
+    chmod +x "$topLevel/macOS/mas/InstallApps.sh" &&
+    "$topLevel/macOS/mas/InstallApps.sh"
 
 brew install git &&
     git config --global user.name "$userName" &&
     git config --global user.email "$userEmail" &&
     git config --global credential.helper osxkeychain &&
     git config --global init.defaultBranch main &&
-    chmod +x "$(git rev-parse --show-toplevel)/git/cloneRepos.sh" &&
-    "$(git rev-parse --show-toplevel)/git/cloneRepos.sh"
+    chmod +x "$topLevel/git/cloneRepos.sh" &&
+    "$topLevel/git/cloneRepos.sh"
 
 brew install azure-cli &&
     (
@@ -109,8 +109,9 @@ brew install --cask openemu
 brew install --cask transmission
 
 brew install --cask visual-studio-code &&
-    chmod +x "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh" &&
-    "$(git rev-parse --show-toplevel)/vscode/InstallExtensions.sh"
+    chmod +x "$topLevel/vscode/InstallExtensions.sh" &&
+    "$topLevel/vscode/InstallExtensions.sh"
 
 brew install --cask powershell &&
-    pwsh "$(git rev-parse --show-toplevel)/pwsh/InstallModules.ps1"
+    pwsh "$topLevel/pwsh/InstallModules.ps1" &&
+    cp "$topLevel/pwsh/Microsoft.PowerShell_profile.ps1" ~/.config/powershell/Microsoft.PowerShell_profile.ps1
