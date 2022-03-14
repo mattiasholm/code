@@ -15,7 +15,9 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   tags: tags
 }
 
-module appi 'modules/appi.bicep' = {
+// module appi 'modules/appi.bicep' = {
+// module appi 'br:crholmbicep001.azurecr.io/appi:v1' = {
+module appi 'br/modules:appi:v1' = {
   name: 'appi'
   scope: rg
   params: {
