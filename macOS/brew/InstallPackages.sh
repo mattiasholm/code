@@ -5,21 +5,21 @@ set -e +x
 path=~/repos/code
 cd "$path"
 
-userName="Mattias Holm"
-userEmail="mattias.holm@live.com"
+userName='Mattias Holm'
+userEmail='mattias.holm@live.com'
 topLevel="$(git rev-parse --show-toplevel)"
 
 touch ~/.hushlogin
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-echo "# sudo: auth account password session
+echo '# sudo: auth account password session
 auth       sufficient     pam_tid.so
 auth       sufficient     pam_smartcard.so
 auth       required       pam_opendirectory.so
 account    required       pam_permit.so
 password   required       pam_deny.so
-session    required       pam_permit.so" | sudo tee /etc/pam.d/sudo
+session    required       pam_permit.so' | sudo tee /etc/pam.d/sudo
 
 brew install tcping
 brew install fping
@@ -50,14 +50,14 @@ source "$topLevel/bash/.bashrc"
 .b
 
 if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/bash)" ]]; then
-    echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
+    echo '/usr/local/bin/bash' | sudo tee -a /etc/shells
 fi
 
 brew install fish
 cp "$topLevel/fish/config.fish" ~/.config/fish/config.fish
 
 if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/fish)" ]]; then
-    echo "/usr/local/bin/fish" | sudo tee -a /etc/shells
+    echo '/usr/local/bin/fish' | sudo tee -a /etc/shells
 fi
 
 chsh -s /usr/local/bin/fish

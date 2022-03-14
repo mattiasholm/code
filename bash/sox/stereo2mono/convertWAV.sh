@@ -2,14 +2,14 @@
 
 set -e +x
 
-inputDir="./input"
-outputDir="./output"
+inputDir='./input'
+outputDir='./output'
 
 mkdir -p "$inputDir"
 mkdir -p "$outputDir"
 
 if [[ -z "$(ls "$inputDir")" ]]; then
-    echo -e "\nInput directory does not contain any WAV files, exiting script\n"
+    echo -e '\nInput directory does not contain any WAV files, exiting script\n'
     exit 1
 fi
 
@@ -20,7 +20,7 @@ for file in $inputDir/*.wav; do
     sampleRate="$(soxi -r "$file")"
     channels="$(soxi -c "$file")"
 
-    if [[ "$bitDepth" == "24" && "$sampleRate" == "44100" && "$channels" == "1" ]]; then
+    if [[ "$bitDepth" == '24' && "$sampleRate" == '44100' && "$channels" == '1' ]]; then
         echo -e "\033[33m\nSkipping conversion of $basename, copying the file to output directory as is...\033[0m"
         cp "$file" "$outputDir/$basename"
     else

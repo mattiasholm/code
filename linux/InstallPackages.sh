@@ -5,8 +5,8 @@ set -e +x
 path=~/repos/code
 cd "$path"
 
-userName="Mattias Holm"
-userEmail="mattias.holm@live.com"
+userName='Mattias Holm'
+userEmail='mattias.holm@live.com'
 topLevel="$(git rev-parse --show-toplevel)"
 
 source "$topLevel/bash/.bashrc"
@@ -34,7 +34,7 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 sudo apt-get update &&
     sudo apt-get install -y apt-transport-https &&
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - &&
-    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list &&
+    echo 'deb https://apt.kubernetes.io/ kubernetes-xenial main' | sudo tee -a /etc/apt/sources.list.d/kubernetes.list &&
     sudo apt-get update &&
     sudo apt-get install -y kubectl
 
@@ -43,7 +43,7 @@ curl -fsSL https://get.pulumi.com | sh
 sudo apt update &&
     sudo apt install -y apt-transport-https ca-certificates curl software-properties-common &&
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &&
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" &&
+    sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable' &&
     sudo apt update &&
     apt-cache policy docker-ce &&
     sudo apt install -y docker-ce

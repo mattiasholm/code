@@ -15,8 +15,6 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   tags: tags
 }
 
-// module appi 'modules/appi.bicep' = {
-// module appi 'br:crholmbicep001.azurecr.io/appi:v1' = {
 module appi 'br/modules:appi:v1' = {
   name: 'appi'
   scope: rg
@@ -29,7 +27,7 @@ module appi 'br/modules:appi:v1' = {
   }
 }
 
-module kv 'modules/kv.bicep' = {
+module kv 'br/modules:kv:v1' = {
   name: 'kv'
   scope: rg
   params: {
@@ -54,7 +52,7 @@ module kv 'modules/kv.bicep' = {
   }
 }
 
-module pdnsz 'modules/pdnsz.bicep' = {
+module pdnsz 'br/modules:pdnsz:v1' = {
   name: 'pdnsz'
   scope: rg
   params: {
@@ -71,7 +69,7 @@ module pdnsz 'modules/pdnsz.bicep' = {
   }
 }
 
-module pip 'modules/pip.bicep' = [for (pipLabel, i) in config.pipLabels: {
+module pip 'br/modules:pip:v1' = [for (pipLabel, i) in config.pipLabels: {
   name: 'pip${i}'
   scope: rg
   params: {
@@ -84,7 +82,7 @@ module pip 'modules/pip.bicep' = [for (pipLabel, i) in config.pipLabels: {
   }
 }]
 
-module st 'modules/st.bicep' = [for i in range(0, config.stCount): {
+module st 'br/modules:st:v1' = [for i in range(0, config.stCount): {
   name: 'st${i}'
   scope: rg
   params: {
@@ -100,7 +98,7 @@ module st 'modules/st.bicep' = [for i in range(0, config.stCount): {
   }
 }]
 
-module vnet 'modules/vnet.bicep' = if (contains(config, 'vnetAddressPrefix')) {
+module vnet 'br/modules:vnet:v1' = if (contains(config, 'vnetAddressPrefix')) {
   name: 'vnet'
   scope: rg
   params: {

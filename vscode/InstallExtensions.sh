@@ -3,31 +3,31 @@
 set -e +x
 
 exts=(
-    "foxundermoon.shell-format"
-    "bmalehorn.vscode-fish"
-    "ms-vscode.powershell"
-    "ms-azuretools.vscode-bicep"
-    "msazurermtools.azurerm-vscode-tools"
-    "hashicorp.terraform"
-    "ms-python.python"
-    "ms-python.vscode-pylance"
-    "josin.kusto-syntax-highlighting"
-    "ms-azure-devops.azure-pipelines"
-    "ms-azuretools.vscode-docker"
-    "ms-mssql.mssql"
-    "gsgben.fortigate-fortios-syntax"
-    "adamhartford.vscode-base64"
-    "redhat.vscode-yaml"
-    "dotjoshjohnson.xml"
-    "mechatroner.rainbow-csv"
-    "yzhang.markdown-all-in-one"
-    "bierner.markdown-emoji"
-    "bierner.markdown-footnotes"
-    "tht13.html-preview-vscode"
-    "waderyan.gitblame"
-    "gurumukhi.selected-lines-count"
-    "ms-vsliveshare.vsliveshare"
-    "softaware.abc-music"
+    'foxundermoon.shell-format'
+    'bmalehorn.vscode-fish'
+    'ms-vscode.powershell'
+    'ms-azuretools.vscode-bicep'
+    'msazurermtools.azurerm-vscode-tools'
+    'hashicorp.terraform'
+    'ms-python.python'
+    'ms-python.vscode-pylance'
+    'josin.kusto-syntax-highlighting'
+    'ms-azure-devops.azure-pipelines'
+    'ms-azuretools.vscode-docker'
+    'ms-mssql.mssql'
+    'gsgben.fortigate-fortios-syntax'
+    'adamhartford.vscode-base64'
+    'redhat.vscode-yaml'
+    'dotjoshjohnson.xml'
+    'mechatroner.rainbow-csv'
+    'yzhang.markdown-all-in-one'
+    'bierner.markdown-emoji'
+    'bierner.markdown-footnotes'
+    'tht13.html-preview-vscode'
+    'waderyan.gitblame'
+    'gurumukhi.selected-lines-count'
+    'ms-vsliveshare.vsliveshare'
+    'softaware.abc-music'
 )
 
 for ext in ${exts[@]}; do

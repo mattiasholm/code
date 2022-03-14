@@ -2,18 +2,18 @@
 
 function SetVariables() {
     set -e +x
-    subscriptionId="9b184a26-7fff-49ed-9230-d11d484ad51b"
-    resourceGroup="rg-holm-arm-001"
-    location="WestEurope"
+    subscriptionId='9b184a26-7fff-49ed-9230-d11d484ad51b'
+    resourceGroup='rg-holm-arm-001'
+    location='WestEurope'
     tags=(
-        "Application=ARM"
-        "Company=Holm"
-        "Environment=Dev"
-        "Owner=mattias.holm@live.com"
+        'Application=ARM'
+        'Company=Holm'
+        'Environment=Dev'
+        'Owner=mattias.holm@live.com'
     )
-    operations=("create")
-    templateFile="main.json"
-    parameterFile="main.parameters.json"
+    operations=('create')
+    templateFile='main.json'
+    parameterFile='main.parameters.json'
 }
 
 function CreateResourceGroup() {
