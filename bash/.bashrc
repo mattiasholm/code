@@ -1,4 +1,5 @@
-export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
+export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(echo ' ('\$(git rev-parse --abbrev-ref HEAD 2> /dev/null)')' | sed 's/ ()//')\[\033[00m\] $ "
+
 export PATH="/usr/local/sbin:$PATH"
 export LSCOLORS='cxfxcxdxbxcgcdabagacad'
 export PULUMI_CONFIG_PASSPHRASE_FILE=~/.config/pulumi/passphrase

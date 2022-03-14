@@ -287,7 +287,7 @@ source /dev/stdin <<<"$(echo key=value)"
 vim ~/.bashrc
 
 # Add the following line:
-export PS1="\u@\h \W\[\033[32m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')\[\033[00m\] $ "
+export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(echo ' ('\$(git rev-parse --abbrev-ref HEAD 2> /dev/null)')' | sed 's/ ()//')\[\033[00m\] $ "
 
 ```
 
