@@ -192,7 +192,7 @@ function midi --argument-names abcFile transposeSteps
     switch $type
         case barndance
             set tempo 160
-            set tmpFile (echo $abcFile | sed 's/.abc/.mid/')
+            set tmpFile (echo $abcFile | sed 's/.abc$/.mid/')
             cat $abcFile | sed s/barndance/hornpipe/ >$tmpFile
             set abcFile $tmpFile
         case hornpipe

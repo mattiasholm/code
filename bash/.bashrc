@@ -208,7 +208,7 @@ function midi() {
     case "$type" in
     "barndance")
         tempo="160"
-        tmpFile="$(echo $abcFile | sed 's/.abc/.mid/')"
+        tmpFile="$(echo $abcFile | sed 's/.abc$/.mid/')"
         cat "$abcFile" | sed 's/barndance/hornpipe/' >"$tmpFile"
         abcFile="$tmpFile"
         ;;
