@@ -29,7 +29,7 @@ param supportsHttpsTrafficOnly bool = true
   'TLS1_2'
 ])
 param minimumTlsVersion string = 'TLS1_2'
-param containerName string
+param containers array = []
 
 resource st 'Microsoft.Storage/storageAccounts@2021-06-01' = {
   name: name
@@ -48,9 +48,9 @@ resource st 'Microsoft.Storage/storageAccounts@2021-06-01' = {
   resource blobServices 'blobServices' = {
     name: 'default'
 
-    resource container 'containers' = {
-      name: containerName
-    }
+    resource container 'containers' = [for container in containers: {
+      name: container
+    }]
   }
 }
 

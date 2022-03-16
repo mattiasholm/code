@@ -9,7 +9,7 @@ param tenantId string = subscription().tenantId
 ])
 param sku string = 'standard'
 param accessPolicies array = []
-param secrets array
+param secrets array = []
 
 var family = 'A'
 
