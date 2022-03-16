@@ -1,0 +1,38 @@
+name: Azure Container Registry
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - azure/bicep/modules/**
+      - .github/workflows/azure-acr.yml
+      - "!**.md"
+
+  workflow_dispatch:
+
+  pull_request:
+
+defaults:
+  run:
+    working-directory: azure/bicep
+
+jobs:
+  publish:
+    name: Publish
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create container registry
+        run: ./cr.sh
+
+      - name: Publish modules
+        run: ./publish.sh
