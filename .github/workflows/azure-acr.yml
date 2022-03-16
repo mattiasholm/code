@@ -45,6 +45,9 @@ jobs:
       - name: Create container registry
         run: az acr create --name $crName --resource-group $resourceGroup --sku $crSku
 
+      - name: Install Bicep
+        run: az bicep install
+
       - name: Publish modules
         run: |
           for module in $modules*; do
