@@ -9,7 +9,7 @@ az group create \
     --tags ${tags[*]} \
     --subscription $subscriptionId
 
-az deployment group create \
+az deployment group what-if \
     --subscription $subscriptionId \
     --resource-group $resourceGroup \
     --template-file $templateFile \
