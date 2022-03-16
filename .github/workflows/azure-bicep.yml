@@ -19,7 +19,7 @@ defaults:
 
 env:
   config: main.config
-  # args: --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+  args: --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
 jobs:
   build:
@@ -41,29 +41,30 @@ jobs:
           echo $location
           echo $templateFile
           echo $parameterFile
+          echo $args
 
-      - name: Validate deployment
-        run: az deployment sub validate --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+  #     - name: Validate deployment
+  #       run: az deployment sub validate --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
-      - name: What-if deployment
-        run: az deployment sub what-if --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+  #     - name: What-if deployment
+  #       run: az deployment sub what-if --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
-  release:
-    name: Release
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
+  # release:
+  #   name: Release
+  #   if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repository
+  #       uses: actions/checkout@v2
 
-      - name: Log in to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #     - name: Log in to Azure
+  #       uses: azure/login@v1
+  #       with:
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Load configuration
-        run: . $config
+  #     - name: Load configuration
+  #       run: . $config
 
-      - name: Create deployment
-        run: az deployment sub create --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+  #     - name: Create deployment
+  #       run: az deployment sub create --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
