@@ -45,11 +45,21 @@ jobs:
 
       - name: Validate deployment
         run: |
-          . main.config
+          echo $subscriptionId
+          echo $location
+          echo $templateFile
+          echo $parameterFile
+          echo $args
+          . $config
+          echo $subscriptionId
+          echo $location
+          echo $templateFile
+          echo $parameterFile
+          echo $args
           az deployment sub validate --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
-  #     - name: What-if deployment
-  #       run: az deployment sub what-if --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+      - name: What-if deployment
+        run: az deployment sub what-if --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
   # release:
   #   name: Release
