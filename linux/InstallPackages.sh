@@ -9,7 +9,7 @@ userName='Mattias Holm'
 userEmail='mattias.holm@live.com'
 topLevel="$(git rev-parse --show-toplevel)"
 
-source "$topLevel/bash/.bashrc"
+. "$topLevel/bash/.bashrc"
 .b
 
 sudo apt install -y git &&

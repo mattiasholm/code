@@ -46,7 +46,7 @@ brew install abcmidi
 brew install timidity
 
 brew install bash
-source "$topLevel/bash/.bashrc"
+. "$topLevel/bash/.bashrc"
 .b
 
 if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/bash)" ]]; then

@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
 set -e +x
-subscriptionId='9b184a26-7fff-49ed-9230-d11d484ad51b'
-location='WestEurope'
-operations=('validate' 'what-if')
-templateFile='main.bicep'
-parameterFile='main.parameters.json'
+. main.config
+
+operations=(validate what-if)
 
 for operation in ${operations[@]}; do
     az deployment sub $operation \

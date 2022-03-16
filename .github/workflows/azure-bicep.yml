@@ -18,9 +18,8 @@ defaults:
     working-directory: azure/bicep
 
 env:
-  location: WestEurope
-  templateFile: main.bicep
-  parameterFile: main.parameters.json
+  config: main.config
+  args: --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
 jobs:
   build:
@@ -35,11 +34,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Load configuration
+        run: . $config
+
       - name: Validate deployment
-        run: az deployment sub validate --location $location --template-file $templateFile --parameters @$parameterFile
+        run: az deployment sub validate $args
 
       - name: What-if deployment
-        run: az deployment sub what-if --location $location --template-file $templateFile --parameters @$parameterFile
+        run: az deployment sub what-if $args
 
   release:
     name: Release
@@ -55,5 +57,8 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Load configuration
+        run: . $config
+
       - name: Create deployment
-        run: az deployment sub create --location $location --template-file $templateFile --parameters @$parameterFile
+        run: az deployment sub create $args
