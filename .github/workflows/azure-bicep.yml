@@ -34,32 +34,13 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Load configuration
-        run: |
-          . $config
-          echo $subscriptionId
-          echo $location
-          echo $templateFile
-          echo $parameterFile
-          echo $args
-
       - name: Validate deployment
         run: |
-          echo $subscriptionId
-          echo $location
-          echo $templateFile
-          echo $parameterFile
-          echo $args
           . $config
-          echo $subscriptionId
-          echo $location
-          echo $templateFile
-          echo $parameterFile
-          echo $args
-          az deployment sub validate --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+          az deployment sub validate $args
 
-      - name: What-if deployment
-        run: az deployment sub what-if --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+      # - name: What-if deployment
+      #   run: az deployment sub what-if --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
   # release:
   #   name: Release
