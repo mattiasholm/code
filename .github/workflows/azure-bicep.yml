@@ -43,8 +43,10 @@ jobs:
           echo $parameterFile
           echo $args
 
-  #     - name: Validate deployment
-  #       run: az deployment sub validate --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+      - name: Validate deployment
+        run: |
+          . main.config
+          az deployment sub validate --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
   #     - name: What-if deployment
   #       run: az deployment sub what-if --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
