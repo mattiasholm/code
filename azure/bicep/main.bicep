@@ -34,7 +34,6 @@ module kv 'br/modules:kv:v1' = {
     sku: config.kvSku
     accessPolicies: [
       {
-        tenantId: tenantId
         objectId: config.kvObjectId
         permissions: config.kvPermissions
       }
