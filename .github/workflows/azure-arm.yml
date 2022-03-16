@@ -21,11 +21,16 @@ env:
   module: ./arm-ttk/arm-ttk/arm-ttk.psd1
   resourceGroup: rg-holm-arm-001
   location: WestEurope
-  tags: |
-    Application=ARM
-    Company=Holm
-    Environment=Dev
-    Owner=mattias.holm@live.com
+  # tags: |
+  #   Application=ARM
+  #   Company=Holm
+  #   Environment=Dev
+  #   Owner=mattias.holm@live.com
+  tags:
+    Application: Pulumi
+    Company: Holm
+    Environment: Dev
+    Owner: mattias.holm@live.com
   templateFile: main.json
   parameterFile: main.parameters.json
 
