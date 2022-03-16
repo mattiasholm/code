@@ -2,6 +2,5 @@
 
 set -e +x
 . main.config
-args="--subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile"
 
-az deployment sub create $args
+az deployment sub create --subscription $subscription --location $location --template-file $template --parameters @$parameters

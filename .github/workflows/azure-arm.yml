@@ -18,16 +18,8 @@ defaults:
     working-directory: azure/arm
 
 env:
-  module: ./arm-ttk/arm-ttk/arm-ttk.psd1
-  resourceGroup: rg-holm-arm-001
-  location: WestEurope
-  tags: |
-    Application=ARM
-    Company=Holm
-    Environment=Dev
-    Owner=mattias.holm@live.com
-  templateFile: main.json
-  parameterFile: main.parameters.json
+  config: main.config
+  # module: ./arm-ttk/arm-ttk/arm-ttk.psd1
 
 jobs:
   build:
@@ -39,11 +31,11 @@ jobs:
         with:
           submodules: true
 
-      - name: Run arm-ttk
-        shell: pwsh
-        run: |
-          Import-Module -FullyQualifiedName $Env:module
-          Test-AzTemplate -MainTemplateFile $Env:templateFile -TemplatePath $Env:templateFile
+      # - name: Run arm-ttk
+      #   shell: pwsh
+      #   run: |
+      #     Import-Module -FullyQualifiedName $Env:module
+      #     Test-AzTemplate -MainTemplateFile $Env:templateFile -TemplatePath $Env:templateFile
 
       - name: Log in to Azure
         uses: azure/login@v1
@@ -51,13 +43,20 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create resource group
-        run: az group create --name $resourceGroup --location $location --tags $tags
+        run: |
+          . $config
+          # az group create --subscription $subscription --name $resourceGroup --location $location --tags ${tags[*]}
+          az group create --subscription #$subscription --name $resourceGroup --location $location --tags ${tags[*]}
 
       - name: Validate deployment
-        run: az deployment group validate --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
+        run: |
+          . $config
+          az deployment group validate --subscription $subscription --resource-group $resourceGroup --template-file $template --parameters @$parameters
 
       - name: What-if deployment
-        run: az deployment group what-if --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
+        run: |
+          . $config
+          az deployment group what-if --subscription $subscription --resource-group $resourceGroup --template-file $template --parameters @$parameters
 
   release:
     name: Release
@@ -74,4 +73,6 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create deployment
-        run: az deployment group create --resource-group $resourceGroup --template-file $templateFile --parameters @$parameterFile
+        run: |
+          . $config
+          az deployment group create --subscription $subscription --resource-group $resourceGroup --template-file $template --parameters @$parameters

@@ -36,12 +36,12 @@ jobs:
       - name: Validate deployment
         run: |
           . $config
-          az deployment sub validate --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+          az deployment sub validate --subscription $subscription --location $location --template-file $template --parameters @$parameters
 
       - name: What-if deployment
         run: |
           . $config
-          az deployment sub what-if --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+          az deployment sub what-if --subscription $subscription --location $location --template-file $template --parameters @$parameters
 
   release:
     name: Release
@@ -60,4 +60,4 @@ jobs:
       - name: Create deployment
         run: |
           . $config
-          az deployment sub create --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+          az deployment sub create --subscription $subscription --location $location --template-file $template --parameters @$parameters

@@ -3,14 +3,5 @@
 set -e +x
 . main.config
 
-az group create \
-    --name $resourceGroup \
-    --location $location \
-    --tags ${tags[*]} \
-    --subscription $subscriptionId
-
-az deployment group validate \
-    --subscription $subscriptionId \
-    --resource-group $resourceGroup \
-    --template-file $templateFile \
-    --parameters @$parameterFile
+az group create --subscription #$subscription --name $resourceGroup --location $location --tags ${tags[*]}
+az deployment group validate --subscription $subscription --resource-group $resourceGroup --template-file $template --parameters @$parameters
