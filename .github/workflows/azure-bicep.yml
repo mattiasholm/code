@@ -20,7 +20,9 @@ defaults:
 env:
   config: main.config
   # args: --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
-  args: --subscription ${{ env.subscriptionId }} --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters @${{ env.parameterFile }}
+  # args: --subscription ${{ env.subscriptionId }} --location ${{ env.location }} --template-file ${{ env.templateFile }} --parameters @${{ env.parameterFile }}
+  args: --subscription \$subscriptionId --location \$location --template-file \$templateFile --parameters @\$parameterFile
+  # args: "--subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile"
 
 jobs:
   build:
