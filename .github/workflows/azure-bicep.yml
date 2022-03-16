@@ -19,7 +19,7 @@ defaults:
 
 env:
   config: main.config
-  args: --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
+  # args: --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
 jobs:
   build:
@@ -38,10 +38,10 @@ jobs:
         run: . $config
 
       - name: Validate deployment
-        run: az deployment sub validate $args
+        run: az deployment sub validate --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
       - name: What-if deployment
-        run: az deployment sub what-if $args
+        run: az deployment sub what-if --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
 
   release:
     name: Release
@@ -61,4 +61,4 @@ jobs:
         run: . $config
 
       - name: Create deployment
-        run: az deployment sub create $args
+        run: az deployment sub create --subscription $subscriptionId --location $location --template-file $templateFile --parameters @$parameterFile
