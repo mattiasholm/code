@@ -1,7 +1,8 @@
 #!/usr/bin/env pwsh
 
-$Module = './arm-ttk/arm-ttk/arm-ttk.psd1'
-$TemplateFile = 'main.json'
+$Config = Get-Content main.config
+$Module = ($Config | Select-String 'module=').ToString().Replace('module=', '').Replace("'", '')
+$Template = ($Config | Select-String 'template=').ToString().Replace('template=', '').Replace("'", '')
 
 Import-Module -FullyQualifiedName $Module
-Test-AzTemplate -MainTemplateFile $TemplateFile -TemplatePath $TemplateFile
+Test-AzTemplate -MainTemplateFile $Template -TemplatePath $Template
