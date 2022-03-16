@@ -17,9 +17,17 @@ defaults:
   run:
     working-directory: azure/bicep
 
+env:
+  resourceGroup: rg-holm-bicep-001
+  location: WestEurope
+  crName: crholmbicep001
+  crSku: Basic
+  modules: modules/
+  tag: v1
+
 jobs:
-  publish:
-    name: Publish
+  release:
+    name: Release
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -31,8 +39,17 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Create resource group
+        run: az group create --name $resourceGroup --location $location
+
       - name: Create container registry
-        run: ./cr.sh
+        run: az acr create --name $crName --resource-group $resourceGroup --sku $crSku
 
       - name: Publish modules
-        run: ./publish.sh
+        run: |
+          for module in $modules*; do
+              name=$(basename $module | sed 's/.bicep$//')
+              az bicep publish \
+                  --file $module \
+                  --target "br:$crName.azurecr.io/$name:$tag"
+          done
