@@ -9,9 +9,9 @@ on:
       - .github/workflows/azure-arm.yml
       - "!**.md"
 
-  workflow_dispatch:
-
   pull_request:
+
+  workflow_dispatch:
 
 defaults:
   run:
