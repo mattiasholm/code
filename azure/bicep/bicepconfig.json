@@ -1,12 +1,4 @@
 {
-    "moduleAliases": {
-        "br": {
-            "modules": {
-                "registry": "crholmbicep001.azurecr.io" //,
-                // "modulePath": "modules"
-            }
-        }
-    },
     "analyzers": {
         "core": {
             "enabled": true,
