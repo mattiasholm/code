@@ -3,16 +3,16 @@
 set -e +x
 
 exts=(
+    'ms-vscode.powershell'
     'foxundermoon.shell-format'
     'bmalehorn.vscode-fish'
-    'ms-vscode.powershell'
     'ms-azuretools.vscode-bicep'
     'msazurermtools.azurerm-vscode-tools'
     'hashicorp.terraform'
     'ms-python.python'
     'ms-python.vscode-pylance'
-    'josin.kusto-syntax-highlighting'
     'ms-azure-devops.azure-pipelines'
+    'josin.kusto-syntax-highlighting'
     'ms-azuretools.vscode-docker'
     'ms-mssql.mssql'
     'gsgben.fortigate-fortios-syntax'
