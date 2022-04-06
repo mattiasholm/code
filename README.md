@@ -1,6 +1,6 @@
-[![Azure ARM](https://github.com/mattiasholm/code/actions/workflows/azure-arm.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-arm.yml)  
-[![Azure Bicep](https://github.com/mattiasholm/code/actions/workflows/azure-bicep.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-bicep.yml)  
-[![Azure Pulumi](https://github.com/mattiasholm/code/actions/workflows/azure-pulumi.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-pulumi.yml)  
+[![Azure ARM](https://github.com/mattiasholm/code/actions/workflows/azure-arm.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-arm.yml)
+[![Azure Bicep](https://github.com/mattiasholm/code/actions/workflows/azure-bicep.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-bicep.yml)
+[![Azure Pulumi](https://github.com/mattiasholm/code/actions/workflows/azure-pulumi.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-pulumi.yml)
 [![Azure Terraform](https://github.com/mattiasholm/code/actions/workflows/azure-terraform.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-terraform.yml)
 
 # code
