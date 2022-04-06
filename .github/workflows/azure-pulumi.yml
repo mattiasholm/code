@@ -48,7 +48,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{ env.stack }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
