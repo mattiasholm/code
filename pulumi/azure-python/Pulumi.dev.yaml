@@ -7,7 +7,7 @@ config:
   azure-python:tags:
     Application: Pulumi
     Company: Holm
-    Environment: Dev
+    Environment: Development
     Owner: mattias.holm@live.com
 
   azure-python:appiKind: web

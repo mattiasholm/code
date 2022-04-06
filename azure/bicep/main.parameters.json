@@ -9,7 +9,7 @@
         "tags": {
           "Application": "Bicep",
           "Company": "Holm",
-          "Environment": "Dev",
+          "Environment": "Development",
           "Owner": "mattias.holm@live.com"
         },
         "appiKind": "web",

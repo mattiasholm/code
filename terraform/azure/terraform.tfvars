@@ -3,7 +3,7 @@ location = "WestEurope"
 tags = {
   Application = "Terraform"
   Company     = "Holm"
-  Environment = "Dev"
+  Environment = "Development"
   Owner       = "mattias.holm@live.com"
 }
 
