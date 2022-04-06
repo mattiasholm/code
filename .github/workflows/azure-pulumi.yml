@@ -49,8 +49,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      # name: ${{ env.stack }}
-      name: dev
+      # name: dev
+      name: ${{ env.stack }}
       url: https://portal.azure.com/
     steps:
       - name: Check out repository
