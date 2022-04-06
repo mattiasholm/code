@@ -7,7 +7,7 @@ A collection of code and cheat sheets to facilitate the daily life of an Azure S
 Cloud Architect
 >[LinkedIn](https://linkedin.com/in/holmmattias)
 
-<br><br><br>
+<br>
 
 <a href="https://www.credly.com/badges/766812c0-12ef-4fcf-9b35-3446eaa22ec2/public_url" target="_blank"><img alt="Microsoft Certified: Azure Administrator Associate" src="./img/microsoft-certified-azure-administrator-associate.png" width="200">
 <a href="https://www.credly.com/badges/76e6835a-7c32-4ae3-a41f-7e50bd9c1c21/public_url" target="_blank"><img alt="Microsoft Certified: Azure Developer Associate" src="./img/microsoft-certified-azure-developer-associate.png" width="200">
