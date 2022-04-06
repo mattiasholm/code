@@ -1,37 +1,11 @@
-## Welcome to GitHub Pages
+<img src="./img/mattiasholm.png" alt="Mattias Holm" width="250"/>
 
-You can use the [editor on GitHub](https://github.com/mattiasholm/code/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+**Mattias Holm**\
+Cloud Architect
+>[LinkedIn](https://linkedin.com/in/holmmattias)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+<br><br><br>
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/mattiasholm/code/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+<a href="https://www.credly.com/badges/766812c0-12ef-4fcf-9b35-3446eaa22ec2/public_url" target="_blank"><img alt="Microsoft Certified: Azure Administrator Associate" src="./img/microsoft-certified-azure-administrator-associate.png" width="200">
+<a href="https://www.credly.com/badges/76e6835a-7c32-4ae3-a41f-7e50bd9c1c21/public_url" target="_blank"><img alt="Microsoft Certified: Azure Developer Associate" src="./img/microsoft-certified-azure-developer-associate.png" width="200">
+<a href="https://www.credly.com/badges/68a30b3d-5d5f-402b-bf8d-3e09754b48f8/public_url" target="_blank"><img alt="Microsoft Certified: Azure Solutions Architect Expert" src="./img/microsoft-certified-azure-solutions-architect-expert.png" width="200">
