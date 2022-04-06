@@ -1,3 +1,5 @@
+[![Azure Pulumi](https://github.com/mattiasholm/code/actions/workflows/azure-pulumi.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-pulumi.yml)
+
 # Cheat Sheet - Pulumi
 
 <br>
