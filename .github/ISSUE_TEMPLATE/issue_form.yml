@@ -2,8 +2,8 @@ name: Bug Report
 description: File a bug report
 labels:
   - bug
-# assignees:
-#   - mattiasholm
+assignees:
+  - mattiasholm
 
 title: "[Bug]: "
 body:
@@ -11,12 +11,12 @@ body:
     id: contact
     attributes:
       label: Email
-      # description: How can we get in touch with you if we need more info?
-      # description: Optionally provide us your email address
       description: Enter your email address (optional)
+      # description: Enter your email address
       placeholder: example@domain.com
     validations:
       required: false
+
   # - type: textarea
   #   id: what-happened
   #   attributes:
