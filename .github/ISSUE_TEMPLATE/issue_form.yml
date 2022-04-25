@@ -7,20 +7,15 @@ assignees:
 
 title: "[Bug]: "
 body:
-  # ??? [CHECKLIST] Have you checked that this bug has not been filed already??? VS true/false boolean?!
-  # I'm using the latest commit on the main branch
-  # I have checked that this bug has not been filed already
-  # ???
-
   - type: checkboxes
     id: checklist
     attributes:
       label: Checklist
       description: Please go through the following checklist before submitting
       options:
-        - label: I have checked that this bug has not been filed already
+        - label: I have verified that this problem still exists in the latest commit on the main branch
           required: true
-        - label: I have verified that this has not been fixed in the latest commit on the main branch
+        - label: I have checked that this bug has not been filed already
           required: true
 
   - type: textarea
@@ -36,7 +31,8 @@ body:
     id: commit
     attributes:
       label: Git commit ID
-      description: Enter the Git commit ID where the problem occurred
+      # description: Enter the Git commit ID where the problem occurred
+      description: Enter the Git commit ID where the problem exists
       placeholder: e6d5796360ad172a759bb478222ddd686c22848c
     validations:
       required: true
