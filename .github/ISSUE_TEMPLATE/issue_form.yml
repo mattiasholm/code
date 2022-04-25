@@ -20,6 +20,8 @@ body:
       options:
         - label: I have checked that this bug has not been filed already
           required: true
+        - label: I have verified that this has not been fixed in the latest commit on the main branch
+          required: true
 
   - type: textarea
     id: description
