@@ -29,7 +29,7 @@ brew install vim
 brew install jq
 brew install pwgen
 brew install gh
-brew tap azure/bicep && brew install bicep
+brew install azure/bicep/bicep
 brew install terraform
 brew install tflint
 brew install checkov
@@ -40,6 +40,7 @@ brew install kubectl
 brew install kubectx
 brew install lastpass-cli
 brew install graphviz
+brew install ddosify/tap/ddosify
 brew install p7zip
 brew install sox
 brew install abcmidi
