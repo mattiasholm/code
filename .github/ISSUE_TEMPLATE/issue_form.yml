@@ -7,7 +7,10 @@ assignees:
 
 title: "[Bug]: "
 body:
-  # ??? [CHECKLIST] Have you checked that this has not been filed already??? VS true/false boolean?!
+  # ??? [CHECKLIST] Have you checked that this bug has not been filed already??? VS true/false boolean?!
+  # I'm using the latest commit on the main branch
+  # I have checked that this bug has not been filed already
+  # ???
 
   - type: input
     id: email
@@ -24,6 +27,15 @@ body:
       label: Description
       description: Please describe the problem you're experiencing
       placeholder: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    validations:
+      required: true
+
+  - type: input
+    id: commit
+    attributes:
+      label: Git commit ID
+      description: Enter the Git commit ID where the problem occurs
+      placeholder: e6d5796360ad172a759bb478222ddd686c22848c
     validations:
       required: true
 
