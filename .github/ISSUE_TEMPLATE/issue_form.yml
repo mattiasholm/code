@@ -31,9 +31,21 @@ body:
     id: commit
     attributes:
       label: Git commit ID
-      # description: Enter the Git commit ID where the problem occurred
       description: Enter the Git commit ID where the problem exists
       placeholder: e6d5796360ad172a759bb478222ddd686c22848c
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platofrm
+      description: What platform are you on?
+      # description: What platform are you using?
+      options:
+        - Linux
+        - macOS
+        - Windows
     validations:
       required: true
 
@@ -45,14 +57,3 @@ body:
       placeholder: example@domain.com
     validations:
       required: false
-
-  - type: dropdown
-    id: version
-    attributes:
-      label: Version
-      description: What version of our software are you running?
-      options:
-        - 1.0.2 (Default)
-        - 1.0.3 (Edge)
-    validations:
-      required: true
