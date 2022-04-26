@@ -1,11 +1,11 @@
 name: Bug report
 description: File a bug report
-labels:
-  - bug
 assignees:
   - mattiasholm
-
+labels:
+  - bug
 title: "[Bug]: "
+
 body:
   - type: checkboxes
     id: checklist
@@ -15,7 +15,7 @@ body:
       options:
         - label: I have verified that this problem still exists in the latest commit on the main branch
           required: true
-        - label: I have checked that this bug has not been filed already
+        - label: I have checked that this bug has not been reported already
           required: true
 
   - type: textarea
@@ -31,7 +31,7 @@ body:
     id: commit
     attributes:
       label: Git commit ID
-      description: Enter the Git commit ID where the problem exists
+      description: Enter a Git commit ID where the problem exists
       placeholder: e6d5796360ad172a759bb478222ddd686c22848c
     validations:
       required: true
@@ -39,9 +39,8 @@ body:
   - type: dropdown
     id: platform
     attributes:
-      label: Platofrm
-      description: What platform are you on?
-      # description: What platform are you using?
+      label: Platform
+      description: Select the platform you're using
       options:
         - Linux
         - macOS
