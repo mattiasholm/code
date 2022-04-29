@@ -21,9 +21,6 @@ defaults:
   run:
     working-directory: azure/arm
 
-env:
-  config: main.config
-
 jobs:
   build:
     name: Build

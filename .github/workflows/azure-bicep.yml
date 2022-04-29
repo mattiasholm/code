@@ -21,9 +21,6 @@ defaults:
   run:
     working-directory: azure/bicep
 
-env:
-  config: main.config
-
 jobs:
   build:
     name: Build
@@ -38,14 +35,10 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Validate deployment
-        run: |
-          . $config
-          az deployment sub validate --subscription $subscription --location $location --template-file $template --parameters @$parameters
+        run: ./validate.sh
 
       - name: What-if deployment
-        run: |
-          . $config
-          az deployment sub what-if --subscription $subscription --location $location --template-file $template --parameters @$parameters
+        run: ./whatif.sh
 
   release:
     name: Release
@@ -63,6 +56,4 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create deployment
-        run: |
-          . $config
-          az deployment sub create --subscription $subscription --location $location --template-file $template --parameters @$parameters
+        run: ./deploy.sh
