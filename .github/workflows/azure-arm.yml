@@ -35,13 +35,7 @@ jobs:
           submodules: true
 
       - name: Run arm-ttk
-        shell: pwsh
-        run: |
-          $Config = Get-Content main.config
-          $Module = ($Config | Select-String 'module=').ToString().Replace('module=', '').Replace("'", '')
-          $Template = ($Config | Select-String 'template=').ToString().Replace('template=', '').Replace("'", '')
-          Import-Module -FullyQualifiedName $Module
-          Test-AzTemplate -MainTemplateFile $Template -TemplatePath $Template
+        run: ./lint.ps1
 
       - name: Log in to Azure
         uses: azure/login@v1
@@ -49,19 +43,13 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create resource group
-        run: |
-          . $config
-          az group create --subscription $subscription --name $resourceGroup --location $location --tags ${tags[*]}
+        run: ./rg.sh
 
       - name: Validate deployment
-        run: |
-          . $config
-          az deployment group validate --subscription $subscription --resource-group $resourceGroup --template-file $template --parameters @$parameters
+        run: ./validate.sh
 
       - name: What-if deployment
-        run: |
-          . $config
-          az deployment group what-if --subscription $subscription --resource-group $resourceGroup --template-file $template --parameters @$parameters
+        run: ./whatif.sh
 
   release:
     name: Release
@@ -79,6 +67,4 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Create deployment
-        run: |
-          . $config
-          az deployment group create --subscription $subscription --resource-group $resourceGroup --template-file $template --parameters @$parameters
+        run: ./deploy.sh
