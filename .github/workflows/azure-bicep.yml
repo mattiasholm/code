@@ -23,7 +23,7 @@ defaults:
 
 jobs:
   build:
-    name: Build 👷
+    name: Build 🔨
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
