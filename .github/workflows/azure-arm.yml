@@ -17,6 +17,9 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  id-token: write
+
 defaults:
   run:
     working-directory: azure/arm
