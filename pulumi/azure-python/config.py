@@ -1,5 +1,4 @@
 import pulumi
-from pulumi_azure_native import authorization
 import pulumi_azuread as azuread
 import ipaddress
 
@@ -8,9 +7,7 @@ config = pulumi.Config()
 prefix = config.require('prefix')
 prefixStripped = prefix.replace('-', '').lower()
 tags = config.get_object('tags')
-# tenantId = authorization.get_client_config().tenant_id
-# Workaround until above function is fixed for azure-cli 2.36
-tenantId = pulumi.Config('azure-native').require('tenantId')
+tenantId = azuread.get_client_config().tenant_id
 
 appiKind = config.get('appiKind') or 'web'
 appiType = config.get('appiType') or 'web'

@@ -23,7 +23,7 @@ env:
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
   ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }} # Already set in azure-native:tenantId, feels redundant to have to set this in two places!
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }} # Already set in azuread:tenantId, feels redundant to have to set this in two places!
 
 jobs:
   build:
