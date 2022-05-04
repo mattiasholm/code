@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: dev
-      url: https://portal.azure.com/#@azronnieb3it.onmicrosoft.com/resource/subscriptions/9b184a26-7fff-49ed-9230-d11d484ad51b/resourceGroups/rg-holm-arm-001/
+      url: ${{ format('{0}{1}{2}', 'https://portal.azure.com/#@', secrets.AZURE_TENANT_ID, '/resource/subscriptions/', secrets.AZURE_SUBSCRIPTION_ID, '/resourceGroups/rg-holm-arm-001/') }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
