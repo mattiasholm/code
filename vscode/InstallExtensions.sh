@@ -27,6 +27,7 @@ exts=(
     'waderyan.gitblame'
     'gurumukhi.selected-lines-count'
     'ms-vsliveshare.vsliveshare'
+    'hediet.vscode-drawio'
     'softaware.abc-music'
 )
 
