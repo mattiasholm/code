@@ -62,6 +62,7 @@ kvSpSecretPermissions = [
   "Get",
   "Set",
   "Delete",
+  "Recover",
   "Purge"
 ]
 
