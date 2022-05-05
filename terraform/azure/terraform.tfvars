@@ -11,7 +11,7 @@ appiType = "web"
 
 kvSku      = "standard"
 kvUsername = "mattias.holm@azronnieb3it.onmicrosoft.com"
-kvKeyPermissions = [
+kvUserKeyPermissions = [
   "Get",
   "List",
   "Update",
@@ -29,7 +29,7 @@ kvKeyPermissions = [
   "Sign",
   "Purge"
 ]
-kvSecretPermissions = [
+kvUserSecretPermissions = [
   "Get",
   "List",
   "Set",
@@ -39,7 +39,7 @@ kvSecretPermissions = [
   "Restore",
   "Purge"
 ]
-kvCertificatePermissions = [
+kvUserCertificatePermissions = [
   "Get",
   "List",
   "Update",

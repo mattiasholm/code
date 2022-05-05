@@ -21,13 +21,13 @@ resource "azurerm_key_vault" "kv" {
   sku_name            = var.kvSku
 }
 
-resource "azurerm_key_vault_access_policy" "accesspolicy" {
+resource "azurerm_key_vault_access_policy" "accesspolicy_user" {
   key_vault_id            = azurerm_key_vault.kv.id
   tenant_id               = local.tenantId
   object_id               = data.azuread_user.user.object_id
-  key_permissions         = var.kvKeyPermissions
-  secret_permissions      = var.kvSecretPermissions
-  certificate_permissions = var.kvCertificatePermissions
+  key_permissions         = var.kvUserKeyPermissions
+  secret_permissions      = var.kvUserSecretPermissions
+  certificate_permissions = var.kvUserCertificatePermissions
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
@@ -43,7 +43,7 @@ resource "azurerm_key_vault_secret" "secret" {
   value        = azurerm_application_insights.appi.connection_string
   key_vault_id = azurerm_key_vault.kv.id
   depends_on = [
-    azurerm_key_vault_access_policy.accesspolicy,
+    azurerm_key_vault_access_policy.accesspolicy_user,
     azurerm_key_vault_access_policy.accesspolicy_sp
   ]
 }

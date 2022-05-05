@@ -33,13 +33,13 @@ variable "kvSku" {
 variable "kvUsername" {
   type = string
 }
-variable "kvKeyPermissions" {
+variable "kvUserKeyPermissions" {
   type = list(string)
 }
-variable "kvSecretPermissions" {
+variable "kvUserSecretPermissions" {
   type = list(string)
 }
-variable "kvCertificatePermissions" {
+variable "kvUserCertificatePermissions" {
   type = list(string)
 }
 variable "kvSpName" {
