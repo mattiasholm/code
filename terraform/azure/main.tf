@@ -5,7 +5,7 @@ terraform {
     organization = "mattiasholm"
 
     workspaces {
-      name = "code"
+      name = "azure"
     }
   }
 
