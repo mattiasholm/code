@@ -37,13 +37,13 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
   secret_permissions = var.kvSpSecretPermissions
 }
 
-resource "azurerm_key_vault_secret" "secret" {
-  name         = "appi-connectionString"
-  tags         = var.tags
-  value        = azurerm_application_insights.appi.connection_string
-  key_vault_id = azurerm_key_vault.kv.id
-  depends_on = [
-    azurerm_key_vault_access_policy.accesspolicy,
-    azurerm_key_vault_access_policy.accesspolicy_sp
-  ]
-}
+# resource "azurerm_key_vault_secret" "secret" {
+#   name         = "appi-connectionString"
+#   tags         = var.tags
+#   value        = azurerm_application_insights.appi.connection_string
+#   key_vault_id = azurerm_key_vault.kv.id
+#   depends_on = [
+#     azurerm_key_vault_access_policy.accesspolicy,
+#     azurerm_key_vault_access_policy.accesspolicy_sp
+#   ]
+# }

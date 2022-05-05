@@ -42,16 +42,16 @@ kv = keyvault.Vault(
     )
 )
 
-keyvault.Secret(
-    'secret',
-    secret_name='appi-connectionString',
-    vault_name=kv.name,
-    resource_group_name=rg.name,
-    tags=config.tags,
-    properties=keyvault.SecretPropertiesArgs(
-        value=appi.connection_string
-    )
-)
+# keyvault.Secret(
+#     'secret',
+#     secret_name='appi-connectionString',
+#     vault_name=kv.name,
+#     resource_group_name=rg.name,
+#     tags=config.tags,
+#     properties=keyvault.SecretPropertiesArgs(
+#         value=appi.connection_string
+#     )
+# )
 
 pdnsz = network.PrivateZone(
     'pdnsz',

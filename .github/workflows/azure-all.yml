@@ -1,4 +1,4 @@
-name: Azure *
+name: Azure All
 
 on:
   workflow_dispatch:
