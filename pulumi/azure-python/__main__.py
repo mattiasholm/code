@@ -109,12 +109,12 @@ for i in range(0, config.stCount):
     )
     sts.append(st)
 
-    # storage.BlobContainer(
-    #     f'container{i}',
-    #     container_name=f'container{config.prefixStripped}001',
-    #     account_name=st.name,
-    #     resource_group_name=rg.name
-    # )
+    storage.BlobContainer(
+        f'container{i}',
+        container_name=f'container{config.prefixStripped}001',
+        account_name=st.name,
+        resource_group_name=rg.name
+    )
 
 if config.vnetAddressPrefix:
     vnet = network.VirtualNetwork(

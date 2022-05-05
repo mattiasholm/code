@@ -16,8 +16,8 @@ resource "azurerm_storage_account" "st" {
   min_tls_version                 = var.stTlsVersion
 }
 
-# resource "azurerm_storage_container" "container" {
-#   count                = var.stCount
-#   name                 = "container${local.prefixStripped}001"
-#   storage_account_name = azurerm_storage_account.st[count.index].name
-# }
+resource "azurerm_storage_container" "container" {
+  count                = var.stCount
+  name                 = "container${local.prefixStripped}001"
+  storage_account_name = azurerm_storage_account.st[count.index].name
+}
