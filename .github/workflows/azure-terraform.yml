@@ -17,6 +17,8 @@ on:
 
   workflow_dispatch:
 
+  workflow_call:
+
 defaults:
   run:
     working-directory: terraform/azure
