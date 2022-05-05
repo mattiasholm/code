@@ -17,6 +17,8 @@ on:
 
   workflow_dispatch:
 
+  workflow_call:
+
 permissions:
   id-token: write
 
