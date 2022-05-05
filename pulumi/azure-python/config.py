@@ -14,10 +14,13 @@ appiType = config.get('appiType') or 'web'
 
 kvSku = config.get('kvSku') or 'standard'
 kvUsername = config.require('kvUsername')
-kvObjectId = azuread.get_user(user_principal_name=kvUsername).object_id
-kvKeyPermissions = config.get_object('kvKeyPermissions')
-kvSecretPermissions = config.get_object('kvSecretPermissions')
-kvCertificatePermissions = config.get_object('kvCertificatePermissions')
+kvUserObjectId = azuread.get_user(user_principal_name=kvUsername).object_id
+kvUserKeyPermissions = config.get_object('kvUserKeyPermissions')
+kvUserSecretPermissions = config.get_object('kvUserSecretPermissions')
+kvUserCertPermissions = config.get_object('kvUserCertPermissions')
+kvSpName = config.require('kvSpName')
+kvSpObjectId = azuread.get_service_principal(display_name=kvSpName).object_id
+kvSpSecretPermissions = config.get_object('kvSpSecretPermissions')
 
 pdnszName = config.require('pdnszName')
 pdnszRegistration = config.get_bool('pdnszRegistration') or False

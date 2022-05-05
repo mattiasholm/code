@@ -31,27 +31,34 @@ kv = keyvault.Vault(
         access_policies=[
             keyvault.AccessPolicyEntryArgs(
                 tenant_id=config.tenantId,
-                object_id=config.kvObjectId,
+                object_id=config.kvUserObjectId,
                 permissions=keyvault.PermissionsArgs(
-                    keys=config.kvKeyPermissions,
-                    secrets=config.kvSecretPermissions,
-                    certificates=config.kvCertificatePermissions
+                    keys=config.kvUserKeyPermissions,
+                    secrets=config.kvUserSecretPermissions,
+                    certificates=config.kvUserCertPermissions
+                )
+            ),
+            keyvault.AccessPolicyEntryArgs(
+                tenant_id=config.tenantId,
+                object_id=config.kvSpObjectId,
+                permissions=keyvault.PermissionsArgs(
+                    secrets=config.kvSpSecretPermissions,
                 )
             )
         ]
     )
 )
 
-keyvault.Secret(
-    'secret',
-    secret_name='appi-connectionString',
-    vault_name=kv.name,
-    resource_group_name=rg.name,
-    tags=config.tags,
-    properties=keyvault.SecretPropertiesArgs(
-        value=appi.connection_string
-    )
-)
+# keyvault.Secret(
+#     'secret',
+#     secret_name='appi-connectionString',
+#     vault_name=kv.name,
+#     resource_group_name=rg.name,
+#     tags=config.tags,
+#     properties=keyvault.SecretPropertiesArgs(
+#         value=appi.connection_string
+#     )
+# )
 
 pdnsz = network.PrivateZone(
     'pdnsz',

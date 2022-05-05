@@ -15,7 +15,7 @@ config:
 
   azure-python:kvSku: standard
   azure-python:kvUsername: mattias.holm@azronnieb3it.onmicrosoft.com
-  azure-python:kvKeyPermissions:
+  azure-python:kvUserKeyPermissions:
     - Get
     - List
     - Update
@@ -32,7 +32,7 @@ config:
     - Verify
     - Sign
     - Purge
-  azure-python:kvSecretPermissions:
+  azure-python:kvUserSecretPermissions:
     - Get
     - List
     - Set
@@ -41,7 +41,7 @@ config:
     - Backup
     - Restore
     - Purge
-  azure-python:kvCertificatePermissions:
+  azure-python:kvUserCertPermissions:
     - Get
     - List
     - Update
@@ -58,6 +58,9 @@ config:
     - SetIssuers
     - DeleteIssuers
     - Purge
+  azure-python:kvSpName: sp-holm-001
+  azure-python:kvSpSecretPermissions:
+    - Delete
 
   azure-python:pdnszName: holm.io
   azure-python:pdnszRegistration: false

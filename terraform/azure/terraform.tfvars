@@ -39,7 +39,7 @@ kvUserSecretPermissions = [
   "Restore",
   "Purge"
 ]
-kvUserCertificatePermissions = [
+kvUserCertPermissions = [
   "Get",
   "List",
   "Update",

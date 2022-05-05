@@ -27,7 +27,7 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_user" {
   object_id               = data.azuread_user.user.object_id
   key_permissions         = var.kvUserKeyPermissions
   secret_permissions      = var.kvUserSecretPermissions
-  certificate_permissions = var.kvUserCertificatePermissions
+  certificate_permissions = var.kvUserCertPermissions
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {

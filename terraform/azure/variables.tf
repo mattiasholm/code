@@ -39,7 +39,7 @@ variable "kvUserKeyPermissions" {
 variable "kvUserSecretPermissions" {
   type = list(string)
 }
-variable "kvUserCertificatePermissions" {
+variable "kvUserCertPermissions" {
   type = list(string)
 }
 variable "kvSpName" {
