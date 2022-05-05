@@ -60,7 +60,8 @@ kvCertificatePermissions = [
 kvSpName = "sp-holm-001"
 kvSpSecretPermissions = [
   "Get",
-  "Set"
+  "Set",
+  "Delete"
 ]
 
 pdnszName         = "holm.io"
