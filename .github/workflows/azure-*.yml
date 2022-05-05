@@ -1,0 +1,8 @@
+name: Azure *
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apa:
+    uses: mattiasholm/code/.github/workflows/azure-arm.yml@main

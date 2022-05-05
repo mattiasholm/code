@@ -61,7 +61,8 @@ kvSpName = "sp-holm-001"
 kvSpSecretPermissions = [
   "Get",
   "Set",
-  "Delete"
+  "Delete",
+  "Purge"
 ]
 
 pdnszName         = "holm.io"
