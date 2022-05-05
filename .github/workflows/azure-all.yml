@@ -6,5 +6,8 @@ on:
 jobs:
   public:
     uses: mattiasholm/code/.github/workflows/azure-arm.yml@main
+    secrets: inherit
+
   local:
     uses: ./.github/workflows/azure-arm.yml
+    secrets: inherit
