@@ -336,7 +336,7 @@ last
 
 ## Source .config file in the same path as script:
 ```shell
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}" | sed 's/[.].*$/.\config/')"
+. $(basename $0 | sed 's/.sh$/.config/')
 ```
 
 ## Reference a variable by another variable's value:

@@ -28,5 +28,9 @@ provider "azuread" {
 
 provider "azurerm" {
   subscription_id = "9b184a26-7fff-49ed-9230-d11d484ad51b"
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
 }
