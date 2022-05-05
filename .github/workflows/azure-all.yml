@@ -6,7 +6,5 @@ on:
 jobs:
   public:
     uses: mattiasholm/code/.github/workflows/azure-arm.yml@main
-  public2:
-    uses: mattiasholm/code/.github/workflows/azure-arm.yml
   local:
     uses: ./.github/workflows/azure-arm.yml
