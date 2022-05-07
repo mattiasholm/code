@@ -66,7 +66,7 @@ alias gsh='git show'
 alias gd='git diff'
 alias gdo='git diff origin/(git rev-parse --abbrev-ref HEAD)'
 alias gdm='git diff (git remote show origin | grep HEAD | cut -d" " -f5)'
-alias ga='git add (git rev-parse --show-toplevel)'
+alias ga='git add'
 alias gr='git restore'
 alias gc='git commit'
 alias gpu='git push'
@@ -143,7 +143,7 @@ function gquick --argument-names message
     if not test $message
         set message 'Quick change'
     end
-    git add (git rev-parse --show-toplevel)
+    git add --all
     git commit --message $message
     git push
 end
