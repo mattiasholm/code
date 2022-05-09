@@ -1,0 +1,121 @@
+name: sp-yaml
+runtime: yaml
+
+configuration:
+  subscriptionId:
+    type: String
+  spName:
+    type: String
+  api:
+    type: String
+  permission:
+    type: String
+  roleId:
+    type: String
+  secretName:
+    type: String
+  secretExpiration:
+    type: String
+    default: 8760h
+  secretVersion:
+    type: Number
+    default: 1
+  audiences:
+    type: List<String>
+  issuer:
+    type: String
+  repo:
+    type: String
+
+variables:
+  user:
+    Fn::Invoke:
+      Function: azuread:getUser
+      Arguments:
+        userPrincipalName: mattias.holm@azronnieb3it.onmicrosoft.com
+  roleDefinition:
+    Fn::Invoke:
+      Function: azure-native:authorization:getRoleDefinition
+      Arguments:
+        roleDefinitionId: ${roleId}
+        scope: /subscriptions/${subscriptionId}
+  # current1:
+  #   Fn::Invoke:
+  #     Function: azuread:getClientConfig
+  #     Arguments: {}
+  # current2:
+  #   Fn::Invoke:
+  #     Function: azure-native:authorization:getClientConfig
+  #     Arguments: {}
+
+resources:
+  app:
+    type: azuread:Application
+    properties:
+      displayName: ${spName}
+      owners:
+        - ${user.objectId}
+        # - ${current1.objectId}
+      requiredResourceAccesses:
+        - resourceAppId: ${api}
+          resourceAccesses:
+            - id: ${permission}
+              type: Role
+      web:
+        implicitGrant:
+          idTokenIssuanceEnabled: true
+
+  sp:
+    type: azuread:ServicePrincipal
+    properties:
+      applicationId: ${app.applicationId}
+
+  role:
+    type: azure-native:authorization:RoleAssignment
+    properties:
+      principalId: ${sp.objectId}
+      principalType: ServicePrincipal
+      roleDefinitionId: ${roleDefinition.id}
+      # scope: ${current2.subscriptionId}
+      scope: /subscriptions/${subscriptionId}
+
+  secret:
+    type: azuread:ApplicationPassword
+    properties:
+      displayName: ${secretName}
+      applicationObjectId: ${app.objectId}
+      endDateRelative: ${secretExpiration}
+      rotateWhenChanged:
+        rotation: ${secretVersion}
+
+  main:
+    type: azuread:ApplicationFederatedIdentityCredential
+    properties:
+      displayName: main
+      applicationObjectId: ${app.objectId}
+      audiences: ${audiences}
+      issuer: ${issuer}
+      subject: repo:${repo}:ref:refs/heads/main
+
+  dev:
+    type: azuread:ApplicationFederatedIdentityCredential
+    properties:
+      displayName: dev
+      applicationObjectId: ${app.objectId}
+      audiences: ${audiences}
+      issuer: ${issuer}
+      subject: repo:${repo}:environment:dev
+
+  pull_request:
+    type: azuread:ApplicationFederatedIdentityCredential
+    properties:
+      displayName: pull_request
+      applicationObjectId: ${app.objectId}
+      audiences: ${audiences}
+      issuer: ${issuer}
+      subject: repo:${repo}:pull_request
+
+outputs:
+  clientId: ${app.applicationId}
+  clientSecret: ${secret.value}
+  # tenantId: ${current1.tenantId}

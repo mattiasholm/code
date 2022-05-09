@@ -23,7 +23,8 @@ variable "secret" {
 }
 
 variable "days" {
-  type = number
+  type    = number
+  default = 365
   validation {
     condition     = var.days < 730
     error_message = "Invalid value for variable."

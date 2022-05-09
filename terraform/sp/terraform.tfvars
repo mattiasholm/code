@@ -1,4 +1,4 @@
-name       = "sp-holm-002"
+name       = "sp-holm-003"
 api        = "00000003-0000-0000-c000-000000000000"
 permission = "df021288-bdef-4463-88db-98f22de89214"
 role       = "Contributor"
