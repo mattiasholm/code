@@ -19,7 +19,7 @@ owner=$(az ad signed-in-user show --query objectId --output tsv)
 az ad app owner add --id $appId --owner-object-id $owner
 
 if [[ $(az ad app permission list --id $appId --query [].resourceAppId --output tsv) != $api ]]; then
-    az ad app permission add --id $appId --api $api --api-permissions $permissions
+    az ad app permission add --id $appId --api $api --api-permissions $permission
 fi
 
 az ad app permission grant --id $appId --api $api
