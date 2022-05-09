@@ -1,7 +1,3 @@
-locals {
-  tenantId = data.azurerm_client_config.current.tenant_id
-}
-
 data "azurerm_client_config" "current" {}
 
 data "azuread_user" "user" {
@@ -17,13 +13,13 @@ resource "azurerm_key_vault" "kv" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
-  tenant_id           = local.tenantId
+  tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = var.kvSku
 }
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_user" {
   key_vault_id            = azurerm_key_vault.kv.id
-  tenant_id               = local.tenantId
+  tenant_id               = data.azurerm_client_config.current.tenant_id
   object_id               = data.azuread_user.user.object_id
   key_permissions         = var.kvUserKeyPermissions
   secret_permissions      = var.kvUserSecretPermissions
@@ -32,7 +28,7 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_user" {
 
 resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
   key_vault_id       = azurerm_key_vault.kv.id
-  tenant_id          = local.tenantId
+  tenant_id          = data.azurerm_client_config.current.tenant_id
   object_id          = data.azuread_service_principal.sp.object_id
   secret_permissions = var.kvSpSecretPermissions
 }
