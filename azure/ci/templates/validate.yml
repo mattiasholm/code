@@ -1,0 +1,21 @@
+stages:
+  - stage: build
+    displayName: Build
+    jobs:
+      - job: iac
+        displayName: Validate infrastructure
+        steps:
+          - template: script.yml
+            parameters:
+              environment: tst
+              args: -Validate
+
+          - template: script.yml
+            parameters:
+              environment: stg
+              args: -Validate
+
+          - template: script.yml
+            parameters:
+              environment: prod
+              args: -Validate

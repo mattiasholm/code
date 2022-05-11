@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e +x
+set -e
 . $(basename $0 | sed 's/.sh$/.config/')
 
 if [[ $(az account show --query tenantId --output tsv) != $tenant ]]; then

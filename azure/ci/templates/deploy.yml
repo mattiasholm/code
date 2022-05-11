@@ -1,0 +1,27 @@
+parameters:
+  - name: environment
+    type: string
+
+  - name: dependsOn
+    type: string
+
+  - name: condition
+    type: string
+
+stages:
+  - stage: ${{ parameters.environment }}
+    displayName: Deploy to ${{ parameters.environment }}
+    dependsOn: ${{ parameters.dependsOn }}
+    condition: ${{ parameters.condition }}
+    jobs:
+      - deployment: iac
+        displayName: Deploy infrastructure
+        environment: ${{ parameters.environment }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - template: script.yml
+                  parameters:
+                    environment: ${{ parameters.environment }}

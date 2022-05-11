@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e +x
+set -e
 
 mas install 634148309  # Logic Pro
 mas install 937984704  # Amphetamine

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e +x
+set +e
 
 for ext in $(code --list-extensions); do
     code --install-extension "$ext" --force

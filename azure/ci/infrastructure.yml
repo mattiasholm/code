@@ -1,0 +1,35 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - ci
+      - iac
+
+pool:
+  vmImage: ubuntu-20.04
+
+variables:
+  - template: templates/variables.yml
+
+stages:
+  - template: templates/validate.yml
+
+  - template: templates/deploy.yml
+    parameters:
+      environment: tst
+      dependsOn: build
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+  - template: templates/deploy.yml
+    parameters:
+      environment: stg
+      dependsOn: tst
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+
+  - template: templates/deploy.yml
+    parameters:
+      environment: prod
+      dependsOn: stg
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main'))

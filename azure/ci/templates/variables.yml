@@ -1,0 +1,4 @@
+variables:
+  azureSubscription-tst: sub-tst
+  azureSubscription-stg: sub-stg
+  azureSubscription-prod: sub-prod
