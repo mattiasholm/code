@@ -3,4 +3,4 @@
 set -e +x
 . main.config
 
-az deployment group validate --subscription $subscription --resource-group $resourceGroup --template-file $template --parameters @$parameters
+az deployment group validate --subscription $subscription --resource-group $resourceGroup --template-file $template --parameters @$parameters --no-prompt --output table
