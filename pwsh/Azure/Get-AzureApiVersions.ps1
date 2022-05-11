@@ -17,7 +17,7 @@ param(
 )
 
 $ProviderNameSpace = $ArmType.Split('/')[0]
-$ResourceTypeName = $ArmType.Replace("$ProviderNameSpace/", '')
+$ResourceTypeName = $ArmType.TrimStart("$ProviderNameSpace/")
 
 switch ($Clipboard) {
     false {

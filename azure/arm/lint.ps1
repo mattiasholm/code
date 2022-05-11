@@ -1,8 +1,14 @@
 #!/usr/bin/env pwsh
 
-$Config = Get-Content main.config
-$Module = ($Config | Select-String 'module=').ToString().Replace('module=', '').Replace("'", '')
-$Template = ($Config | Select-String 'template=').ToString().Replace('template=', '').Replace("'", '')
+function Get-Config {
+    param (
+        $Key
+    )
+    ((Get-Content 'main.config' | Select-String "$Key=").ToString() -replace '^.+=').Trim("'")
+}
+
+$Module = Get-Config 'module'
+$Template = Get-Config 'template'
 
 Import-Module -FullyQualifiedName $Module
 Test-AzTemplate -MainTemplateFile $Template -TemplatePath $Template

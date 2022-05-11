@@ -30,7 +30,7 @@ foreach ($Server in $Servers) {
     New-Item -ItemType File -Path $UncFilePath -Value "Testfil skapad $TimeStamp" | Out-Null
 
     if (Test-Path -Path $UncFilePath) {
-        Write-Host -ForegroundColor Green -Object ("$($Server.ServerName)`t`tSuccessfully created test file`t`t$FileName").Replace('Testfil_','').Replace('.txt','').Replace('.',':')
+        Write-Host -ForegroundColor Green -Object ("$($Server.ServerName)`t`tSuccessfully created test file`t`t$FileName").Replace('Testfil_', '').Replace('.txt', '').Replace('.', ':')
     }
     else {
         Write-Host -ForegroundColor Red -Object "$($Server.ServerName)`t`tFailed to create test file`t`t$FileName"

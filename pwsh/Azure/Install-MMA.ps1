@@ -6,7 +6,7 @@ $MMADownloadURL = 'https://go.microsoft.com/fwlink/?LinkId=828603'
 $MMADownloadFileName = 'MMASetup-AMD64.exe'
 $MMADownloadPath = 'C:\Temp'
 $MMADownloadFullPath = "$MMADownloadPath\$MMADownloadFileName"
-$ExtractedDirectoryName = $MMADownloadFileName.Replace('.exe', '')
+$ExtractedDirectoryName = $MMADownloadFileName.TrimEnd('.exe')
 $ExtractedDirectoryFullPath = "$MMADownloadPath\$ExtractedDirectoryName"
 $ExtractedMsiFilename = 'MOMAgent.msi'
 $ExtractedMsiFullPath = "$ExtractedDirectoryFullPath\$ExtractedMsiFilename"
