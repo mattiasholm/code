@@ -32,8 +32,10 @@ brew install gh
 brew install azure/bicep/bicep
 brew install terraform
 brew install tflint
-brew install checkov
+brew install tfsec
 brew install terrascan
+brew install terraform-docs
+brew install checkov
 brew install pulumi
 brew install python3
 brew install kubectl
