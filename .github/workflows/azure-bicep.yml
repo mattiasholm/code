@@ -1,15 +1,15 @@
 name: Azure Bicep
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
     paths:
       - azure/bicep/**
       - .github/workflows/azure-bicep.yml
       - "!**.md"
 
-  pull_request:
+  push:
+    branches:
+      - main
     paths:
       - azure/bicep/**
       - .github/workflows/azure-bicep.yml
