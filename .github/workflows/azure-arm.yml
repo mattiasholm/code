@@ -1,15 +1,15 @@
 name: Azure ARM
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
     paths:
       - azure/arm/**
       - .github/workflows/azure-arm.yml
       - "!**.md"
 
-  push:
-    branches:
-      - main
+  pull_request:
     paths:
       - azure/arm/**
       - .github/workflows/azure-arm.yml

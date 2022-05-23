@@ -1,15 +1,15 @@
 name: Azure Terraform
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
     paths:
       - terraform/azure/**
       - .github/workflows/azure-terraform.yml
       - "!**.md"
 
-  push:
-    branches:
-      - main
+  pull_request:
     paths:
       - terraform/azure/**
       - .github/workflows/azure-terraform.yml

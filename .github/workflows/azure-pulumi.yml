@@ -1,15 +1,15 @@
 name: Azure Pulumi
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
     paths:
       - pulumi/azure-python/**
       - .github/workflows/azure-pulumi.yml
       - "!**.md"
 
-  push:
-    branches:
-      - main
+  pull_request:
     paths:
       - pulumi/azure-python/**
       - .github/workflows/azure-pulumi.yml
