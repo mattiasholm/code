@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: dev
-      url: https://foo.holm.io/
+      url: https://bicep.holm.io/
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
