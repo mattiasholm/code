@@ -2,11 +2,12 @@ targetScope = 'subscription'
 
 param config object
 
-var prefixStripped = toLower(replace(config.prefix, '-', ''))
+var prefix = toLower('${config.tags.Company}-${config.tags.Application}')
+var prefixStripped = replace(prefix, '-', '')
 var tenantId = subscription().tenantId
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: 'rg-${config.prefix}-001'
+  name: 'rg-${prefix}-001'
   location: config.location
   tags: config.tags
 }
@@ -15,7 +16,7 @@ module appi 'modules/appi.bicep' = {
   name: 'appi'
   scope: rg
   params: {
-    name: 'appi-${config.prefix}-001'
+    name: 'appi-${prefix}-001'
     location: config.location
     tags: config.tags
     kind: config.appi.kind
@@ -27,7 +28,7 @@ module kv 'modules/kv.bicep' = {
   name: 'kv'
   scope: rg
   params: {
-    name: 'kv-${config.prefix}-001'
+    name: 'kv-${prefix}-001'
     location: config.location
     tags: config.tags
     tenantId: tenantId
@@ -68,12 +69,12 @@ module pip 'modules/pip.bicep' = [for (label, i) in config.pip.labels: {
   name: 'pip${i}'
   scope: rg
   params: {
-    name: 'pip-${config.prefix}-${padLeft(i + 1, 3, '0')}'
+    name: 'pip-${prefix}-${padLeft(i + 1, 3, '0')}'
     location: config.location
     tags: config.tags
     sku: config.pip.sku
     publicIPAllocationMethod: config.pip.allocation
-    domainNameLabel: '${label}-${config.prefix}'
+    domainNameLabel: '${label}-${prefix}'
   }
 }]
 
@@ -99,7 +100,7 @@ module vnet 'modules/vnet.bicep' = if (contains(config, 'vnetAddressPrefix')) {
   name: 'vnet'
   scope: rg
   params: {
-    name: 'vnet-${config.prefix}-001'
+    name: 'vnet-${prefix}-001'
     location: config.location
     tags: config.tags
     addressPrefixes: [
@@ -107,7 +108,7 @@ module vnet 'modules/vnet.bicep' = if (contains(config, 'vnetAddressPrefix')) {
     ]
     subnets: [
       {
-        name: 'snet-${config.prefix}-001'
+        name: 'snet-${prefix}-001'
         addressPrefix: config.vnet.addressPrefix
       }
     ]

@@ -4,7 +4,6 @@
   "parameters": {
     "config": {
       "value": {
-        "prefix": "holm-bicep",
         "location": "WestEurope",
         "tags": {
           "Application": "Bicep",

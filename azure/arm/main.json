@@ -2,10 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "prefix": {
-            "type": "string",
-            "maxLength": 17
-        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]"
@@ -131,18 +127,19 @@
         }
     },
     "variables": {
-        "prefixStripped": "[toLower(replace(parameters('prefix'), '-', ''))]",
+        "prefix": "[toLower(format('{0}-{1}', parameters('tags').Company, parameters('tags').Application))]",
+        "prefixStripped": "[replace(variables('prefix'), '-', '')]",
         "tenantId": "[subscription().tenantId]",
-        "appiName": "[format('appi-{0}-001', parameters('prefix'))]",
+        "appiName": "[format('appi-{0}-001', variables('prefix'))]",
         "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
-        "kvName": "[format('kv-{0}-001', parameters('prefix'))]",
+        "kvName": "[format('kv-{0}-001', variables('prefix'))]",
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "pdnszId": "[resourceId('Microsoft.Network/privateDnsZones', parameters('pdnszName'))]",
         "pipCount": "[length(parameters('pipLabels'))]",
         "containerName": "[format('default/container{0}001', variables('prefixStripped'))]",
-        "vnetName": "[format('vnet-{0}-001', parameters('prefix'))]",
+        "vnetName": "[format('vnet-{0}-001', variables('prefix'))]",
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
-        "snetName": "[format('snet-{0}-001', parameters('prefix'))]",
+        "snetName": "[format('snet-{0}-001', variables('prefix'))]",
         "copy": [
             {
                 "name": "cnameName",
@@ -157,7 +154,7 @@
             {
                 "name": "pipName",
                 "count": "[variables('pipCount')]",
-                "input": "[format('pip-{0}-{1}', parameters('prefix'), padLeft(copyIndex('pipName', 1), 3, '0'))]"
+                "input": "[format('pip-{0}-{1}', variables('prefix'), padLeft(copyIndex('pipName', 1), 3, '0'))]"
             },
             {
                 "name": "pipId",
@@ -167,7 +164,7 @@
             {
                 "name": "pipLabel",
                 "count": "[variables('pipCount')]",
-                "input": "[format('{0}-{1}', parameters('pipLabels')[copyIndex('pipLabel')], parameters('prefix'))]"
+                "input": "[format('{0}-{1}', parameters('pipLabels')[copyIndex('pipLabel')], variables('prefix'))]"
             },
             {
                 "name": "stName",
