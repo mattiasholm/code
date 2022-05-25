@@ -4,10 +4,10 @@ import ipaddress
 
 config = pulumi.Config()
 
-prefix = config.require('prefix')
-prefixStripped = prefix.replace('-', '').lower()
-tags = config.get_object('tags')
 tenantId = azuread.get_client_config().tenant_id
+tags = config.get_object('tags')
+prefix = '{Company}-{Application}'.format_map(tags).lower()
+prefixStripped = prefix.replace('-', '')
 
 appiKind = config.get('appiKind') or 'web'
 appiType = config.get('appiType') or 'web'
@@ -40,7 +40,7 @@ stTlsVersion = config.get('stTlsVersion') or 'TLS1_2'
 vnetAddressPrefix = config.get('vnetAddressPrefix')
 
 if len(prefix) > 17:
-    raise ValueError(f"'{prefix}' is longer than 17")
+    raise ValueError(f"'{prefix}' is longer than 17 characters")
 
 if vnetAddressPrefix:
     network = ipaddress.ip_network(vnetAddressPrefix)
