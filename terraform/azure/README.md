@@ -2,7 +2,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.1.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.2.0 |
 | <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.20.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.2.0 |
 
@@ -57,7 +57,6 @@ No modules.
 | <a name="input_pipAllocation"></a> [pipAllocation](#input\_pipAllocation) | n/a | `string` | `"Dynamic"` | no |
 | <a name="input_pipLabels"></a> [pipLabels](#input\_pipLabels) | n/a | `list(string)` | n/a | yes |
 | <a name="input_pipSku"></a> [pipSku](#input\_pipSku) | n/a | `string` | `"Basic"` | no |
-| <a name="input_prefix"></a> [prefix](#input\_prefix) | n/a | `string` | n/a | yes |
 | <a name="input_stCount"></a> [stCount](#input\_stCount) | n/a | `number` | `1` | no |
 | <a name="input_stHttpsOnly"></a> [stHttpsOnly](#input\_stHttpsOnly) | n/a | `bool` | `true` | no |
 | <a name="input_stKind"></a> [stKind](#input\_stKind) | n/a | `string` | `"StorageV2"` | no |

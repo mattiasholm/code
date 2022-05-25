@@ -1,7 +1,3 @@
-locals {
-  prefixStripped = lower(replace(var.prefix, "-", ""))
-}
-
 resource "azurerm_storage_account" "st" {
   count                           = var.stCount
   name                            = "st${local.prefixStripped}${format("%03d", count.index + 1)}"

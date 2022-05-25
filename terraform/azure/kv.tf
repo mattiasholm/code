@@ -9,7 +9,7 @@ data "azuread_service_principal" "sp" {
 }
 
 resource "azurerm_key_vault" "kv" {
-  name                = "kv-${var.prefix}-001"
+  name                = "kv-${local.prefix}-001"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags

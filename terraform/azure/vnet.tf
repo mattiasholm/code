@@ -1,6 +1,6 @@
 resource "azurerm_virtual_network" "vnet" {
   count               = var.vnetAddressPrefix != "" ? 1 : 0
-  name                = "vnet-${var.prefix}-001"
+  name                = "vnet-${local.prefix}-001"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
@@ -8,7 +8,7 @@ resource "azurerm_virtual_network" "vnet" {
     var.vnetAddressPrefix
   ]
   subnet {
-    name           = "snet-${var.prefix}-001"
+    name           = "snet-${local.prefix}-001"
     address_prefix = var.vnetAddressPrefix
   }
 }

@@ -1,10 +1,3 @@
-variable "prefix" {
-  type = string
-  validation {
-    condition     = length(var.prefix) <= 17
-    error_message = "Invalid value for variable."
-  }
-}
 variable "location" {
   type = string
 }
