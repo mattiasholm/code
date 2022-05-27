@@ -109,6 +109,7 @@ brew install --cask spotify
 brew install --cask plex-media-server
 brew install --cask obs
 brew install --cask openemu
+brew install --cask dosbox-x
 brew install --cask transmission
 
 brew install --cask visual-studio-code &&
