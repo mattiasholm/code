@@ -4,7 +4,7 @@ trigger:
       - main
   paths:
     include:
-      - ci
+      - ci/iac.yml
       - iac
 
 pool:

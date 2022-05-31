@@ -21,8 +21,9 @@ stages:
           runOnce:
             deploy:
               steps:
-                - checkout: self
-                - template: script.yml
-                  parameters:
-                    displayName: Deploy infrastructure
-                    environment: ${{ parameters.environment }}
+                - task: AzureFunctionApp@1
+                  displayName: Deploy Function App
+                  inputs:
+                    azureSubscription: $(azureSubscription)
+                    appName: $(appName)
+                    package: $(Agent.BuildDirectory)/**/*.zip

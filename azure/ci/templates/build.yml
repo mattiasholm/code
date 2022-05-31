@@ -1,0 +1,30 @@
+stages:
+  - stage: build
+    displayName: Build
+    jobs:
+      - job: build
+        displayName: Build
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: dotnet restore
+            inputs:
+              command: restore
+              projects: "**/*.csproj"
+
+          - task: DotNetCoreCLI@2
+            displayName: dotnet build
+            inputs:
+              command: build
+              arguments: --configuration Release --no-restore
+              projects: "**/*.csproj"
+
+          - task: DotNetCoreCLI@2
+            displayName: dotnet publish
+            inputs:
+              command: publish
+              arguments: --configuration Release --no-restore --output $(Build.StagingDirectory)
+              projects: "**/*.csproj"
+              publishWebProjects: false
+
+          - task: PublishBuildArtifacts@1
+            displayName: Publish Artifact
