@@ -1,3 +1,2 @@
 variables:
-  azureSubscription: sub-$(Environment.Name)-001
   appName: func-$(Environment.Name)-001

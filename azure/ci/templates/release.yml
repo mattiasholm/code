@@ -14,16 +14,31 @@ stages:
     dependsOn: ${{ parameters.dependsOn }}
     condition: ${{ parameters.condition }}
     jobs:
-      - deployment: release
-        displayName: Release
+      - deployment: iac
+        displayName: Deploy Infrastructure
         environment: ${{ parameters.environment }}
         strategy:
           runOnce:
             deploy:
               steps:
+                - checkout: self
+                - template: script.yml
+                  parameters:
+                    environment: ${{ parameters.environment }}
+
+      - deployment: func
+        displayName: Deploy Function App
+        environment: ${{ parameters.environment }}
+        dependsOn: iac
+        condition: succeeded()
+        strategy:
+          runOnce:
+            deploy:
+              steps:
                 - task: AzureFunctionApp@1
-                  displayName: Deploy Function App
+                  displayName: ${{ parameters.environment }}
                   inputs:
-                    azureSubscription: $(azureSubscription)
+                    azureSubscription: ${{ parameters.environment }}
                     appName: $(appName)
                     package: $(Agent.BuildDirectory)/**/*.zip
+                    deploymentMethod: zipDeploy

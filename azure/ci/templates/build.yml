@@ -2,8 +2,26 @@ stages:
   - stage: build
     displayName: Build
     jobs:
-      - job: build
-        displayName: Build
+      - job: iac
+        displayName: Validate Infrastructure
+        steps:
+          - template: script.yml
+            parameters:
+              environment: tst
+              arguments: -Validate
+
+          - template: script.yml
+            parameters:
+              environment: stg
+              arguments: -Validate
+
+          - template: script.yml
+            parameters:
+              environment: prod
+              arguments: -Validate
+
+      - job: func
+        displayName: Build Function App
         steps:
           - task: DotNetCoreCLI@2
             displayName: dotnet restore

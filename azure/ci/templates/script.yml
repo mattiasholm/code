@@ -1,7 +1,4 @@
 parameters:
-  - name: displayName
-    type: string
-
   - name: environment
     type: string
 
@@ -11,9 +8,9 @@ parameters:
 
 steps:
   - task: AzureCLI@2
-    displayName: ${{ parameters.displayName }}
+    displayName: ${{ parameters.environment }}
     inputs:
-      azureSubscription: $(azureSubscription)
+      azureSubscription: ${{ parameters.environment }}
       scriptType: pscore
       scriptPath: iac/deploy.ps1
       arguments: ${{ parameters.environment }} ${{ parameters.arguments }}
