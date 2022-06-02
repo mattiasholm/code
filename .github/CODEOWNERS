@@ -1,1 +1,6 @@
-*   @mattiasholm
+* @mattiasholm
+azure/arm @arm
+azure/bicep @bicep
+pulumi @pulumi
+terraform @terraform
+.github/settings.yml @admin

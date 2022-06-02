@@ -25,6 +25,7 @@ exts=(
     'bierner.markdown-footnotes'
     'tht13.html-preview-vscode'
     'waderyan.gitblame'
+    'jasonnutter.vscode-codeowners'
     'gurumukhi.selected-lines-count'
     'ms-vsliveshare.vsliveshare'
     'hediet.vscode-drawio'
