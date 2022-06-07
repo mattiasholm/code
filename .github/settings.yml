@@ -1,0 +1,54 @@
+repository:
+  name: code
+  description: A collection of code and cheat sheets to facilitate the daily life of an Azure Solutions Architect!
+  homepage: https://linkedin.com/in/holmmattias
+  topics: azure, infrastructure-as-code, arm-templates, bicep, pulumi, terraform
+  private: false
+  has_issues: true
+  has_projects: false
+  has_wiki: false
+  has_downloads: true
+  default_branch: main
+  allow_squash_merge: true
+  allow_merge_commit: false
+  allow_rebase_merge: false
+  delete_branch_on_merge: true
+  enable_automated_security_fixes: true
+  enable_vulnerability_alerts: true
+
+labels:
+  - name: bug
+    description: Something isn't working
+    color: d73a4a
+
+  - name: documentation
+    description: Improvements or additions to documentation
+    color: 0075ca
+
+  - name: duplicate
+    description: This issue or pull request already exists
+    color: cfd3d7
+
+  - name: enhancement
+    description: New feature or request
+    color: a2eeef
+
+  - name: good first issue
+    description: Good for newcomers
+    color: 7057ff
+
+  - name: help wanted
+    description: Extra attention is needed
+    color: 008672
+
+  - name: invalid
+    description: This doesn't seem right
+    color: e4e669
+
+  - name: question
+    description: Further information is requested
+    color: d876e3
+
+  - name: wontfix
+    description: This will not be worked on
+    color: ffffff
