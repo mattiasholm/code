@@ -1,0 +1,4 @@
+config:
+  github:owner: mattiasholm
+  github:token:
+    secure: AAABAFmXpshZF0KbOVDsUM1aHjBhYIWkwil74WvEiMi1AnXzKkxzJqZIRLUg++u7eiIP7EkUiEVBiArJp24rhisTuYc+SRcA

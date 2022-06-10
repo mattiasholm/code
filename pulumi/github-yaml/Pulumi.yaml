@@ -1,0 +1,13 @@
+name: github-yaml
+runtime: yaml
+
+resources:
+  repo:
+    type: github:Repository
+    properties:
+      name: pulumi
+      description: Repository created with Pulumi
+      autoInit: true
+
+outputs:
+  cloneUrl: ${repo.httpCloneUrl}
