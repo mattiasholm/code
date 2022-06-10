@@ -1,6 +1,5 @@
 set -x PATH /usr/local/sbin $PATH
 set -x LSCOLORS cxfxcxdxbxcgcdabagacad
-set -x PULUMI_CONFIG_PASSPHRASE_FILE ~/.config/pulumi/passphrase
 set -x GITHUB_TOKEN (cat ~/.config/gh/token)
 
 set fish_greeting ''
