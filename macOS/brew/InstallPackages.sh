@@ -35,6 +35,7 @@ brew install tflint
 brew install tfsec
 brew install terrascan
 brew install terraform-docs
+brew install infracost
 brew install checkov
 brew install pulumi
 brew install python3
