@@ -15,7 +15,7 @@ stages:
     condition: ${{ parameters.condition }}
     jobs:
       - deployment: iac
-        displayName: Deploy Infrastructure
+        displayName: Deploy infrastructure
         environment: ${{ parameters.environment }}
         strategy:
           runOnce:
@@ -26,8 +26,8 @@ stages:
                   parameters:
                     environment: ${{ parameters.environment }}
 
-      - deployment: func
-        displayName: Deploy Function App
+      - deployment: app
+        displayName: Deploy application
         environment: ${{ parameters.environment }}
         dependsOn: iac
         condition: succeeded()
@@ -35,7 +35,7 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: AzureFunctionApp@1
+                - task: AzureWebApp@1
                   displayName: ${{ parameters.environment }}
                   inputs:
                     azureSubscription: ${{ parameters.environment }}
