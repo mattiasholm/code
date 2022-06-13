@@ -5,17 +5,17 @@ stages:
       - job: iac
         displayName: Validate infrastructure
         steps:
-          - template: script.yml
+          - template: deploy.yml
             parameters:
               environment: tst
               arguments: -Validate
 
-          - template: script.yml
+          - template: deploy.yml
             parameters:
               environment: stg
               arguments: -Validate
 
-          - template: script.yml
+          - template: deploy.yml
             parameters:
               environment: prod
               arguments: -Validate

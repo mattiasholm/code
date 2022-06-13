@@ -22,7 +22,7 @@ stages:
             deploy:
               steps:
                 - checkout: self
-                - template: script.yml
+                - template: deploy.yml
                   parameters:
                     environment: ${{ parameters.environment }}
 
