@@ -33,10 +33,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.path }}/venv/
           key: ${{ runner.os }}-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
@@ -59,10 +59,10 @@ jobs:
       url: https://pulumi.holm.io/
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.path }}/venv/
           key: ${{ runner.os }}-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
