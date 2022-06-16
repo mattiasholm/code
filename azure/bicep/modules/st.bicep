@@ -31,7 +31,7 @@ param supportsHttpsTrafficOnly bool = true
 param minimumTlsVersion string = 'TLS1_2'
 param containers array = []
 
-resource st 'Microsoft.Storage/storageAccounts@2021-08-01' = {
+resource st 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: name
   location: location
   tags: tags

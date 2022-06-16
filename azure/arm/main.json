@@ -65,7 +65,6 @@
                 "Basic",
                 "Standard"
             ]
-
         },
         "pipAllocation": {
             "type": "string",
@@ -279,7 +278,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2021-05-01",
+            "apiVersion": "2021-08-01",
             "name": "[variables('pipName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -300,7 +299,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2021-08-01",
+            "apiVersion": "2021-09-01",
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -316,7 +315,7 @@
             "resources": [
                 {
                     "type": "blobServices/containers",
-                    "apiVersion": "2021-08-01",
+                    "apiVersion": "2021-09-01",
                     "name": "[variables('containerName')]",
                     "dependsOn": [
                         "[variables('stId')[copyIndex()]]"
@@ -327,7 +326,7 @@
         {
             "condition": "[not(empty(parameters('vnetAddressPrefix')))]",
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2021-05-01",
+            "apiVersion": "2021-08-01",
             "name": "[variables('vnetName')]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
