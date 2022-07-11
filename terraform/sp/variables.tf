@@ -1,3 +1,11 @@
+variable "tenantId" {
+  type = string
+}
+
+variable "subscriptionId" {
+  type = string
+}
+
 variable "name" {
   type = string
   validation {

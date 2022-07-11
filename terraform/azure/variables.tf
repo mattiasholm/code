@@ -1,3 +1,10 @@
+variable "tenantId" {
+  type = string
+}
+variable "subscriptionId" {
+  type = string
+}
+
 variable "location" {
   type = string
 }

@@ -113,6 +113,32 @@ terraform apply --var-file='<path>'
 
 <br><br>
 
+## Create a new Terraform workspace:
+```shell
+terraform workspace new <name>
+```
+
+## List available Terraform workspaces:
+```shell
+terraform workspace list
+```
+
+## Show currently selected Terraform workspace:
+```shell
+terraform workspace show
+```
+
+## Select Terraform workspace:
+```shell
+terraform workspace select <name>
+```
+## Delete a Terraform workspace:
+```shell
+terraform workspace delete <name>
+```
+
+<br><br>
+
 ## Show all deployment outputs:
 ```shell
 terraform output
