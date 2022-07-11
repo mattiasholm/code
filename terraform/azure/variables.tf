@@ -10,7 +10,7 @@ variable "appiType" {
   type    = string
   default = "web"
   validation {
-    condition     = var.appiType == "web" || var.appiType == "ios" || var.appiType == "other" || var.appiType == "store" || var.appiType == "java" || var.appiType == "phone"
+    condition     = contains(["web", "ios", "other", "store", "java", "phone"], var.appiType)
     error_message = "Invalid value for variable."
   }
 }
@@ -19,7 +19,7 @@ variable "kvSku" {
   type    = string
   default = "standard"
   validation {
-    condition     = var.kvSku == "standard" || var.kvSku == "premium"
+    condition     = contains(["standard", "premium"], var.kvSku)
     error_message = "Invalid value for variable."
   }
 }
@@ -61,7 +61,7 @@ variable "pipSku" {
   type    = string
   default = "Basic"
   validation {
-    condition     = var.pipSku == "Basic" || var.pipSku == "Standard"
+    condition     = contains(["Basic", "Standard"], var.pipSku)
     error_message = "Invalid value for variable."
   }
 }
@@ -69,7 +69,7 @@ variable "pipAllocation" {
   type    = string
   default = "Dynamic"
   validation {
-    condition     = var.pipAllocation == "Dynamic" || var.pipAllocation == "Static"
+    condition     = contains(["Dynamic", "Static"], var.pipAllocation)
     error_message = "Invalid value for variable."
   }
 }
@@ -82,7 +82,7 @@ variable "stKind" {
   type    = string
   default = "StorageV2"
   validation {
-    condition     = var.stKind == "Storage" || var.stKind == "StorageV2" || var.stKind == "BlobStorage" || var.stKind == "FileStorage" || var.stKind == "BlockBlobStorage"
+    condition     = contains(["Storage", "StorageV2", "BlobStorage", "FileStorage", "BlockBlobStorage"], var.stKind)
     error_message = "Invalid value for variable."
   }
 }
@@ -90,7 +90,7 @@ variable "stSku" {
   type    = string
   default = "Standard"
   validation {
-    condition     = var.stSku == "Standard" || var.stSku == "Premium"
+    condition     = contains(["Standard", "Premium"], var.stSku)
     error_message = "Invalid value for variable."
   }
 }
@@ -98,7 +98,7 @@ variable "stReplication" {
   type    = string
   default = "LRS"
   validation {
-    condition     = var.stReplication == "LRS" || var.stReplication == "ZRS" || var.stReplication == "GRS" || var.stReplication == "RAGRS" || var.stReplication == "GZRS" || var.stReplication == "RAGZRS"
+    condition     = contains(["LRS", "ZRS", "GRS", "RAGRS", "GZRS", "RAGZRS"], var.stReplication)
     error_message = "Invalid value for variable."
   }
 }
@@ -114,7 +114,7 @@ variable "stTlsVersion" {
   type    = string
   default = "TLS1_2"
   validation {
-    condition     = var.stTlsVersion == "TLS1_0" || var.stTlsVersion == "TLS1_1" || var.stTlsVersion == "TLS1_2"
+    condition     = contains(["TLS1_0", "TLS1_1", "TLS1_2"], var.stTlsVersion)
     error_message = "Invalid value for variable."
   }
 }

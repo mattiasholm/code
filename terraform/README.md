@@ -45,16 +45,6 @@ terraform login
 terraform logout
 ```
 
-## Log in to Azure (using Azure CLI):
-```shell
-az login
-```
-
-## Select Azure context (using Azure CLI):
-```shell
-az account set --subscription <subscription-id>
-```
-
 <br><br>
 
 ## Initialize Terraform backend:
