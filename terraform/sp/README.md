@@ -2,16 +2,16 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.1.0 |
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.20.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.2.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.2.0 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.26.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.13.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.20.0 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.2.0 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.26.1 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.13.0 |
 | <a name="provider_null"></a> [null](#provider\_null) | 3.1.1 |
 | <a name="provider_time"></a> [time](#provider\_time) | 0.7.2 |
 
@@ -46,6 +46,8 @@ No modules.
 | <a name="input_role"></a> [role](#input\_role) | n/a | `string` | n/a | yes |
 | <a name="input_secret"></a> [secret](#input\_secret) | n/a | `string` | n/a | yes |
 | <a name="input_subjects"></a> [subjects](#input\_subjects) | n/a | `list(string)` | n/a | yes |
+| <a name="input_subscriptionId"></a> [subscriptionId](#input\_subscriptionId) | n/a | `string` | n/a | yes |
+| <a name="input_tenantId"></a> [tenantId](#input\_tenantId) | n/a | `string` | n/a | yes |
 
 ## Outputs
 
