@@ -2,6 +2,8 @@ name: sp-yaml
 runtime: yaml
 
 configuration:
+  subscriptionId:
+    type: String
   spName:
     type: String
   api:
@@ -26,20 +28,26 @@ configuration:
     type: String
 
 variables:
+  user: #
+    Fn::Invoke: #
+      Function: azuread:getUser #
+      Arguments: #
+        userPrincipalName: mattias.holm@azronnieb3it.onmicrosoft.com #
   roleDefinition:
     Fn::Invoke:
       Function: azure-native:authorization:getRoleDefinition
       Arguments:
         roleDefinitionId: ${roleId}
-        scope: ${current2.subscriptionId}
-  current1:
-    Fn::Invoke:
-      Function: azuread:getClientConfig
-      Arguments: {}
-  current2:
-    Fn::Invoke:
-      Function: azure-native:authorization:getClientConfig
-      Arguments: {}
+        # scope: ${current2.subscriptionId}
+        scope: /subscriptions/${subscriptionId}
+  # current1:
+  #   Fn::Invoke:
+  #     Function: azuread:getClientConfig
+  #     Arguments: {}
+  # current2:
+  #   Fn::Invoke:
+  #     Function: azure-native:authorization:getClientConfig
+  #     Arguments: {}
 
 resources:
   app:
@@ -47,7 +55,8 @@ resources:
     properties:
       displayName: ${spName}
       owners:
-        - ${current1.objectId}
+        # - ${current1.objectId}
+        - ${user.objectId}
       requiredResourceAccesses:
         - resourceAppId: ${api}
           resourceAccesses:
@@ -68,7 +77,8 @@ resources:
       principalId: ${sp.objectId}
       principalType: ServicePrincipal
       roleDefinitionId: ${roleDefinition.id}
-      scope: ${current2.subscriptionId}
+      # scope: ${current2.subscriptionId}
+      scope: /subscriptions/${subscriptionId}
 
   secret:
     type: azuread:ApplicationPassword
@@ -109,4 +119,10 @@ resources:
 outputs:
   clientId: ${app.applicationId}
   clientSecret: ${secret.value}
-  tenantId: ${current1.tenantId}
+  # tenantId: ${current1.tenantId}
+#
+# resource "null_resource" "null" {
+#   provisioner "local-exec" {
+#     command = "az ad app permission admin-consent --id ${azuread_application.app.application_id}"
+#   }
+# }

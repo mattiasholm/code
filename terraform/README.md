@@ -149,6 +149,11 @@ terraform output
 terraform output <output-name>
 ```
 
+## List configured Terraform providers:
+```shell
+terraform providers
+```
+
 ## Show current Terraform state:
 ```shell
 terraform show

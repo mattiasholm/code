@@ -1,8 +1,8 @@
 config:
   azuread:tenantId: 9e042b3b-36c4-4b99-8236-728c73166cd9
-  azure-native:subscriptionId: 9b184a26-7fff-49ed-9230-d11d484ad51b
-  # sp-yaml:spName: sp-holm-002
-  sp-yaml:name: sp-holm-002
+  # azure-native:subscriptionId: 9b184a26-7fff-49ed-9230-d11d484ad51b
+  sp-yaml:subscriptionId: 9b184a26-7fff-49ed-9230-d11d484ad51b #
+  sp-yaml:spName: sp-holm-002
   sp-yaml:api: 00000003-0000-0000-c000-000000000000
   sp-yaml:permission: df021288-bdef-4463-88db-98f22de89214
   sp-yaml:roleId: b24988ac-6180-42a0-ab88-20f7382dd24c
