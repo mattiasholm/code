@@ -54,12 +54,12 @@ resource "azuread_application_password" "secret" {
 }
 
 resource "azuread_application_federated_identity_credential" "oidc" {
-  for_each              = toset(var.subjects)
-  display_name          = replace(replace(each.key, "/^.*:/", ""), "refs/heads/", "")
+  for_each              = var.subjects
+  display_name          = each.key
   application_object_id = azuread_application.app.object_id
   audiences             = var.audiences
   issuer                = var.issuer
-  subject               = each.key
+  subject               = each.value
 }
 
 resource "null_resource" "null" {

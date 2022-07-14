@@ -11,8 +11,8 @@ audiences = [
   "api://AzureADTokenExchange"
 ]
 issuer = "https://token.actions.githubusercontent.com"
-subjects = [
-  "repo:mattiasholm/code:ref:refs/heads/main",
-  "repo:mattiasholm/code:environment:dev",
-  "repo:mattiasholm/code:pull_request"
-]
+subjects = {
+  main         = "repo:mattiasholm/code:ref:refs/heads/main"
+  dev          = "repo:mattiasholm/code:environment:dev"
+  pull_request = "repo:mattiasholm/code:pull_request"
+}

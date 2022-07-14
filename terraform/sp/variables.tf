@@ -49,5 +49,5 @@ variable "issuer" {
 }
 
 variable "subjects" {
-  type = list(string)
+  type = map(string)
 }

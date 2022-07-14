@@ -72,10 +72,10 @@ pdnszName         = "holm.io"
 pdnszRegistration = false
 pdnszTtl          = 3600
 
-pipLabels = [
-  "foo",
-  "bar"
-]
+pipLabels = {
+  "001" = "foo"
+  "002" = "bar"
+}
 pipSku        = "Basic"
 pipAllocation = "Dynamic"
 

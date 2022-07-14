@@ -92,8 +92,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "link" {
 }
 
 resource "azurerm_private_dns_cname_record" "cname" {
-  for_each            = toset(var.pipLabels)
-  name                = each.key
+  for_each            = var.pipLabels
+  name                = each.value
   zone_name           = azurerm_private_dns_zone.pdnsz.name
   resource_group_name = azurerm_resource_group.rg.name
   ttl                 = var.pdnszTtl
@@ -101,14 +101,14 @@ resource "azurerm_private_dns_cname_record" "cname" {
 }
 
 resource "azurerm_public_ip" "pip" {
-  for_each            = { for i, pipLabel in var.pipLabels : pipLabel => i }
-  name                = "pip-${local.prefix}-${format("%03d", each.value + 1)}"
+  for_each            = var.pipLabels
+  name                = "pip-${local.prefix}-${each.key}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
   sku                 = var.pipSku
   allocation_method   = var.pipAllocation
-  domain_name_label   = "${each.key}-${local.prefix}"
+  domain_name_label   = "${each.value}-${local.prefix}"
 }
 
 resource "azurerm_storage_account" "st" {

@@ -62,7 +62,7 @@ variable "pdnszTtl" {
 }
 
 variable "pipLabels" {
-  type = list(string)
+  type = map(string)
 }
 variable "pipSku" {
   type    = string
