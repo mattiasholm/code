@@ -174,6 +174,16 @@ terraform refresh
 terraform state list
 ```
 
+## Show a specific resource in Terraform state:
+```shell
+terraform state show <terraform-resource-type>.<symbolic-name>
+```
+
+## Rename a specific resource in Terraform state:
+```shell
+terraform state mv <old-name> <new-name>
+```
+
 ## Remove a specific resource from Terraform state:
 ```shell
 terraform state rm <terraform-resource-type>.<symbolic-name>

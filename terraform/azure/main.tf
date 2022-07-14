@@ -83,7 +83,7 @@ resource "azurerm_private_dns_zone" "pdnsz" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "link" {
-  count                 = var.vnetAddressPrefix != "" ? 1 : 0
+  count                 = var.vnetAddressPrefix == "" ? 0 : 1
   name                  = azurerm_virtual_network.vnet[0].name
   private_dns_zone_name = azurerm_private_dns_zone.pdnsz.name
   resource_group_name   = azurerm_resource_group.rg.name
@@ -132,7 +132,7 @@ resource "azurerm_storage_container" "container" {
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  count               = var.vnetAddressPrefix != "" ? 1 : 0
+  count               = var.vnetAddressPrefix == "" ? 0 : 1
   name                = "vnet-${local.prefix}-001"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
