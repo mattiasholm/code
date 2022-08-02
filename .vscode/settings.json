@@ -1,5 +1,8 @@
 {
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
-    "python.defaultInterpreterPath": "${workspaceFolder}/pulumi/azure-python/venv/bin/python"
+    "python.defaultInterpreterPath": "${workspaceFolder}/pulumi/azure-python/venv/bin/python",
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json": "deploy.yml"
+    }
 }
