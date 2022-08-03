@@ -66,7 +66,7 @@ resource "azurerm_key_vault_access_policy" "accesspolicy_sp" {
 }
 
 resource "azurerm_key_vault_secret" "secret" {
-  name         = "appi-connectionString"
+  name         = "appiConnectionString"
   tags         = var.tags
   value        = azurerm_application_insights.appi.connection_string
   key_vault_id = azurerm_key_vault.kv.id
