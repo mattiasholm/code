@@ -108,6 +108,11 @@ resources:
       issuer: ${issuer}
       subject: repo:${repo}:pull_request
 
+  command:
+    type: command:local:Command
+    properties:
+      create: az ad app permission admin-consent --id ${app.applicationId}
+
 outputs:
   clientId: ${app.applicationId}
   clientSecret: ${secret.value}
