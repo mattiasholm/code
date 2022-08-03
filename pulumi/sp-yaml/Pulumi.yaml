@@ -2,8 +2,6 @@ name: sp-yaml
 runtime: yaml
 
 configuration:
-  subscriptionId:
-    type: String
   spName:
     type: String
   api:
@@ -28,21 +26,22 @@ configuration:
     type: String
 
 variables:
+  currentUser:
+    Fn::Invoke:
+      Function: azuread:getClientConfig
+      Arguments: {}
+
+  currentSubscription:
+    Fn::Invoke:
+      Function: azure-native:authorization:getClientConfig
+      Arguments: {}
+
   roleDefinition:
     Fn::Invoke:
       Function: azure-native:authorization:getRoleDefinition
       Arguments:
         roleDefinitionId: ${roleId}
-        # scope: ${current2.subscriptionId}
-        scope: /subscriptions/${subscriptionId}
-  currentUser:
-    Fn::Invoke:
-      Function: azuread:getClientConfig
-      Arguments: {}
-  # current2:
-  #   Fn::Invoke:
-  #     Function: azure-native:authorization:getClientConfig
-  #     Arguments: {}
+        scope: /subscriptions/${currentSubscription.subscriptionId}
 
 resources:
   app:
@@ -71,8 +70,7 @@ resources:
       principalId: ${sp.objectId}
       principalType: ServicePrincipal
       roleDefinitionId: ${roleDefinition.id}
-      # scope: ${current2.subscriptionId}
-      scope: /subscriptions/${subscriptionId}
+      scope: /subscriptions/${currentSubscription.subscriptionId}
 
   secret:
     type: azuread:ApplicationPassword
@@ -114,9 +112,3 @@ outputs:
   clientId: ${app.applicationId}
   clientSecret: ${secret.value}
   tenantId: ${currentUser.tenantId}
-#
-# resource "null_resource" "null" {
-#   provisioner "local-exec" {
-#     command = "az ad app permission admin-consent --id ${azuread_application.app.application_id}"
-#   }
-# }
