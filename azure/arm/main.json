@@ -191,7 +191,7 @@
         },
         {
             "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2021-10-01",
+            "apiVersion": "2022-07-01",
             "name": "[variables('kvName')]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -212,7 +212,7 @@
             "resources": [
                 {
                     "type": "secrets",
-                    "apiVersion": "2021-10-01",
+                    "apiVersion": "2022-07-01",
                     "name": "appiConnectionString",
                     "tags": "[parameters('tags')]",
                     "properties": {
@@ -278,7 +278,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2021-08-01",
+            "apiVersion": "2022-01-01",
             "name": "[variables('pipName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -326,7 +326,7 @@
         {
             "condition": "[not(empty(parameters('vnetAddressPrefix')))]",
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2021-08-01",
+            "apiVersion": "2022-01-01",
             "name": "[variables('vnetName')]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",

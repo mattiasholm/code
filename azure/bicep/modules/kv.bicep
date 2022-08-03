@@ -10,7 +10,7 @@ param tenantId string = subscription().tenantId
 param sku string = 'standard'
 param accessPolicies array = []
 
-resource kv 'Microsoft.KeyVault/vaults@2021-10-01' = {
+resource kv 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: name
   location: location
   tags: tags

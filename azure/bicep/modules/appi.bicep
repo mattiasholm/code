@@ -27,11 +27,11 @@ resource appi 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
-resource kv 'Microsoft.KeyVault/vaults@2021-10-01' existing = {
+resource kv 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
   name: kvName
 }
 
-resource secret 'Microsoft.KeyVault/vaults/secrets@2021-10-01' = {
+resource secret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: kv
   name: 'appiConnectionString'
   tags: tags
