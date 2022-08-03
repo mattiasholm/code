@@ -7,6 +7,9 @@
                 "adminusername-should-not-be-literal": {
                     "level": "error"
                 },
+                "artifacts-parameters": {
+                    "level": "error"
+                },
                 "explicit-values-for-loc-params": {
                     "level": "error"
                 },
@@ -34,6 +37,9 @@
                 "no-unnecessary-dependson": {
                     "level": "error"
                 },
+                "no-unused-existing-resources": {
+                    "level": "error"
+                },
                 "no-unused-params": {
                     "level": "error"
                 },
@@ -46,13 +52,22 @@
                 "prefer-interpolation": {
                     "level": "error"
                 },
+                "prefer-unquoted-property-names": {
+                    "level": "error"
+                },
                 "protect-commandtoexecute-secrets": {
                     "level": "error"
                 },
                 "secure-parameter-default": {
                     "level": "error"
                 },
+                "secure-secrets-in-params": {
+                    "level": "error"
+                },
                 "simplify-interpolation": {
+                    "level": "error"
+                },
+                "use-stable-resource-identifiers": {
                     "level": "error"
                 },
                 "use-stable-vm-image": {

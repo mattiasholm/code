@@ -20,7 +20,8 @@ module appi 'modules/appi.bicep' = {
     location: config.location
     tags: config.tags
     kind: config.appi.kind
-    Application_Type: config.appi.type
+    applicationType: config.appi.type
+    kvName: kv.outputs.name
   }
 }
 
@@ -37,12 +38,6 @@ module kv 'modules/kv.bicep' = {
       {
         objectId: config.kv.objectId
         permissions: config.kv.permissions
-      }
-    ]
-    secrets: [
-      {
-        name: 'appi-connectionString'
-        value: appi.outputs.connectionString
       }
     ]
   }

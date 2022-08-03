@@ -14,7 +14,8 @@ param kind string = 'web'
   'web'
   'other'
 ])
-param Application_Type string = 'web'
+param applicationType string = 'web'
+param kvName string
 
 resource appi 'Microsoft.Insights/components@2020-02-02' = {
   name: name
@@ -22,8 +23,19 @@ resource appi 'Microsoft.Insights/components@2020-02-02' = {
   tags: tags
   kind: kind
   properties: {
-    Application_Type: Application_Type
+    Application_Type: applicationType
   }
 }
 
-output connectionString string = appi.properties.ConnectionString
+resource kv 'Microsoft.KeyVault/vaults@2021-10-01' existing = {
+  name: kvName
+}
+
+resource secret 'Microsoft.KeyVault/vaults/secrets@2021-10-01' = {
+  parent: kv
+  name: 'appiConnectionString'
+  tags: tags
+  properties: {
+    value: appi.properties.ConnectionString
+  }
+}

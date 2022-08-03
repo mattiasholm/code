@@ -213,7 +213,7 @@
                 {
                     "type": "secrets",
                     "apiVersion": "2021-10-01",
-                    "name": "appi-connectionString",
+                    "name": "appiConnectionString",
                     "tags": "[parameters('tags')]",
                     "properties": {
                         "value": "[reference(variables('appiId')).connectionString]"
