@@ -28,11 +28,6 @@ configuration:
     type: String
 
 variables:
-  user: #
-    Fn::Invoke: #
-      Function: azuread:getUser #
-      Arguments: #
-        userPrincipalName: mattias.holm@azronnieb3it.onmicrosoft.com #
   roleDefinition:
     Fn::Invoke:
       Function: azure-native:authorization:getRoleDefinition
@@ -40,10 +35,10 @@ variables:
         roleDefinitionId: ${roleId}
         # scope: ${current2.subscriptionId}
         scope: /subscriptions/${subscriptionId}
-  # current1:
-  #   Fn::Invoke:
-  #     Function: azuread:getClientConfig
-  #     Arguments: {}
+  currentUser:
+    Fn::Invoke:
+      Function: azuread:getClientConfig
+      Arguments: {}
   # current2:
   #   Fn::Invoke:
   #     Function: azure-native:authorization:getClientConfig
@@ -55,8 +50,7 @@ resources:
     properties:
       displayName: ${spName}
       owners:
-        # - ${current1.objectId}
-        - ${user.objectId}
+        - ${currentUser.objectId}
       requiredResourceAccesses:
         - resourceAppId: ${api}
           resourceAccesses:
@@ -119,7 +113,7 @@ resources:
 outputs:
   clientId: ${app.applicationId}
   clientSecret: ${secret.value}
-  # tenantId: ${current1.tenantId}
+  tenantId: ${currentUser.tenantId}
 #
 # resource "null_resource" "null" {
 #   provisioner "local-exec" {
