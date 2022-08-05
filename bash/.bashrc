@@ -61,6 +61,7 @@ alias bu='brew upgrade'
 alias bun='brew uninstall'
 
 alias pwsh='pwsh -NoLogo'
+alias python='python3'
 
 alias gcl='git clone'
 alias gf='git fetch'
