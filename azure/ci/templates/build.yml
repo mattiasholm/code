@@ -1,3 +1,7 @@
+parameters:
+  - name: environments
+    type: object
+
 stages:
   - stage: build
     displayName: Build
@@ -5,19 +9,10 @@ stages:
       - job: iac
         displayName: Validate infrastructure
         steps:
+          - ${{ each environment in parameters.environments }}:
           - template: deploy.yml
             parameters:
-              environment: tst
-              arguments: -Validate
-
-          - template: deploy.yml
-            parameters:
-              environment: stg
-              arguments: -Validate
-
-          - template: deploy.yml
-            parameters:
-              environment: prod
+              environment: ${{ environment }}
               arguments: -Validate
 
       - job: app

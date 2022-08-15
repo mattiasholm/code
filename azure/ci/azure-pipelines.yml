@@ -16,6 +16,11 @@ variables:
 
 stages:
   - template: templates/build.yml
+    parameters:
+      environments:
+        - tst
+        - stg
+        - prod
 
   - template: templates/release.yml
     parameters:
