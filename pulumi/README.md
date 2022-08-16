@@ -189,6 +189,29 @@ pulumi stack history
 
 <br><br>
 
+## List all installed plugins:
+```shell
+pulumi plugin ls
+```
+
+## Install a plugin:
+```shell
+pulumi plugin install <kind> <name>
+```
+
+## Uninstall a plugin:
+```shell
+pulumi plugin rm <kind> <name>
+```
+
+## Uninstall all plugins:
+```shell
+pulumi plugin rm --all
+pulumi plugin rm -a
+```
+
+<br><br>
+
 ## Import an existing Azure resource into Pulumi:
 ```shell
 pulumi import <pulumi-resource-type> <symbolic-name> <azure-resource-id>
