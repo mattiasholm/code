@@ -2,7 +2,7 @@ name: sp-yaml
 runtime: yaml
 
 configuration:
-  spName:
+  name:
     type: String
   api:
     type: String
@@ -47,7 +47,7 @@ resources:
   app:
     type: azuread:Application
     properties:
-      displayName: ${spName}
+      displayName: ${name}
       owners:
         - ${currentUser.objectId}
       requiredResourceAccesses:

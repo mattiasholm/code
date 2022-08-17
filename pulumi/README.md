@@ -140,6 +140,11 @@ pulumi stack rm -y
 pulumi stack rm <name>
 ```
 
+## Open the current stack in web UI:
+```shell
+pulumi console
+```
+
 <br><br>
 
 ## List configuration values for a specific stack:

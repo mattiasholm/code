@@ -13,8 +13,8 @@ appi = insights.Component(
     resource_name_=f'appi-{config.prefix}-001',
     resource_group_name=rg.name,
     tags=config.tags,
-    kind=config.appiKind,
-    application_type=config.appiType
+    kind=config.appi_kind,
+    application_type=config.appi_type
 )
 
 kv = keyvault.Vault(
@@ -23,26 +23,26 @@ kv = keyvault.Vault(
     resource_group_name=rg.name,
     tags=config.tags,
     properties=keyvault.VaultPropertiesArgs(
-        tenant_id=config.tenantId,
+        tenant_id=config.tenant_id,
         sku=keyvault.SkuArgs(
             family='A',
-            name=config.kvSku
+            name=config.kv_sku
         ),
         access_policies=[
             keyvault.AccessPolicyEntryArgs(
-                tenant_id=config.tenantId,
-                object_id=config.kvUserObjectId,
+                tenant_id=config.tenant_id,
+                object_id=config.kv_user_object_id,
                 permissions=keyvault.PermissionsArgs(
-                    keys=config.kvUserKeyPermissions,
-                    secrets=config.kvUserSecretPermissions,
-                    certificates=config.kvUserCertificatePermissions
+                    keys=config.kv_user_key_permissions,
+                    secrets=config.kv_user_secret_permissions,
+                    certificates=config.kv_user_certificate_permissions
                 )
             ),
             keyvault.AccessPolicyEntryArgs(
-                tenant_id=config.tenantId,
-                object_id=config.kvSpObjectId,
+                tenant_id=config.tenant_id,
+                object_id=config.kv_sp_object_id,
                 permissions=keyvault.PermissionsArgs(
-                    secrets=config.kvSpSecretPermissions,
+                    secrets=config.kv_sp_secret_permissions,
                 )
             )
         ]
@@ -62,7 +62,7 @@ keyvault.Secret(
 
 pdnsz = network.PrivateZone(
     'pdnsz',
-    private_zone_name=config.pdnszName,
+    private_zone_name=config.pdnsz_name,
     resource_group_name=rg.name,
     location='global',
     tags=config.tags
@@ -70,28 +70,28 @@ pdnsz = network.PrivateZone(
 
 pips = []
 cnames = []
-for i, pipLabel in enumerate(config.pipLabels):
+for i, pip_label in enumerate(config.pip_labels):
     pip = network.PublicIPAddress(
         f'pip{i}',
         public_ip_address_name=f'pip-{config.prefix}-{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
         tags=config.tags,
         sku=network.PublicIPAddressSkuArgs(
-            name=config.pipSku
+            name=config.pip_sku
         ),
-        public_ip_allocation_method=config.pipAllocation,
+        public_ip_allocation_method=config.pip_allocation,
         dns_settings=network.PublicIPAddressDnsSettingsArgs(
-            domain_name_label=f'{pipLabel}-{config.prefix}'
+            domain_name_label=f'{pip_label}-{config.prefix}'
         )
     )
     pips.append(pip)
 
     cname = network.PrivateRecordSet(
         f'cname{i}',
-        relative_record_set_name=pipLabel,
+        relative_record_set_name=pip_label,
         private_zone_name=pdnsz.name,
         resource_group_name=rg.name,
-        ttl=config.pdnszTtl,
+        ttl=config.pdnsz_ttl,
         record_type='CNAME',
         cname_record=network.CnameRecordArgs(
             cname=pip.dns_settings.fqdn
@@ -100,30 +100,30 @@ for i, pipLabel in enumerate(config.pipLabels):
     cnames.append(cname)
 
 sts = []
-for i in range(0, config.stCount):
+for i in range(0, config.st_count):
     st = storage.StorageAccount(
         f'st{i}',
-        account_name=f'st{config.prefixStripped}{str(i + 1).zfill(3)}',
+        account_name=f'st{config.prefix_stripped}{str(i + 1).zfill(3)}',
         resource_group_name=rg.name,
         tags=config.tags,
-        kind=config.stKind,
+        kind=config.st_kind,
         sku=storage.SkuArgs(
-            name=config.stSku
+            name=config.st_sku
         ),
-        allow_blob_public_access=config.stPublicAccess,
-        enable_https_traffic_only=config.stHttpsOnly,
-        minimum_tls_version=config.stTlsVersion
+        allow_blob_public_access=config.st_public_access,
+        enable_https_traffic_only=config.st_https_only,
+        minimum_tls_version=config.st_tls_version
     )
     sts.append(st)
 
     storage.BlobContainer(
         f'container{i}',
-        container_name=f'container{config.prefixStripped}001',
+        container_name=f'container{config.prefix_stripped}001',
         account_name=st.name,
         resource_group_name=rg.name
     )
 
-if config.vnetAddressPrefix:
+if config.vnet_address_prefix:
     vnet = network.VirtualNetwork(
         'vnet',
         virtual_network_name=f'vnet-{config.prefix}-001',
@@ -131,13 +131,13 @@ if config.vnetAddressPrefix:
         tags=config.tags,
         address_space=network.AddressSpaceArgs(
             address_prefixes=[
-                config.vnetAddressPrefix
+                config.vnet_address_prefix
             ]
         ),
         subnets=[
             network.SubnetArgs(
                 name=f'snet-{config.prefix}-001',
-                address_prefix=config.vnetAddressPrefix
+                address_prefix=config.vnet_address_prefix
             )
         ]
     )
@@ -151,14 +151,14 @@ if config.vnetAddressPrefix:
         virtual_network=network.SubResourceArgs(
             id=vnet.id
         ),
-        registration_enabled=config.pdnszRegistration
+        registration_enabled=config.pdnsz_registration
     )
 
-pulumi.export('kvUrl', kv.properties.vault_uri)
+pulumi.export('kv_url', kv.properties.vault_uri)
 
-pulumi.export('pdnszUrl', [cname.fqdn for cname in cnames])
+pulumi.export('pdnsz_url', [cname.fqdn for cname in cnames])
 
-pulumi.export('pipUrl', [pulumi.Output.concat(
+pulumi.export('pip_url', [pulumi.Output.concat(
     'https://', pip.dns_settings.fqdn, '/') for pip in pips])
 
-pulumi.export('stUrl', [st.primary_endpoints for st in sts])
+pulumi.export('st_url', [st.primary_endpoints for st in sts])

@@ -22,19 +22,19 @@ variable "permission" {
   type = string
 }
 
-variable "role" {
+variable "role_name" {
   type = string
 }
 
-variable "secret" {
+variable "secret_name" {
   type = string
 }
 
-variable "days" {
+variable "secret_expiration" {
   type    = number
   default = 365
   validation {
-    condition     = var.days < 730
+    condition     = var.secret_expiration < 730
     error_message = "Invalid value for variable."
 
   }

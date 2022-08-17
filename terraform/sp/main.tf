@@ -36,18 +36,18 @@ resource "azuread_service_principal" "sp" {
 
 resource "azurerm_role_assignment" "role" {
   principal_id         = azuread_service_principal.sp.object_id
-  role_definition_name = var.role
+  role_definition_name = var.role_name
   scope                = data.azurerm_subscription.current.id
 }
 
 resource "time_rotating" "rotation" {
-  rotation_days = floor(var.days * 0.90)
+  rotation_days = floor(var.secret_expiration * 0.90)
 }
 
 resource "azuread_application_password" "secret" {
-  display_name          = var.secret
+  display_name          = var.secret_name
   application_object_id = azuread_application.app.object_id
-  end_date_relative     = "${var.days * 24}h"
+  end_date_relative     = "${var.secret_expiration * 24}h"
   rotate_when_changed = {
     rotation = time_rotating.rotation.id
   }

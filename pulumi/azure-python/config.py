@@ -4,49 +4,49 @@ import ipaddress
 
 config = pulumi.Config()
 
-tenantId = azuread.get_client_config().tenant_id
+tenant_id = azuread.get_client_config().tenant_id
 tags = config.get_object('tags')
 prefix = '{Company}-{Application}'.format_map(tags).lower()
-prefixStripped = prefix.replace('-', '')
+prefix_stripped = prefix.replace('-', '')
 
-appiKind = config.get('appiKind') or 'web'
-appiType = config.get('appiType') or 'web'
+appi_kind = config.get('appi_kind') or 'web'
+appi_type = config.get('appi_type') or 'web'
 
-kvSku = config.get('kvSku') or 'standard'
-kvUsername = config.require('kvUsername')
-kvUserObjectId = azuread.get_user(user_principal_name=kvUsername).object_id
-kvUserKeyPermissions = config.get_object('kvUserKeyPermissions')
-kvUserSecretPermissions = config.get_object('kvUserSecretPermissions')
-kvUserCertificatePermissions = config.get_object('kvUserCertificatePermissions')
-kvSpName = config.require('kvSpName')
-kvSpObjectId = azuread.get_service_principal(display_name=kvSpName).object_id
-kvSpSecretPermissions = config.get_object('kvSpSecretPermissions')
+kv_sku = config.get('kv_sku') or 'standard'
+kv_user_name = config.require('kv_user_name')
+kv_user_object_id = azuread.get_user(user_principal_name=kv_user_name).object_id
+kv_user_key_permissions = config.get_object('kv_user_key_permissions')
+kv_user_secret_permissions = config.get_object('kv_user_secret_permissions')
+kv_user_certificate_permissions = config.get_object('kv_user_certificate_permissions')
+kv_sp_name = config.require('kv_sp_name')
+kv_sp_object_id = azuread.get_service_principal(display_name=kv_sp_name).object_id
+kv_sp_secret_permissions = config.get_object('kv_sp_secret_permissions')
 
-pdnszName = config.require('pdnszName')
-pdnszRegistration = config.get_bool('pdnszRegistration') or False
-pdnszTtl = config.get_int('pdnszTtl') or 3600
+pdnsz_name = config.require('pdnsz_name')
+pdnsz_registration = config.get_bool('pdnsz_registration') or False
+pdnsz_ttl = config.get_int('pdnsz_ttl') or 3600
 
-pipLabels = config.require_object('pipLabels')
-pipSku = config.get('pipSku') or 'Basic'
-pipAllocation = config.get('pipAllocation') or 'Dynamic'
+pip_labels = config.require_object('pip_labels')
+pip_sku = config.get('pip_sku') or 'Basic'
+pip_allocation = config.get('pip_allocation') or 'Dynamic'
 
-stCount = config.get_int('stCount') or 1
-stKind = config.get('stKind') or 'StorageV2'
-stSku = config.get('stSku') or 'Standard_LRS'
-stPublicAccess = config.get_bool('stPublicAccess') or False
-stHttpsOnly = config.get_bool('stHttpsOnly') or True
-stTlsVersion = config.get('stTlsVersion') or 'TLS1_2'
+st_count = config.get_int('st_count') or 1
+st_kind = config.get('st_kind') or 'StorageV2'
+st_sku = config.get('st_sku') or 'Standard_LRS'
+st_public_access = config.get_bool('st_public_access') or False
+st_https_only = config.get_bool('st_https_only') or True
+st_tls_version = config.get('st_tls_version') or 'TLS1_2'
 
-vnetAddressPrefix = config.get('vnetAddressPrefix')
+vnet_address_prefix = config.get('vnet_address_prefix')
 
 if len(prefix) > 17:
     raise ValueError(f"'{prefix}' is longer than 17 characters")
 
-if vnetAddressPrefix:
-    network = ipaddress.ip_network(vnetAddressPrefix)
+if vnet_address_prefix:
+    network = ipaddress.ip_network(vnet_address_prefix)
 
     if not network.is_private:
-        raise ValueError(f"'{vnetAddressPrefix}' is not a private network")
+        raise ValueError(f"'{vnet_address_prefix}' is not a private network")
 
     if network.prefixlen > 24:
-        raise ValueError(f"'{vnetAddressPrefix}' is smaller than /24")
+        raise ValueError(f"'{vnet_address_prefix}' is smaller than /24")
