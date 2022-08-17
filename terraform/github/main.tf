@@ -7,3 +7,9 @@ resource "github_repository" "repo" {
   description = "Repository created with Terraform"
   auto_init   = true
 }
+
+resource "github_repository_file" "file" {
+  repository = github_repository.repo.name
+  file       = ".gitignore"
+  content    = ".DS_Store"
+}

@@ -187,6 +187,18 @@ pulumi refresh -y
 
 <br><br>
 
+## Rename a resource in the current stack's state:
+```shell
+pulumi state rename <old-urn> <new-urn>
+```
+
+## Remove a resource from the current stack's state:
+```shell
+pulumi state delete <urn>
+```
+
+<br><br>
+
 ## Show history of updates to current stack:
 ```shell
 pulumi stack history

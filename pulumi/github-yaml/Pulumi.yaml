@@ -9,5 +9,12 @@ resources:
       description: Repository created with Pulumi
       autoInit: true
 
+  file:
+    type: github:RepositoryFile
+    properties:
+      repository: ${repo.name}
+      file: .gitignore
+      content: .DS_Store
+
 outputs:
   cloneUrl: ${repo.httpCloneUrl}
