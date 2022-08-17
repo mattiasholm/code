@@ -51,7 +51,7 @@ kv = keyvault.Vault(
 
 keyvault.Secret(
     'secret',
-    secret_name='appiConnectionString',
+    secret_name='APPLICATIONINSIGHTS-CONNECTION-STRING',
     vault_name=kv.name,
     resource_group_name=rg.name,
     tags=config.tags,

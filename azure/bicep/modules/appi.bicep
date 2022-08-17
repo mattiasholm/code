@@ -33,7 +33,7 @@ resource kv 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
 
 resource secret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: kv
-  name: 'appiConnectionString'
+  name: 'APPLICATIONINSIGHTS-CONNECTION-STRING'
   tags: tags
   properties: {
     value: appi.properties.ConnectionString
