@@ -23,8 +23,8 @@ No modules.
 |------|------|
 | [azurerm_application_insights.appi](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/application_insights) | resource |
 | [azurerm_key_vault.kv](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) | resource |
-| [azurerm_key_vault_access_policy.accesspolicy_sp](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy) | resource |
-| [azurerm_key_vault_access_policy.accesspolicy_user](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy) | resource |
+| [azurerm_key_vault_access_policy.policy_sp](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy) | resource |
+| [azurerm_key_vault_access_policy.policy_user](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_access_policy) | resource |
 | [azurerm_key_vault_secret.secret](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_secret) | resource |
 | [azurerm_private_dns_cname_record.cname](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_cname_record) | resource |
 | [azurerm_private_dns_zone.pdnsz](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_zone) | resource |
@@ -42,38 +42,38 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_appiType"></a> [appiType](#input\_appiType) | n/a | `string` | `"web"` | no |
-| <a name="input_kvSku"></a> [kvSku](#input\_kvSku) | n/a | `string` | `"standard"` | no |
-| <a name="input_kvSpName"></a> [kvSpName](#input\_kvSpName) | n/a | `string` | n/a | yes |
-| <a name="input_kvSpSecretPermissions"></a> [kvSpSecretPermissions](#input\_kvSpSecretPermissions) | n/a | `list(string)` | n/a | yes |
-| <a name="input_kvUserCertPermissions"></a> [kvUserCertPermissions](#input\_kvUserCertPermissions) | n/a | `list(string)` | n/a | yes |
-| <a name="input_kvUserKeyPermissions"></a> [kvUserKeyPermissions](#input\_kvUserKeyPermissions) | n/a | `list(string)` | n/a | yes |
-| <a name="input_kvUserSecretPermissions"></a> [kvUserSecretPermissions](#input\_kvUserSecretPermissions) | n/a | `list(string)` | n/a | yes |
-| <a name="input_kvUsername"></a> [kvUsername](#input\_kvUsername) | n/a | `string` | n/a | yes |
+| <a name="input_appi_type"></a> [appi\_type](#input\_appi\_type) | n/a | `string` | `"web"` | no |
+| <a name="input_kv_sku"></a> [kv\_sku](#input\_kv\_sku) | n/a | `string` | `"standard"` | no |
+| <a name="input_kv_sp_name"></a> [kv\_sp\_name](#input\_kv\_sp\_name) | n/a | `string` | n/a | yes |
+| <a name="input_kv_sp_secret_permissions"></a> [kv\_sp\_secret\_permissions](#input\_kv\_sp\_secret\_permissions) | n/a | `list(string)` | n/a | yes |
+| <a name="input_kv_user_cert_permissions"></a> [kv\_user\_cert\_permissions](#input\_kv\_user\_cert\_permissions) | n/a | `list(string)` | n/a | yes |
+| <a name="input_kv_user_key_permissions"></a> [kv\_user\_key\_permissions](#input\_kv\_user\_key\_permissions) | n/a | `list(string)` | n/a | yes |
+| <a name="input_kv_user_name"></a> [kv\_user\_name](#input\_kv\_user\_name) | n/a | `string` | n/a | yes |
+| <a name="input_kv_user_secret_permissions"></a> [kv\_user\_secret\_permissions](#input\_kv\_user\_secret\_permissions) | n/a | `list(string)` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | n/a | `string` | n/a | yes |
-| <a name="input_pdnszName"></a> [pdnszName](#input\_pdnszName) | n/a | `string` | n/a | yes |
-| <a name="input_pdnszRegistration"></a> [pdnszRegistration](#input\_pdnszRegistration) | n/a | `bool` | `false` | no |
-| <a name="input_pdnszTtl"></a> [pdnszTtl](#input\_pdnszTtl) | n/a | `number` | `3600` | no |
-| <a name="input_pipAllocation"></a> [pipAllocation](#input\_pipAllocation) | n/a | `string` | `"Dynamic"` | no |
-| <a name="input_pipLabels"></a> [pipLabels](#input\_pipLabels) | n/a | `map(string)` | n/a | yes |
-| <a name="input_pipSku"></a> [pipSku](#input\_pipSku) | n/a | `string` | `"Basic"` | no |
-| <a name="input_stCount"></a> [stCount](#input\_stCount) | n/a | `number` | `1` | no |
-| <a name="input_stHttpsOnly"></a> [stHttpsOnly](#input\_stHttpsOnly) | n/a | `bool` | `true` | no |
-| <a name="input_stKind"></a> [stKind](#input\_stKind) | n/a | `string` | `"StorageV2"` | no |
-| <a name="input_stPublicAccess"></a> [stPublicAccess](#input\_stPublicAccess) | n/a | `bool` | `false` | no |
-| <a name="input_stReplication"></a> [stReplication](#input\_stReplication) | n/a | `string` | `"LRS"` | no |
-| <a name="input_stSku"></a> [stSku](#input\_stSku) | n/a | `string` | `"Standard"` | no |
-| <a name="input_stTlsVersion"></a> [stTlsVersion](#input\_stTlsVersion) | n/a | `string` | `"TLS1_2"` | no |
-| <a name="input_subscriptionId"></a> [subscriptionId](#input\_subscriptionId) | n/a | `string` | n/a | yes |
+| <a name="input_pdnsz_name"></a> [pdnsz\_name](#input\_pdnsz\_name) | n/a | `string` | n/a | yes |
+| <a name="input_pdnsz_registration"></a> [pdnsz\_registration](#input\_pdnsz\_registration) | n/a | `bool` | `false` | no |
+| <a name="input_pdnsz_ttl"></a> [pdnsz\_ttl](#input\_pdnsz\_ttl) | n/a | `number` | `3600` | no |
+| <a name="input_pip_allocation"></a> [pip\_allocation](#input\_pip\_allocation) | n/a | `string` | `"Dynamic"` | no |
+| <a name="input_pip_labels"></a> [pip\_labels](#input\_pip\_labels) | n/a | `map(string)` | n/a | yes |
+| <a name="input_pip_sku"></a> [pip\_sku](#input\_pip\_sku) | n/a | `string` | `"Basic"` | no |
+| <a name="input_st_count"></a> [st\_count](#input\_st\_count) | n/a | `number` | `1` | no |
+| <a name="input_st_https_only"></a> [st\_https\_only](#input\_st\_https\_only) | n/a | `bool` | `true` | no |
+| <a name="input_st_kind"></a> [st\_kind](#input\_st\_kind) | n/a | `string` | `"StorageV2"` | no |
+| <a name="input_st_public_access"></a> [st\_public\_access](#input\_st\_public\_access) | n/a | `bool` | `false` | no |
+| <a name="input_st_replication"></a> [st\_replication](#input\_st\_replication) | n/a | `string` | `"LRS"` | no |
+| <a name="input_st_sku"></a> [st\_sku](#input\_st\_sku) | n/a | `string` | `"Standard"` | no |
+| <a name="input_st_tls_version"></a> [st\_tls\_version](#input\_st\_tls\_version) | n/a | `string` | `"TLS1_2"` | no |
+| <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | n/a | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(any)` | `{}` | no |
-| <a name="input_tenantId"></a> [tenantId](#input\_tenantId) | n/a | `string` | n/a | yes |
-| <a name="input_vnetAddressPrefix"></a> [vnetAddressPrefix](#input\_vnetAddressPrefix) | n/a | `string` | `""` | no |
+| <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | n/a | `string` | n/a | yes |
+| <a name="input_vnet_address_prefix"></a> [vnet\_address\_prefix](#input\_vnet\_address\_prefix) | n/a | `string` | `""` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_kvUrl"></a> [kvUrl](#output\_kvUrl) | n/a |
-| <a name="output_pdnszUrl"></a> [pdnszUrl](#output\_pdnszUrl) | n/a |
-| <a name="output_pipUrl"></a> [pipUrl](#output\_pipUrl) | n/a |
-| <a name="output_stUrl"></a> [stUrl](#output\_stUrl) | n/a |
+| <a name="output_kv_url"></a> [kv\_url](#output\_kv\_url) | n/a |
+| <a name="output_pdnsz_url"></a> [pdnsz\_url](#output\_pdnsz\_url) | n/a |
+| <a name="output_pip_url"></a> [pip\_url](#output\_pip\_url) | n/a |
+| <a name="output_st_url"></a> [st\_url](#output\_st\_url) | n/a |

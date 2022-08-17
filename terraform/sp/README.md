@@ -48,13 +48,13 @@ No modules.
 | <a name="input_role"></a> [role](#input\_role) | n/a | `string` | n/a | yes |
 | <a name="input_secret"></a> [secret](#input\_secret) | n/a | `string` | n/a | yes |
 | <a name="input_subjects"></a> [subjects](#input\_subjects) | n/a | `map(string)` | n/a | yes |
-| <a name="input_subscriptionId"></a> [subscriptionId](#input\_subscriptionId) | n/a | `string` | n/a | yes |
-| <a name="input_tenantId"></a> [tenantId](#input\_tenantId) | n/a | `string` | n/a | yes |
+| <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | n/a | `string` | n/a | yes |
+| <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | n/a | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_clientId"></a> [clientId](#output\_clientId) | n/a |
-| <a name="output_clientSecret"></a> [clientSecret](#output\_clientSecret) | n/a |
-| <a name="output_tenantId"></a> [tenantId](#output\_tenantId) | n/a |
+| <a name="output_client_id"></a> [client\_id](#output\_client\_id) | n/a |
+| <a name="output_client_secret"></a> [client\_secret](#output\_client\_secret) | n/a |
+| <a name="output_tenant_id"></a> [tenant\_id](#output\_tenant\_id) | n/a |

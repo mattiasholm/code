@@ -1,8 +1,8 @@
-variable "tenantId" {
+variable "tenant_id" {
   type = string
 }
 
-variable "subscriptionId" {
+variable "subscription_id" {
   type = string
 }
 

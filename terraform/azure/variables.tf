@@ -1,7 +1,7 @@
-variable "tenantId" {
+variable "tenant_id" {
   type = string
 }
-variable "subscriptionId" {
+variable "subscription_id" {
   type = string
 }
 
@@ -13,120 +13,120 @@ variable "tags" {
   default = {}
 }
 
-variable "appiType" {
+variable "appi_type" {
   type    = string
   default = "web"
   validation {
-    condition     = contains(["web", "ios", "other", "store", "java", "phone"], var.appiType)
+    condition     = contains(["web", "ios", "other", "store", "java", "phone"], var.appi_type)
     error_message = "Invalid value for variable."
   }
 }
 
-variable "kvSku" {
+variable "kv_sku" {
   type    = string
   default = "standard"
   validation {
-    condition     = contains(["standard", "premium"], var.kvSku)
+    condition     = contains(["standard", "premium"], var.kv_sku)
     error_message = "Invalid value for variable."
   }
 }
-variable "kvUsername" {
+variable "kv_user_name" {
   type = string
 }
-variable "kvUserKeyPermissions" {
+variable "kv_user_key_permissions" {
   type = list(string)
 }
-variable "kvUserSecretPermissions" {
+variable "kv_user_secret_permissions" {
   type = list(string)
 }
-variable "kvUserCertPermissions" {
+variable "kv_user_cert_permissions" {
   type = list(string)
 }
-variable "kvSpName" {
+variable "kv_sp_name" {
   type = string
 }
-variable "kvSpSecretPermissions" {
+variable "kv_sp_secret_permissions" {
   type = list(string)
 }
 
-variable "pdnszName" {
+variable "pdnsz_name" {
   type = string
 }
-variable "pdnszRegistration" {
+variable "pdnsz_registration" {
   type    = bool
   default = false
 }
-variable "pdnszTtl" {
+variable "pdnsz_ttl" {
   type    = number
   default = 3600
 }
 
-variable "pipLabels" {
+variable "pip_labels" {
   type = map(string)
 }
-variable "pipSku" {
+variable "pip_sku" {
   type    = string
   default = "Basic"
   validation {
-    condition     = contains(["Basic", "Standard"], var.pipSku)
+    condition     = contains(["Basic", "Standard"], var.pip_sku)
     error_message = "Invalid value for variable."
   }
 }
-variable "pipAllocation" {
+variable "pip_allocation" {
   type    = string
   default = "Dynamic"
   validation {
-    condition     = contains(["Dynamic", "Static"], var.pipAllocation)
+    condition     = contains(["Dynamic", "Static"], var.pip_allocation)
     error_message = "Invalid value for variable."
   }
 }
 
-variable "stCount" {
+variable "st_count" {
   type    = number
   default = 1
 }
-variable "stKind" {
+variable "st_kind" {
   type    = string
   default = "StorageV2"
   validation {
-    condition     = contains(["Storage", "StorageV2", "BlobStorage", "FileStorage", "BlockBlobStorage"], var.stKind)
+    condition     = contains(["Storage", "StorageV2", "BlobStorage", "FileStorage", "BlockBlobStorage"], var.st_kind)
     error_message = "Invalid value for variable."
   }
 }
-variable "stSku" {
+variable "st_sku" {
   type    = string
   default = "Standard"
   validation {
-    condition     = contains(["Standard", "Premium"], var.stSku)
+    condition     = contains(["Standard", "Premium"], var.st_sku)
     error_message = "Invalid value for variable."
   }
 }
-variable "stReplication" {
+variable "st_replication" {
   type    = string
   default = "LRS"
   validation {
-    condition     = contains(["LRS", "ZRS", "GRS", "RAGRS", "GZRS", "RAGZRS"], var.stReplication)
+    condition     = contains(["LRS", "ZRS", "GRS", "RAGRS", "GZRS", "RAGZRS"], var.st_replication)
     error_message = "Invalid value for variable."
   }
 }
-variable "stPublicAccess" {
+variable "st_public_access" {
   type    = bool
   default = false
 }
-variable "stHttpsOnly" {
+variable "st_https_only" {
   type    = bool
   default = true
 }
-variable "stTlsVersion" {
+variable "st_tls_version" {
   type    = string
   default = "TLS1_2"
   validation {
-    condition     = contains(["TLS1_0", "TLS1_1", "TLS1_2"], var.stTlsVersion)
+    condition     = contains(["TLS1_0", "TLS1_1", "TLS1_2"], var.st_tls_version)
     error_message = "Invalid value for variable."
   }
 }
 
-variable "vnetAddressPrefix" {
+variable "vnet_address_prefix" {
   type    = string
   default = ""
 }

@@ -29,4 +29,4 @@ No inputs.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cloneUrl"></a> [cloneUrl](#output\_cloneUrl) | n/a |
+| <a name="output_clone_url"></a> [clone\_url](#output\_clone\_url) | n/a |
