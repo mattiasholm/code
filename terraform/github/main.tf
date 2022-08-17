@@ -13,3 +13,9 @@ resource "github_repository_file" "file" {
   file       = ".gitignore"
   content    = ".DS_Store"
 }
+
+resource "github_actions_secret" "secret" {
+  repository      = github_repository.repo.name
+  secret_name     = "SECRET"
+  plaintext_value = "secret"
+}

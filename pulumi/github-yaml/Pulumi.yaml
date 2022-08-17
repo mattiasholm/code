@@ -16,5 +16,12 @@ resources:
       file: .gitignore
       content: .DS_Store
 
+  secret:
+    type: github:ActionsSecret
+    properties:
+      repository: ${repo.name}
+      secretName: SECRET
+      plaintextValue: secret
+
 outputs:
   cloneUrl: ${repo.httpCloneUrl}
