@@ -41,7 +41,7 @@ kv_user_secret_permissions = [
   "Restore",
   "Purge"
 ]
-kv_user_cert_permissions = [
+kv_user_certificate_permissions = [
   "Get",
   "List",
   "Update",

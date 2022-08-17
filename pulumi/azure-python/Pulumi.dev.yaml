@@ -39,7 +39,7 @@ config:
     - Backup
     - Restore
     - Purge
-  azure-python:kvUserCertPermissions:
+  azure-python:kvUserCertificatePermissions:
     - Get
     - List
     - Update

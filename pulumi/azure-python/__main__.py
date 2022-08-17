@@ -35,7 +35,7 @@ kv = keyvault.Vault(
                 permissions=keyvault.PermissionsArgs(
                     keys=config.kvUserKeyPermissions,
                     secrets=config.kvUserSecretPermissions,
-                    certificates=config.kvUserCertPermissions
+                    certificates=config.kvUserCertificatePermissions
                 )
             ),
             keyvault.AccessPolicyEntryArgs(

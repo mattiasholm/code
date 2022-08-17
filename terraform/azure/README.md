@@ -46,7 +46,7 @@ No modules.
 | <a name="input_kv_sku"></a> [kv\_sku](#input\_kv\_sku) | n/a | `string` | `"standard"` | no |
 | <a name="input_kv_sp_name"></a> [kv\_sp\_name](#input\_kv\_sp\_name) | n/a | `string` | n/a | yes |
 | <a name="input_kv_sp_secret_permissions"></a> [kv\_sp\_secret\_permissions](#input\_kv\_sp\_secret\_permissions) | n/a | `list(string)` | n/a | yes |
-| <a name="input_kv_user_cert_permissions"></a> [kv\_user\_cert\_permissions](#input\_kv\_user\_cert\_permissions) | n/a | `list(string)` | n/a | yes |
+| <a name="input_kv_user_certificate_permissions"></a> [kv\_user\_certificate\_permissions](#input\_kv\_user\_certificate\_permissions) | n/a | `list(string)` | n/a | yes |
 | <a name="input_kv_user_key_permissions"></a> [kv\_user\_key\_permissions](#input\_kv\_user\_key\_permissions) | n/a | `list(string)` | n/a | yes |
 | <a name="input_kv_user_name"></a> [kv\_user\_name](#input\_kv\_user\_name) | n/a | `string` | n/a | yes |
 | <a name="input_kv_user_secret_permissions"></a> [kv\_user\_secret\_permissions](#input\_kv\_user\_secret\_permissions) | n/a | `list(string)` | n/a | yes |
