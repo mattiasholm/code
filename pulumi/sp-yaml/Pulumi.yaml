@@ -63,6 +63,8 @@ resources:
     type: azuread:ServicePrincipal
     properties:
       applicationId: ${app.applicationId}
+      owners:
+        - ${currentUser.objectId}
 
   role:
     type: azure-native:authorization:RoleAssignment
@@ -111,7 +113,10 @@ resources:
   command:
     type: command:local:Command
     properties:
-      create: az ad app permission admin-consent --id ${app.applicationId}
+      create: |
+        uri="https://graph.microsoft.com/v1.0/servicePrincipals/${sp.objectId}/appRoleAssignments"
+        resourceId=$(az ad sp show --id ${api} --query id --output tsv)
+        az rest --method POST --uri $uri --body "{\"principalId\": \"${sp.objectId}\",\"resourceId\": \"$resourceId\",\"appRoleId\": \"${permission}\"}"
 
 outputs:
   clientId: ${app.applicationId}
