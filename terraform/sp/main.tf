@@ -32,6 +32,9 @@ resource "azuread_application" "app" {
 
 resource "azuread_service_principal" "sp" {
   application_id = azuread_application.app.application_id
+  owners = [
+    data.azuread_client_config.current.object_id
+  ]
 }
 
 resource "azurerm_role_assignment" "role" {
@@ -64,6 +67,10 @@ resource "azuread_application_federated_identity_credential" "oidc" {
 
 resource "null_resource" "null" {
   provisioner "local-exec" {
-    command = "az ad app permission admin-consent --id ${azuread_application.app.application_id}"
+    command = <<EOT
+      uri="https://graph.microsoft.com/v1.0/servicePrincipals/${azuread_service_principal.sp.object_id}/appRoleAssignments"
+      resourceId=$(az ad sp show --id ${var.api} --query id --output tsv)
+      az rest --method POST --uri $uri --body "{\"principalId\": \"${azuread_service_principal.sp.object_id}\",\"resourceId\": \"$resourceId\",\"appRoleId\": \"${var.permission}\"}"
+    EOT
   }
 }
