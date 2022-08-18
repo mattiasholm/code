@@ -11,26 +11,34 @@ fi
 appId=$(az ad app list --display-name $name --query [].appId --output tsv)
 
 if [[ -z $appId ]]; then
-    az ad sp create-for-rbac --name $name --role $role --scopes $scopes --output json
+    az ad sp create-for-rbac --display-name $name --role $role --scopes $scopes --output json
     appId=$(az ad app list --display-name $name --query [].appId --output tsv)
 fi
 
-owner=$(az ad signed-in-user show --query objectId --output tsv)
+id=$(az ad sp list --display-name $name --query [].id --output tsv)
+
+owner=$(az ad signed-in-user show --query id --output tsv)
 az ad app owner add --id $appId --owner-object-id $owner
 
-if [[ $(az ad app permission list --id $appId --query [].resourceAppId --output tsv) != $api ]]; then
-    az ad app permission add --id $appId --api $api --api-permissions $permission
+uri="https://graph.microsoft.com/v1.0/servicePrincipals/$id/owners/\$ref"
+
+if [[ ! $(az rest --method GET --uri $uri --query value --output tsv) =~ $owner ]]; then
+    az rest --method POST --uri $uri --body "{\"@odata.id\": \"https://graph.microsoft.com/v1.0/users/$owner\"}"
 fi
 
-az ad app permission grant --id $appId --api $api
-az ad app permission admin-consent --id $appId
+if [[ ! ($(az ad app permission list --id $appId --query [].resourceAppId --output tsv) =~ $api && $(az ad app permission list --id $appId --query [].resourceAccess[].id --output tsv) =~ $permission) ]]; then
+    az ad app permission add --id $appId --api $api --api-permissions "$permission=Role"
+fi
 
-objectId=$(az ad app list --display-name $name --query [].objectId --output tsv)
-uri="https://graph.microsoft.com/beta/applications/$objectId/federatedIdentityCredentials"
+uri="https://graph.microsoft.com/v1.0/servicePrincipals/$id/appRoleAssignments"
+resourceId=$(az ad sp show --id $api --query id --output tsv)
+
+if [[ ! ($(az rest --method GET --uri $uri --query value[].principalId --output tsv) =~ $id && $(az rest --method GET --uri $uri --query value[].resourceId --output tsv) =~ $resourceId && $(az rest --method GET --uri $uri --query value[].appRoleId --output tsv) =~ $permission) ]]; then
+    az rest --method POST --uri $uri --body "{\"principalId\": \"$id\",\"resourceId\": \"$resourceId\",\"appRoleId\": \"$permission\"}"
+fi
 
 for subject in ${subjects[@]}; do
-    if [[ ! $(az rest --method GET --uri $uri --query value[].subject[] --output tsv) =~ $subject ]]; then
-        name=$(echo $subject | sed 's/^.*://; s/refs\/heads\///')
-        az rest --method POST --uri $uri --body "{\"name\":\"$name\",\"issuer\":\"$issuer\",\"subject\":\"$subject\",\"audiences\":[\"$audience\"]}"
+    if [[ ! $(az ad app federated-credential list --id $appId --query [].subject --output tsv) =~ $subject ]]; then
+        az ad app federated-credential create --id $appId --parameters "{\"name\": \"$(echo $subject | sed 's/^.*://; s/refs\/heads\///')\",\"issuer\": \"$issuer\",\"subject\": \"$subject\",\"audiences\": [\"$audience\"]}"
     fi
 done
