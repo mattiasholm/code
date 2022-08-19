@@ -94,7 +94,7 @@ alias gclean='git clean -d --force'
 alias greset='git reset --hard origin/(git rev-parse --abbrev-ref HEAD)'
 
 function fish_prompt
-    set branch (git rev-parse --abbrev-ref HEAD 2> /dev/null)
+    set branch (git rev-parse --abbrev-ref HEAD 2>/dev/null)
     set suffix '$ '
     echo (set_color green)$USER@$hostname(set_color normal):(set_color magenta)(prompt_pwd)(set_color cyan) \($branch\) (set_color normal)$suffix
 end

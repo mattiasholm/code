@@ -7,10 +7,8 @@ config:
     Company: Holm
     Environment: Development
     Owner: mattias.holm@live.com
-
   azure-python:appi_kind: web
   azure-python:appi_type: web
-
   azure-python:kv_sku: standard
   azure-python:kv_user_name: mattias.holm@azronnieb3it.onmicrosoft.com
   azure-python:kv_user_key_permissions:
@@ -59,22 +57,18 @@ config:
   azure-python:kv_sp_name: sp-holm-001
   azure-python:kv_sp_secret_permissions:
     - Delete
-
   azure-python:pdnsz_name: holm.io
   azure-python:pdnsz_registration: false
   azure-python:pdnsz_ttl: 3600
-
   azure-python:pip_labels:
     - foo
     - bar
   azure-python:pip_sku: Basic
   azure-python:pip_allocation: Dynamic
-
   azure-python:st_count: 2
   azure-python:st_kind: StorageV2
   azure-python:st_sku: Standard_LRS
   azure-python:st_public_access: false
   azure-python:st_https_only: true
   azure-python:st_tls_version: TLS1_2
-
   azure-python:vnet_address_prefix: 10.0.0.0/24

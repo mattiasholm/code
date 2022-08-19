@@ -8,6 +8,7 @@ variable "subscription_id" {
 
 variable "name" {
   type = string
+
   validation {
     condition     = can(regex("^sp-[a-z]+-[0-9]{3}$", var.name))
     error_message = "Invalid value for variable."
@@ -33,6 +34,7 @@ variable "secret_name" {
 variable "secret_expiration" {
   type    = number
   default = 365
+
   validation {
     condition     = var.secret_expiration < 730
     error_message = "Invalid value for variable."

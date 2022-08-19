@@ -4,6 +4,7 @@ provider "azuread" {
 
 provider "azurerm" {
   subscription_id = var.subscription_id
+
   features {}
 }
 
@@ -16,16 +17,13 @@ resource "azuread_application" "app" {
   owners = [
     data.azuread_client_config.current.object_id
   ]
+
   required_resource_access {
     resource_app_id = var.api
+
     resource_access {
       id   = var.permission
       type = "Role"
-    }
-  }
-  web {
-    implicit_grant {
-      id_token_issuance_enabled = true
     }
   }
 }
@@ -44,7 +42,7 @@ resource "azurerm_role_assignment" "role" {
 }
 
 resource "time_rotating" "rotation" {
-  rotation_days = floor(var.secret_expiration * 0.90)
+  rotation_days = var.secret_expiration
 }
 
 resource "azuread_application_password" "secret" {

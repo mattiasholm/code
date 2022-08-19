@@ -4,6 +4,7 @@ provider "azuread" {
 
 provider "azurerm" {
   subscription_id = var.subscription_id
+
   features {
     resource_group {
       prevent_deletion_if_contains_resources = false
@@ -140,6 +141,7 @@ resource "azurerm_virtual_network" "vnet" {
   address_space = [
     var.vnet_address_prefix
   ]
+
   subnet {
     name           = "snet-${local.prefix}-001"
     address_prefix = var.vnet_address_prefix

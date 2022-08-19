@@ -15,9 +15,8 @@ configuration:
   secretExpiration:
     type: String
     default: 8760h
-  secretVersion:
-    type: Number
-    default: 1
+  secretRotate:
+    type: string
   audiences:
     type: List<String>
   issuer:
@@ -29,12 +28,10 @@ variables:
   currentUser:
     Fn::Invoke:
       Function: azuread:getClientConfig
-      Arguments: {}
 
   currentSubscription:
     Fn::Invoke:
       Function: azure-native:authorization:getClientConfig
-      Arguments: {}
 
   roleDefinition:
     Fn::Invoke:
@@ -55,9 +52,6 @@ resources:
           resourceAccesses:
             - id: ${permission}
               type: Role
-      web:
-        implicitGrant:
-          idTokenIssuanceEnabled: true
 
   sp:
     type: azuread:ServicePrincipal
@@ -81,7 +75,7 @@ resources:
       applicationObjectId: ${app.objectId}
       endDateRelative: ${secretExpiration}
       rotateWhenChanged:
-        rotation: ${secretVersion}
+        rotation: ${secretRotate}
 
   main:
     type: azuread:ApplicationFederatedIdentityCredential
