@@ -15,11 +15,12 @@ if [[ -z $appId ]]; then
     appId=$(az ad app list --display-name $name --query [].appId --output tsv)
 fi
 
-id=$(az ad sp list --display-name $name --query [].id --output tsv)
+az ad app update --id $appId --enable-id-token-issuance true --sign-in-audience 'AzureADMyOrg'
 
 owner=$(az ad signed-in-user show --query id --output tsv)
 az ad app owner add --id $appId --owner-object-id $owner
 
+id=$(az ad sp list --display-name $name --query [].id --output tsv)
 uri="https://graph.microsoft.com/v1.0/servicePrincipals/$id/owners/\$ref"
 
 if [[ ! $(az rest --method GET --uri $uri --query value --output tsv) =~ $owner ]]; then
