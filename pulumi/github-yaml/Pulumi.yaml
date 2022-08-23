@@ -7,6 +7,7 @@ resources:
     properties:
       name: pulumi
       description: Repository created with Pulumi
+      visibility: public
       autoInit: true
 
   file:
@@ -14,7 +15,8 @@ resources:
     properties:
       repository: ${repo.name}
       file: .gitignore
-      content: .DS_Store
+      content: |
+        .DS_Store
 
   secret:
     type: github:ActionsSecret

@@ -5,13 +5,14 @@ provider "github" {
 resource "github_repository" "repo" {
   name        = "terraform"
   description = "Repository created with Terraform"
+  visibility  = "public"
   auto_init   = true
 }
 
 resource "github_repository_file" "file" {
   repository = github_repository.repo.name
   file       = ".gitignore"
-  content    = ".DS_Store"
+  content    = ".DS_Store\n"
 }
 
 resource "github_actions_secret" "secret" {

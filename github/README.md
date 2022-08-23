@@ -476,3 +476,20 @@ gh run rerun <run-id>
 ```shell
 gh run watch <run-id>
 ```
+
+<br><br>
+
+## List all repository secrets:
+```shell
+gh secret list
+```
+
+## Set a repository secret:
+```shell
+gh secret set <name>
+```
+
+## Delete a repository secret:
+```shell
+gh secret delete <name>
+```
