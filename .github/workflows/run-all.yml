@@ -12,6 +12,5 @@ jobs:
           - azure-bicep
           - azure-pulumi
           - azure-terraform
-    # uses: ./.github/workflows/${{ matrix.workflow }}.yml
-    uses: ./.github/workflows/azure-terraform.yml
+    uses: ./.github/workflows/${{ matrix.workflow }}.yml
     secrets: inherit
