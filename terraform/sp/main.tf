@@ -65,7 +65,7 @@ resource "azuread_application_federated_identity_credential" "oidc" {
 
 resource "null_resource" "null" {
   provisioner "local-exec" {
-    command = <<EOT
+    command = <<-EOT
       uri="https://graph.microsoft.com/v1.0/servicePrincipals/${azuread_service_principal.sp.object_id}/appRoleAssignments"
       resourceId=$(az ad sp show --id ${var.api} --query id --output tsv)
       az rest --method POST --uri $uri --body "{\"principalId\": \"${azuread_service_principal.sp.object_id}\",\"resourceId\": \"$resourceId\",\"appRoleId\": \"${var.permission}\"}"
