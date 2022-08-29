@@ -86,15 +86,6 @@ resources:
       issuer: ${issuer}
       subject: repo:${repo}:ref:refs/heads/main
 
-  dev:
-    type: azuread:ApplicationFederatedIdentityCredential
-    properties:
-      displayName: dev
-      applicationObjectId: ${app.objectId}
-      audiences: ${audiences}
-      issuer: ${issuer}
-      subject: repo:${repo}:environment:dev
-
   pull_request:
     type: azuread:ApplicationFederatedIdentityCredential
     properties:
@@ -103,6 +94,15 @@ resources:
       audiences: ${audiences}
       issuer: ${issuer}
       subject: repo:${repo}:pull_request
+
+  dev:
+    type: azuread:ApplicationFederatedIdentityCredential
+    properties:
+      displayName: dev
+      applicationObjectId: ${app.objectId}
+      audiences: ${audiences}
+      issuer: ${issuer}
+      subject: repo:${repo}:environment:dev
 
   command:
     type: command:local:Command

@@ -12,6 +12,6 @@ audiences = [
 issuer = "https://token.actions.githubusercontent.com"
 subjects = {
   main         = "repo:mattiasholm/code:ref:refs/heads/main"
-  dev          = "repo:mattiasholm/code:environment:dev"
   pull_request = "repo:mattiasholm/code:pull_request"
+  dev          = "repo:mattiasholm/code:environment:dev"
 }
