@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - terraform/azure/**
       - .github/workflows/azure-terraform.yml
+      - terraform/azure/**
       - "!**.md"
 
   pull_request:
     paths:
-      - terraform/azure/**
       - .github/workflows/azure-terraform.yml
+      - terraform/azure/**
       - "!**.md"
 
   workflow_dispatch:

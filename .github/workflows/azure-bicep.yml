@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - azure/bicep/**
       - .github/workflows/azure-bicep.yml
+      - azure/bicep/**
       - "!**.md"
 
   pull_request:
     paths:
-      - azure/bicep/**
       - .github/workflows/azure-bicep.yml
+      - azure/bicep/**
       - "!**.md"
 
   workflow_dispatch:

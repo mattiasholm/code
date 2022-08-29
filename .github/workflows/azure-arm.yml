@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - azure/arm/**
       - .github/workflows/azure-arm.yml
+      - azure/arm/**
       - "!**.md"
 
   pull_request:
     paths:
-      - azure/arm/**
       - .github/workflows/azure-arm.yml
+      - azure/arm/**
       - "!**.md"
 
   workflow_dispatch:

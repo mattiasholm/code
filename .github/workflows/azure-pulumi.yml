@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - pulumi/azure-python/**
       - .github/workflows/azure-pulumi.yml
+      - pulumi/azure-python/**
       - "!**.md"
 
   pull_request:
     paths:
-      - pulumi/azure-python/**
       - .github/workflows/azure-pulumi.yml
+      - pulumi/azure-python/**
       - "!**.md"
 
   workflow_dispatch:
