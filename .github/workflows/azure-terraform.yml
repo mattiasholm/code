@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - terraform/azure/**
       - .github/workflows/azure-terraform.yml
+      - terraform/azure/**
       - "!**.md"
 
   pull_request:
     paths:
-      - terraform/azure/**
       - .github/workflows/azure-terraform.yml
+      - terraform/azure/**
       - "!**.md"
 
   workflow_dispatch:
@@ -32,7 +32,7 @@ env:
 jobs:
   build:
     name: Build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository

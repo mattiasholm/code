@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - azure/arm/**
       - .github/workflows/azure-arm.yml
+      - azure/arm/**
       - "!**.md"
 
   pull_request:
     paths:
-      - azure/arm/**
       - .github/workflows/azure-arm.yml
+      - azure/arm/**
       - "!**.md"
 
   workflow_dispatch:
@@ -29,7 +29,7 @@ defaults:
 jobs:
   build:
     name: Build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository

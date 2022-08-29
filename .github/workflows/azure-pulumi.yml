@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - pulumi/azure-python/**
       - .github/workflows/azure-pulumi.yml
+      - pulumi/azure-python/**
       - "!**.md"
 
   pull_request:
     paths:
-      - pulumi/azure-python/**
       - .github/workflows/azure-pulumi.yml
+      - pulumi/azure-python/**
       - "!**.md"
 
   workflow_dispatch:
@@ -30,7 +30,7 @@ env:
 jobs:
   build:
     name: Build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
