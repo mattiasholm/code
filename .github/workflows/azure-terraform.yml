@@ -19,8 +19,6 @@ on:
 
   workflow_call:
 
-permissions: {}
-
 defaults:
   run:
     working-directory: terraform/azure

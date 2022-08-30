@@ -19,8 +19,6 @@ on:
 
   workflow_call:
 
-permissions: {}
-
 env:
   path: pulumi/azure-python
   stack: dev
