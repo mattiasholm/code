@@ -5,17 +5,17 @@ on:
 
 jobs:
   azure-arm:
-    uses: ${{ env.path }}/azure-arm.yml
+    uses: ./.github/workflows/azure-arm.yml
     secrets: inherit
 
   azure-bicep:
-    uses: ${{ env.path }}/azure-bicep.yml
+    uses: ./.github/workflows/azure-bicep.yml
     secrets: inherit
 
   azure-pulumi:
-    uses: ${{ env.path }}/azure-pulumi.yml
+    uses: ./.github/workflows/azure-pulumi.yml
     secrets: inherit
 
   azure-terraform:
-    uses: ${{ env.path }}/azure-terraform.yml
+    uses: ./.github/workflows/azure-terraform.yml
     secrets: inherit
