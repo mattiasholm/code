@@ -3,22 +3,19 @@ name: Run All
 on:
   workflow_dispatch:
 
-env:
-  path: ./.github/workflows
-
 jobs:
   azure-arm:
-    uses: ${{ env.path }}/azure-arm.yml
+    uses: ./.github/workflows/${{ github.job }}.yml
     secrets: inherit
 
   azure-bicep:
-    uses: ${{ env.path }}/azure-bicep.yml
+    uses: ./.github/workflows/${{ github.job }}.yml
     secrets: inherit
 
   azure-pulumi:
-    uses: ${{ env.path }}/azure-pulumi.yml
+    uses: ./.github/workflows/${{ github.job }}.yml
     secrets: inherit
 
   azure-terraform:
-    uses: ${{ env.path }}/azure-terraform.yml
+    uses: ./.github/workflows/${{ github.job }}.yml
     secrets: inherit
