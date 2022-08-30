@@ -19,8 +19,7 @@ on:
 
   workflow_call:
 
-permissions:
-  id-token: write
+permissions: {}
 
 defaults:
   run:

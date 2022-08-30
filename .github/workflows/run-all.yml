@@ -3,6 +3,8 @@ name: Run All
 on:
   workflow_dispatch:
 
+permissions: {}
+
 jobs:
   azure-arm:
     uses: ./.github/workflows/azure-arm.yml
