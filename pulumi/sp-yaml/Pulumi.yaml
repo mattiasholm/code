@@ -113,6 +113,6 @@ resources:
         az rest --method POST --uri $uri --body "{\"principalId\": \"${sp.objectId}\",\"resourceId\": \"$resourceId\",\"appRoleId\": \"${permission}\"}"
 
 outputs:
+  tenantId: ${currentUser.tenantId}
   clientId: ${app.applicationId}
   clientSecret: ${secret.value}
-  tenantId: ${currentUser.tenantId}
