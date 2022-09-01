@@ -135,7 +135,7 @@
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "pdnszId": "[resourceId('Microsoft.Network/privateDnsZones', parameters('pdnszName'))]",
         "pipCount": "[length(parameters('pipLabels'))]",
-        "containerName": "[format('default/container{0}001', variables('prefixStripped'))]",
+        "containerName": "[format('container{0}001', variables('prefixStripped'))]",
         "vnetName": "[format('vnet-{0}-001', variables('prefix'))]",
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
         "snetName": "[format('snet-{0}-001', variables('prefix'))]",
@@ -174,6 +174,11 @@
                 "name": "stId",
                 "count": "[parameters('stCount')]",
                 "input": "[resourceId('Microsoft.Storage/storageAccounts', variables('stName')[copyIndex('stId')])]"
+            },
+            {
+                "name": "blobId",
+                "count": "[parameters('stCount')]",
+                "input": "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('stName')[copyIndex('blobId')], 'default')]"
             }
         ]
     },
@@ -314,13 +319,24 @@
             },
             "resources": [
                 {
-                    "type": "blobServices/containers",
+                    "type": "blobServices",
                     "apiVersion": "2021-09-01",
-                    "name": "[variables('containerName')]",
+                    "name": "default",
                     "dependsOn": [
                         "[variables('stId')[copyIndex()]]"
+                    ],
+                    "resources": [
+                        {
+                            "type": "containers",
+                            "apiVersion": "2021-09-01",
+                            "name": "[variables('containerName')]",
+                            "dependsOn": [
+                                "[variables('blobId')[copyIndex()]]"
+                            ]
+                        }
                     ]
                 }
+
             ]
         },
         {
