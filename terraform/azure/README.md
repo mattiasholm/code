@@ -3,15 +3,15 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.2.0 |
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.26.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.16.0 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.28.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.20.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.26.1 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.16.0 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.28.1 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.20.0 |
 
 ## Modules
 
@@ -65,7 +65,7 @@ No modules.
 | <a name="input_st_sku"></a> [st\_sku](#input\_st\_sku) | n/a | `string` | `"Standard"` | no |
 | <a name="input_st_tls_version"></a> [st\_tls\_version](#input\_st\_tls\_version) | n/a | `string` | `"TLS1_2"` | no |
 | <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | n/a | `string` | n/a | yes |
-| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(any)` | `{}` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `{}` | no |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | n/a | `string` | n/a | yes |
 | <a name="input_vnet_address_prefix"></a> [vnet\_address\_prefix](#input\_vnet\_address\_prefix) | n/a | `string` | `""` | no |
 
