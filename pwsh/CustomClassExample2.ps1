@@ -20,7 +20,7 @@ $Dog1
 #########################
 
 function New-Dog {
-    param(
+    param (
         [Parameter(Mandatory = $true)]
         [String]$name,
 
@@ -62,7 +62,7 @@ $dog1.Pee()
 ##########################
 
 function New-Dog {
-    param(
+    param (
         [Parameter(Mandatory = $true)]
         [string]$Name,
 
@@ -81,7 +81,7 @@ function New-Dog {
 }
 
 function Invoke-Pee {
-    param(
+    param (
         [Parameter(Mandatory = $true, Position = 0, ValueFromPipelineByPropertyName = $true)]
         [String]$Name
     )

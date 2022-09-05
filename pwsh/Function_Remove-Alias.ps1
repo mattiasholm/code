@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 
 function Remove-Alias {
-    Param (
+    param (
         [Parameter(Mandatory = $true)]
         [String]$Name
     )

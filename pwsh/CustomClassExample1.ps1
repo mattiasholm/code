@@ -92,7 +92,7 @@ $chevy6::numberOfWheels
 ##### Function to add new car:
 
 function New-Car {
-    param(
+    param (
         [Parameter(Mandatory = $true)]
         [ValidatePattern('^[A-Z]{3}-[0-9]{3}$')]
         [String]$vin,

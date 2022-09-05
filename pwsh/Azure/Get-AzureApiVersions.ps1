@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 
-param(
+param (
     [Parameter(
         Mandatory = $true,
         Position = 0)]

@@ -82,7 +82,7 @@ $Person2
 
 
 function New-Person {
-    Param (
+    param (
         #[Parameter(Mandatory = $true)]
         [string]
         $SSN,
