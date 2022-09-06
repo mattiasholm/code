@@ -36,13 +36,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Setup cache
+      - name: Set up cache
         uses: actions/cache@v3
         with:
           path: ${{ env.path }}/venv/
           key: ${{ runner.os }}-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
-      - name: Pulumi Preview
+      - name: Preview Pulumi
         uses: pulumi/actions@v3
         with:
           command: preview
@@ -62,13 +62,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Setup cache
+      - name: Set up cache
         uses: actions/cache@v3
         with:
           path: ${{ env.path }}/venv/
           key: ${{ runner.os }}-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
-      - name: Pulumi Up
+      - name: Up Pulumi
         uses: pulumi/actions@v3
         with:
           command: up

@@ -37,7 +37,7 @@ jobs:
         with:
           submodules: true
 
-      - name: Run arm-ttk
+      - name: Run linter
         run: ./lint.ps1
 
       - name: Log in to Azure
