@@ -8,60 +8,60 @@ https://chocolatey.org/packages
 <br><br>
 
 ## Install Chocolatey:
-```powershell
+```pwsh
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://chocolatey.org/install.ps1"))
 ```
 
 ## Show version:
-```powershell
+```pwsh
 choco --version
 choco -v
 ```
 
 ## Upgrade Chocolatey:
-```powershell
+```pwsh
 choco upgrade chocolatey
 ```
 
 <br><br>
 
 ## Install package:
-```powershell
+```pwsh
 choco install <package-name>
 ```
 
 ## Uninstall package:
-```powershell
+```pwsh
 choco uninstall <package-name>
 ```
 
 ## Reinstall package:
-```powershell
+```pwsh
 choco install --force <package-name>
 ```
 
 ## List installed packages:
-```powershell
+```pwsh
 choco list --localonly
 ```
 
 <br><br>
 
 ## Upgrade a specific package:
-```powershell
+```pwsh
 choco upgrade <package-name>
 ```
 
 ## Upgrade all installed packages:
-```powershell
+```pwsh
 choco upgrade all
 ```
 
 <br><br>
 
 ## Suppress upgrades for a specific package:
-```powershell
+```pwsh
 choco pin <package-name>
 ```

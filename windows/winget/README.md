@@ -8,7 +8,7 @@ https://winget.run/
 <br><br>
 
 ## Show version:
-```powershell
+```pwsh
 winget --version
 winget -v
 ```
@@ -16,43 +16,43 @@ winget -v
 <br>
 
 ## Install package:
-```powershell
+```pwsh
 winget install <id>
 ```
 
 ## Uninstall package:
-```powershell
+```pwsh
 winget uninstall <id>
 ```
 
 ## List installed packages:
-```powershell
+```pwsh
 winget list
 ```
 
 ## Search available packages:
-```powershell
+```pwsh
 winget search [<pattern>]
 ```
 
 ## Show a specific package:
-```powershell
+```pwsh
 winget show <id>
 ```
 
 <br><br>
 
 ## List all available upgrades:
-```powershell
+```pwsh
 winget upgrade
 ```
 
 ## Upgrade a specific package:
-```powershell
+```pwsh
 winget upgrade <id>
 ```
 
 ## Upgrade all installed packages:
-```powershell
+```pwsh
 winget upgrade --all
 ```

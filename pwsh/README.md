@@ -4,7 +4,7 @@
 
 ## Test connection to SQL database:
 
-```powershell
+```pwsh
 $connectionString = ""
 $sqlConnection = New-Object System.Data.SqlClient.SqlConnection $connectionString
 $sqlConnection.Open()
