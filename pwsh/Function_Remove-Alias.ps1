@@ -10,7 +10,7 @@ function Remove-Alias {
         Remove-Item -Path $Path -Confirm:$false
     }
     else {
-        Throw "Alias $Name does not exist."
+        throw "Alias $Name does not exist."
     }
 }
 
