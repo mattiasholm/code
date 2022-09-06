@@ -515,9 +515,16 @@ git tag --annotate <tag-name> --message <message> <branch-name | commit-id | tag
 git tag -a <tag-name> -m <message> <branch-name | commit-id | tag-name>
 ```
 
-## Delete a tag:
+## Delete a tag locally:
 ```shell
+git tag --delete <tag-name>
 git tag -d <tag-name>
+```
+
+## Delete a tag in a specific remote:
+```shell
+git push --delete <remote-name> <tag-name>
+git push -d <remote-name> <tag-name>
 ```
 
 ## Push an unannotated tag to `origin`:
@@ -881,22 +888,22 @@ git branch --set-upstream-to <remote-name>/<branch-name> <branch-name>
 git branch --unset-upstream
 ```
 
-## Delete a fully merged branch:
+## Delete a branch locally:
 ```shell
 git branch --delete <branch-name>
 git branch -d <branch-name>
 ```
 
-## Force delete branch, even if not merged:
+## Force delete a branch, even if not fully merged:
 ```shell
 git branch --delete --force <branch-name>
 git branch -D <branch-name>
 ```
 
-## Delete a remote branch in a specific remote:
+## Delete a branch in a specific remote:
 ```shell
-git push <remote-name> --delete <branch-name>
-git push <remote-name> -d <branch-name>
+git push --delete <remote-name> <branch-name>
+git push -d <remote-name> <branch-name>
 ```
 
 <br><br>
