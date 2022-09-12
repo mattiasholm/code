@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+
 owner='mattiasholm'
 repo='gh'
 

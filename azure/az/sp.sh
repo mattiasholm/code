@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+
 . $(basename $0 | sed 's/.sh$/.config/')
 
 if [[ $(az account show --query tenantId --output tsv) != $tenantId ]]; then
@@ -41,7 +42,7 @@ if [[ ! $(az ad app credential list --id $appId --query [].displayName --output 
     az ad app credential reset --id $appId --display-name $secretName --years $secretExpiration
 fi
 
-for subject in ${subjects[@]}; do
+for subject in ${subjects[*]}; do
     if [[ ! $(az ad app federated-credential list --id $appId --query [].subject --output tsv) =~ $subject ]]; then
         az ad app federated-credential create --id $appId --parameters "{\"name\": \"$(echo $subject | sed 's/^.*://; s/refs\/heads\///')\",\"issuer\": \"$issuer\",\"subject\": \"$subject\",\"audiences\": [\"$audience\"]}"
     fi

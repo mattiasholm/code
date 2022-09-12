@@ -380,7 +380,7 @@ echo "                "
 ```shell
 array=("a" "b" "c")
 
-echo "${array[RANDOM%${#array[@]}]}"
+echo ${array[RANDOM%${#array[*]}]}
 ```
 
 ## Output only a specific number of lines:

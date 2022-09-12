@@ -18,8 +18,7 @@ function cloneRepos() {
 
     echo ''
 
-    for url in "${urls[@]}"; do
-
+    for url in ${urls[*]}; do
         name=$(basename "$url" | sed 's/.git$//')
 
         if [[ ! -d "$path/$name" ]]; then

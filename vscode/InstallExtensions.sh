@@ -33,8 +33,10 @@ exts=(
     'softaware.abc-music'
 )
 
-for ext in ${exts[@]}; do
-    code --install-extension "$ext"
+for ext in ${exts[*]}; do
+    code --install-extension $ext
 done
+
+echo -e '\n# Installed extensions:'
 
 code --list-extensions --show-versions

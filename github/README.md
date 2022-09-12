@@ -493,3 +493,10 @@ gh secret set <name>
 ```shell
 gh secret delete <name>
 ```
+
+<br><br>
+
+## Make an authenticated HTTP request to the GitHub API:
+```shell
+gh api <path> [--method <method>]
+```
