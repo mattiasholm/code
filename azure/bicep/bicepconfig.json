@@ -61,10 +61,19 @@
                 "secure-parameter-default": {
                     "level": "error"
                 },
+                "secure-params-in-nested-deploy": {
+                    "level": "error"
+                },
                 "secure-secrets-in-params": {
                     "level": "error"
                 },
                 "simplify-interpolation": {
+                    "level": "error"
+                },
+                "use-recent-api-versions": {
+                    "level": "error"
+                },
+                "use-resource-id-functions": {
                     "level": "error"
                 },
                 "use-stable-resource-identifiers": {
