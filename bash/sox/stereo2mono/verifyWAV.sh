@@ -3,10 +3,8 @@
 set -e
 
 inputDir='./input'
-outputDir='./output'
 
 mkdir -p "$inputDir"
-mkdir -p "$outputDir"
 
 if [[ -z "$(ls "$inputDir")" ]]; then
     echo -e '\nInput directory does not contain any WAV files, exiting script\n'

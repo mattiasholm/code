@@ -2,7 +2,7 @@
 
 import os
 from pydub import AudioSegment
-import soundfile as sf
+import soundfile
 
 inputDir = "./input/"
 tmpDir = "./.tmp/"
@@ -22,7 +22,7 @@ for file in os.listdir(inputDir):
 
 for file in os.listdir(tmpDir):
     if file.endswith(".wav"):
-        data, samplerate = sf.read(tmpDir + file)
-        sf.write(outputDir + file, data, samplerate, subtype="PCM_24")
+        data, samplerate = soundfile.read(tmpDir + file)
+        soundfile.write(outputDir + file, data, samplerate, subtype="PCM_24")
 
 os.system("rm -rf " + tmpDir)

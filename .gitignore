@@ -1,16 +1,16 @@
 .DS_Store
 
-/azure/bicep/main.json
-/azure/bicep/modules/*.json
+main.json
+/**/modules/*.json
 
-/**/*.tfstate*
-/**/.terraform/
-/**/.terraform.lock.hcl
-/**/tfplan
-/**/.infracost/
+.terraform
+.terraform.lock.hcl
+*.tfstate*
+tfplan
+.infracost
 
-/**/__pycache__/
-/**/venv/
+__pycache__
+venv
 
-/**/stereo2mono/input/
-/**/stereo2mono/output/
+/**/stereo2mono/input
+/**/stereo2mono/output
