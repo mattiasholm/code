@@ -768,6 +768,11 @@ git reflog
 git rev-parse HEAD
 ```
 
+## List shortened commit ID of current `HEAD`:
+```shell
+git rev-parse --short HEAD
+```
+
 ## List commit ID of `HEAD` for all branches (both local and remote):
 ```shell
 git show-ref
@@ -789,8 +794,8 @@ git blame <filename>
 ```shell
 git branch --show-current
 git rev-parse --abbrev-ref HEAD
-git symbolic-ref --short -q HEAD
-cat .git/HEAD
+git symbolic-ref --short HEAD
+git name-rev --name-only HEAD
 ```
 
 ## List all local branches:

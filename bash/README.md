@@ -282,15 +282,6 @@ source /dev/stdin <<<"$(echo key=value)"
 
 <br>
 
-## Customize prompt to include current git branch:
-```shell
-vim ~/.bashrc
-
-# Add the following line:
-export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(echo ' ('\$(git rev-parse --abbrev-ref HEAD 2>/dev/null)')' | sed 's/ ()//')\[\033[00m\] $ "
-
-```
-
 ## Source `.bashrc` to make changes take effect right away, without having to restart the shell:
 ```shell
 source ~/.bashrc
