@@ -1,8 +1,7 @@
 .DS_Store
 
-/azure/bicep/**/*.json
-!/azure/bicep/**/main.parameters.json
-!/azure/bicep/**/bicepconfig.json
+/azure/bicep/main.json
+/azure/bicep/modules/*.json
 
 /**/*.tfstate*
 /**/.terraform/
