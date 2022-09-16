@@ -23,6 +23,18 @@ curl --silent example.com
 curl -s example.com
 ```
 
+## Curl request that will fail on HTTP server errors:
+```shell
+curl --fail example.com
+curl -f example.com
+```
+
+## Curl request that will fail on HTTP server errors, while still returning the response body:
+```shell
+curl --fail-with-body example.com
+```
+
+
 ## Curl request that shows HTTP status code and response headers:
 ```shell
 curl --include example.com
