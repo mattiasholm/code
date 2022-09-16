@@ -32,7 +32,6 @@ env:
 jobs:
   build:
     name: Build
-    # if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
