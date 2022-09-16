@@ -10,10 +10,6 @@ on:
       - "!**.md"
 
   pull_request:
-    paths:
-      - .github/workflows/azure-terraform.yml
-      - terraform/azure/**
-      - "!**.md"
 
   workflow_dispatch:
 

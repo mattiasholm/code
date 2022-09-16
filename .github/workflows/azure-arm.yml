@@ -10,10 +10,6 @@ on:
       - "!**.md"
 
   pull_request:
-    paths:
-      - .github/workflows/azure-arm.yml
-      - azure/arm/**
-      - "!**.md"
 
   workflow_dispatch:
 
