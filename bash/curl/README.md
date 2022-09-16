@@ -34,7 +34,6 @@ curl -f example.com
 curl --fail-with-body example.com
 ```
 
-
 ## Curl request that shows HTTP status code and response headers:
 ```shell
 curl --include example.com
