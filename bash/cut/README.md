@@ -18,7 +18,6 @@ cut -d<delimiter> -f<field-index>
 cut -d'<delimiter>' -f<field-index>
 ```
 
-
 ## Cut out multiple fields using the specified delimiter:
 ```shell
 cut -d<delimiter> -f<field-index>,<field-index>

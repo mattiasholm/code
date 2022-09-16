@@ -128,7 +128,6 @@ code .
 
 `Windows` <kbd>Ctrl</kbd>+<kbd>T</kbd>+<kbd>T</kbd> + <kbd>Enter</kbd>
 
-
 <br><br>
 
 ## Add next occurrence to selection:

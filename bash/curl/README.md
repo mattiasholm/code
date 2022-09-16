@@ -29,6 +29,18 @@ curl --header "Host: example.com" https://example.azurewebsites.net/
 curl -H "Host: example.com" https://example.azurewebsites.net/
 ```
 
+## Curl request with other method than default GET:
+```shell
+curl --request <method> https://example.com
+curl -X <method> https://example.com
+```
+
+## Curl request that includes a payload:
+```shell
+curl --data <payload> https://example.com
+curl -d <payload> https://example.com
+```
+
 ## Curl request that overrides DNS with a hard-coded IP address and ignores any certificate errors:
 ```shell
 curl --resolve example.com:443:51.141.12.112 https://example.com --insecure
