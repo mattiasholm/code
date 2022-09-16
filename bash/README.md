@@ -342,7 +342,8 @@ tail -r
 
 ## Run a shell script directly from a public URL, without having to download it locally (use with caution!):
 ```shell
-bash <(curl -s <url>)
+curl --silent <url> | bash
+bash <(curl --silent <url>)
 ```
 
 ## Test a TCP connection to a specific host and port:

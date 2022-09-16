@@ -106,7 +106,7 @@ function .f
 end
 
 function ip
-    set ip (curl -s ifconfig.io)
+    set ip (curl --silent ifconfig.io)
     echo $ip
     echo -n $ip | pbcopy
 end

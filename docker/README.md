@@ -71,7 +71,7 @@ docker run -it <image-name> /bin/bash
 
 ## Check public IP used for a specific container:
 ```shell
-docker exec <container-id> curl -s ifconfig.co
+docker exec <container-id> curl --silent ifconfig.co
 ```
 
 <br><br>

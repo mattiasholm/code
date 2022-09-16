@@ -107,7 +107,7 @@ function .b() {
 }
 
 function ip() {
-    ip="$(curl -s ifconfig.io)"
+    ip="$(curl --silent ifconfig.io)"
     echo "$ip"
     echo -n "$ip" | pbcopy
 }

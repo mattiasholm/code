@@ -17,10 +17,16 @@ curl ipinfo.io
 curl ipinfo.io/<ip-address>
 ```
 
+## Curl request that runs in quiet mode:
+```shell
+curl --silent example.com
+curl -s example.com
+```
+
 ## Curl request that shows HTTP status code and response headers:
 ```shell
-curl example.com --include
-curl example.com -i
+curl --include example.com
+curl -i example.com
 ```
 
 ## Curl request with custom Host header:
