@@ -1,5 +1,5 @@
 ### Description:
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+\<description\>
 
 ### Checklist:
 - [ ] The code has been properly formatted and linted
