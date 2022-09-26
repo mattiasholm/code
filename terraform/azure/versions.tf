@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.2.0"
+  required_version = "~> 1.3.0"
 
   cloud {
     organization = "mattiasholm"
@@ -17,7 +17,7 @@ terraform {
 
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.20.0"
+      version = "~> 3.24.0"
     }
   }
 }
