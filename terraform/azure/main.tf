@@ -17,7 +17,7 @@ locals {
   prefix_stripped = replace(local.prefix, "-", "")
 }
 
-data "azurerm_client_config" "current" {}
+data "azurerm_client_config" "subscription" {}
 
 data "azuread_user" "user" {
   user_principal_name = var.kv_user_name
@@ -46,13 +46,13 @@ resource "azurerm_key_vault" "kv" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
-  tenant_id           = data.azurerm_client_config.current.tenant_id
+  tenant_id           = data.azurerm_client_config.subscription.tenant_id
   sku_name            = var.kv_sku
 }
 
 resource "azurerm_key_vault_access_policy" "policy_user" {
   key_vault_id            = azurerm_key_vault.kv.id
-  tenant_id               = data.azurerm_client_config.current.tenant_id
+  tenant_id               = data.azurerm_client_config.subscription.tenant_id
   object_id               = data.azuread_user.user.object_id
   key_permissions         = var.kv_user_key_permissions
   secret_permissions      = var.kv_user_secret_permissions
@@ -61,7 +61,7 @@ resource "azurerm_key_vault_access_policy" "policy_user" {
 
 resource "azurerm_key_vault_access_policy" "policy_sp" {
   key_vault_id       = azurerm_key_vault.kv.id
-  tenant_id          = data.azurerm_client_config.current.tenant_id
+  tenant_id          = data.azurerm_client_config.subscription.tenant_id
   object_id          = data.azuread_service_principal.sp.object_id
   secret_permissions = var.kv_sp_secret_permissions
 }

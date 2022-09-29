@@ -8,14 +8,14 @@ provider "azurerm" {
   features {}
 }
 
-data "azuread_client_config" "current" {}
+data "azuread_client_config" "user" {}
 
-data "azurerm_subscription" "current" {}
+data "azurerm_subscription" "subscription" {}
 
 resource "azuread_application" "app" {
   display_name = var.name
   owners = [
-    data.azuread_client_config.current.object_id
+    data.azuread_client_config.user.object_id
   ]
 
   required_resource_access {
@@ -31,14 +31,14 @@ resource "azuread_application" "app" {
 resource "azuread_service_principal" "sp" {
   application_id = azuread_application.app.application_id
   owners = [
-    data.azuread_client_config.current.object_id
+    data.azuread_client_config.user.object_id
   ]
 }
 
 resource "azurerm_role_assignment" "role" {
   principal_id         = azuread_service_principal.sp.object_id
   role_definition_name = var.role_name
-  scope                = data.azurerm_subscription.current.id
+  scope                = data.azurerm_subscription.subscription.id
 }
 
 resource "time_rotating" "rotation" {
@@ -54,7 +54,7 @@ resource "azuread_application_password" "secret" {
   }
 }
 
-resource "azuread_application_federated_identity_credential" "oidc" {
+resource "azuread_application_federated_identity_credential" "credential" {
   for_each              = var.subjects
   display_name          = each.key
   application_object_id = azuread_application.app.object_id
@@ -63,7 +63,7 @@ resource "azuread_application_federated_identity_credential" "oidc" {
   subject               = each.value
 }
 
-resource "null_resource" "null" {
+resource "null_resource" "command" {
   provisioner "local-exec" {
     command = <<-EOT
       uri="https://graph.microsoft.com/v1.0/servicePrincipals/${azuread_service_principal.sp.object_id}/appRoleAssignments"

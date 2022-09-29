@@ -25,11 +25,11 @@ configuration:
     type: String
 
 variables:
-  currentUser:
+  user:
     Fn::Invoke:
       Function: azuread:getClientConfig
 
-  currentSubscription:
+  subscription:
     Fn::Invoke:
       Function: azure-native:authorization:getClientConfig
 
@@ -38,7 +38,7 @@ variables:
       Function: azure-native:authorization:getRoleDefinition
       Arguments:
         roleDefinitionId: ${roleId}
-        scope: /subscriptions/${currentSubscription.subscriptionId}
+        scope: /subscriptions/${subscription.subscriptionId}
 
 resources:
   app:
@@ -46,7 +46,7 @@ resources:
     properties:
       displayName: ${name}
       owners:
-        - ${currentUser.objectId}
+        - ${user.objectId}
       requiredResourceAccesses:
         - resourceAppId: ${api}
           resourceAccesses:
@@ -58,7 +58,7 @@ resources:
     properties:
       applicationId: ${app.applicationId}
       owners:
-        - ${currentUser.objectId}
+        - ${user.objectId}
 
   role:
     type: azure-native:authorization:RoleAssignment
@@ -66,7 +66,7 @@ resources:
       principalId: ${sp.objectId}
       principalType: ServicePrincipal
       roleDefinitionId: ${roleDefinition.id}
-      scope: /subscriptions/${currentSubscription.subscriptionId}
+      scope: /subscriptions/${subscription.subscriptionId}
 
   secret:
     type: azuread:ApplicationPassword
@@ -113,6 +113,6 @@ resources:
         az rest --method POST --uri $uri --body "{\"principalId\": \"${sp.objectId}\",\"resourceId\": \"$resourceId\",\"appRoleId\": \"${permission}\"}"
 
 outputs:
-  tenantId: ${currentUser.tenantId}
+  tenantId: ${user.tenantId}
   clientId: ${app.applicationId}
   clientSecret: ${secret.value}
