@@ -21,9 +21,13 @@ resource "azuread_application" "app" {
   required_resource_access {
     resource_app_id = var.api
 
-    resource_access {
-      id   = var.permission
-      type = "Role"
+    dynamic "resource_access" {
+      for_each = var.permissions
+
+      content {
+        id   = resource_access.key
+        type = resource_access.value
+      }
     }
   }
 }
@@ -64,11 +68,12 @@ resource "azuread_application_federated_identity_credential" "credential" {
 }
 
 resource "null_resource" "command" {
+  for_each = var.permissions
   provisioner "local-exec" {
     command = <<-EOT
       uri="https://graph.microsoft.com/v1.0/servicePrincipals/${azuread_service_principal.sp.object_id}/appRoleAssignments"
       resourceId=$(az ad sp show --id ${var.api} --query id --output tsv)
-      az rest --method POST --uri $uri --body "{\"principalId\": \"${azuread_service_principal.sp.object_id}\",\"resourceId\": \"$resourceId\",\"appRoleId\": \"${var.permission}\"}"
+      az rest --method POST --uri $uri --body "{\"principalId\": \"${azuread_service_principal.sp.object_id}\",\"resourceId\": \"$resourceId\",\"appRoleId\": \"${each.key}\"}"
     EOT
   }
 }

@@ -19,8 +19,8 @@ variable "api" {
   type = string
 }
 
-variable "permission" {
-  type = string
+variable "permissions" {
+  type = map(string)
 }
 
 variable "role_name" {
