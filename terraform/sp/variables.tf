@@ -38,7 +38,6 @@ variable "secret_expiration" {
   validation {
     condition     = var.secret_expiration < 730
     error_message = "Invalid value for variable."
-
   }
 }
 
