@@ -110,25 +110,21 @@ Escape special characters:
 
 <br><br>
 
-    echo "string"
-```markdown
-    echo "string"
-```
-
-<br><br>
-
+Code block:  
 ```bash
 echo "string"
 ```
-    ```bash
-    echo "string"
-    ```
-
-    -OR-
-
-    ~~~bash
-    echo "string"
-    ~~~
+~~~markdown
+```bash
+echo "string"
+```
+~~~
+-OR-
+```markdown
+~~~bash
+echo "string"
+~~~
+```
 
 <br><br>
 
