@@ -10,6 +10,10 @@ on:
       - "!**.md"
 
   pull_request:
+    paths:
+      - .github/workflows/azure-bicep.yml
+      - azure/bicep/**
+      - "!**.md"
 
   workflow_dispatch:
 
