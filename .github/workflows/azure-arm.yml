@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/azure-arm.yml
+      - .github/workflows/azure-arm.yml # Test
       - azure/arm/**
       - "!**.md"
 

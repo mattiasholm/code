@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/azure-bicep.yml # Test
+      - .github/workflows/azure-bicep.yml
       - azure/bicep/**
       - "!**.md"
 
