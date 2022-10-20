@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/azure-pulumi.yml
+      - .github/workflows/azure-pulumi.yml # Test
       - pulumi/azure-python/**
       - "!**.md"
 
