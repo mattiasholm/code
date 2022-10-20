@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/azure-terraform.yml
+      - .github/workflows/azure-terraform.yml # Test
       - terraform/azure/**
       - "!**.md"
 

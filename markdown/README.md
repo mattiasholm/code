@@ -86,7 +86,6 @@ ___Bold and italic text___
 `Highlighted text`
 ```
 
-Escape special characters:  
 \#
 
 \-
@@ -110,7 +109,6 @@ Escape special characters:
 
 <br><br>
 
-Code block:  
 ```bash
 echo "string"
 ```
@@ -292,6 +290,24 @@ _ _ _
 
 [Emojipedia](https://emojipedia.org/)
 
+<br><br>
+
+<!-- https://mermaid-js.github.io/mermaid/#/flowchart -->
+Flowchart (left to right):  
+```mermaid
+flowchart LR
+  step1 --> step2 --> step3[This is the third step] --> step4(This is the text in the box)
+```
+
+<br>
+
+Flowchart (top to bottom):  
+```mermaid
+flowchart TB
+    step1 --> step2 --> step3[This is the third step] --> step4(This is the text in the box)
+```
+
+<!--  -->
 <br><br>
 
 Footnote[^1]
