@@ -10,6 +10,10 @@ on:
       - "!**.md"
 
   pull_request:
+    paths:
+      - .github/workflows/azure-pulumi.yml
+      - pulumi/azure-python/**
+      - "!**.md"
 
   workflow_dispatch:
 
