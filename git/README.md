@@ -935,13 +935,13 @@ git commit --amend --no-edit --reset-author
 
 <br><br>
 
-## Discard changes to a specific file in working tree (will not touch staging area):
+## Discard changes to a specific file in working tree (will not touch index):
 ```shell
 git restore <filename>
 git checkout <filename>
 ```
 
-## Discard changes to all tracked files in working tree (will not touch staging area):
+## Discard changes to all tracked files in working tree (will not touch index):
 ```shell
 git restore .
 git checkout .
