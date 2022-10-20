@@ -302,7 +302,7 @@ git pull -t
 
 <br><br>
 
-## Show currently checked out branch and status of working tree and index (branch-specific staging area):
+## Show currently checked out branch and status of working tree and index (staging area):
 ```shell
 git status
 ```
@@ -321,13 +321,13 @@ git status --u=no
 
 <br><br>
 
-## Stage all modified and untracked files to index (branch-specific staging area):
+## Stage all modified and untracked files to index (staging area):
 ```shell
 git add .
 git stage .
 ```
 
-## Stage only files already tracked to index (branch-specific staging area):
+## Stage only files already tracked to index (staging area):
 ```shell
 git add --update
 git add -u
@@ -335,7 +335,7 @@ git stage --update
 git stage -u
 ```
 
-## Stage all modified, untracked and removed files to index (branch-specific staging area):
+## Stage all modified, untracked and removed files to index (staging area):
 ```shell
 git add --all
 git add -A
@@ -343,7 +343,7 @@ git stage --all
 git stage -A
 ```
 
-## Stage only a specific file to index (branch-specific staging area):
+## Stage only a specific file to index (staging area):
 ```shell
 git add <filename>
 git stage <filename>
@@ -351,14 +351,14 @@ git stage <filename>
 
 <br><br>
 
-## Remove a file from working tree and index (branch-specific staging area):
+## Remove a file from working tree and index (staging area):
 ```shell
 git rm <filename>
 ```
 
 <br><br>
 
-## Rename/move a file in working tree and index (branch-specific staging area):
+## Rename/move a file in working tree and index (staging area):
 ```shell
 git mv <filename> <new-name | destination-path>
 ```
@@ -423,7 +423,7 @@ git ls-tree -d <branch-name | commit-id | tag-name>
 
 <br><br>
 
-## Commit all changes in index (branch-specific staging area):
+## Commit all changes in index (staging area):
 ```shell
 git commit --message "<message>"
 git commit -m "<message>"
@@ -947,14 +947,14 @@ git restore .
 git checkout .
 ```
 
-## Unstage a specific file in index (branch-specific staging area):
+## Unstage a specific file in index (staging area):
 ```shell
 git restore <filename> --staged
 git restore <filename> -S
 git reset <filename>
 ```
 
-## Unstage all files in index (branch-specific staging area):
+## Unstage all files in index (staging area):
 ```shell
 git restore . --staged
 git restore . -S
