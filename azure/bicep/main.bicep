@@ -114,3 +114,5 @@ output kvUrl string = kv.outputs.vaultUri
 output pdnszUrl array = pdnsz.outputs.fqdn
 output pipUrl array = [for (label, i) in config.pip.labels: 'https://${pip[i].outputs.fqdn}/']
 output stUrl array = [for i in range(0, config.st.count): st[i].outputs.primaryEndpoints]
+
+// Test
