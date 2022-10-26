@@ -252,7 +252,7 @@ function midi() {
     esac
 
     midiFile="$(echo "$abcFile" | sed 's/.abc$/.mid/')"
-    abc2midi "$abcFile" -o "$midiFile" -Q $tempo
-    timidity -f "$midiFile" -A 300 -K "$transposeSteps"
+    abc2midi "$abcFile" -Q $tempo -o "$midiFile"
+    timidity "$midiFile" -A 300 -K "$transposeSteps" -Od
     rm "$midiFile"
 }
