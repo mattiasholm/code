@@ -26,10 +26,12 @@ jobs:
       - run: exit 1
 
       - name: Set up tmate
-        if: inputs.debug && (success() || failure())
+        if: inputs.debug
+        continue-on-error: true
+        # if: inputs.debug && (success() || failure())
+        #
         # if: inputs.debug && always()
         # if: success() || failure()
-        # if: inputs.debug
         # if: always()
         uses: mxschmitt/action-tmate@v3
         timeout-minutes: 60
