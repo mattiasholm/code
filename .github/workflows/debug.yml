@@ -1,5 +1,4 @@
-name: Debug # debug.yml
-# name: Remote Debug # remote-debug.yml
+name: Debug
 
 on:
   workflow_dispatch:
@@ -24,7 +23,9 @@ jobs:
       - run: exit 2
 
       - name: Set up tmate
-        if: success() || failure()
+        if: inputs.debug && always()
+        # if: always() && inputs.debug
+        # if: success() || failure()
         # if: inputs.debug
         # if: always()
         uses: mxschmitt/action-tmate@v3
