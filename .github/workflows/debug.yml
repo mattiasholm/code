@@ -4,7 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       debug:
-        description: Debug
+        # description: Debug
+        description: Remote debugging
         type: boolean
 
 env:
