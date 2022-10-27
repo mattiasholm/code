@@ -8,9 +8,8 @@ on:
         type: boolean
 
 env:
-  path: pulumi/azure-python
   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-  # secrets: ${{ secrets }}
+  secrets: ${{ secrets }}
 
 jobs:
   debug:
