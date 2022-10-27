@@ -6,7 +6,7 @@ on:
     inputs:
       debug:
         description: Debug
-        # type: boolean
+        type: boolean
 
 jobs:
   debug:
