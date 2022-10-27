@@ -13,15 +13,16 @@ on:
 jobs:
   debug:
     name: Debug
-    # if: inputs.debug
     runs-on: ubuntu-latest
     # timeout-minutes: 1
     steps:
       # - name: Check out repository
       #   uses: actions/checkout@v3
 
+      - run: exit 1
+
       - name: Set up tmate
         if: inputs.debug
         # if: failure()
         uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 1
+        timeout-minutes: 60
