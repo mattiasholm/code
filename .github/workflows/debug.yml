@@ -11,18 +11,14 @@ jobs:
   debug:
     name: Debug
     runs-on: ubuntu-latest
-    # timeout-minutes: 60
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-
-      - run: touch 123
 
       - run: echo ${{ secrets.AZURE_TENANT_ID }} > secrets.AZURE_TENANT_ID
 
       - name: Set up tmate
         if: inputs.debug && (success() || failure())
         uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 60 #
 
       - run: echo "Post-step"
