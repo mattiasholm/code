@@ -7,6 +7,11 @@ on:
         description: Debug
         type: boolean
 
+env:
+  path: pulumi/azure-python
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  secrets: ${{ secrets }}
+
 jobs:
   debug:
     name: Debug
@@ -15,10 +20,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - run: echo ${{ secrets.AZURE_TENANT_ID }} > secrets.AZURE_TENANT_ID
+      # - run: echo ${{ secrets.AZURE_TENANT_ID }} > secrets.AZURE_TENANT_ID
 
       - name: Set up tmate
         if: inputs.debug && (success() || failure())
         uses: mxschmitt/action-tmate@v3
 
-      - run: echo "Post-step"
+      # - run: echo "Post-step"
