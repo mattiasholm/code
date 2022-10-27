@@ -26,9 +26,9 @@ jobs:
       - run: exit 1
 
       - name: Set up tmate
-        if: inputs.debug
-        continue-on-error: true
-        # if: inputs.debug && (success() || failure())
+        if: inputs.debug && (success() || failure())
+        # if: inputs.debug
+        # continue-on-error: true
         #
         # if: inputs.debug && always()
         # if: success() || failure()
