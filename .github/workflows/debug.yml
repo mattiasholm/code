@@ -20,10 +20,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # - run: echo ${{ secrets.AZURE_TENANT_ID }} > secrets.AZURE_TENANT_ID
-
       - name: Set up tmate
         if: inputs.debug && (success() || failure())
         uses: mxschmitt/action-tmate@v3
-
-      # - run: echo "Post-step"
