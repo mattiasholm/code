@@ -21,7 +21,7 @@ jobs:
       - run: echo ${{ secrets.AZURE_TENANT_ID }} > secrets.AZURE_TENANT_ID
 
       - run: sleep 15
-        if: always
+        if: always()
 
       - run: exit 1
 
