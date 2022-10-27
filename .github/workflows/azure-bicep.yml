@@ -16,6 +16,10 @@ on:
       - "!**.md"
 
   workflow_dispatch:
+    inputs:
+      debug:
+        description: Debug
+        type: boolean
 
   workflow_call:
 
@@ -47,6 +51,10 @@ jobs:
       - name: What-if deployment
         run: ./whatif.sh
 
+      - name: Set up remote debugging
+        if: inputs.debug && (success() || failure())
+        uses: mxschmitt/action-tmate@v3
+
   release:
     name: Release
     if: github.ref == 'refs/heads/main'
@@ -68,3 +76,7 @@ jobs:
 
       - name: Create deployment
         run: ./deploy.sh
+
+      - name: Set up remote debugging
+        if: inputs.debug && (success() || failure())
+        uses: mxschmitt/action-tmate@v3
