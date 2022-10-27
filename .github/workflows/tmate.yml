@@ -1,28 +1,29 @@
 name: tmate
-
-# on:
-#   workflow_dispatch:
+# name: Debug
 
 on:
   workflow_dispatch:
-    inputs:
-      debug:
-        description: Debug
-        type: boolean
+
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       debug:
+#         description: Debug
+#         type: boolean
 
 jobs:
   debug:
     name: Debug
     runs-on: ubuntu-latest
-    # timeout-minutes: 1
+    # timeout-minutes: 60
     steps:
-      # - name: Check out repository
-      #   uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v3
 
       # - run: exit 1
 
       - name: Set up tmate
-        if: inputs.debug
-        # if: failure()
+        # if: inputs.debug
+        if: failure()
         uses: mxschmitt/action-tmate@v3
         timeout-minutes: 60
