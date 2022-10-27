@@ -42,8 +42,9 @@ brew install python3
 brew install kubectl
 brew install kubectx
 brew install lastpass-cli
-brew install graphviz
+brew install tmate
 brew install ddosify/tap/ddosify
+brew install graphviz
 brew install p7zip
 brew install sox
 brew install abcmidi
