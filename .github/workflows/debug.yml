@@ -7,13 +7,10 @@ on:
         description: Debug
         type: boolean
 
-# env:
-#   path: pulumi/azure-python
-#   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-#   secrets: ${{ secrets }}
-
 env:
-  path: terraform/azure
+  path: pulumi/azure-python
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  # secrets: ${{ secrets }}
 
 jobs:
   debug:
