@@ -20,7 +20,9 @@ jobs:
 
       - run: echo ${{ secrets.AZURE_TENANT_ID }} > secrets.AZURE_TENANT_ID
 
-      - run: exit 2
+      - run: sleep 15
+
+      - run: exit 1
 
       - name: Set up tmate
         if: inputs.debug && always()
