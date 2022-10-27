@@ -21,6 +21,7 @@ jobs:
       - run: echo ${{ secrets.AZURE_TENANT_ID }} > secrets.AZURE_TENANT_ID
 
       - run: sleep 15
+        if: always
 
       - run: exit 1
 
@@ -32,3 +33,5 @@ jobs:
         # if: always()
         uses: mxschmitt/action-tmate@v3
         timeout-minutes: 60
+
+      - run: echo "Post-step"
