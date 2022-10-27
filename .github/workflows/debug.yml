@@ -19,12 +19,13 @@ jobs:
 
       - run: exit 1
 
-      - run: exit 0
+      - run: echo ${{ secrets.AZURE_TENANT_ID }} > secrets.AZURE_TENANT_ID
 
       - run: exit 2
 
       - name: Set up tmate
-        if: inputs.debug
+        if: success() || failure()
+        # if: inputs.debug
         # if: always()
         uses: mxschmitt/action-tmate@v3
         timeout-minutes: 60
