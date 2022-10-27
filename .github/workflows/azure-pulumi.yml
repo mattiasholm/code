@@ -16,6 +16,10 @@ on:
       - "!**.md"
 
   workflow_dispatch:
+    inputs:
+      debug:
+        description: Debug
+        type: boolean
 
   workflow_call:
 
@@ -49,6 +53,10 @@ jobs:
           stack-name: ${{ env.stack }}
           refresh: true
 
+      - name: Set up remote debugging
+        if: inputs.debug && (success() || failure())
+        uses: mxschmitt/action-tmate@v3
+
   release:
     name: Release
     if: github.ref == 'refs/heads/main'
@@ -73,3 +81,7 @@ jobs:
           command: up
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
+
+      - name: Set up remote debugging
+        if: inputs.debug && (success() || failure())
+        uses: mxschmitt/action-tmate@v3
