@@ -92,7 +92,7 @@ alias gnr='git name-rev'
 alias grev='git revert HEAD'
 alias gamend='git commit --amend --no-edit'
 alias gclean='git clean -d --force'
-alias greset='git reset --hard origin/(git rev-parse --abbrev-ref HEAD)'
+alias gres='git reset --hard origin/(git rev-parse --abbrev-ref HEAD)'
 
 function fish_prompt
     set branch (git rev-parse --abbrev-ref HEAD 2>/dev/null)
