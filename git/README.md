@@ -236,8 +236,6 @@ git rev-parse --show-toplevel
 
 ## Exclude specific files from source control:
 ```shell
-cd "$(git rev-parse --show-toplevel)"
-
 vim .gitignore
 
 <pattern>

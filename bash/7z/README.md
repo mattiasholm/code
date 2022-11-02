@@ -2,7 +2,7 @@
 
 <br>
 
-## Display help:
+## Show help:
 ```shell
 7z --help
 ```

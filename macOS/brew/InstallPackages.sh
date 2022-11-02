@@ -43,6 +43,7 @@ brew install kubectl
 brew install kubectx
 brew install lastpass-cli
 brew install tmate
+brew install act
 brew install ddosify/tap/ddosify
 brew install graphviz
 brew install p7zip
