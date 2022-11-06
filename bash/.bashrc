@@ -32,6 +32,7 @@ alias m='midi'
 alias o='open'
 alias p='pulumi'
 alias t='terraform'
+alias u='units'
 
 alias cl='clear'
 alias cls='clear'
