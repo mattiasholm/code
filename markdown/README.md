@@ -328,13 +328,16 @@ _ _ _
 gitGraph
   commit
   commit tag: "v1"
-  branch develop
+  branch feature/A
   commit
   commit
   checkout main
-  merge develop tag: "v2"
+  merge feature/A
+  branch feature/B
   commit
   commit
+  checkout main
+  merge feature/B tag: "v2"
 ```
 
 ~~~markdown
@@ -342,13 +345,16 @@ gitGraph
 gitGraph
   commit
   commit tag: "v1"
-  branch develop
+  branch feature/A
   commit
   commit
   checkout main
-  merge develop tag: "v2"
+  merge feature/A
+  branch feature/B
   commit
   commit
+  checkout main
+  merge feature/B tag: "v2"
 ```
 ~~~
 
