@@ -110,22 +110,22 @@ pbpaste
 
 ## Lock the Dock to prevent unwanted changes:
 ```shell
+defaults write com.apple.Dock contents-immutable -bool true
+
 defaults write com.apple.Dock position-immutable -bool true
 
 defaults write com.apple.Dock size-immutable -bool true
-
-defaults write com.apple.Dock contents-immutable -bool true
 
 killall Dock
 ```
 
 ## Unlock the Dock in order to make changes:
 ```shell
+defaults write com.apple.Dock contents-immutable -bool false
+
 defaults write com.apple.Dock position-immutable -bool false
 
 defaults write com.apple.Dock size-immutable -bool false
-
-defaults write com.apple.Dock contents-immutable -bool false
 
 killall Dock
 ```
