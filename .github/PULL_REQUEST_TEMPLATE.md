@@ -3,5 +3,5 @@
 
 ### Checklist:
 - [ ] The code has been properly formatted and linted
-- [ ] The changes have been successfully deployed to a test environment
-- [ ] The README has been updated accordingly
+- [ ] The documentation has been updated accordingly
+- [ ] The pull request has been linked to an issue
