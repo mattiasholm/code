@@ -97,7 +97,7 @@ alias gnr='git name-rev'
 alias grev='git revert HEAD'
 alias gamend='git commit --amend --no-edit'
 alias gclean='git clean -d --force'
-alias gres='git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
+alias greset='git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
 
 function .b() {
     path=~/repos/code

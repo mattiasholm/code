@@ -45,20 +45,20 @@ az bicep [<subcommand>] -h
 
 <br><br>
 
-## Build a Bicep file and output it to the working directory:
+## Build a Bicep file into an ARM template:
 ```shell
-az bicep build --files <filename>
+az bicep build --file <filename>
 az bicep build -f <filename>
 ```
 
-## Build a Bicep file and output it to standard output:
+## Decompile an ARM template into a Bicep file:
 ```shell
-az bicep build --files <filename> --stdout
-az bicep build -f <filename> --stdout
+az bicep decompile --file <filename>
+az bicep decompile -f <filename>
 ```
 
-## Decompile an ARM template and output it to the working directory:
+## Generate a parameter file for a Bicep file:
 ```shell
-az bicep decompile --files <filename>
-az bicep decompile -f <filename>
+az bicep generate-params --file <filename>
+az bicep generate-params -f <filename>
 ```
