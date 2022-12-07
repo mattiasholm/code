@@ -18,7 +18,6 @@ module appi 'modules/appi.bicep' = {
   params: {
     name: 'appi-${prefix}-001'
     location: config.location
-    tags: config.tags
     kind: config.appi.kind
     applicationType: config.appi.type
     kvName: kv.outputs.name
@@ -31,7 +30,6 @@ module kv 'modules/kv.bicep' = {
   params: {
     name: 'kv-${prefix}-001'
     location: config.location
-    tags: config.tags
     tenantId: tenantId
     sku: config.kv.sku
     accessPolicies: [
@@ -48,7 +46,6 @@ module pdnsz 'modules/pdnsz.bicep' = {
   scope: rg
   params: {
     name: config.pdnsz.name
-    tags: config.tags
     vnetName: vnet.outputs.name
     vnetId: contains(config, 'vnetAddressPrefix') ? vnet.outputs.id : ''
     registrationEnabled: config.pdnsz.registration
@@ -66,7 +63,6 @@ module pip 'modules/pip.bicep' = [for (label, i) in config.pip.labels: {
   params: {
     name: 'pip-${prefix}-${padLeft(i + 1, 3, '0')}'
     location: config.location
-    tags: config.tags
     sku: config.pip.sku
     publicIPAllocationMethod: config.pip.allocation
     domainNameLabel: '${label}-${prefix}'
@@ -79,7 +75,6 @@ module st 'modules/st.bicep' = [for i in range(0, config.st.count): {
   params: {
     name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
     location: config.location
-    tags: config.tags
     kind: config.st.kind
     sku: config.st.sku
     allowBlobPublicAccess: config.st.publicAccess
@@ -97,7 +92,6 @@ module vnet 'modules/vnet.bicep' = if (contains(config, 'vnetAddressPrefix')) {
   params: {
     name: 'vnet-${prefix}-001'
     location: config.location
-    tags: config.tags
     addressPrefixes: [
       config.vnet.addressPrefix
     ]
