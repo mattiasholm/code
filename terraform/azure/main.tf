@@ -13,7 +13,7 @@ provider "azurerm" {
 }
 
 locals {
-  prefix          = lower("${var.tags["Company"]}-${var.tags["Application"]}")
+  prefix          = lower("${var.tags.Company}-${var.tags.Application}")
   prefix_stripped = replace(local.prefix, "-", "")
 }
 
