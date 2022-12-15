@@ -15,18 +15,10 @@
             "defaultValue": "web",
             "allowedValues": [
                 "web",
-                "ios",
-                "other",
-                "store",
                 "java",
-                "phone"
-            ]
-        },
-        "appiType": {
-            "type": "string",
-            "defaultValue": "web",
-            "allowedValues": [
-                "web",
+                "store",
+                "ios",
+                "phone",
                 "other"
             ]
         },
@@ -191,7 +183,7 @@
             "tags": "[parameters('tags')]",
             "kind": "[parameters('appiKind')]",
             "properties": {
-                "Application_Type": "[parameters('appiType')]"
+                "Application_Type": "[if(equals(parameters('appiKind'), 'web'), 'web', 'other')]"
             }
         },
         {

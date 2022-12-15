@@ -8,7 +8,6 @@ config:
     Environment: Development
     Owner: mattias.holm@live.com
   azure-python:appi_kind: web
-  azure-python:appi_type: web
   azure-python:kv_sku: standard
   azure-python:kv_user_name: mattias.holm@azronnieb3it.onmicrosoft.com
   azure-python:kv_user_key_permissions:

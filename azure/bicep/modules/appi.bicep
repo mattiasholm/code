@@ -3,19 +3,16 @@ param location string
 param tags object = resourceGroup().tags
 @allowed([
   'web'
-  'ios'
-  'other'
-  'store'
   'java'
+  'store'
+  'ios'
   'phone'
+  'other'
 ])
 param kind string = 'web'
-@allowed([
-  'web'
-  'other'
-])
-param applicationType string = 'web'
 param kvName string
+
+var applicationType = kind == 'web' ? 'web' : 'other'
 
 resource appi 'Microsoft.Insights/components@2020-02-02' = {
   name: name

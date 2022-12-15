@@ -10,7 +10,6 @@ prefix = '{Company}-{Application}'.format_map(tags).lower()
 prefix_stripped = prefix.replace('-', '')
 
 appi_kind = config.get('appi_kind') or 'web'
-appi_type = config.get('appi_type') or 'web'
 
 kv_sku = config.get('kv_sku') or 'standard'
 kv_user_name = config.require('kv_user_name')

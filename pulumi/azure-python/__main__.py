@@ -13,8 +13,7 @@ appi = insights.Component(
     resource_name_=f'appi-{config.prefix}-001',
     resource_group_name=rg.name,
     tags=config.tags,
-    kind=config.appi_kind,
-    application_type=config.appi_type
+    kind=config.appi_kind
 )
 
 kv = keyvault.Vault(
@@ -42,7 +41,7 @@ kv = keyvault.Vault(
                 tenant_id=config.tenant_id,
                 object_id=config.kv_sp_object_id,
                 permissions=keyvault.PermissionsArgs(
-                    secrets=config.kv_sp_secret_permissions,
+                    secrets=config.kv_sp_secret_permissions
                 )
             )
         ]

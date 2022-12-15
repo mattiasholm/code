@@ -19,7 +19,6 @@ module appi 'modules/appi.bicep' = {
     name: 'appi-${prefix}-001'
     location: config.location
     kind: config.appi.kind
-    applicationType: config.appi.type
     kvName: kv.outputs.name
   }
 }

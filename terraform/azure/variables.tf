@@ -20,7 +20,7 @@ variable "appi_type" {
   default = "web"
 
   validation {
-    condition     = contains(["web", "ios", "other", "store", "java", "phone"], var.appi_type)
+    condition     = contains(["web", "java", "store", "ios", "phone", "other"], var.appi_type)
     error_message = "Invalid value for variable."
   }
 }

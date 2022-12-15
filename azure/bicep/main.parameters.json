@@ -12,8 +12,7 @@
           "Owner": "mattias.holm@live.com"
         },
         "appi": {
-          "kind": "web",
-          "type": "web"
+          "kind": "web"
         },
         "kv": {
           "sku": "standard",
