@@ -108,9 +108,13 @@ resources:
     type: command:local:Command
     properties:
       create: |
-        uri="https://graph.microsoft.com/v1.0/servicePrincipals/${sp.objectId}/appRoleAssignments"
         resourceId=$(az ad sp show --id ${api} --query id --output tsv)
-        az rest --method POST --uri $uri --body "{\"principalId\": \"${sp.objectId}\",\"resourceId\": \"$resourceId\",\"appRoleId\": \"${permission}\"}"
+
+        method='POST'
+        uri="https://graph.microsoft.com/v1.0/servicePrincipals/${sp.objectId}/appRoleAssignments"
+        body="{\"principalId\":\"${sp.objectId}\",\"resourceId\":\"$resourceId\",\"appRoleId\":\"${permission}\"}"
+
+        az rest --method $method --uri $uri --body $body
 
 outputs:
   tenantId: ${user.tenantId}
