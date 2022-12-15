@@ -84,6 +84,11 @@ terraform plan
 terraform plan --out=<plan-name>
 ```
 
+## Plan a replace of a specific resource managed by Terraform:
+```shell
+terraform plan --replace <terraform-resource-type>.<symbolic-name>
+```
+
 <br><br>
 
 ## Apply a Terraform configuration:
@@ -109,6 +114,11 @@ terraform apply --var '<variable-name>=<value>'
 ## Apply a Terraform configuration and pass variables from file:
 ```shell
 terraform apply --var-file='<path>'
+```
+
+## Replace a specific resource managed by Terraform:
+```shell
+terraform apply --replace <terraform-resource-type>.<symbolic-name>
 ```
 
 <br><br>
@@ -164,7 +174,7 @@ terraform show
 terraform show --json | jq
 ```
 
-## Reconcile the state Terraform knows about with the real-world infrastructure:
+## Refresh the Terraform state to match the actual resources:
 ```shell
 terraform refresh
 ```
@@ -201,12 +211,12 @@ terraform state rm $(terraform state list)
 terraform plan --destroy
 ```
 
-## Destroy Terraform-managed infrastructure:
+## Destroy all resources managed by Terraform:
 ```shell
 terraform destroy 
 ```
 
-## Destroy Terraform-managed infrastructure without requiring interactive approval::
+## Destroy all resources managed by Terraform without requiring interactive approval:
 ```shell
 terraform destroy --auto-approve
 ```
