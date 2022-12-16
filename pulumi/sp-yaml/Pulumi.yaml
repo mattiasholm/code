@@ -1,42 +1,45 @@
 name: sp-yaml
 runtime: yaml
+# options:
+#   refresh: always
+# ??? Remove from pipeline in that case? Will get same behavior in both CI and interactive!
 
-configuration:
+config:
   name:
-    type: String
-  api:
-    type: String
-  permission:
-    type: String
-  roleId:
-    type: String
-  secretName:
-    type: String
-  secretExpiration:
-    type: String
-    default: 8760h
-  secretRotate:
     type: string
-  audiences:
-    type: List<String>
+  api:
+    type: string
+  permission:
+    type: string
+  roleId:
+    type: string
+  secretName:
+    type: string
+  secretExpiration:
+    type: integer
+    default: 8760
+  secretRotate:
+    type: boolean
+  audience:
+    type: string
   issuer:
-    type: String
+    type: string
   repo:
-    type: String
+    type: string
 
 variables:
   user:
-    Fn::Invoke:
-      Function: azuread:getClientConfig
+    fn::invoke:
+      function: azuread:getClientConfig
 
   subscription:
-    Fn::Invoke:
-      Function: azure-native:authorization:getClientConfig
+    fn::invoke:
+      function: azure-native:authorization:getClientConfig
 
   roleDefinition:
-    Fn::Invoke:
-      Function: azure-native:authorization:getRoleDefinition
-      Arguments:
+    fn::invoke:
+      function: azure-native:authorization:getRoleDefinition
+      arguments:
         roleDefinitionId: ${roleId}
         scope: /subscriptions/${subscription.subscriptionId}
 
@@ -73,7 +76,7 @@ resources:
     properties:
       displayName: ${secretName}
       applicationObjectId: ${app.objectId}
-      endDateRelative: ${secretExpiration}
+      endDateRelative: ${secretExpiration}h
       rotateWhenChanged:
         rotation: ${secretRotate}
 
@@ -82,7 +85,8 @@ resources:
     properties:
       displayName: main
       applicationObjectId: ${app.objectId}
-      audiences: ${audiences}
+      audiences:
+        - ${audience}
       issuer: ${issuer}
       subject: repo:${repo}:ref:refs/heads/main
 
@@ -91,7 +95,8 @@ resources:
     properties:
       displayName: pull_request
       applicationObjectId: ${app.objectId}
-      audiences: ${audiences}
+      audiences:
+        - ${audience}
       issuer: ${issuer}
       subject: repo:${repo}:pull_request
 
@@ -100,7 +105,8 @@ resources:
     properties:
       displayName: dev
       applicationObjectId: ${app.objectId}
-      audiences: ${audiences}
+      audiences:
+        - ${audience}
       issuer: ${issuer}
       subject: repo:${repo}:environment:dev
 

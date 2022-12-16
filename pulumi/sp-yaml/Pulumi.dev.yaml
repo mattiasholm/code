@@ -6,9 +6,8 @@ config:
   sp-yaml:permission: df021288-bdef-4463-88db-98f22de89214
   sp-yaml:roleId: b24988ac-6180-42a0-ab88-20f7382dd24c
   sp-yaml:secretName: github
-  sp-yaml:secretExpiration: 8760h
+  sp-yaml:secretExpiration: 8760
   sp-yaml:secretRotate: false
-  sp-yaml:audiences:
-    - api://AzureADTokenExchange
+  sp-yaml:audience: api://AzureADTokenExchange
   sp-yaml:issuer: https://token.actions.githubusercontent.com
   sp-yaml:repo: mattiasholm/code
