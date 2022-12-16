@@ -84,7 +84,7 @@ terraform plan
 terraform plan --out=<plan-name>
 ```
 
-## Plan a replace of a specific resource managed by Terraform:
+## Plan a replace of a specific resource:
 ```shell
 terraform plan --replace <terraform-resource-type>.<symbolic-name>
 ```
@@ -116,7 +116,12 @@ terraform apply --var '<variable-name>=<value>'
 terraform apply --var-file='<path>'
 ```
 
-## Replace a specific resource managed by Terraform:
+## Apply a specific resource:
+```shell
+terraform apply --target <terraform-resource-type>.<symbolic-name>
+```
+
+## Replace a specific resource:
 ```shell
 terraform apply --replace <terraform-resource-type>.<symbolic-name>
 ```
@@ -211,12 +216,12 @@ terraform state rm $(terraform state list)
 terraform plan --destroy
 ```
 
-## Destroy all resources managed by Terraform:
+## Destroy all resources:
 ```shell
 terraform destroy 
 ```
 
-## Destroy all resources managed by Terraform without requiring interactive approval:
+## Destroy all resources without requiring interactive approval:
 ```shell
 terraform destroy --auto-approve
 ```

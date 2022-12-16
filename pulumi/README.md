@@ -60,20 +60,43 @@ pulumi new <template> -y
 
 <br><br>
 
-## Previw changes before deploying:
+## Preview changes before updating:
 ```shell
 pulumi preview
 ```
 
-## Deploy current stack:
+## Preview a specific resource before updating:
+```shell
+pulumi preview --target <urn>
+pulumi preview -t <urn>
+```
+
+## Update current stack:
 ```shell
 pulumi up
 ```
 
-## Deploy current stack, skip confirmation prompt:
+## Update current stack, skip confirmation prompt:
 ```shell
 pulumi up --yes
 pulumi up --y
+```
+
+## Update current stack, after first refreshing the state from the cloud:
+```shell
+pulumi up --refresh
+pulumi up -r
+```
+
+## Update a specific resource:
+```shell
+pulumi up --target <urn>
+pulumi up -t <urn>
+```
+
+## Replace a specific resource:
+```shell
+pulumi up --replace <urn>
 ```
 
 ## Destroy current stack:
@@ -87,11 +110,23 @@ pulumi destroy --yes
 pulumi destroy -y
 ```
 
+## Destroy a specific resource:
+```shell
+pulumi destroy --target <urn>
+pulumi destroy -t <urn>
+```
+
 <br><br>
 
 ## List current stack:
 ```shell
 pulumi stack
+```
+
+## List all resources in current stack:
+```shell
+pulumi stack --show-urns
+pulumi stack -u
 ```
 
 ## List all stacks:
