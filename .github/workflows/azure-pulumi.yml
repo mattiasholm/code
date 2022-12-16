@@ -51,7 +51,6 @@ jobs:
           command: preview
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
-          refresh: true
 
       - name: Set up remote debugging
         if: inputs.debug && (success() || failure())

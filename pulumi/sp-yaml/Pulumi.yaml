@@ -1,8 +1,7 @@
 name: sp-yaml
 runtime: yaml
-# options:
-#   refresh: always
-# ??? Remove from pipeline in that case? Will get same behavior in both CI and interactive!
+options:
+  refresh: always
 
 config:
   name:
