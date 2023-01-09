@@ -122,10 +122,12 @@ resources:
         az rest --method $method --uri $uri --body $body
 
       delete: |
+        resourceId=$(az ad sp show --id ${api} --query id --output tsv)
+
         method='GET'
         uri="https://graph.microsoft.com/v1.0/servicePrincipals/${sp.objectId}/appRoleAssignments"
 
-        id=$(az rest --method $method --uri $uri --query value[].id --output tsv)
+        id=$(az rest --method $method --uri $uri --query "value[?resourceId == '$resourceId' && appRoleId == '${permission}'].id" --output tsv)
 
         method='DELETE'
         uri="https://graph.microsoft.com/v1.0/servicePrincipals/${sp.objectId}/appRoleAssignments/$id"
