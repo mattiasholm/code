@@ -48,9 +48,9 @@ cat <filename> | jq ".<key-name> | .[<n>]"
 cat <filename> | jq .<key-name> | jq .[<n>]
 ```
 
-## Get a specific array element, based on the value of another subelement:
+## Get a property for a specific array element, based on the value of another property:
 ```shell
-cat <filename> | jq -r ".<key-name>[] | select(.<first-subelement> == <value>) | .<second-subelement>"
+cat <filename> | jq -r ".<key-name>[] | select(.<first-property> == \"<value>\") | .<second-property>"
 ```
 
 <br><br>
