@@ -121,6 +121,17 @@ resources:
 
         az rest --method $method --uri $uri --body $body
 
+      delete: |
+        method='GET'
+        uri="https://graph.microsoft.com/v1.0/servicePrincipals/${sp.objectId}/appRoleAssignments"
+
+        id=$(az rest --method $method --uri $uri --query value[].id --output tsv)
+
+        method='DELETE'
+        uri="https://graph.microsoft.com/v1.0/servicePrincipals/${sp.objectId}/appRoleAssignments/$id"
+
+        az rest --method $method --uri $uri
+
 outputs:
   tenantId: ${user.tenantId}
   clientId: ${app.applicationId}
