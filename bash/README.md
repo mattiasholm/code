@@ -332,7 +332,7 @@ last
 
 ## Reference a variable by another variable's value:
 ```shell
-"${!<other-variable>}"
+${!<variable>}
 ```
 
 ## Print output in reversed order:
