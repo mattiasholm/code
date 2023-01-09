@@ -176,7 +176,7 @@ terraform show
 
 ## Show current Terraform state in `JSON` format:
 ```shell
-terraform show --json | jq
+terraform show --json
 ```
 
 ## Refresh the Terraform state to match the actual resources:
