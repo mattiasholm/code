@@ -296,7 +296,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2021-09-01",
+            "apiVersion": "2022-09-01",
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -312,7 +312,7 @@
             "resources": [
                 {
                     "type": "blobServices",
-                    "apiVersion": "2021-09-01",
+                    "apiVersion": "2022-09-01",
                     "name": "default",
                     "dependsOn": [
                         "[variables('stId')[copyIndex()]]"
@@ -320,7 +320,7 @@
                     "resources": [
                         {
                             "type": "containers",
-                            "apiVersion": "2021-09-01",
+                            "apiVersion": "2022-09-01",
                             "name": "[variables('containerName')]",
                             "dependsOn": [
                                 "[variables('blobId')[copyIndex()]]"
@@ -334,7 +334,7 @@
         {
             "condition": "[not(empty(parameters('vnetAddressPrefix')))]",
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2022-01-01",
+            "apiVersion": "2022-07-01",
             "name": "[variables('vnetName')]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",

@@ -6,7 +6,7 @@ var prefix = toLower('${config.tags.Company}-${config.tags.Application}')
 var prefixStripped = replace(prefix, '-', '')
 var tenantId = subscription().tenantId
 
-resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   name: 'rg-${prefix}-001'
   location: config.location
   tags: config.tags
