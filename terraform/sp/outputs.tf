@@ -1,5 +1,5 @@
 output "tenant_id" {
-  value = data.azuread_client_config.user.tenant_id
+  value = var.tenant_id
 }
 
 output "client_id" {

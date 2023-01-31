@@ -10,7 +10,7 @@ provider "azurerm" {
 
 data "azuread_client_config" "user" {}
 
-data "azurerm_subscription" "subscription" {}
+data "azurerm_subscription" "sub" {}
 
 resource "azuread_application" "app" {
   display_name = var.name
@@ -42,7 +42,7 @@ resource "azuread_service_principal" "sp" {
 resource "azurerm_role_assignment" "role" {
   principal_id         = azuread_service_principal.sp.object_id
   role_definition_name = var.role_name
-  scope                = data.azurerm_subscription.subscription.id
+  scope                = data.azurerm_subscription.sub.id
 }
 
 resource "time_rotating" "rotation" {

@@ -3,15 +3,15 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.3.0 |
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.28.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.24.0 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.32.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.39.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.28.1 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.24.0 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.32.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.39.1 |
 
 ## Modules
 
@@ -36,7 +36,7 @@ No modules.
 | [azurerm_virtual_network.vnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) | resource |
 | [azuread_service_principal.sp](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) | data source |
 | [azuread_user.user](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/user) | data source |
-| [azurerm_client_config.subscription](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
+| [azurerm_subscription.sub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
 
 ## Inputs
 
