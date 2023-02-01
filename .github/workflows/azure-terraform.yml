@@ -23,6 +23,9 @@ on:
 
   workflow_call:
 
+permissions:
+  id-token: write
+
 defaults:
   run:
     working-directory: terraform/azure
