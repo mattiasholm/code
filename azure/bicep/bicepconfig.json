@@ -73,6 +73,9 @@
                 "simplify-interpolation": {
                     "level": "error"
                 },
+                "use-parent-property": {
+                    "level": "error"
+                },
                 "use-recent-api-versions": {
                     "level": "error"
                 },
