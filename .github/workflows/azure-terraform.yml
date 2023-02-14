@@ -24,6 +24,7 @@ on:
   workflow_call:
 
 permissions:
+  contents: read
   id-token: write
 
 defaults:
@@ -49,13 +50,13 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Initialize Terraform
+      - name: Terraform - Init
         run: terraform init -input=false
 
-      - name: Validate Terraform
+      - name: Terraform - Validate
         run: terraform validate
 
-      - name: Plan Terraform
+      - name: Terraform - Plan
         run: terraform plan -out=tfplan -input=false
 
       - name: Upload artifact
@@ -64,7 +65,7 @@ jobs:
           name: tfplan
           path: ${{ env.path }}/tfplan
 
-      - name: Set up remote debugging
+      - name: Debug
         if: inputs.debug && (success() || failure())
         uses: mxschmitt/action-tmate@v3
 
@@ -91,12 +92,12 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Initialize Terraform
+      - name: Terraform - Init
         run: terraform init -input=false
 
-      - name: Apply Terraform
+      - name: Terraform - Apply
         run: terraform apply -input=false tfplan
 
-      - name: Set up remote debugging
+      - name: Debug
         if: inputs.debug && (success() || failure())
         uses: mxschmitt/action-tmate@v3

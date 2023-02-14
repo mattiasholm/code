@@ -24,6 +24,7 @@ on:
   workflow_call:
 
 permissions:
+  contents: read
   id-token: write
 
 defaults:
@@ -59,7 +60,7 @@ jobs:
       - name: What-if deployment
         run: ./whatif.sh
 
-      - name: Set up remote debugging
+      - name: Debug
         if: inputs.debug && (success() || failure())
         uses: mxschmitt/action-tmate@v3
 
@@ -85,6 +86,6 @@ jobs:
       - name: Create deployment
         run: ./deploy.sh
 
-      - name: Set up remote debugging
+      - name: Debug
         if: inputs.debug && (success() || failure())
         uses: mxschmitt/action-tmate@v3

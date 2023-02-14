@@ -45,14 +45,14 @@ jobs:
           path: ${{ env.path }}/venv/
           key: ${{ runner.os }}-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
-      - name: Preview Pulumi
+      - name: Pulumi - Preview
         uses: pulumi/actions@v3
         with:
           command: preview
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
 
-      - name: Set up remote debugging
+      - name: Debug
         if: inputs.debug && (success() || failure())
         uses: mxschmitt/action-tmate@v3
 
@@ -74,13 +74,13 @@ jobs:
           path: ${{ env.path }}/venv/
           key: ${{ runner.os }}-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
-      - name: Up Pulumi
+      - name: Pulumi - Up
         uses: pulumi/actions@v3
         with:
           command: up
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
 
-      - name: Set up remote debugging
+      - name: Debug
         if: inputs.debug && (success() || failure())
         uses: mxschmitt/action-tmate@v3
