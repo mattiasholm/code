@@ -46,7 +46,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
       - name: Pulumi - Preview
-        uses: pulumi/actions@v3
+        uses: pulumi/actions@v4
         with:
           command: preview
           work-dir: ${{ env.path }}
@@ -75,7 +75,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
       - name: Pulumi - Up
-        uses: pulumi/actions@v3
+        uses: pulumi/actions@v4
         with:
           command: up
           work-dir: ${{ env.path }}
