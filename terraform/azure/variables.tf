@@ -154,5 +154,5 @@ variable "st_tls_version" {
 
 variable "vnet_address_prefix" {
   type    = string
-  default = ""
+  default = null
 }
