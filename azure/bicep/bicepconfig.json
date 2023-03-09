@@ -73,6 +73,9 @@
                 "simplify-interpolation": {
                     "level": "error"
                 },
+                "simplify-json-null": {
+                    "level": "error"
+                },
                 "use-parent-property": {
                     "level": "error"
                 },
@@ -80,6 +83,9 @@
                     "level": "error"
                 },
                 "use-resource-id-functions": {
+                    "level": "error"
+                },
+                "use-resource-symbol-reference": {
                     "level": "error"
                 },
                 "use-stable-resource-identifiers": {
