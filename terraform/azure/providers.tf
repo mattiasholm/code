@@ -5,7 +5,7 @@ terraform {
     organization = "mattiasholm"
 
     workspaces {
-      name = "sp"
+      name = "azure"
     }
   }
 
@@ -19,15 +19,19 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.39.0"
     }
+  }
+}
 
-    time = {
-      source  = "hashicorp/time"
-      version = "~> 0.9.0"
-    }
+provider "azuread" {
+  tenant_id = var.tenant_id
+}
 
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3.2.0"
+provider "azurerm" {
+  subscription_id = var.subscription_id
+
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
     }
   }
 }
