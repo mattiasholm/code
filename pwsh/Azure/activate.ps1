@@ -4,7 +4,9 @@ param (
     [String]$Subscription = (az account show --query id --output tsv),
 
     [ValidateSet('Contributor', 'Owner')]
-    [String]$Role = 'Owner'
+    [String]$Role = 'Owner',
+
+    [String]$Justification = (Split-Path -Leaf (git remote get-url origin)) -replace '.git$'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -35,7 +37,7 @@ $Body = ConvertTo-Json -Depth 100 @{
                 type     = 'AfterDuration'
             }
         }
-        justification    = Split-Path -Leaf (git remote get-url origin).TrimEnd('.git')
+        justification    = $Justification
         requestType      = 'SelfActivate'
     }
 }
