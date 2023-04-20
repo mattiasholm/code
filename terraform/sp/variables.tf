@@ -20,7 +20,7 @@ variable "api" {
 }
 
 variable "permissions" {
-  type = map(string)
+  type = map(list(string))
 }
 
 variable "role_name" {

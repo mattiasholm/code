@@ -2,6 +2,12 @@ data "azuread_client_config" "user" {}
 
 data "azurerm_subscription" "sub" {}
 
+data "azuread_application_published_app_ids" "app_ids" {}
+
+data "azuread_service_principal" "sp" {
+  application_id = data.azuread_application_published_app_ids.app_ids.result[var.api]
+}
+
 resource "azuread_application" "app" {
   display_name = var.name
   owners = [
@@ -9,14 +15,23 @@ resource "azuread_application" "app" {
   ]
 
   required_resource_access {
-    resource_app_id = var.api
+    resource_app_id = data.azuread_application_published_app_ids.app_ids.result[var.api]
 
     dynamic "resource_access" {
-      for_each = var.permissions
+      for_each = try(var.permissions.roles, [])
 
       content {
-        id   = resource_access.key
-        type = resource_access.value
+        id   = data.azuread_service_principal.sp.app_role_ids[resource_access.value]
+        type = "Role"
+      }
+    }
+
+    dynamic "resource_access" {
+      for_each = try(var.permissions.scopes, [])
+
+      content {
+        id   = data.azuread_service_principal.sp.oauth2_permission_scope_ids[resource_access.value]
+        type = "Scope"
       }
     }
   }
@@ -58,15 +73,12 @@ resource "azuread_application_federated_identity_credential" "credential" {
 }
 
 resource "null_resource" "command" {
-  for_each = var.permissions
+  for_each = toset(var.permissions.roles)
   provisioner "local-exec" {
     command = <<-EOT
-      resourceId=$(az ad sp show --id ${var.api} --query id --output tsv)
-
       method='POST'
       uri="https://graph.microsoft.com/v1.0/servicePrincipals/${azuread_service_principal.sp.object_id}/appRoleAssignments"
-      body="{\"principalId\":\"${azuread_service_principal.sp.object_id}\",\"resourceId\":\"$resourceId\",\"appRoleId\":\"${each.key}\"}"
-
+      body="{\"principalId\":\"${azuread_service_principal.sp.object_id}\",\"resourceId\":\"${data.azuread_service_principal.sp.object_id}\",\"appRoleId\":\"${data.azuread_service_principal.sp.app_role_ids[each.value]}\"}"
       az rest --method $method --uri $uri --body $body
     EOT
   }
