@@ -23,17 +23,12 @@ on:
 
   workflow_call:
 
-permissions:
-  contents: read
-  id-token: write
-
 env:
   path: pulumi/azure-python
   stack: dev
   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  # ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  ARM_USE_OIDC: true
+  ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
 jobs:
