@@ -1,5 +1,3 @@
-// Test
-
 targetScope = 'subscription'
 
 param config object
