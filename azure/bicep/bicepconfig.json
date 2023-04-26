@@ -96,5 +96,8 @@
                 }
             }
         }
+    },
+    "experimentalFeaturesEnabled": {
+        "paramsFiles": true
     }
 }
