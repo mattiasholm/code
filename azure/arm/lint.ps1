@@ -8,7 +8,7 @@ function Get-Config {
     param (
         $Key
     )
-    ((Get-Content 'main.config' | Select-String "$Key=").ToString() -replace '^.+=').Trim("'")
+    ((Get-Content 'config.sh' | Select-String "$Key=").ToString() -replace '^.+=').Trim("'")
 }
 
 $Module = Get-Config 'module'
