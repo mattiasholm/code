@@ -2,7 +2,7 @@
 
 set -e
 
-. $(basename $0 | sed 's/.sh$/.config/')
+. config.sh
 
 if [[ $(az account show --query tenantId --output tsv) != $tenantId ]]; then
     echo -e "Not signed in to tenant $tenantId.\nRun 'az login' to sign in."
