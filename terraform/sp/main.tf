@@ -72,7 +72,7 @@ resource "azuread_application_federated_identity_credential" "credential" {
   subject               = each.value
 }
 
-resource "null_resource" "command" {
+resource "null_resource" "admin_consent" {
   for_each = toset(var.permissions.roles)
   provisioner "local-exec" {
     command = <<-EOT
