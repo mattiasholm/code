@@ -1,6 +1,6 @@
 $SubscriptionId = '18acfa7a-785b-4c49-980d-b0ee07a7364a'
 $ResourceGroupName = 'HolmLekstuga2'
-$Location = 'WestEurope'
+$Location = 'westeurope'
 
 
 
