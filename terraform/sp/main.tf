@@ -72,14 +72,9 @@ resource "azuread_application_federated_identity_credential" "credential" {
   subject               = each.value
 }
 
-resource "null_resource" "admin_consent" {
-  for_each = toset(var.permissions.roles)
-  provisioner "local-exec" {
-    command = <<-EOT
-      method='POST'
-      uri="https://graph.microsoft.com/v1.0/servicePrincipals/${azuread_service_principal.sp.object_id}/appRoleAssignments"
-      body="{\"principalId\":\"${azuread_service_principal.sp.object_id}\",\"resourceId\":\"${data.azuread_service_principal.sp.object_id}\",\"appRoleId\":\"${data.azuread_service_principal.sp.app_role_ids[each.value]}\"}"
-      az rest --method $method --uri $uri --body $body
-    EOT
-  }
+resource "azuread_app_role_assignment" "assignment" {
+  for_each            = toset(var.permissions.roles)
+  resource_object_id  = data.azuread_service_principal.sp.object_id
+  app_role_id         = data.azuread_service_principal.sp.app_role_ids[each.value]
+  principal_object_id = azuread_service_principal.sp.object_id
 }
