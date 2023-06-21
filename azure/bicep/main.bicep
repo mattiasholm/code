@@ -3,7 +3,7 @@ targetScope = 'subscription'
 param config object
 
 var prefix = toLower('${config.tags.Company}-${config.tags.Application}')
-var prefixStripped = replace(prefix, '-', '')
+var prefixStripped = replace(prefix, '-', '') // Replace with UDF once supported
 var tenantId = subscription().tenantId
 
 resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {

@@ -3,7 +3,7 @@ param name string
 param location string
 param tags object = resourceGroup().tags
 param tenantId string = subscription().tenantId
-@allowed([
+@allowed([// Replace with UDT once supported
   'standard'
   'premium'
 ])
