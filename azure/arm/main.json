@@ -127,10 +127,10 @@
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "pdnszId": "[resourceId('Microsoft.Network/privateDnsZones', parameters('pdnszName'))]",
         "pipCount": "[length(parameters('pipLabels'))]",
-        "containerName": "[format('container{0}001', variables('prefixStripped'))]",
+        "containerName": "container-001",
         "vnetName": "[format('vnet-{0}-001', variables('prefix'))]",
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
-        "snetName": "[format('snet-{0}-001', variables('prefix'))]",
+        "snetName": "snet-001",
         "copy": [
             {
                 "name": "cnameName",

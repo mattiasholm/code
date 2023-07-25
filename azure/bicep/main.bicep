@@ -81,7 +81,6 @@ module st 'modules/st.bicep' = [for i in range(0, config.st.count): {
     minimumTlsVersion: config.st.tlsVersion
     containers: [
       'container-001'
-      'container-002'
     ]
   }
 }]

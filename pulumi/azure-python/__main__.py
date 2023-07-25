@@ -117,7 +117,7 @@ for i in range(0, config.st_count):
 
     storage.BlobContainer(
         f'container{i}',
-        container_name=f'container{config.prefix_stripped}001',
+        container_name=f'container-001',
         account_name=st.name,
         resource_group_name=rg.name
     )
@@ -135,7 +135,7 @@ if config.vnet_address_prefix:
         ),
         subnets=[
             network.SubnetArgs(
-                name=f'snet-{config.prefix}-001',
+                name=f'snet-001',
                 address_prefix=config.vnet_address_prefix
             )
         ]

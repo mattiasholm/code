@@ -114,7 +114,7 @@ resource "azurerm_storage_account" "st" {
 
 resource "azurerm_storage_container" "container" {
   count                = var.st_count
-  name                 = "container${local.prefix_stripped}001"
+  name                 = "container-001"
   storage_account_name = azurerm_storage_account.st[count.index].name
 }
 
@@ -129,7 +129,7 @@ resource "azurerm_virtual_network" "vnet" {
   ]
 
   subnet {
-    name           = "snet-${local.prefix}-001"
+    name           = "snet-001"
     address_prefix = var.vnet_address_prefix
   }
 }
