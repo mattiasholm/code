@@ -46,7 +46,7 @@ module pdnsz 'modules/pdnsz.bicep' = {
   params: {
     name: config.pdnsz.name
     vnetName: vnet.outputs.name
-    vnetId: contains(config, 'vnetAddressPrefix') ? vnet.outputs.id : ''
+    vnetId: contains(config, 'vnet') ? vnet.outputs.id : ''
     registrationEnabled: config.pdnsz.registration
     ttl: config.pdnsz.ttl
     cnameRecords: [for (label, i) in config.pip.labels: {
@@ -80,12 +80,13 @@ module st 'modules/st.bicep' = [for i in range(0, config.st.count): {
     supportsHttpsTrafficOnly: config.st.httpsOnly
     minimumTlsVersion: config.st.tlsVersion
     containers: [
-      'container${prefixStripped}001'
+      'container-001'
+      'container-002'
     ]
   }
 }]
 
-module vnet 'modules/vnet.bicep' = if (contains(config, 'vnetAddressPrefix')) {
+module vnet 'modules/vnet.bicep' = if (contains(config, 'vnet')) {
   name: 'vnet'
   scope: rg
   params: {
@@ -96,8 +97,12 @@ module vnet 'modules/vnet.bicep' = if (contains(config, 'vnetAddressPrefix')) {
     ]
     subnets: [
       {
-        name: 'snet-${prefix}-001'
-        addressPrefix: config.vnet.addressPrefix
+        name: 'snet-001'
+        addressPrefix: cidrSubnet(config.vnet.addressPrefix, 25, 0)
+      }
+      {
+        name: 'snet-002'
+        addressPrefix: cidrSubnet(config.vnet.addressPrefix, 25, 1)
       }
     ]
   }
