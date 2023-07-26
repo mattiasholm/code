@@ -128,6 +128,18 @@ terraform apply --replace <terraform-resource-type>.<symbolic-name>
 
 <br><br>
 
+## Mark a resource as tainted:
+```shell
+terraform taint <terraform-resource-type>.<symbolic-name>
+```
+
+## Unmark a resource as tainted:
+```shell
+terraform untaint <terraform-resource-type>.<symbolic-name>
+```
+
+<br><br>
+
 ## Create a new Terraform workspace:
 ```shell
 terraform workspace new <name>
