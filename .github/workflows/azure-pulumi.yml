@@ -23,9 +23,9 @@ on:
 
   workflow_call:
 
-# permissions:
-#   contents: read
-#   id-token: write
+permissions:
+  contents: read
+  id-token: write
 
 env:
   path: pulumi/azure-python
