@@ -44,6 +44,7 @@ jobs:
         with:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          allow-no-subscriptions: true
 
       - name: Validate deployment
         run: ./validate.sh
@@ -72,6 +73,7 @@ jobs:
         with:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          allow-no-subscriptions: true
 
       - name: Create deployment
         run: ./deploy.sh
