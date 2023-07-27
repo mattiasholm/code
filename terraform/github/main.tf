@@ -16,3 +16,9 @@ resource "github_actions_secret" "secret" {
   secret_name     = "SECRET"
   plaintext_value = "secret"
 }
+
+resource "github_actions_variable" "variable" {
+  repository    = github_repository.repo.name
+  variable_name = "VARIABLE"
+  value         = "variable"
+}

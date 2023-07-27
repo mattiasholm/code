@@ -27,5 +27,12 @@ resources:
       secretName: SECRET
       plaintextValue: secret
 
+  variable:
+    type: github:ActionsVariable
+    properties:
+      repository: ${repo.name}
+      variableName: VARIABLE
+      value: variable
+
 outputs:
   cloneUrl: ${repo.httpCloneUrl}

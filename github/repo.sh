@@ -26,4 +26,6 @@ fi
 
 gh secret set 'SECRET' --body 'secret' --repo "$owner/$repo"
 
+gh variable set 'VARIABLE' --body 'variable' --repo "$owner/$repo"
+
 gh repo view "$owner/$repo" --json url
