@@ -110,7 +110,14 @@ resources:
       issuer: ${issuer}
       subject: repo:${repo}:environment:dev
 
-  command:
+  # assignment:
+  #   type: azuread:AppRoleAssignment
+  #   properties:
+  #     resourceObjectId: ${api}
+  #     appRoleId: ${permission}
+  #     principalObjectId: ${sp.objectId}
+
+  command: # REPLACE WITH NATIVE RESOURCE!
     type: command:local:Command
     properties:
       create: |
