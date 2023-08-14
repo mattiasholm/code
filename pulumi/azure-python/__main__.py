@@ -13,7 +13,8 @@ appi = insights.Component(
     resource_name_=f'appi-{config.prefix}-001',
     resource_group_name=rg.name,
     tags=config.tags,
-    kind=config.appi_kind
+    kind=config.appi_kind,
+    ingestion_mode='ApplicationInsights'
 )
 
 kv = keyvault.Vault(
