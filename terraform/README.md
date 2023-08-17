@@ -4,18 +4,6 @@
 
 <br>
 
-## Official docs:
-https://www.terraform.io/docs/cli-index.html
-
-https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
-
-<br><br>
-
-## Azure tutorial:
-https://learn.hashicorp.com/collections/terraform/azure-get-started
-
-<br><br>
-
 ## Show version:
 ```shell
 terraform --version
@@ -47,12 +35,12 @@ terraform logout
 
 <br><br>
 
-## Initialize Terraform backend:
+## Initialize Terraform:
 ```shell
 terraform init
 ```
 
-## Upgrade Terraform backend to a newer version:
+## Upgrade Terraform provider versions:
 ```shell
 terraform init --upgrade
 ```
@@ -221,6 +209,11 @@ terraform state rm <terraform-resource-type>.<symbolic-name>
 terraform state rm $(terraform state list)
 ```
 
+## Force-unlock the Terraform state:
+```shell
+terraform force-unlock --force <lock-name>
+```
+
 <br><br>
 
 ## Plan a Terraform destroy:
@@ -256,5 +249,5 @@ terraform console
 
 ## Generate a visualization of a Terraform configuration:
 ```shell
-terraform graph | dot -Tsvg > graph.svg
+terraform graph | dot -Tpng > graph.png
 ```
