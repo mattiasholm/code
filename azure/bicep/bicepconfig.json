@@ -16,6 +16,9 @@
                 "explicit-values-for-loc-params": {
                     "level": "error"
                 },
+                "max-asserts": {
+                    "level": "error"
+                },
                 "max-outputs": {
                     "level": "error"
                 },
@@ -26,6 +29,9 @@
                     "level": "error"
                 },
                 "max-variables": {
+                    "level": "error"
+                },
+                "no-conflicting-metadata": {
                     "level": "error"
                 },
                 "no-hardcoded-env-urls": {
