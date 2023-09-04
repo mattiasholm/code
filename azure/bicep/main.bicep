@@ -1,6 +1,7 @@
 targetScope = 'subscription'
 
 param config object
+param location string = deployment().location
 
 var prefix = toLower('${config.tags.Company}-${config.tags.Application}')
 var prefixStripped = replace(prefix, '-', '') // Replace with UDF once supported
@@ -8,7 +9,7 @@ var tenantId = subscription().tenantId
 
 resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   name: 'rg-${prefix}-001'
-  location: config.location
+  location: location
   tags: config.tags
 }
 
@@ -17,7 +18,7 @@ module appi 'modules/appi.bicep' = {
   scope: rg
   params: {
     name: 'appi-${prefix}-001'
-    location: config.location
+    location: location
     kind: config.appi.kind
     kvName: kv.outputs.name
   }
@@ -28,7 +29,7 @@ module kv 'modules/kv.bicep' = {
   scope: rg
   params: {
     name: 'kv-${prefix}-001'
-    location: config.location
+    location: location
     tenantId: tenantId
     sku: config.kv.sku
     accessPolicies: [
@@ -61,7 +62,7 @@ module pip 'modules/pip.bicep' = [for (label, i) in config.pip.labels: {
   scope: rg
   params: {
     name: 'pip-${prefix}-${padLeft(i + 1, 3, '0')}'
-    location: config.location
+    location: location
     sku: config.pip.sku
     publicIPAllocationMethod: config.pip.allocation
     domainNameLabel: '${label}-${prefix}'
@@ -73,7 +74,7 @@ module st 'modules/st.bicep' = [for i in range(0, config.st.count): {
   scope: rg
   params: {
     name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
-    location: config.location
+    location: location
     kind: config.st.kind
     sku: config.st.sku
     allowBlobPublicAccess: config.st.publicAccess
@@ -90,7 +91,7 @@ module vnet 'modules/vnet.bicep' = if (contains(config, 'vnet')) {
   scope: rg
   params: {
     name: 'vnet-${prefix}-001'
-    location: config.location
+    location: location
     addressPrefixes: [
       config.vnet.addressPrefix
     ]

@@ -1,7 +1,6 @@
 using 'main.bicep'
 
 param config = {
-  location: 'WestEurope'
   tags: {
     Application: 'Bicep'
     Company: 'Holm'
