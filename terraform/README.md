@@ -211,7 +211,7 @@ terraform state rm $(terraform state list)
 
 ## Force-unlock the Terraform state:
 ```shell
-terraform force-unlock --force <lock-name>
+terraform force-unlock <lock-id>
 ```
 
 <br><br>
