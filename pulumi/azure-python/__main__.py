@@ -4,13 +4,13 @@ import config
 
 rg = resources.ResourceGroup(
     'rg',
-    resource_group_name=f'rg-{config.prefix}-001',
+    resource_group_name=f'rg-{config.prefix}-01',
     tags=config.tags
 )
 
 appi = insights.Component(
     'appi',
-    resource_name_=f'appi-{config.prefix}-001',
+    resource_name_=f'appi-{config.prefix}-01',
     resource_group_name=rg.name,
     tags=config.tags,
     kind=config.appi_kind,
@@ -19,7 +19,7 @@ appi = insights.Component(
 
 kv = keyvault.Vault(
     'kv',
-    vault_name=f'kv-{config.prefix}-001',
+    vault_name=f'kv-{config.prefix}-01',
     resource_group_name=rg.name,
     tags=config.tags,
     properties=keyvault.VaultPropertiesArgs(
@@ -73,7 +73,7 @@ cnames = []
 for i, pip_label in enumerate(config.pip_labels):
     pip = network.PublicIPAddress(
         f'pip{i}',
-        public_ip_address_name=f'pip-{config.prefix}-{str(i + 1).zfill(3)}',
+        public_ip_address_name=f'pip-{config.prefix}-{str(i + 1).zfill(2)}',
         resource_group_name=rg.name,
         tags=config.tags,
         sku=network.PublicIPAddressSkuArgs(
@@ -103,7 +103,7 @@ sts = []
 for i in range(0, config.st_count):
     st = storage.StorageAccount(
         f'st{i}',
-        account_name=f'st{config.prefix_stripped}{str(i + 1).zfill(3)}',
+        account_name=f'st{config.prefix_stripped}{str(i + 1).zfill(2)}',
         resource_group_name=rg.name,
         tags=config.tags,
         kind=config.st_kind,
@@ -118,7 +118,7 @@ for i in range(0, config.st_count):
 
     storage.BlobContainer(
         f'container{i}',
-        container_name=f'container-001',
+        container_name=f'container-01',
         account_name=st.name,
         resource_group_name=rg.name
     )
@@ -126,7 +126,7 @@ for i in range(0, config.st_count):
 if config.vnet_address_prefix:
     vnet = network.VirtualNetwork(
         'vnet',
-        virtual_network_name=f'vnet-{config.prefix}-001',
+        virtual_network_name=f'vnet-{config.prefix}-01',
         resource_group_name=rg.name,
         tags=config.tags,
         address_space=network.AddressSpaceArgs(
@@ -136,7 +136,7 @@ if config.vnet_address_prefix:
         ),
         subnets=[
             network.SubnetArgs(
-                name=f'snet-001',
+                name=f'snet-01',
                 address_prefix=config.vnet_address_prefix
             )
         ]

@@ -14,13 +14,13 @@ data "azuread_service_principal" "sp" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-${local.prefix}-001"
+  name     = "rg-${local.prefix}-01"
   location = var.location
   tags     = var.tags
 }
 
 resource "azurerm_application_insights" "appi" {
-  name                = "appi-${local.prefix}-001"
+  name                = "appi-${local.prefix}-01"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
@@ -28,7 +28,7 @@ resource "azurerm_application_insights" "appi" {
 }
 
 resource "azurerm_key_vault" "kv" {
-  name                = "kv-${local.prefix}-001"
+  name                = "kv-${local.prefix}-01"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
@@ -84,12 +84,12 @@ resource "azurerm_private_dns_cname_record" "cname" {
   zone_name           = azurerm_private_dns_zone.pdnsz.name
   resource_group_name = azurerm_resource_group.rg.name
   ttl                 = var.pdnsz_ttl
-  record              = azurerm_public_ip.pip[each.key].fqdn
+  record              = azurerm_public_ip.pip[each.value].fqdn
 }
 
 resource "azurerm_public_ip" "pip" {
   for_each            = var.pip_labels
-  name                = "pip-${local.prefix}-${each.key}"
+  name                = "pip-${local.prefix}-${format("%02d", index(tolist(var.pip_labels), each.value) + 1)}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
@@ -100,7 +100,7 @@ resource "azurerm_public_ip" "pip" {
 
 resource "azurerm_storage_account" "st" {
   count                           = var.st_count
-  name                            = "st${local.prefix_stripped}${format("%03d", count.index + 1)}"
+  name                            = "st${local.prefix_stripped}${format("%02d", count.index + 1)}"
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = var.location
   tags                            = var.tags
@@ -114,13 +114,13 @@ resource "azurerm_storage_account" "st" {
 
 resource "azurerm_storage_container" "container" {
   count                = var.st_count
-  name                 = "container-001"
+  name                 = "container-01"
   storage_account_name = azurerm_storage_account.st[count.index].name
 }
 
 resource "azurerm_virtual_network" "vnet" {
   count               = var.vnet_address_prefix != null ? 1 : 0
-  name                = "vnet-${local.prefix}-001"
+  name                = "vnet-${local.prefix}-01"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
@@ -129,7 +129,7 @@ resource "azurerm_virtual_network" "vnet" {
   ]
 
   subnet {
-    name           = "snet-001"
+    name           = "snet-01"
     address_prefix = var.vnet_address_prefix
   }
 }

@@ -9,7 +9,7 @@
       "value": "standard"
     },
     "kvObjectId": {
-      "value": "e1d37e09-c819-457e-9b93-44b8c784f539"
+      "value": "d725a3d9-3350-4f0c-b44a-345eb27b4302"
     },
     "kvPermissions": {
       "value": {
@@ -72,8 +72,8 @@
     },
     "pipLabels": {
       "value": [
-        "foo",
-        "bar"
+        "app",
+        "web"
       ]
     },
     "pipSku": {

@@ -74,7 +74,7 @@ variable "pdnsz_ttl" {
 }
 
 variable "pip_labels" {
-  type = map(string)
+  type = set(string)
 }
 
 variable "pip_sku" {

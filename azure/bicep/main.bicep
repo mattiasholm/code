@@ -8,7 +8,7 @@ var prefixStripped = replace(prefix, '-', '') // Replace with UDF once supported
 var tenantId = subscription().tenantId
 
 resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
-  name: 'rg-${prefix}-001'
+  name: 'rg-${prefix}-01'
   location: location
   tags: config.tags
 }
@@ -17,7 +17,7 @@ module appi 'modules/appi.bicep' = {
   name: 'appi'
   scope: rg
   params: {
-    name: 'appi-${prefix}-001'
+    name: 'appi-${prefix}-01'
     location: location
     kind: config.appi.kind
     kvName: kv.outputs.name
@@ -28,7 +28,7 @@ module kv 'modules/kv.bicep' = {
   name: 'kv'
   scope: rg
   params: {
-    name: 'kv-${prefix}-001'
+    name: 'kv-${prefix}-01'
     location: location
     tenantId: tenantId
     sku: config.kv.sku
@@ -61,7 +61,7 @@ module pip 'modules/pip.bicep' = [for (label, i) in config.pip.labels: {
   name: 'pip${i}'
   scope: rg
   params: {
-    name: 'pip-${prefix}-${padLeft(i + 1, 3, '0')}'
+    name: 'pip-${prefix}-${padLeft(i + 1, 2, '0')}'
     location: location
     sku: config.pip.sku
     publicIPAllocationMethod: config.pip.allocation
@@ -73,7 +73,7 @@ module st 'modules/st.bicep' = [for i in range(0, config.st.count): {
   name: 'st${i}'
   scope: rg
   params: {
-    name: 'st${prefixStripped}${padLeft(i + 1, 3, '0')}'
+    name: 'st${prefixStripped}${padLeft(i + 1, 2, '0')}'
     location: location
     kind: config.st.kind
     sku: config.st.sku
@@ -81,7 +81,7 @@ module st 'modules/st.bicep' = [for i in range(0, config.st.count): {
     supportsHttpsTrafficOnly: config.st.httpsOnly
     minimumTlsVersion: config.st.tlsVersion
     containers: [
-      'container-001'
+      'container-01'
     ]
   }
 }]
@@ -90,18 +90,18 @@ module vnet 'modules/vnet.bicep' = if (contains(config, 'vnet')) {
   name: 'vnet'
   scope: rg
   params: {
-    name: 'vnet-${prefix}-001'
+    name: 'vnet-${prefix}-01'
     location: location
     addressPrefixes: [
       config.vnet.addressPrefix
     ]
     subnets: [
       {
-        name: 'snet-001'
+        name: 'snet-01'
         addressPrefix: cidrSubnet(config.vnet.addressPrefix, 25, 0)
       }
       {
-        name: 'snet-002'
+        name: 'snet-02'
         addressPrefix: cidrSubnet(config.vnet.addressPrefix, 25, 1)
       }
     ]

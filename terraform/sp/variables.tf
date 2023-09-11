@@ -10,7 +10,7 @@ variable "name" {
   type = string
 
   validation {
-    condition     = can(regex("^sp-[a-z]+-[0-9]{3}$", var.name))
+    condition     = can(regex("^sp-[a-z]+-[0-9]{2}$", var.name))
     error_message = "Invalid value for variable."
   }
 }

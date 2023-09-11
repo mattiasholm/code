@@ -1,15 +1,15 @@
 config:
-  azuread:tenantId: 9e042b3b-36c4-4b99-8236-728c73166cd9
-  azure-native:subscriptionId: 9b184a26-7fff-49ed-9230-d11d484ad51b
+  azuread:tenantId: 34311a99-c681-4ecd-88ce-eab1d59f443a
+  azure-native:subscriptionId: 804fd219-0c15-45f9-ae36-0a4d3725848f
   azure-native:location: WestEurope
   azure-python:tags:
     Application: Pulumi
     Company: Holm
     Environment: Development
-    Owner: mattias.holm@live.com
+    Owner: mattias.holm@b3cloud.onmicrosoft.com
   azure-python:appi_kind: web
   azure-python:kv_sku: standard
-  azure-python:kv_user_name: mattias.holm@azronnieb3it.onmicrosoft.com
+  azure-python:kv_user_name: mattias.holm@b3cloud.onmicrosoft.com
   azure-python:kv_user_key_permissions:
     - Get
     - List
@@ -53,15 +53,15 @@ config:
     - SetIssuers
     - DeleteIssuers
     - Purge
-  azure-python:kv_sp_name: sp-holm-001
+  azure-python:kv_sp_name: sp-holm-01
   azure-python:kv_sp_secret_permissions:
     - Delete
   azure-python:pdnsz_name: holm.io
   azure-python:pdnsz_registration: false
   azure-python:pdnsz_ttl: 3600
   azure-python:pip_labels:
-    - foo
-    - bar
+    - app
+    - web
   azure-python:pip_sku: Basic
   azure-python:pip_allocation: Dynamic
   azure-python:st_count: 2

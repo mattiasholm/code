@@ -5,14 +5,14 @@ param config = {
     Application: 'Bicep'
     Company: 'Holm'
     Environment: 'Development'
-    Owner: 'mattias.holm@live.com'
+    Owner: 'mattias.holm@b3cloud.onmicrosoft.com'
   }
   appi: {
     kind: 'web'
   }
   kv: {
     sku: 'standard'
-    objectId: 'e1d37e09-c819-457e-9b93-44b8c784f539'
+    objectId: 'd725a3d9-3350-4f0c-b44a-345eb27b4302'
     permissions: {
       keys: [
         'Get'
@@ -69,8 +69,8 @@ param config = {
   }
   pip: {
     labels: [
-      'foo'
-      'bar'
+      'app'
+      'web'
     ]
     sku: 'Basic'
     allocation: 'Dynamic'

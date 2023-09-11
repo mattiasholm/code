@@ -1,6 +1,6 @@
-tenant_id       = "9e042b3b-36c4-4b99-8236-728c73166cd9"
-subscription_id = "9b184a26-7fff-49ed-9230-d11d484ad51b"
-name            = "sp-holm-003"
+tenant_id       = "34311a99-c681-4ecd-88ce-eab1d59f443a"
+subscription_id = "804fd219-0c15-45f9-ae36-0a4d3725848f"
+name            = "sp-holm-03"
 api             = "MicrosoftGraph"
 permissions = {
   roles = [

@@ -121,16 +121,16 @@
         "prefix": "[toLower(format('{0}-{1}', parameters('tags').Company, parameters('tags').Application))]",
         "prefixStripped": "[replace(variables('prefix'), '-', '')]",
         "tenantId": "[subscription().tenantId]",
-        "appiName": "[format('appi-{0}-001', variables('prefix'))]",
+        "appiName": "[format('appi-{0}-01', variables('prefix'))]",
         "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
-        "kvName": "[format('kv-{0}-001', variables('prefix'))]",
+        "kvName": "[format('kv-{0}-01', variables('prefix'))]",
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "pdnszId": "[resourceId('Microsoft.Network/privateDnsZones', parameters('pdnszName'))]",
         "pipCount": "[length(parameters('pipLabels'))]",
-        "containerName": "container-001",
-        "vnetName": "[format('vnet-{0}-001', variables('prefix'))]",
+        "containerName": "container-01",
+        "vnetName": "[format('vnet-{0}-01', variables('prefix'))]",
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
-        "snetName": "snet-001",
+        "snetName": "snet-01",
         "copy": [
             {
                 "name": "cnameName",
@@ -145,7 +145,7 @@
             {
                 "name": "pipName",
                 "count": "[variables('pipCount')]",
-                "input": "[format('pip-{0}-{1}', variables('prefix'), padLeft(copyIndex('pipName', 1), 3, '0'))]"
+                "input": "[format('pip-{0}-{1}', variables('prefix'), padLeft(copyIndex('pipName', 1), 2, '0'))]"
             },
             {
                 "name": "pipId",
@@ -160,7 +160,7 @@
             {
                 "name": "stName",
                 "count": "[parameters('stCount')]",
-                "input": "[format('st{0}{1}', variables('prefixStripped'), padLeft(copyIndex('stName', 1), 3, '0'))]"
+                "input": "[format('st{0}{1}', variables('prefixStripped'), padLeft(copyIndex('stName', 1), 2, '0'))]"
             },
             {
                 "name": "stId",

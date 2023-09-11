@@ -1,11 +1,11 @@
-subscription='9b184a26-7fff-49ed-9230-d11d484ad51b'
-resourceGroup='rg-holm-arm-001'
+subscription='804fd219-0c15-45f9-ae36-0a4d3725848f'
+resourceGroup='rg-holm-arm-01'
 location='WestEurope'
 tags=(
     'Application=ARM'
     'Company=Holm'
     'Environment=Development'
-    'Owner=mattias.holm@live.com'
+    'Owner=mattias.holm@b3cloud.onmicrosoft.com'
 )
 template='main.json'
 parameters='parameters.json'
