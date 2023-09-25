@@ -4,7 +4,7 @@ param vnetName string
 param vnetId string
 param registrationEnabled bool = false
 param ttl int = 3600
-param cnameRecords array = []
+param cnameRecords { name: string, cname: string }[] = []
 
 var location = 'global'
 

@@ -1,15 +1,7 @@
 param name string
 param location string
 param tags object = resourceGroup().tags
-@allowed([
-  'web'
-  'java'
-  'store'
-  'ios'
-  'phone'
-  'other'
-])
-param kind string = 'web'
+param kind 'web' | 'java' | 'store' | 'ios' | 'phone' | 'other' = 'web'
 param kvName string
 
 var applicationType = kind == 'web' ? 'web' : 'other'

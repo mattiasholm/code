@@ -3,12 +3,8 @@ param name string
 param location string
 param tags object = resourceGroup().tags
 param tenantId string = subscription().tenantId
-@allowed([// Replace with UDT once supported
-  'standard'
-  'premium'
-])
-param sku string = 'standard'
-param accessPolicies array = []
+param sku 'standard' | 'premium' = 'standard'
+param accessPolicies { objectId: string, permissions: object }[] = []
 
 resource kv 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: name

@@ -1,16 +1,8 @@
 param name string
 param location string
 param tags object = resourceGroup().tags
-@allowed([
-  'Basic'
-  'Standard'
-])
-param sku string = 'Basic'
-@allowed([
-  'Dynamic'
-  'Static'
-])
-param publicIPAllocationMethod string = 'Dynamic'
+param sku 'Basic' | 'Standard' = 'Basic'
+param publicIPAllocationMethod 'Dynamic' | 'Static' = 'Dynamic'
 param domainNameLabel string
 
 resource pip 'Microsoft.Network/publicIPAddresses@2022-01-01' = {

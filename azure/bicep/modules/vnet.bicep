@@ -1,8 +1,8 @@
 param name string
 param location string
 param tags object = resourceGroup().tags
-param addressPrefixes array
-param subnets array = []
+param addressPrefixes string[]
+param subnets { name: string, addressPrefix: string }[] = []
 
 resource vnet 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: name
