@@ -188,7 +188,7 @@
         },
         {
             "type": "Microsoft.KeyVault/vaults",
-            "apiVersion": "2022-07-01",
+            "apiVersion": "2023-02-01",
             "name": "[variables('kvName')]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -209,7 +209,7 @@
             "resources": [
                 {
                     "type": "secrets",
-                    "apiVersion": "2022-07-01",
+                    "apiVersion": "2023-02-01",
                     "name": "APPLICATIONINSIGHTS-CONNECTION-STRING",
                     "tags": "[parameters('tags')]",
                     "properties": {
@@ -275,7 +275,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2022-01-01",
+            "apiVersion": "2023-05-01",
             "name": "[variables('pipName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -296,7 +296,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2022-09-01",
+            "apiVersion": "2023-01-01",
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -312,7 +312,7 @@
             "resources": [
                 {
                     "type": "blobServices",
-                    "apiVersion": "2022-09-01",
+                    "apiVersion": "2023-01-01",
                     "name": "default",
                     "dependsOn": [
                         "[variables('stId')[copyIndex()]]"
@@ -320,7 +320,7 @@
                     "resources": [
                         {
                             "type": "containers",
-                            "apiVersion": "2022-09-01",
+                            "apiVersion": "2023-01-01",
                             "name": "[variables('containerName')]",
                             "dependsOn": [
                                 "[variables('blobId')[copyIndex()]]"
@@ -334,7 +334,7 @@
         {
             "condition": "[not(empty(parameters('vnetAddressPrefix')))]",
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2022-07-01",
+            "apiVersion": "2023-05-01",
             "name": "[variables('vnetName')]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
