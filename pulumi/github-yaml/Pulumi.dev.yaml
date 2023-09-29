@@ -1,4 +1,5 @@
 config:
+  pulumi:disable-default-providers: ["*"]
   github:owner: mattiasholm
   github:token:
     secure: AAABAEOC071w9gvqKo8BS8wAaX5RcICJhZ2wy1cRUQFVB3s/9TPeAhVN56p4MyT8jZwN5W2ut/pjCUFNeTEprbGqlwxoOdLl

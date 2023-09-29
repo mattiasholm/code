@@ -31,21 +31,46 @@ variables:
   user:
     fn::invoke:
       function: azuread:getClientConfig
+      options:
+        provider: ${azuread}
 
   subscription:
     fn::invoke:
       function: azure-native:authorization:getClientConfig
+      options:
+        provider: ${azure-native}
 
   roleDefinition:
     fn::invoke:
       function: azure-native:authorization:getRoleDefinition
+      options:
+        provider: ${azure-native}
       arguments:
         roleDefinitionId: ${roleId}
         scope: /subscriptions/${subscription.subscriptionId}
 
 resources:
+  azuread:
+    type: pulumi:providers:azuread
+    options:
+      version: 5.42.0
+    properties:
+      metadataHost: management.azure.com
+
+  azure-native:
+    type: pulumi:providers:azure-native
+    options:
+      version: 2.9.0
+
+  command:
+    type: pulumi:providers:command
+    options:
+      version: 0.9.0
+
   app:
     type: azuread:Application
+    options:
+      provider: ${azuread}
     properties:
       displayName: ${name}
       owners:
@@ -58,6 +83,8 @@ resources:
 
   sp:
     type: azuread:ServicePrincipal
+    options:
+      provider: ${azuread}
     properties:
       applicationId: ${app.applicationId}
       owners:
@@ -65,6 +92,8 @@ resources:
 
   role:
     type: azure-native:authorization:RoleAssignment
+    options:
+      provider: ${azure-native}
     properties:
       principalId: ${sp.objectId}
       principalType: ServicePrincipal
@@ -73,6 +102,8 @@ resources:
 
   secret:
     type: azuread:ApplicationPassword
+    options:
+      provider: ${azuread}
     properties:
       displayName: ${secretName}
       applicationObjectId: ${app.objectId}
@@ -82,6 +113,8 @@ resources:
 
   main:
     type: azuread:ApplicationFederatedIdentityCredential
+    options:
+      provider: ${azuread}
     properties:
       displayName: main
       applicationObjectId: ${app.objectId}
@@ -92,6 +125,8 @@ resources:
 
   pull_request:
     type: azuread:ApplicationFederatedIdentityCredential
+    options:
+      provider: ${azuread}
     properties:
       displayName: pull_request
       applicationObjectId: ${app.objectId}
@@ -102,6 +137,8 @@ resources:
 
   dev:
     type: azuread:ApplicationFederatedIdentityCredential
+    options:
+      provider: ${azuread}
     properties:
       displayName: dev
       applicationObjectId: ${app.objectId}
@@ -117,8 +154,10 @@ resources:
   #     appRoleId: ${permission}
   #     principalObjectId: ${sp.objectId}
 
-  command: # REPLACE WITH NATIVE RESOURCE!
+  assignment: # REPLACE WITH NATIVE RESOURCE!
     type: command:local:Command
+    options:
+      provider: ${command}
     properties:
       create: |
         resourceId=$(az ad sp show --id ${api} --query id --output tsv)

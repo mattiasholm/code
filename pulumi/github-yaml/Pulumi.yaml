@@ -4,8 +4,15 @@ options:
   refresh: always
 
 resources:
+  github:
+    type: pulumi:providers:github
+    options:
+      version: 5.19.0
+
   repo:
     type: github:Repository
+    options:
+      provider: ${github}
     properties:
       name: pulumi
       description: Repository created with Pulumi
@@ -14,6 +21,8 @@ resources:
 
   file:
     type: github:RepositoryFile
+    options:
+      provider: ${github}
     properties:
       repository: ${repo.name}
       file: .gitignore
@@ -22,6 +31,8 @@ resources:
 
   secret:
     type: github:ActionsSecret
+    options:
+      provider: ${github}
     properties:
       repository: ${repo.name}
       secretName: SECRET
@@ -29,6 +40,8 @@ resources:
 
   variable:
     type: github:ActionsVariable
+    options:
+      provider: ${github}
     properties:
       repository: ${repo.name}
       variableName: VARIABLE
