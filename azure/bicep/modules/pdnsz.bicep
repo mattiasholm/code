@@ -13,7 +13,7 @@ resource pdnsz 'Microsoft.Network/privateDnsZones@2020-06-01' = {
   location: location
   tags: tags
 
-  resource link 'virtualNetworkLinks' = if (!empty(vnetId)) {
+  resource link 'virtualNetworkLinks' = {
     name: vnetName
     location: location
     properties: {

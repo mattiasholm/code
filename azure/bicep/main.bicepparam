@@ -85,5 +85,7 @@ param config = {
   }
   vnet: {
     addressPrefix: '10.0.0.0/24'
+    subnetSize: 26
+    subnetCount: 4
   }
 }

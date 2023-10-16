@@ -114,6 +114,10 @@ function ip() {
     echo -n "$ip" | pbcopy
 }
 
+function ipi() {
+    curl --silent ipinfo.io/$1
+}
+
 function pw() {
     if [[ -z "$1" ]]; then
         length='16'

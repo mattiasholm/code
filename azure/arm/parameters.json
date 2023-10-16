@@ -102,6 +102,12 @@
     },
     "vnetAddressPrefix": {
       "value": "10.0.0.0/24"
+    },
+    "vnetSubnetSize": {
+      "value": 26
+    },
+    "vnetSubnetCount": {
+      "value": 4
     }
   }
 }

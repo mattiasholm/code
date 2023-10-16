@@ -13,7 +13,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   tags: config.tags
 }
 
-module appi 'modules/appi.bicep' = {
+module appi 'modules/appi.bicep' = if (contains(config, 'appi')) {
   name: 'appi'
   scope: rg
   params: {
@@ -47,7 +47,7 @@ module pdnsz 'modules/pdnsz.bicep' = {
   params: {
     name: config.pdnsz.name
     vnetName: vnet.outputs.name
-    vnetId: contains(config, 'vnet') ? vnet.outputs.id : ''
+    vnetId: vnet.outputs.id
     registrationEnabled: config.pdnsz.registration
     ttl: config.pdnsz.ttl
     cnameRecords: [for (label, i) in config.pip.labels: {
@@ -86,7 +86,7 @@ module st 'modules/st.bicep' = [for i in range(0, config.st.count): {
   }
 }]
 
-module vnet 'modules/vnet.bicep' = if (contains(config, 'vnet')) {
+module vnet 'modules/vnet.bicep' = {
   name: 'vnet'
   scope: rg
   params: {
@@ -95,16 +95,10 @@ module vnet 'modules/vnet.bicep' = if (contains(config, 'vnet')) {
     addressPrefixes: [
       config.vnet.addressPrefix
     ]
-    subnets: [
-      {
-        name: 'snet-01'
-        addressPrefix: cidrSubnet(config.vnet.addressPrefix, 25, 0)
-      }
-      {
-        name: 'snet-02'
-        addressPrefix: cidrSubnet(config.vnet.addressPrefix, 25, 1)
-      }
-    ]
+    subnets: [for i in range(0, config.vnet.subnetCount): {
+      name: 'snet-${padLeft(i + 1, 2, '0')}'
+      addressPrefix: cidrSubnet(config.vnet.addressPrefix, config.vnet.subnetSize, i)
+    }]
   }
 }
 

@@ -12,8 +12,9 @@
         },
         "appiKind": {
             "type": "string",
-            "defaultValue": "web",
+            "defaultValue": "",
             "allowedValues": [
+                "",
                 "web",
                 "java",
                 "store",
@@ -113,8 +114,13 @@
             ]
         },
         "vnetAddressPrefix": {
-            "type": "string",
-            "defaultValue": ""
+            "type": "string"
+        },
+        "vnetSubnetSize": {
+            "type": "int"
+        },
+        "vnetSubnetCount": {
+            "type": "int"
         }
     },
     "variables": {
@@ -127,10 +133,8 @@
         "kvId": "[resourceId('Microsoft.KeyVault/vaults', variables('kvName'))]",
         "pdnszId": "[resourceId('Microsoft.Network/privateDnsZones', parameters('pdnszName'))]",
         "pipCount": "[length(parameters('pipLabels'))]",
-        "containerName": "container-01",
         "vnetName": "[format('vnet-{0}-01', variables('prefix'))]",
         "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
-        "snetName": "snet-01",
         "copy": [
             {
                 "name": "cnameName",
@@ -171,11 +175,22 @@
                 "name": "blobId",
                 "count": "[parameters('stCount')]",
                 "input": "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('stName')[copyIndex('blobId')], 'default')]"
+            },
+            {
+                "name": "snetName",
+                "count": "[parameters('vnetSubnetCount')]",
+                "input": "[format('snet-{0}', padLeft(copyIndex('snetName', 1), 2, '0'))]"
+            },
+            {
+                "name": "snetAddressPrefix",
+                "count": "[parameters('vnetSubnetCount')]",
+                "input": "[cidrSubnet(parameters('vnetAddressPrefix'), parameters('vnetSubnetSize'), copyIndex('snetAddressPrefix'))]"
             }
         ]
     },
     "resources": [
         {
+            "condition": "[not(empty(parameters('appiKind')))]",
             "type": "Microsoft.Insights/components",
             "apiVersion": "2020-02-02",
             "name": "[variables('appiName')]",
@@ -208,12 +223,13 @@
             },
             "resources": [
                 {
+                    "condition": "[not(empty(parameters('appiKind')))]",
                     "type": "secrets",
                     "apiVersion": "2023-02-01",
                     "name": "APPLICATIONINSIGHTS-CONNECTION-STRING",
                     "tags": "[parameters('tags')]",
                     "properties": {
-                        "value": "[reference(variables('appiId')).connectionString]"
+                        "value": "[if(empty(parameters('appiKind')), '', reference(variables('appiId')).connectionString)]"
                     },
                     "dependsOn": [
                         "[variables('kvId')]",
@@ -230,7 +246,6 @@
             "tags": "[parameters('tags')]",
             "resources": [
                 {
-                    "condition": "[not(empty(parameters('vnetAddressPrefix')))]",
                     "type": "virtualNetworkLinks",
                     "apiVersion": "2020-06-01",
                     "name": "[variables('vnetName')]",
@@ -321,7 +336,7 @@
                         {
                             "type": "containers",
                             "apiVersion": "2023-01-01",
-                            "name": "[variables('containerName')]",
+                            "name": "container-01",
                             "dependsOn": [
                                 "[variables('blobId')[copyIndex()]]"
                             ]
@@ -332,7 +347,6 @@
             ]
         },
         {
-            "condition": "[not(empty(parameters('vnetAddressPrefix')))]",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2023-05-01",
             "name": "[variables('vnetName')]",
@@ -344,11 +358,15 @@
                         "[parameters('vnetAddressPrefix')]"
                     ]
                 },
-                "subnets": [
+                "copy": [
                     {
-                        "name": "[variables('snetName')]",
-                        "properties": {
-                            "addressPrefix": "[parameters('vnetAddressPrefix')]"
+                        "name": "subnets",
+                        "count": "[parameters('vnetSubnetCount')]",
+                        "input": {
+                            "name": "[variables('snetName')[copyIndex('subnets')]]",
+                            "properties": {
+                                "addressPrefix": "[variables('snetAddressPrefix')[copyIndex('subnets')]]"
+                            }
                         }
                     }
                 ]

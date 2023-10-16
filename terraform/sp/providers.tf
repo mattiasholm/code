@@ -1,7 +1,8 @@
 terraform {
-  required_version = "~> 1.5.0"
+  required_version = "~> 1.6.0"
 
   cloud {
+    hostname     = "app.terraform.io"
     organization = "mattiasholm"
 
     workspaces {
@@ -17,7 +18,7 @@ terraform {
 
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.74.0"
+      version = "~> 3.75.0"
     }
 
     time = {

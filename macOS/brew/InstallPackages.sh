@@ -31,6 +31,7 @@ brew install pwgen
 brew install gh
 brew install azure/bicep/bicep
 brew install terraform
+brew install opentofu
 brew install tflint
 brew install tfsec
 brew install terrascan

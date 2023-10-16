@@ -113,6 +113,14 @@ function ip
     echo -n $ip | pbcopy
 end
 
+function ipi --argument-names ip
+    if not test $ip
+        set ip ''
+    end
+
+    curl --silent ipinfo.io/$ip
+end
+
 function pw --argument-names length count
     if not test $length
         set length 16
