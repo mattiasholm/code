@@ -31,7 +31,13 @@
                 "max-variables": {
                     "level": "error"
                 },
+                "nested-deployment-template-scoping": {
+                    "level": "error"
+                },
                 "no-conflicting-metadata": {
+                    "level": "error"
+                },
+                "no-deployments-resources": {
                     "level": "error"
                 },
                 "no-hardcoded-env-urls": {
