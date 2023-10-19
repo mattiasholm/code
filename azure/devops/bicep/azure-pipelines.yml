@@ -12,7 +12,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  - template: templates/variables.yml
+  appName: app-$(Environment.Name)-01
 
 stages:
   - template: templates/build.yml
@@ -26,16 +26,15 @@ stages:
     parameters:
       environment: tst
       dependsOn: build
-      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
   - template: templates/release.yml
     parameters:
       environment: stg
       dependsOn: tst
-      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
   - template: templates/release.yml
     parameters:
       environment: prod
       dependsOn: stg
-      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))

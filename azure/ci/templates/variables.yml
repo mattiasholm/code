@@ -1,2 +1,0 @@
-variables:
-  appName: app-$(Environment.Name)-01

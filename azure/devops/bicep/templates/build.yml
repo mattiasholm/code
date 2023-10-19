@@ -10,10 +10,13 @@ stages:
         displayName: Validate infrastructure
         steps:
           - ${{ each environment in parameters.environments }}:
-          - template: deploy.yml
-            parameters:
-              environment: ${{ environment }}
-              arguments: -Validate
+              - task: AzureCLI@2
+                displayName: ${{ environment }}
+                inputs:
+                  azureSubscription: ${{ environment }}
+                  scriptType: pscore
+                  scriptPath: iac/deploy.ps1
+                  arguments: ${{ environment }} -Validate
 
       - job: app
         displayName: Build application
