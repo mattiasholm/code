@@ -20,6 +20,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_application_insights" "appi" {
+  count               = var.appi_type != "" ? 1 : 0
   name                = "appi-${local.prefix}-01"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
@@ -53,9 +54,10 @@ resource "azurerm_key_vault_access_policy" "policy_sp" {
 }
 
 resource "azurerm_key_vault_secret" "secret" {
+  count        = var.appi_type != "" ? 1 : 0
   name         = "APPLICATIONINSIGHTS-CONNECTION-STRING"
   tags         = var.tags
-  value        = azurerm_application_insights.appi.connection_string
+  value        = azurerm_application_insights.appi[0].connection_string
   key_vault_id = azurerm_key_vault.kv.id
   depends_on = [
     azurerm_key_vault_access_policy.policy_user,
@@ -70,11 +72,10 @@ resource "azurerm_private_dns_zone" "pdnsz" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "link" {
-  count                 = var.vnet_address_prefix != null ? 1 : 0
-  name                  = azurerm_virtual_network.vnet[0].name
+  name                  = azurerm_virtual_network.vnet.name
   private_dns_zone_name = azurerm_private_dns_zone.pdnsz.name
   resource_group_name   = azurerm_resource_group.rg.name
-  virtual_network_id    = azurerm_virtual_network.vnet[0].id
+  virtual_network_id    = azurerm_virtual_network.vnet.id
   registration_enabled  = var.pdnsz_registration
 }
 
@@ -119,7 +120,6 @@ resource "azurerm_storage_container" "container" {
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  count               = var.vnet_address_prefix != null ? 1 : 0
   name                = "vnet-${local.prefix}-01"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location

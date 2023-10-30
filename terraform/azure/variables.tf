@@ -17,10 +17,10 @@ variable "tags" {
 
 variable "appi_type" {
   type    = string
-  default = "web"
+  default = ""
 
   validation {
-    condition     = contains(["web", "java", "store", "ios", "phone", "other"], var.appi_type)
+    condition     = contains(["", "web", "java", "store", "ios", "phone", "other"], var.appi_type)
     error_message = "Invalid value for variable."
   }
 }
@@ -153,6 +153,5 @@ variable "st_tls_version" {
 }
 
 variable "vnet_address_prefix" {
-  type    = string
-  default = null
+  type = string
 }
