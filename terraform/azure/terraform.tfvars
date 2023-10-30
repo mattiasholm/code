@@ -81,3 +81,5 @@ st_public_access    = false
 st_https_only       = true
 st_tls_version      = "TLS1_2"
 vnet_address_prefix = "10.0.0.0/24"
+vnet_subnet_size    = 26
+vnet_subnet_count   = 4

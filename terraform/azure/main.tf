@@ -1,6 +1,7 @@
 locals {
   prefix          = lower("${var.tags.Company}-${var.tags.Application}")
   prefix_stripped = replace(local.prefix, "-", "")
+  vnet_size       = split("/", var.vnet_address_prefix)[1]
 }
 
 data "azurerm_subscription" "sub" {}
@@ -128,8 +129,12 @@ resource "azurerm_virtual_network" "vnet" {
     var.vnet_address_prefix
   ]
 
-  subnet {
-    name           = "snet-01"
-    address_prefix = var.vnet_address_prefix
+  dynamic "subnet" {
+    for_each = range(var.vnet_subnet_count)
+
+    content {
+      name           = "snet-${format("%02d", subnet.value + 1)}"
+      address_prefix = cidrsubnet(var.vnet_address_prefix, var.vnet_subnet_size - local.vnet_size, subnet.value)
+    }
   }
 }

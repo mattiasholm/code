@@ -155,3 +155,11 @@ variable "st_tls_version" {
 variable "vnet_address_prefix" {
   type = string
 }
+
+variable "vnet_subnet_size" {
+  type = number
+}
+
+variable "vnet_subnet_count" {
+  type = number
+}

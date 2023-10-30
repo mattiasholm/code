@@ -100,7 +100,7 @@ for i, pip_label in enumerate(config.pip_labels):
     cnames.append(cname)
 
 sts = []
-for i in range(0, config.st_count):
+for i in range(config.st_count):
     st = storage.StorageAccount(
         f'st{i}',
         account_name=f'st{config.prefix_stripped}{str(i + 1).zfill(2)}',
