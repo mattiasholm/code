@@ -8,14 +8,15 @@ rg = resources.ResourceGroup(
     tags=config.tags
 )
 
-appi = insights.Component(
-    'appi',
-    resource_name_=f'appi-{config.prefix}-01',
-    resource_group_name=rg.name,
-    tags=config.tags,
-    kind=config.appi_kind,
-    ingestion_mode='ApplicationInsights'
-)
+if config.appi_kind:
+    appi = insights.Component(
+        'appi',
+        resource_name_=f'appi-{config.prefix}-01',
+        resource_group_name=rg.name,
+        tags=config.tags,
+        kind=config.appi_kind,
+        ingestion_mode='ApplicationInsights'
+    )
 
 kv = keyvault.Vault(
     'kv',
@@ -49,16 +50,17 @@ kv = keyvault.Vault(
     )
 )
 
-keyvault.Secret(
-    'secret',
-    secret_name='APPLICATIONINSIGHTS-CONNECTION-STRING',
-    vault_name=kv.name,
-    resource_group_name=rg.name,
-    tags=config.tags,
-    properties=keyvault.SecretPropertiesArgs(
-        value=appi.connection_string
+if config.appi_kind:
+    keyvault.Secret(
+        'secret',
+        secret_name='APPLICATIONINSIGHTS-CONNECTION-STRING',
+        vault_name=kv.name,
+        resource_group_name=rg.name,
+        tags=config.tags,
+        properties=keyvault.SecretPropertiesArgs(
+            value=appi.connection_string
+        )
     )
-)
 
 pdnsz = network.PrivateZone(
     'pdnsz',
@@ -123,36 +125,35 @@ for i in range(config.st_count):
         resource_group_name=rg.name
     )
 
-if config.vnet_address_prefix:
-    vnet = network.VirtualNetwork(
-        'vnet',
-        virtual_network_name=f'vnet-{config.prefix}-01',
-        resource_group_name=rg.name,
-        tags=config.tags,
-        address_space=network.AddressSpaceArgs(
-            address_prefixes=[
-                config.vnet_address_prefix
-            ]
-        ),
-        subnets=[
-            network.SubnetArgs(
-                name='snet-01',
-                address_prefix=config.vnet_address_prefix
-            )
+vnet = network.VirtualNetwork(
+    'vnet',
+    virtual_network_name=f'vnet-{config.prefix}-01',
+    resource_group_name=rg.name,
+    tags=config.tags,
+    address_space=network.AddressSpaceArgs(
+        address_prefixes=[
+            config.vnet_address_prefix
         ]
-    )
+    ),
+    subnets=[
+        network.SubnetArgs(
+            name='snet-01',
+            address_prefix=config.vnet_address_prefix
+        )
+    ]
+)
 
-    network.VirtualNetworkLink(
-        'link',
-        virtual_network_link_name=vnet.name,
-        private_zone_name=pdnsz.name,
-        resource_group_name=rg.name,
-        location='global',
-        virtual_network=network.SubResourceArgs(
-            id=vnet.id
-        ),
-        registration_enabled=config.pdnsz_registration
-    )
+network.VirtualNetworkLink(
+    'link',
+    virtual_network_link_name=vnet.name,
+    private_zone_name=pdnsz.name,
+    resource_group_name=rg.name,
+    location='global',
+    virtual_network=network.SubResourceArgs(
+        id=vnet.id
+    ),
+    registration_enabled=config.pdnsz_registration
+)
 
 pulumi.export('kv_url', kv.properties.vault_uri)
 

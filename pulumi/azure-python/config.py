@@ -9,7 +9,7 @@ tags = config.get_object('tags')
 prefix = '{Company}-{Application}'.format_map(tags).lower()
 prefix_stripped = prefix.replace('-', '')
 
-appi_kind = config.get('appi_kind') or 'web'
+appi_kind = config.get('appi_kind')
 
 kv_sku = config.get('kv_sku') or 'standard'
 kv_user_name = config.require('kv_user_name')
@@ -36,16 +36,15 @@ st_public_access = config.get_bool('st_public_access') or False
 st_https_only = config.get_bool('st_https_only') or True
 st_tls_version = config.get('st_tls_version') or 'TLS1_2'
 
-vnet_address_prefix = config.get('vnet_address_prefix')
+vnet_address_prefix = config.require('vnet_address_prefix')
 
 if len(prefix) > 17:
     raise ValueError(f"'{prefix}' is longer than 17 characters")
 
-if vnet_address_prefix:
-    network = ipaddress.ip_network(vnet_address_prefix)
+network = ipaddress.ip_network(vnet_address_prefix)
 
-    if not network.is_private:
-        raise ValueError(f"'{vnet_address_prefix}' is not a private network")
+if not network.is_private:
+    raise ValueError(f"'{vnet_address_prefix}' is not a private network")
 
-    if network.prefixlen > 24:
-        raise ValueError(f"'{vnet_address_prefix}' is smaller than /24")
+if network.prefixlen > 24:
+    raise ValueError(f"'{vnet_address_prefix}' is smaller than /24")
