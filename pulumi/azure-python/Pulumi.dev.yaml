@@ -71,3 +71,5 @@ config:
   azure-python:st_https_only: true
   azure-python:st_tls_version: TLS1_2
   azure-python:vnet_address_prefix: 10.0.0.0/24
+  azure-python:vnet_subnet_size: 26
+  azure-python:vnet_subnet_count: 4

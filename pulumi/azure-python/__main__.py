@@ -137,9 +137,9 @@ vnet = network.VirtualNetwork(
     ),
     subnets=[
         network.SubnetArgs(
-            name='snet-01',
-            address_prefix=config.vnet_address_prefix
-        )
+            name=f'snet-{str(i + 1).zfill(2)}',
+            address_prefix=str(config.subnets[i])
+        ) for i in range(config.vnet_subnet_count)
     ]
 )
 

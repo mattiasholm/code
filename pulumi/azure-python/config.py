@@ -37,11 +37,13 @@ st_https_only = config.get_bool('st_https_only') or True
 st_tls_version = config.get('st_tls_version') or 'TLS1_2'
 
 vnet_address_prefix = config.require('vnet_address_prefix')
+vnet_subnet_size = config.require_int('vnet_subnet_size')
+vnet_subnet_count = config.require_int('vnet_subnet_count')
+network = ipaddress.ip_network(vnet_address_prefix)
+subnets = list(network.subnets(new_prefix=vnet_subnet_size))
 
 if len(prefix) > 17:
     raise ValueError(f"'{prefix}' is longer than 17 characters")
-
-network = ipaddress.ip_network(vnet_address_prefix)
 
 if not network.is_private:
     raise ValueError(f"'{vnet_address_prefix}' is not a private network")
