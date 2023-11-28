@@ -5,7 +5,7 @@ data "azurerm_subscription" "sub" {}
 data "azuread_application_published_app_ids" "app_ids" {}
 
 data "azuread_service_principal" "sp" {
-  application_id = data.azuread_application_published_app_ids.app_ids.result[var.api]
+  client_id = data.azuread_application_published_app_ids.app_ids.result[var.api]
 }
 
 resource "azuread_application" "app" {
@@ -38,7 +38,7 @@ resource "azuread_application" "app" {
 }
 
 resource "azuread_service_principal" "sp" {
-  application_id = azuread_application.app.application_id
+  client_id = azuread_application.app.client_id
   owners = [
     data.azuread_client_config.user.object_id
   ]
@@ -55,21 +55,21 @@ resource "time_rotating" "rotation" {
 }
 
 resource "azuread_application_password" "secret" {
-  display_name          = var.secret_name
-  application_object_id = azuread_application.app.object_id
-  end_date_relative     = "${var.secret_expiration * 24}h"
+  display_name      = var.secret_name
+  application_id    = azuread_application.app.id
+  end_date_relative = "${var.secret_expiration * 24}h"
   rotate_when_changed = {
     rotation = time_rotating.rotation.id
   }
 }
 
 resource "azuread_application_federated_identity_credential" "credential" {
-  for_each              = var.subjects
-  display_name          = each.key
-  application_object_id = azuread_application.app.object_id
-  audiences             = var.audiences
-  issuer                = var.issuer
-  subject               = each.value
+  for_each       = var.subjects
+  display_name   = each.key
+  application_id = azuread_application.app.id
+  audiences      = var.audiences
+  issuer         = var.issuer
+  subject        = each.value
 }
 
 resource "azuread_app_role_assignment" "assignment" {
