@@ -11,7 +11,7 @@ topLevel="$(git rev-parse --show-toplevel)"
 
 touch ~/.hushlogin
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 echo '# sudo: auth account password session
 auth       sufficient     pam_tid.so
