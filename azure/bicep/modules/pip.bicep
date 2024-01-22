@@ -5,7 +5,7 @@ param sku 'Basic' | 'Standard' = 'Basic'
 param publicIPAllocationMethod 'Dynamic' | 'Static' = 'Dynamic'
 param domainNameLabel string
 
-resource pip 'Microsoft.Network/publicIPAddresses@2023-05-01' = {
+resource pip 'Microsoft.Network/publicIPAddresses@2023-06-01' = {
   name: name
   location: location
   tags: tags

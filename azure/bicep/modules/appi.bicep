@@ -16,7 +16,7 @@ resource appi 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
-resource kv 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
+resource kv 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
   name: kvName
 
   resource secret 'secrets' = {

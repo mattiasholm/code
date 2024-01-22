@@ -6,7 +6,7 @@ param tenantId string = subscription().tenantId
 param sku 'standard' | 'premium' = 'standard'
 param accessPolicies { objectId: string, permissions: object }[] = []
 
-resource kv 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: name
   location: location
   tags: tags
