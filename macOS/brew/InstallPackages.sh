@@ -40,6 +40,7 @@ brew install infracost
 brew install checkov
 brew install pulumi
 brew install python3
+brew install node
 brew install kubectl
 brew install kubectx
 brew install lastpass-cli
@@ -92,8 +93,6 @@ brew install azure-cli &&
 brew install --cask iterm2
 brew install --cask dotnet-sdk
 brew install --cask postman
-brew install --cask balenaetcher
-brew install --cask owasp-zap
 brew install --cask azure-data-studio
 brew install --cask microsoft-azure-storage-explorer
 brew install --cask google-chrome
@@ -106,6 +105,8 @@ brew install --cask teamviewer
 brew install --cask watchguard-mobile-vpn-with-ssl
 brew install --cask avg-antivirus
 brew install --cask dropbox
+brew install --cask balenaetcher
+brew install --cask zap
 brew install --cask gimp
 brew install --cask paintbrush
 brew install --cask vlc
