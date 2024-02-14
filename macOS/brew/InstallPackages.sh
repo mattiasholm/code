@@ -29,6 +29,7 @@ brew install vim
 brew install jq
 brew install pwgen
 brew install gh
+brew install azcopy
 brew install azure/bicep/bicep
 brew install terraform
 brew install opentofu
