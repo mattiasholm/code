@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 1.7.0"
+  required_version = "~> 1.7.0"
 
   cloud {
     hostname     = "app.terraform.io"
@@ -18,7 +18,7 @@ terraform {
 
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.88.0"
+      version = "~> 3.97.0"
     }
   }
 }
