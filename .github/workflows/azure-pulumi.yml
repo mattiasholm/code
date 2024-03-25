@@ -33,7 +33,6 @@ env:
   ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
   ARM_USE_OIDC: true
-  # ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }} # Temporary until pulumi-azuread supports OIDC
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
 jobs:
