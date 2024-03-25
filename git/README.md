@@ -963,14 +963,26 @@ git reset .
 
 ## Remove all untracked files from working tree:
 ```shell
-git clean --force
-git clean -f
+git clean [--dry-run | --force]
+git clean [-n | -f]
 ```
 
 ## Remove all untracked files and directories from working tree:
 ```shell
-git clean -d --force
-git clean -d -f
+git clean -d [--dry-run | --force]
+git clean -d [-n | -f]
+```
+
+## Remove all ignored files from working tree:
+```shell
+git clean -X [--dry-run | --force]
+git clean -X [-n | -f]
+```
+
+## Remove all ignored files and directories from working tree:
+```shell
+git clean -X -d [--dry-run | --force]
+git clean -X -d [-n | -f]
 ```
 
 <br><br>
