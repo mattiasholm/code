@@ -6,10 +6,6 @@ options:
 config:
   name:
     type: string
-  api:
-    type: string
-  permission:
-    type: string
   roleId:
     type: string
   secretName:
@@ -34,6 +30,20 @@ variables:
       options:
         provider: ${azuread}
 
+  wellKnown:
+    fn::invoke:
+      function: azuread:getApplicationPublishedAppIds
+      options:
+        provider: ${azuread}
+
+  msgraph:
+    fn::invoke:
+      function: azuread:getServicePrincipal
+      options:
+        provider: ${azuread}
+      arguments:
+        clientId: ${wellKnown.result["MicrosoftGraph"]}
+
   subscription:
     fn::invoke:
       function: azure-native:authorization:getClientConfig
@@ -53,19 +63,14 @@ resources:
   azuread:
     type: pulumi:providers:azuread
     options:
-      version: 5.42.0
+      version: 5.47.0
     properties:
       metadataHost: management.azure.com
 
   azure-native:
     type: pulumi:providers:azure-native
     options:
-      version: 2.9.0
-
-  command:
-    type: pulumi:providers:command
-    options:
-      version: 0.9.0
+      version: 2.32.0
 
   app:
     type: azuread:Application
@@ -76,9 +81,9 @@ resources:
       owners:
         - ${user.objectId}
       requiredResourceAccesses:
-        - resourceAppId: ${api}
+        - resourceAppId: ${wellKnown.result["MicrosoftGraph"]}
           resourceAccesses:
-            - id: ${permission}
+            - id: ${msgraph.appRoleIds["User.Read.All"]}
               type: Role
 
   sp:
@@ -86,7 +91,7 @@ resources:
     options:
       provider: ${azuread}
     properties:
-      applicationId: ${app.applicationId}
+      clientId: ${app.clientId}
       owners:
         - ${user.objectId}
 
@@ -106,7 +111,7 @@ resources:
       provider: ${azuread}
     properties:
       displayName: ${secretName}
-      applicationObjectId: ${app.objectId}
+      applicationId: ${app.id}
       endDateRelative: ${secretExpiration}h
       rotateWhenChanged:
         rotation: v${secretVersion}
@@ -117,7 +122,7 @@ resources:
       provider: ${azuread}
     properties:
       displayName: main
-      applicationObjectId: ${app.objectId}
+      applicationId: ${app.id}
       audiences:
         - ${audience}
       issuer: ${issuer}
@@ -129,7 +134,7 @@ resources:
       provider: ${azuread}
     properties:
       displayName: pull_request
-      applicationObjectId: ${app.objectId}
+      applicationId: ${app.id}
       audiences:
         - ${audience}
       issuer: ${issuer}
@@ -141,47 +146,22 @@ resources:
       provider: ${azuread}
     properties:
       displayName: dev
-      applicationObjectId: ${app.objectId}
+      applicationId: ${app.id}
       audiences:
         - ${audience}
       issuer: ${issuer}
       subject: repo:${repo}:environment:dev
 
-  # assignment:
-  #   type: azuread:AppRoleAssignment
-  #   properties:
-  #     resourceObjectId: ${api}
-  #     appRoleId: ${permission}
-  #     principalObjectId: ${sp.objectId}
-
-  assignment: # REPLACE WITH NATIVE RESOURCE!
-    type: command:local:Command
+  assignment:
+    type: azuread:AppRoleAssignment
     options:
-      provider: ${command}
+      provider: ${azuread}
     properties:
-      create: |
-        resourceId=$(az ad sp show --id ${api} --query id --output tsv)
-
-        method='POST'
-        uri="https://graph.microsoft.com/v1.0/servicePrincipals/${sp.objectId}/appRoleAssignments"
-        body="{\"principalId\":\"${sp.objectId}\",\"resourceId\":\"$resourceId\",\"appRoleId\":\"${permission}\"}"
-
-        az rest --method $method --uri $uri --body $body
-
-      delete: |
-        resourceId=$(az ad sp show --id ${api} --query id --output tsv)
-
-        method='GET'
-        uri="https://graph.microsoft.com/v1.0/servicePrincipals/${sp.objectId}/appRoleAssignments"
-
-        id=$(az rest --method $method --uri $uri --query "value[?resourceId == '$resourceId' && appRoleId == '${permission}'].id" --output tsv)
-
-        method='DELETE'
-        uri="https://graph.microsoft.com/v1.0/servicePrincipals/${sp.objectId}/appRoleAssignments/$id"
-
-        az rest --method $method --uri $uri
+      resourceObjectId: ${msgraph.objectId}
+      appRoleId: ${msgraph.appRoleIds["User.Read.All"]}
+      principalObjectId: ${sp.objectId}
 
 outputs:
   tenantId: ${user.tenantId}
-  clientId: ${app.applicationId}
+  clientId: ${app.clientId}
   clientSecret: ${secret.value}
