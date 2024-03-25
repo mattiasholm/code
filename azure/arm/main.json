@@ -125,7 +125,6 @@
     },
     "variables": {
         "prefix": "[toLower(format('{0}-{1}', parameters('tags').Company, parameters('tags').Application))]",
-        "prefixStripped": "[replace(variables('prefix'), '-', '')]",
         "tenantId": "[subscription().tenantId]",
         "appiName": "[format('appi-{0}-01', variables('prefix'))]",
         "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
@@ -164,7 +163,7 @@
             {
                 "name": "stName",
                 "count": "[parameters('stCount')]",
-                "input": "[format('st{0}{1}', variables('prefixStripped'), padLeft(copyIndex('stName', 1), 2, '0'))]"
+                "input": "[format('st{0}{1}', func.strip(variables('prefix')), padLeft(copyIndex('stName', 1), 2, '0'))]"
             },
             {
                 "name": "stId",
@@ -188,6 +187,25 @@
             }
         ]
     },
+    "functions": [
+        {
+            "namespace": "func",
+            "members": {
+                "strip": {
+                    "parameters": [
+                        {
+                            "type": "string",
+                            "name": "prefix"
+                        }
+                    ],
+                    "output": {
+                        "type": "string",
+                        "value": "[replace(parameters('prefix'), '-', '')]"
+                    }
+                }
+            }
+        }
+    ],
     "resources": [
         {
             "condition": "[not(empty(parameters('appiKind')))]",
@@ -290,7 +308,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2023-06-01",
+            "apiVersion": "2023-09-01",
             "name": "[variables('pipName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -348,7 +366,7 @@
         },
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2023-06-01",
+            "apiVersion": "2023-09-01",
             "name": "[variables('vnetName')]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",

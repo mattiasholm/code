@@ -24,15 +24,17 @@ resource pdnsz 'Microsoft.Network/privateDnsZones@2020-06-01' = {
     }
   }
 
-  resource cname 'CNAME' = [for cnameRecord in cnameRecords: {
-    name: cnameRecord.name
-    properties: {
-      ttl: ttl
-      cnameRecord: {
-        cname: cnameRecord.cname
+  resource cname 'CNAME' = [
+    for cnameRecord in cnameRecords: {
+      name: cnameRecord.name
+      properties: {
+        ttl: ttl
+        cnameRecord: {
+          cname: cnameRecord.cname
+        }
       }
     }
-  }]
+  ]
 }
 
 output fqdn array = [for (cnameRecord, i) in cnameRecords: pdnsz::cname[i].properties.fqdn]

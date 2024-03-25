@@ -2,10 +2,10 @@ data "azuread_client_config" "user" {}
 
 data "azurerm_subscription" "sub" {}
 
-data "azuread_application_published_app_ids" "app_ids" {}
+data "azuread_application_published_app_ids" "well_known" {}
 
-data "azuread_service_principal" "sp" {
-  client_id = data.azuread_application_published_app_ids.app_ids.result[var.api]
+data "azuread_service_principal" "msgraph" {
+  client_id = data.azuread_application_published_app_ids.well_known.result[var.api]
 }
 
 resource "azuread_application" "app" {
@@ -15,13 +15,13 @@ resource "azuread_application" "app" {
   ]
 
   required_resource_access {
-    resource_app_id = data.azuread_application_published_app_ids.app_ids.result[var.api]
+    resource_app_id = data.azuread_application_published_app_ids.well_known.result[var.api]
 
     dynamic "resource_access" {
       for_each = try(var.permissions.roles, [])
 
       content {
-        id   = data.azuread_service_principal.sp.app_role_ids[resource_access.value]
+        id   = data.azuread_service_principal.msgraph.app_role_ids[resource_access.value]
         type = "Role"
       }
     }
@@ -30,7 +30,7 @@ resource "azuread_application" "app" {
       for_each = try(var.permissions.scopes, [])
 
       content {
-        id   = data.azuread_service_principal.sp.oauth2_permission_scope_ids[resource_access.value]
+        id   = data.azuread_service_principal.msgraph.oauth2_permission_scope_ids[resource_access.value]
         type = "Scope"
       }
     }
@@ -74,7 +74,7 @@ resource "azuread_application_federated_identity_credential" "credential" {
 
 resource "azuread_app_role_assignment" "assignment" {
   for_each            = toset(var.permissions.roles)
-  resource_object_id  = data.azuread_service_principal.sp.object_id
-  app_role_id         = data.azuread_service_principal.sp.app_role_ids[each.value]
+  resource_object_id  = data.azuread_service_principal.msgraph.object_id
+  app_role_id         = data.azuread_service_principal.msgraph.app_role_ids[each.value]
   principal_object_id = azuread_service_principal.sp.object_id
 }

@@ -16,11 +16,13 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
       family: 'A'
       name: sku
     }
-    accessPolicies: [for accessPolicy in accessPolicies: {
-      tenantId: tenantId
-      objectId: accessPolicy.objectId
-      permissions: accessPolicy.permissions
-    }]
+    accessPolicies: [
+      for accessPolicy in accessPolicies: {
+        tenantId: tenantId
+        objectId: accessPolicy.objectId
+        permissions: accessPolicy.permissions
+      }
+    ]
   }
 }
 
