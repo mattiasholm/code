@@ -15,8 +15,9 @@ topLevel="$(git rev-parse --show-toplevel)"
 sudo apt install -y git &&
     git config --global user.name "$userName" &&
     git config --global user.email "$userEmail" &&
-    git config --global credential.helper 'cache --timeout=86400' &&
     git config --global init.defaultBranch main &&
+    git config --global push.autoSetupRemote true &&
+    git config --global credential.helper 'cache --timeout=86400' &&
     chmod +x "$topLevel/git/cloneRepos.sh" &&
     "$topLevel/git/cloneRepos.sh"
 

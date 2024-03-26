@@ -16,5 +16,6 @@ foreach ($Package in $Packages) {
 
 git config --global user.name $UserName
 git config --global user.email $UserEmail
-git config --global credential.helper wincred
 git config --global init.defaultBranch main
+git config --global push.autoSetupRemote true
+git config --global credential.helper wincred

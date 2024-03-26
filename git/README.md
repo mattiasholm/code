@@ -45,6 +45,28 @@ git <subcommand> -n
 
 <br><br>
 
+## Configure username globally:
+```shell
+git config --global user.name "<name>"
+```
+
+## Configure email address globally:
+```shell
+git config --global user.email "<email>"
+```
+
+## Configure default branch name for all new repositories:
+```shell
+git config --global init.defaultBranch <name>
+```
+
+## Configure git to automatically set up remote tracking:
+```shell
+git config --global push.autoSetupRemote true
+```
+
+<br><br>
+
 ## Enable credential helper to save/cache credentials globally:
 
 ### `Mac`:
@@ -70,21 +92,6 @@ git config --system --unset credential.helper
 ```
 
 <br><br>
-
-## Configure username globally:
-```shell
-git config --global user.name "<name>"
-```
-
-## Configure email address globally:
-```shell
-git config --global user.email "<email>"
-```
-
-## Configure default branch name for all new repositories:
-```shell
-git config --global init.defaultBranch <name>
-```
 
 ## Force case-sensitivity globally:
 ```shell

@@ -79,8 +79,9 @@ brew install mas &&
 brew install git &&
     git config --global user.name "$userName" &&
     git config --global user.email "$userEmail" &&
-    git config --global credential.helper osxkeychain &&
     git config --global init.defaultBranch main &&
+    git config --global push.autoSetupRemote true &&
+    git config --global credential.helper osxkeychain &&
     chmod +x "$topLevel/git/cloneRepos.sh" &&
     "$topLevel/git/cloneRepos.sh"
 
