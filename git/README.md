@@ -1047,6 +1047,11 @@ git revert <commit-id>
 git revert <commit-id> --no-commit
 ```
 
+## Revert changes made in a series of commits:
+```shell
+git revert <oldest-commit>^..<newest-commit> --no-commit
+```
+
 <br><br>
 
 ## Compare all files in working directory to current `HEAD`:
