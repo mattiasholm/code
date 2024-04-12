@@ -28,6 +28,7 @@ brew install grep
 brew install vim
 brew install jq
 brew install pwgen
+brew install ipcalc
 brew install gh
 brew install azcopy
 brew install azure/bicep/bicep
