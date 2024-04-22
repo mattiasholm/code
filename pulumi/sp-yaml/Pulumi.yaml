@@ -13,9 +13,6 @@ config:
   secretExpiration:
     type: integer
     default: 8760
-  secretVersion:
-    type: integer
-    default: 1
   audience:
     type: string
   issuer:
@@ -72,6 +69,11 @@ resources:
     options:
       version: 2.32.0
 
+  time:
+    type: pulumi:providers:time
+    options:
+      version: 0.0.17
+
   app:
     type: azuread:Application
     options:
@@ -105,6 +107,12 @@ resources:
       roleDefinitionId: ${roleDefinition.id}
       scope: /subscriptions/${subscription.subscriptionId}
 
+  rotation:
+    type: time:Rotating
+    options:
+      provider: ${time}
+    properties:
+      rotationHours: ${secretExpiration}
   secret:
     type: azuread:ApplicationPassword
     options:
@@ -114,7 +122,7 @@ resources:
       applicationId: ${app.id}
       endDateRelative: ${secretExpiration}h
       rotateWhenChanged:
-        rotation: v${secretVersion}
+        rotation: ${rotation.id}
 
   main:
     type: azuread:ApplicationFederatedIdentityCredential
