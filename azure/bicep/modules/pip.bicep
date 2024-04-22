@@ -11,6 +11,7 @@ resource pip 'Microsoft.Network/publicIPAddresses@2023-09-01' = {
   tags: tags
   sku: {
     name: sku
+    tier: 'Regional'
   }
   properties: {
     publicIPAllocationMethod: publicIPAllocationMethod

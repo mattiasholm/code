@@ -13,6 +13,8 @@ resource appi 'Microsoft.Insights/components@2020-02-02' = {
   kind: kind
   properties: {
     Application_Type: applicationType
+    Flow_Type: 'Bluefield'
+    Request_Source: 'rest'
   }
 }
 

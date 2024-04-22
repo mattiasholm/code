@@ -216,7 +216,9 @@
             "tags": "[parameters('tags')]",
             "kind": "[parameters('appiKind')]",
             "properties": {
-                "Application_Type": "[if(equals(parameters('appiKind'), 'web'), 'web', 'other')]"
+                "Application_Type": "[if(equals(parameters('appiKind'), 'web'), 'web', 'other')]",
+                "Flow_Type": "Bluefield",
+                "Request_Source": "rest"
             }
         },
         {
@@ -313,7 +315,8 @@
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
             "sku": {
-                "name": "[parameters('pipSku')]"
+                "name": "[parameters('pipSku')]",
+                "tier": "Regional"
             },
             "properties": {
                 "publicIPAllocationMethod": "[parameters('pipAllocation')]",
@@ -347,6 +350,12 @@
                     "type": "blobServices",
                     "apiVersion": "2023-01-01",
                     "name": "default",
+                    "properties": {
+                        "deleteRetentionPolicy": {
+                            "allowPermanentDelete": false,
+                            "enabled": false
+                        }
+                    },
                     "dependsOn": [
                         "[variables('stId')[copyIndex()]]"
                     ],
@@ -355,6 +364,11 @@
                             "type": "containers",
                             "apiVersion": "2023-01-01",
                             "name": "container-01",
+                            "properties": {
+                                "defaultEncryptionScope": "$account-encryption-key",
+                                "denyEncryptionScopeOverride": false,
+                                "publicAccess": "None"
+                            },
                             "dependsOn": [
                                 "[variables('blobId')[copyIndex()]]"
                             ]

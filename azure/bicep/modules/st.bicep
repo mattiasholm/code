@@ -33,10 +33,21 @@ resource st 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 
   resource blobServices 'blobServices' = {
     name: 'default'
+    properties: {
+      deleteRetentionPolicy: {
+        allowPermanentDelete: false
+        enabled: false
+      }
+    }
 
     resource container 'containers' = [
       for container in containers: {
         name: container
+        properties: {
+          defaultEncryptionScope: '$account-encryption-key'
+          denyEncryptionScopeOverride: false
+          publicAccess: 'None'
+        }
       }
     ]
   }
