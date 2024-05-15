@@ -8,12 +8,14 @@ on:
       - .github/workflows/azure-bicep.yml
       - azure/bicep/**
       - "!**.md"
+      - "!**.gitignore"
 
   pull_request:
     paths:
       - .github/workflows/azure-bicep.yml
       - azure/bicep/**
       - "!**.md"
+      - "!**.gitignore"
 
   workflow_dispatch:
     inputs:

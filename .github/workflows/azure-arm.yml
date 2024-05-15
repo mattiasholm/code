@@ -8,12 +8,14 @@ on:
       - .github/workflows/azure-arm.yml
       - azure/arm/**
       - "!**.md"
+      - "!**.gitignore"
 
   pull_request:
     paths:
       - .github/workflows/azure-arm.yml
       - azure/arm/**
       - "!**.md"
+      - "!**.gitignore"
 
   workflow_dispatch:
     inputs:

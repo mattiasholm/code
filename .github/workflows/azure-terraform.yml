@@ -8,12 +8,14 @@ on:
       - .github/workflows/azure-terraform.yml
       - terraform/azure/**
       - "!**.md"
+      - "!**.gitignore"
 
   pull_request:
     paths:
       - .github/workflows/azure-terraform.yml
       - terraform/azure/**
       - "!**.md"
+      - "!**.gitignore"
 
   workflow_dispatch:
     inputs:
