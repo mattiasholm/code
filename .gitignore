@@ -1,16 +1,1 @@
 .DS_Store
-
-main.json
-/**/modules/*.json
-
-.terraform
-.terraform.lock.hcl
-*.tfstate*
-tfplan
-.infracost
-
-__pycache__
-venv
-
-/**/stereo2mono/input
-/**/stereo2mono/output

@@ -5,12 +5,12 @@ from pydub import AudioSegment
 import soundfile
 
 inputDir = "./input/"
-tmpDir = "./.tmp/"
 outputDir = "./output/"
+tmpDir = "./.tmp/"
 
 os.system("mkdir -p " + inputDir)
-os.system("mkdir -p " + tmpDir)
 os.system("mkdir -p " + outputDir)
+os.system("mkdir -p " + tmpDir)
 
 for file in os.listdir(inputDir):
     if file.endswith(".wav"):
