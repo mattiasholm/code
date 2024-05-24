@@ -14,17 +14,16 @@ resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   tags: config.tags
 }
 
-module appi 'modules/appi.bicep' =
-  if (contains(config, 'appi')) {
-    name: 'appi'
-    scope: rg
-    params: {
-      name: 'appi-${prefix}-01'
-      location: location
-      kind: config.appi.kind
-      kvName: kv.outputs.name
-    }
+module appi 'modules/appi.bicep' = if (contains(config, 'appi')) {
+  name: 'appi'
+  scope: rg
+  params: {
+    name: 'appi-${prefix}-01'
+    location: location
+    kind: config.appi.kind
+    kvName: kv.outputs.name
   }
+}
 
 module kv 'modules/kv.bicep' = {
   name: 'kv'
