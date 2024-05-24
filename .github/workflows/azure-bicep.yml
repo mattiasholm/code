@@ -6,14 +6,14 @@ on:
       - main
     paths:
       - .github/workflows/azure-bicep.yml
-      - azure/bicep/**
+      - bicep/azure/**
       - "!**.md"
       - "!**.gitignore"
 
   pull_request:
     paths:
       - .github/workflows/azure-bicep.yml
-      - azure/bicep/**
+      - bicep/azure/**
       - "!**.md"
       - "!**.gitignore"
 
@@ -31,7 +31,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: azure/bicep
+    working-directory: bicep/azure
 
 jobs:
   build:
