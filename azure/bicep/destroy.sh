@@ -3,4 +3,4 @@
 set -e
 . config.sh
 
-az stack sub delete --name holm-bicep --subscription $subscription --action-on-unmanage deleteAll --yes --output table
+az stack sub delete --name $stack --subscription $subscription --action-on-unmanage deleteAll --yes --output table
