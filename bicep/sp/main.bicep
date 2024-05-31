@@ -1,35 +1,29 @@
 targetScope = 'subscription'
 
-provider microsoftGraph
+provider microsoftGraph // Until implicitProviders works!
 
-param range int = 5
-output result array = sys.range(1, range)
+param name string
+param subjects object
 
-var prefix = 'mattias-testar'
-
-resource group 'Microsoft.Graph/groups@v1.0' = {
-  uniqueName: 'group-${prefix}-001'
-  displayName: 'group-${prefix}-001'
-  mailNickname: 'group-${prefix}-001'
-  securityEnabled: true
-  mailEnabled: false
-  owners: [
-    sp.id
-  ]
-  members: [
-    'd725a3d9-3350-4f0c-b44a-345eb27b4302'
-  ]
+var wellKnown = {
+  MicrosoftGraph: {
+    appId: '00000003-0000-0000-c000-000000000000'
+    id: '9bf89b3c-c23d-438c-ac11-4db91749b4b9'
+  }
+}
+var roles = {
+  'User.Read.All': 'df021288-bdef-4463-88db-98f22de89214'
 }
 
 resource app 'Microsoft.Graph/applications@v1.0' = {
-  displayName: 'sp-${prefix}-001'
-  uniqueName: 'sp-${prefix}-001'
+  displayName: name
+  uniqueName: name
   requiredResourceAccess: [
     {
-      resourceAppId: '00000003-0000-0000-c000-000000000000'
+      resourceAppId: wellKnown.MicrosoftGraph.appId
       resourceAccess: [
         {
-          id: 'df021288-bdef-4463-88db-98f22de89214'
+          id: roles['User.Read.All']
           type: 'Role'
         }
       ]
@@ -48,14 +42,17 @@ resource app 'Microsoft.Graph/applications@v1.0' = {
     }
   }
 
-  // resource credential 'federatedIdentityCredentials' = {
-  //   name: 'github'
-  //   audiences: [
-  //     'api://AzureADTokenExchange'
-  //   ]
-  //   issuer: 'https://token.actions.githubusercontent.com'
-  //   subject: 'repo:mattiasholm/code:ref:refs/heads/main'
-  // }
+  resource credential 'federatedIdentityCredentials' = [
+    for subject in items(subjects): {
+      // name: subject.key
+      name: '${app.uniqueName}/${subject.key}' // Temporary workaround
+      audiences: [
+        'api://AzureADTokenExchange'
+      ]
+      issuer: 'https://token.actions.githubusercontent.com'
+      subject: subject.value
+    }
+  ]
 }
 
 resource sp 'Microsoft.Graph/servicePrincipals@v1.0' = {
@@ -64,6 +61,6 @@ resource sp 'Microsoft.Graph/servicePrincipals@v1.0' = {
 
 resource role 'Microsoft.Graph/appRoleAssignedTo@v1.0' = {
   principalId: sp.id
-  resourceId: '9bf89b3c-c23d-438c-ac11-4db91749b4b9'
-  appRoleId: 'df021288-bdef-4463-88db-98f22de89214'
+  resourceId: wellKnown.MicrosoftGraph.id
+  appRoleId: roles['User.Read.All']
 }
