@@ -62,9 +62,9 @@ alias bi='brew install'
 alias bu='brew upgrade'
 alias bun='brew uninstall'
 
+alias ipc='ipcalc'
 alias pwsh='pwsh -NoLogo'
 alias python='python3'
-
 alias tdocs='terraform-docs markdown . > README.md'
 
 alias gcl='git clone'
