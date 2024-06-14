@@ -4,7 +4,7 @@ param config object
 param location string = deployment().location
 
 var prefix = toLower('${config.tags.Company}-${config.tags.Application}')
-var tenantId = subscription().tenantId
+var tenantId = tenant().tenantId
 
 func strip(prefix string) string => replace(prefix, '-', '')
 

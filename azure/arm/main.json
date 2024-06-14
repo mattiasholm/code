@@ -125,7 +125,7 @@
     },
     "variables": {
         "prefix": "[toLower(format('{0}-{1}', parameters('tags').Company, parameters('tags').Application))]",
-        "tenantId": "[subscription().tenantId]",
+        "tenantId": "[tenant().tenantId]",
         "appiName": "[format('appi-{0}-01', variables('prefix'))]",
         "appiId": "[resourceId('Microsoft.Insights/components', variables('appiName'))]",
         "kvName": "[format('kv-{0}-01', variables('prefix'))]",
@@ -375,7 +375,6 @@
                         }
                     ]
                 }
-
             ]
         },
         {
