@@ -402,28 +402,28 @@ git ls-files | grep <pattern>
 
 # List the contents of a specific branch, commit or tag:
 ```shell
-git ls-tree <branch-name | commit-id | tag-name>
+git ls-tree <git-ref>
 ```
 
 # List the contents of a specific branch, commit or tag (filename-only):
 ```shell
-git ls-tree --name-only <branch-name | commit-id | tag-name>
+git ls-tree --name-only <git-ref>
 ```
 
 # List the contents of a specific branch, commit or tag (including file size):
 ```shell
-git ls-tree --long <branch-name | commit-id | tag-name>
-git ls-tree -l <branch-name | commit-id | tag-name>
+git ls-tree --long <git-ref>
+git ls-tree -l <git-ref>
 ```
 
 # Recursively list the contents of a specific branch, commit or tag:
 ```shell
-git ls-tree -r <branch-name | commit-id | tag-name>
+git ls-tree -r <git-ref>
 ```
 
 # List only directories in a specific branch, commit or tag:
 ```shell
-git ls-tree -d <branch-name | commit-id | tag-name>
+git ls-tree -d <git-ref>
 ```
 
 <br><br>
@@ -505,7 +505,7 @@ git tag <tag-name>
 
 ## Create an unannotated tag that will reference a specific branch, commit or even another tag:
 ```shell
-git tag <tag-name> <branch-name | commit-id | tag-name>
+git tag <tag-name> <git-ref>
 ```
 
 ## Create an annotated tag that will reference the currently checked out branch:
@@ -516,8 +516,8 @@ git tag -a <tag-name> -m <message>
 
 ## Create an annotated tag that will reference a specific branch, commit or even another tag:
 ```shell
-git tag --annotate <tag-name> --message <message> <branch-name | commit-id | tag-name>
-git tag -a <tag-name> -m <message> <branch-name | commit-id | tag-name>
+git tag --annotate <tag-name> --message <message> <git-ref>
+git tag -a <tag-name> -m <message> <git-ref>
 ```
 
 ## Delete a tag locally:
@@ -585,15 +585,15 @@ git show HEAD~1
 
 ## Show actual changes in a specific branch, commit or tag:
 ```shell
-git show <branch-name | commit-id | tag-name>
+git show <git-ref>
 ```
 
 ## Show only log entry for a specific specific branch, commit or tag (i.e. omit displaying actual changes):
 ```shell
-git show <branch-name | commit-id | tag-name> --quiet
-git show <branch-name | commit-id | tag-name> -q
-git show <branch-name | commit-id | tag-name> --no-patch
-git show <branch-name | commit-id | tag-name> -s
+git show <git-ref> --quiet
+git show <git-ref> -q
+git show <git-ref> --no-patch
+git show <git-ref> -s
 ```
 
 <br><br>
@@ -843,12 +843,12 @@ git switch <branch-name>
 
 ## Check out a specific branch, commit or tag:
 ```shell
-git checkout <branch-name | commit-id | tag-name>
+git checkout <git-ref>
 ```
 
 ## Check out a specific file or directory from another branch, commit or tag (effectively discarding the versions in the current branch):
 ```shell
-git checkout <branch-name | commit-id | tag-name> <filename | directory>
+git checkout <git-ref> <filename | directory>
 ```
 
 ## Switch back to the previously checked out branch or commit:
@@ -1011,18 +1011,18 @@ git reset --hard origin/<branch-name>
 
 ## Reset `HEAD`, index and working tree to a specific branch, commit or tag and discard all newer commits (only safe to do on commits not yet pushed to origin):
 ```shell
-git reset --hard <branch-name | commit-id | tag-name>
+git reset --hard <git-ref>
 ```
 
 ## Reset `HEAD` and index, but place committed changes in working tree and keep uncommitted changes in working tree (this is the default action):
 ```shell
-git reset --mixed <branch-name | commit-id | tag-name>
-git reset <branch-name | commit-id | tag-name>
+git reset --mixed <git-ref>
+git reset <git-ref>
 ```
 
 ## Reset only `HEAD`, but place committed changes in index and keep uncommitted changes in both working tree and index:
 ```shell
-git reset --soft <branch-name | commit-id | tag-name>
+git reset --soft <git-ref>
 ```
 
 <br><br>
@@ -1068,27 +1068,32 @@ git diff origin/<branch-name>
 
 ## Compare a specific directory or file in working directory to current `HEAD`:
 ```shell
-git diff <directory | filename>
+git diff <filename | directory>
 ```
 
 ## Compare all files in working directory to another branch, commit or tag:
 ```shell
-git diff <branch-name | commit-id | tag-name>
+git diff <git-ref>
 ```
 
 ## Compare a specific directory or file in working directory to another branch, commit or tag:
 ```shell
-git diff <branch-name | commit-id | tag-name> <directory | filename>
+git diff <git-ref> <filename | directory>
+```
+
+## Exclude a specific file or directory from comparison:
+```shell
+git diff <git-ref> -- ':!<filename | directory>'
 ```
 
 ## Compare all files in a specific branch, commit or tag to another branch, commit or tag:
 ```shell
-git diff <branch-name | commit-id | tag-name> <branch-name | commit-id | tag-name>
+git diff <git-ref> <git-ref>
 ```
 
 ## Compare a specific directory or file in a specific branch, commit or tag to another branch, commit or tag:
 ```shell
-git diff <branch-name | commit-id | tag-name> <branch-name | commit-id | tag-name> <directory | filename>
+git diff <git-ref> <git-ref> <filename | directory>
 ```
 
 ## Compare files added to index:
@@ -1106,39 +1111,56 @@ git log --diff-filter=D --summary
 
 ## Merge a specific branch, commit or tag into currently checked out branch (will attempt to make a merge commit automatically):
 ```shell
-git merge <branch-name | commit-id | tag-name>
-git merge <branch-name | commit-id | tag-name>
+git merge <git-ref>
 ```
 
 ## Merge a specific branch, commit or tag into currently checked out branch (allow unrelated histories):
 ```shell
-git merge <branch-name | commit-id | tag-name> --allow-unrelated-histories
+git merge <git-ref> --allow-unrelated-histories
+```
+
+## Merge a specific branch, commit or tag into currently checked out branch (favoring current changes):
+```shell
+git merge <git-ref> --strategy-option ours
+git merge <git-ref> -X ours
+```
+
+## Merge a specific branch, commit or tag into currently checked out branch (favoring incoming changes):
+```shell
+git merge <git-ref> --strategy-option theirs
+git merge <git-ref> -X theirs
+```
+
+## Override merge strategy for a specific file or directory:
+```shell
+echo '<pattern> merge=<ours | theirs>' >> .gitattributes
+git config merge.<ours | theirs>.driver true
 ```
 
 ## Merge a specific branch, commit or tag into currently checked out branch, with a custom commit message (will attempt to make a merge commit automatically):
 ```shell
-git merge <branch-name | commit-id | tag-name> --message "<message>"
-git merge <branch-name | commit-id | tag-name> -m "<message>"
+git merge <git-ref> --message "<message>"
+git merge <git-ref> -m "<message>"
 ```
 
 ## Merge a specific branch, commit or tag into currently checked out branch, without automatically making a commit:
 ```shell
-git merge <branch-name | commit-id | tag-name> --no-commit
+git merge <git-ref> --no-commit
 ```
 
 ## Merge a specific branch, commit or tag into currently checked out branch, without allowing the fast-forward strategy (i.e. a merge commit will always be created):
 ```shell
-git merge <branch-name | commit-id | tag-name> --no-ff
+git merge <git-ref> --no-ff
 ```
 
 ## Merge a specific branch, commit or tag into currently checked out branch, but abort if the fast-forward strategy is not possible, e.g. if merge conflicts cannot be resolved automatically:
 ```shell
-git merge <branch-name | commit-id | tag-name> --ff-only
+git merge <git-ref> --ff-only
 ```
 
 ## Make a squash merge, i.e. merge changes into working tree and index, without updating `HEAD` (a manual commit is then made to consolidate multiple commits into a single commit):
 ```shell
-git merge <branch-name | commit-id | tag-name> --squash
+git merge <git-ref> --squash
 ```
 
 <br><br>
@@ -1196,12 +1218,12 @@ git revert <merge-commit-id> -m 2
 
 ## Patch a specific file or directory in currently checked out branch, by interactively selecting what hunks of changes to accept or reject from another branch, commit or tag (selected changes will be staged automatically, but need to be committed manually):
 ```shell
-git checkout --patch <branch-name | commit-id | tag-name> <filename | directory>
+git checkout --patch <git-ref> <filename | directory>
 ```
 
 ## Patch all files and directories in currently checked out branch, by interactively selecting what hunks of changes to accept or reject from another branch, commit or tag (selected changes will be staged automatically, but need to be committed manually):
 ```shell
-git checkout --patch <branch-name | commit-id | tag-name> "$(git rev-parse --show-toplevel)"
+git checkout --patch <git-ref> "$(git rev-parse --show-toplevel)"
 ```
 
 <br><br>
