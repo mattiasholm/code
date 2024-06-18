@@ -32,6 +32,7 @@ exts=(
     'ms-vsliveshare.vsliveshare'
     'hediet.vscode-drawio'
     'softaware.abc-music'
+    'tonybaloney.vscode-pets'
 )
 
 for ext in ${exts[*]}; do
