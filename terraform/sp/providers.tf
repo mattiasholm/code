@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.8.0"
+  required_version = "~> 1.9.0"
 
   cloud {
     hostname     = "app.terraform.io"
@@ -13,12 +13,12 @@ terraform {
   required_providers {
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 2.47.0"
+      version = "~> 2.53.0"
     }
 
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.97.0"
+      version = "~> 3.110.0"
     }
 
     time = {
