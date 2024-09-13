@@ -94,10 +94,16 @@
                 "use-recent-api-versions": {
                     "level": "error"
                 },
+                "use-recent-module-versions": {
+                    "level": "error"
+                },
                 "use-resource-id-functions": {
                     "level": "error"
                 },
                 "use-resource-symbol-reference": {
+                    "level": "error"
+                },
+                "use-safe-access": {
                     "level": "error"
                 },
                 "use-secure-value-for-secure-inputs": {
