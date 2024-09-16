@@ -18,12 +18,12 @@ terraform {
 
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.110.0"
+      version = "~> 4.2.0"
     }
 
     time = {
       source  = "hashicorp/time"
-      version = "~> 0.11.0"
+      version = "~> 0.12.0"
     }
   }
 }

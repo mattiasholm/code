@@ -104,7 +104,7 @@ resource "azurerm_storage_account" "st" {
   account_tier                    = var.st_sku
   account_replication_type        = var.st_replication
   allow_nested_items_to_be_public = var.st_public_access
-  enable_https_traffic_only       = var.st_https_only
+  https_traffic_only_enabled      = var.st_https_only
   min_tls_version                 = var.st_tls_version
 }
 
@@ -127,8 +127,10 @@ resource "azurerm_virtual_network" "vnet" {
     for_each = range(var.vnet_subnet_count)
 
     content {
-      name           = "snet-${format("%02d", subnet.value + 1)}"
-      address_prefix = cidrsubnet(var.vnet_address_prefix, var.vnet_subnet_size - local.vnet_size, subnet.value)
+      name = "snet-${format("%02d", subnet.value + 1)}"
+      address_prefixes = [
+        cidrsubnet(var.vnet_address_prefix, var.vnet_subnet_size - local.vnet_size, subnet.value)
+      ]
     }
   }
 }
