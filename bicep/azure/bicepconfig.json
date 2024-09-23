@@ -114,6 +114,9 @@
                 },
                 "use-stable-vm-image": {
                     "level": "error"
+                },
+                "what-if-short-circuiting": {
+                    "level": "warning"
                 }
             }
         }

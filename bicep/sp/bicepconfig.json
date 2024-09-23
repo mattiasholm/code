@@ -1,8 +1,5 @@
 {
     "experimentalFeaturesEnabled": {
         "extensibility": true
-    },
-    "implicitProviders": [
-        "microsoftGraph"
-    ]
+    }
 }

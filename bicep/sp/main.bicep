@@ -1,6 +1,6 @@
 targetScope = 'subscription'
 
-provider microsoftGraph // Until implicitProviders works!
+extension microsoftGraph
 
 param name string
 param subjects object

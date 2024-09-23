@@ -8,7 +8,7 @@ param cnameRecords { name: string, cname: string }[] = []
 
 var location = 'global'
 
-resource pdnsz 'Microsoft.Network/privateDnsZones@2020-06-01' = {
+resource pdnsz 'Microsoft.Network/privateDnsZones@2024-06-01' = {
   name: name
   location: location
   tags: tags

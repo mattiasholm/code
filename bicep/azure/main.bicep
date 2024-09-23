@@ -8,7 +8,7 @@ var tenantId = tenant().tenantId
 
 func strip(prefix string) string => replace(prefix, '-', '')
 
-resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: 'rg-${prefix}-01'
   location: location
   tags: config.tags

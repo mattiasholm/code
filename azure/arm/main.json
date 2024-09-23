@@ -260,14 +260,14 @@
         },
         {
             "type": "Microsoft.Network/privateDnsZones",
-            "apiVersion": "2020-06-01",
+            "apiVersion": "2024-06-01",
             "name": "[parameters('pdnszName')]",
             "location": "global",
             "tags": "[parameters('tags')]",
             "resources": [
                 {
                     "type": "virtualNetworkLinks",
-                    "apiVersion": "2020-06-01",
+                    "apiVersion": "2024-06-01",
                     "name": "[variables('vnetName')]",
                     "location": "global",
                     "properties": {
@@ -290,7 +290,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Network/privateDnsZones/CNAME",
-            "apiVersion": "2020-06-01",
+            "apiVersion": "2024-06-01",
             "name": "[variables('cnameName')[copyIndex()]]",
             "properties": {
                 "ttl": "[parameters('pdnszTtl')]",
@@ -310,7 +310,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2023-09-01",
+            "apiVersion": "2024-01-01",
             "name": "[variables('pipName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -332,7 +332,7 @@
                 "mode": "parallel"
             },
             "type": "Microsoft.Storage/storageAccounts",
-            "apiVersion": "2023-01-01",
+            "apiVersion": "2023-05-01",
             "name": "[variables('stName')[copyIndex()]]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
@@ -348,7 +348,7 @@
             "resources": [
                 {
                     "type": "blobServices",
-                    "apiVersion": "2023-01-01",
+                    "apiVersion": "2023-05-01",
                     "name": "default",
                     "properties": {
                         "deleteRetentionPolicy": {
@@ -362,7 +362,7 @@
                     "resources": [
                         {
                             "type": "containers",
-                            "apiVersion": "2023-01-01",
+                            "apiVersion": "2023-05-01",
                             "name": "container-01",
                             "properties": {
                                 "defaultEncryptionScope": "$account-encryption-key",
@@ -379,7 +379,7 @@
         },
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2023-09-01",
+            "apiVersion": "2024-01-01",
             "name": "[variables('vnetName')]",
             "location": "[parameters('location')]",
             "tags": "[parameters('tags')]",
