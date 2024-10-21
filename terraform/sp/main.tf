@@ -55,11 +55,17 @@ resource "time_rotating" "rotation" {
 }
 
 resource "azuread_application_password" "secret" {
-  display_name      = var.secret_name
-  application_id    = azuread_application.app.id
-  end_date_relative = "${var.secret_expiration * 24}h"
+  display_name   = var.secret_name
+  application_id = azuread_application.app.id
+  end_date       = timeadd(timestamp(), "${var.secret_expiration * 24}h")
   rotate_when_changed = {
     rotation = time_rotating.rotation.id
+  }
+
+  lifecycle {
+    ignore_changes = [
+      end_date
+    ]
   }
 }
 
