@@ -62,6 +62,16 @@ terraform fmt --check
 terraform fmt
 ```
 
+## Run Terraform tests:
+```shell
+terraform test
+```
+
+## Run Terraform tests with verbose output:
+```shell
+terraform test -verbose
+```
+
 ## Create a Terraform execution plan:
 ```shell
 terraform plan

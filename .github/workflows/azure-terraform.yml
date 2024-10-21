@@ -55,6 +55,9 @@ jobs:
       - name: Terraform - Init
         run: terraform init -input=false
 
+      - name: Terraform - Test
+        run: terraform test
+
       - name: Terraform - Plan
         run: terraform plan -out=tfplan -input=false
 
