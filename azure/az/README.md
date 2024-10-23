@@ -59,6 +59,16 @@ az account list --output table
 az account set --subscription <subscription-id>
 ```
 
+## Obtain a JWT token for Azure:
+```shell
+az account get-access-token --query accessToken --output tsv
+```
+
+## Obtain a JWT token for Microsoft Graph:
+```shell
+az account get-access-token --scope https://graph.microsoft.com/.default --query accessToken --output tsv
+```
+
 <br><br>
 
 ## List all required endpoints for Azure Cloud:
