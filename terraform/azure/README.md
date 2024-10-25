@@ -3,15 +3,15 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9.0 |
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.53.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.2.0 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 3.0.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.53.1 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.2.0 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 3.0.2 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.6.0 |
 
 ## Modules
 
@@ -55,7 +55,7 @@ No modules.
 | <a name="input_pdnsz_registration"></a> [pdnsz\_registration](#input\_pdnsz\_registration) | n/a | `bool` | `false` | no |
 | <a name="input_pdnsz_ttl"></a> [pdnsz\_ttl](#input\_pdnsz\_ttl) | n/a | `number` | `3600` | no |
 | <a name="input_pip_allocation"></a> [pip\_allocation](#input\_pip\_allocation) | n/a | `string` | `"Dynamic"` | no |
-| <a name="input_pip_labels"></a> [pip\_labels](#input\_pip\_labels) | n/a | `set(string)` | n/a | yes |
+| <a name="input_pip_labels"></a> [pip\_labels](#input\_pip\_labels) | n/a | `set(string)` | `[]` | no |
 | <a name="input_pip_sku"></a> [pip\_sku](#input\_pip\_sku) | n/a | `string` | `"Basic"` | no |
 | <a name="input_st_count"></a> [st\_count](#input\_st\_count) | n/a | `number` | `1` | no |
 | <a name="input_st_https_only"></a> [st\_https\_only](#input\_st\_https\_only) | n/a | `bool` | `true` | no |
@@ -65,7 +65,7 @@ No modules.
 | <a name="input_st_sku"></a> [st\_sku](#input\_st\_sku) | n/a | `string` | `"Standard"` | no |
 | <a name="input_st_tls_version"></a> [st\_tls\_version](#input\_st\_tls\_version) | n/a | `string` | `"TLS1_2"` | no |
 | <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | n/a | `string` | n/a | yes |
-| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `{}` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | n/a | yes |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | n/a | `string` | n/a | yes |
 | <a name="input_vnet_address_prefix"></a> [vnet\_address\_prefix](#input\_vnet\_address\_prefix) | n/a | `string` | n/a | yes |
 | <a name="input_vnet_subnet_count"></a> [vnet\_subnet\_count](#input\_vnet\_subnet\_count) | n/a | `number` | n/a | yes |

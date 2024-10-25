@@ -54,18 +54,19 @@ resource "time_rotating" "rotation" {
   rotation_days = var.secret_expiration
 }
 
+resource "time_offset" "offset" {
+  offset_days = var.secret_expiration
+  triggers = {
+    rotation = time_rotating.rotation.id
+  }
+}
+
 resource "azuread_application_password" "secret" {
   display_name   = var.secret_name
   application_id = azuread_application.app.id
-  end_date       = timeadd(timestamp(), "${var.secret_expiration * 24}h")
+  end_date       = time_offset.offset.rfc3339
   rotate_when_changed = {
     rotation = time_rotating.rotation.id
-  }
-
-  lifecycle {
-    ignore_changes = [
-      end_date
-    ]
   }
 }
 
