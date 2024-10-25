@@ -3,6 +3,7 @@ variables {
     Application = "App"
     Company     = "Com"
   }
+  appi_type = "web"
   pip_labels = [
     "label"
   ]

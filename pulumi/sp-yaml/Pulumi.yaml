@@ -12,7 +12,7 @@ config:
     type: string
   secretExpiration:
     type: integer
-    default: 8760
+    default: 365
   audience:
     type: string
   issuer:
@@ -60,19 +60,19 @@ resources:
   azuread:
     type: pulumi:providers:azuread
     options:
-      version: 5.47.0
+      version: 6.0.0
     properties:
       metadataHost: management.azure.com
 
   azure-native:
     type: pulumi:providers:azure-native
     options:
-      version: 2.32.0
+      version: 2.68.0
 
   time:
     type: pulumi:providers:time
     options:
-      version: 0.0.17
+      version: 0.1.0
 
   app:
     type: azuread:Application
@@ -112,7 +112,17 @@ resources:
     options:
       provider: ${time}
     properties:
-      rotationHours: ${secretExpiration}
+      rotationDays: ${secretExpiration}
+
+  offset:
+    type: time:Offset
+    options:
+      provider: ${time}
+    properties:
+      offsetDays: ${secretExpiration}
+      triggers:
+        rotation: ${rotation.id}
+
   secret:
     type: azuread:ApplicationPassword
     options:
@@ -120,7 +130,7 @@ resources:
     properties:
       displayName: ${secretName}
       applicationId: ${app.id}
-      endDateRelative: ${secretExpiration}h
+      endDate: ${offset.rfc3339}
       rotateWhenChanged:
         rotation: ${rotation.id}
 
