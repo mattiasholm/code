@@ -37,6 +37,11 @@ run "validate_naming" {
   }
 
   assert {
+    condition     = azurerm_public_ip.pip["label"].domain_name_label == "label-com-app"
+    error_message = "Public IP domain label did not match expected"
+  }
+
+  assert {
     condition     = azurerm_storage_account.st[0].name == "stcomapp01"
     error_message = "Storage account name did not match expected"
   }
