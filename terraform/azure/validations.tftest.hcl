@@ -57,11 +57,36 @@ run "validate_naming" {
   }
 }
 
-run "validate_subnetting" {
+run "validate_subnet" {
   command = plan
 
   assert {
     condition     = tolist(azurerm_virtual_network.vnet.subnet)[0].address_prefixes[0] == "10.0.0.0/24"
     error_message = "Subnet address prefix did not match expected"
+  }
+}
+
+run "validate_conditionals" {
+  command = plan
+
+  variables {
+    appi_type  = ""
+    pip_labels = []
+    st_count   = 0
+  }
+
+  assert {
+    condition     = length(azurerm_application_insights.appi) == 0
+    error_message = "Application Insights count did not match expected"
+  }
+
+  assert {
+    condition     = length(azurerm_public_ip.pip) == 0
+    error_message = "Public IP count did not match expected"
+  }
+
+  assert {
+    condition     = length(azurerm_storage_account.st) == 0
+    error_message = "Storage account count did not match expected"
   }
 }
