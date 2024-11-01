@@ -5,7 +5,7 @@ import ipaddress
 config = pulumi.Config()
 
 tenant_id = azuread.get_client_config().tenant_id
-tags = config.get_object('tags')
+tags = config.require_object('tags')
 prefix = '{Company}-{Application}'.format_map(tags).lower()
 prefix_stripped = prefix.replace('-', '')
 
@@ -25,11 +25,11 @@ pdnsz_name = config.require('pdnsz_name')
 pdnsz_registration = config.get_bool('pdnsz_registration') or False
 pdnsz_ttl = config.get_int('pdnsz_ttl') or 3600
 
-pip_labels = config.require_object('pip_labels')
+pip_labels = config.get_object('pip_labels') or []
 pip_sku = config.get('pip_sku') or 'Basic'
 pip_allocation = config.get('pip_allocation') or 'Dynamic'
 
-st_count = config.get_int('st_count') or 1
+st_count = config.get_int('st_count') or 0
 st_kind = config.get('st_kind') or 'StorageV2'
 st_sku = config.get('st_sku') or 'Standard_LRS'
 st_public_access = config.get_bool('st_public_access') or False

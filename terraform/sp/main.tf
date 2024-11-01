@@ -51,11 +51,11 @@ resource "azurerm_role_assignment" "role" {
 }
 
 resource "time_rotating" "rotation" {
-  rotation_days = var.secret_expiration
+  rotation_days = var.secret_rotation
 }
 
 resource "time_offset" "offset" {
-  offset_days = var.secret_expiration
+  offset_days = var.secret_rotation
   triggers = {
     rotation = time_rotating.rotation.id
   }

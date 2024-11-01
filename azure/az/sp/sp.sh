@@ -43,7 +43,7 @@ fi
 az role assignment create --assignee-object-id $id --assignee-principal-type 'ServicePrincipal' --role $roleName --scope "/subscriptions/$subscriptionId"
 
 if [[ ! $(az ad app credential list --id $appId --query [].displayName --output tsv) =~ $secretName || $secretRotate == true ]]; then
-    az ad app credential reset --id $appId --display-name $secretName --years $secretExpiration
+    az ad app credential reset --id $appId --display-name $secretName --years $secretRotation
 fi
 
 for subject in ${subjects[*]}; do

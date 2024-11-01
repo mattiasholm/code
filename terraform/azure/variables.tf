@@ -11,8 +11,7 @@ variable "location" {
 }
 
 variable "tags" {
-  type    = map(string)
-  default = {}
+  type = map(string)
 }
 
 variable "appi_type" {
@@ -74,7 +73,8 @@ variable "pdnsz_ttl" {
 }
 
 variable "pip_labels" {
-  type = set(string)
+  type    = set(string)
+  default = []
 }
 
 variable "pip_sku" {
@@ -99,7 +99,7 @@ variable "pip_allocation" {
 
 variable "st_count" {
   type    = number
-  default = 1
+  default = 0
 }
 
 variable "st_kind" {

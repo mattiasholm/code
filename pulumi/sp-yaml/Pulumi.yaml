@@ -10,7 +10,7 @@ config:
     type: string
   secretName:
     type: string
-  secretExpiration:
+  secretRotation:
     type: integer
     default: 365
   audience:
@@ -112,14 +112,14 @@ resources:
     options:
       provider: ${time}
     properties:
-      rotationDays: ${secretExpiration}
+      rotationDays: ${secretRotation}
 
   offset:
     type: time:Offset
     options:
       provider: ${time}
     properties:
-      offsetDays: ${secretExpiration}
+      offsetDays: ${secretRotation}
       triggers:
         rotation: ${rotation.id}
 

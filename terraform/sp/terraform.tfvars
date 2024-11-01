@@ -7,9 +7,9 @@ permissions = {
     "User.Read.All"
   ]
 }
-role_name         = "Contributor"
-secret_name       = "github"
-secret_expiration = 365
+role_name       = "Contributor"
+secret_name     = "github"
+secret_rotation = 365
 audiences = [
   "api://AzureADTokenExchange"
 ]

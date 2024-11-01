@@ -46,8 +46,8 @@ No modules.
 | <a name="input_name"></a> [name](#input\_name) | n/a | `string` | n/a | yes |
 | <a name="input_permissions"></a> [permissions](#input\_permissions) | n/a | `map(list(string))` | n/a | yes |
 | <a name="input_role_name"></a> [role\_name](#input\_role\_name) | n/a | `string` | n/a | yes |
-| <a name="input_secret_expiration"></a> [secret\_expiration](#input\_secret\_expiration) | n/a | `number` | `365` | no |
 | <a name="input_secret_name"></a> [secret\_name](#input\_secret\_name) | n/a | `string` | n/a | yes |
+| <a name="input_secret_rotation"></a> [secret\_rotation](#input\_secret\_rotation) | n/a | `number` | `365` | no |
 | <a name="input_subjects"></a> [subjects](#input\_subjects) | n/a | `map(string)` | n/a | yes |
 | <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | n/a | `string` | n/a | yes |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | n/a | `string` | n/a | yes |

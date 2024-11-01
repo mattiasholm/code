@@ -57,7 +57,7 @@ No modules.
 | <a name="input_pip_allocation"></a> [pip\_allocation](#input\_pip\_allocation) | n/a | `string` | `"Dynamic"` | no |
 | <a name="input_pip_labels"></a> [pip\_labels](#input\_pip\_labels) | n/a | `set(string)` | `[]` | no |
 | <a name="input_pip_sku"></a> [pip\_sku](#input\_pip\_sku) | n/a | `string` | `"Basic"` | no |
-| <a name="input_st_count"></a> [st\_count](#input\_st\_count) | n/a | `number` | `1` | no |
+| <a name="input_st_count"></a> [st\_count](#input\_st\_count) | n/a | `number` | `0` | no |
 | <a name="input_st_https_only"></a> [st\_https\_only](#input\_st\_https\_only) | n/a | `bool` | `true` | no |
 | <a name="input_st_kind"></a> [st\_kind](#input\_st\_kind) | n/a | `string` | `"StorageV2"` | no |
 | <a name="input_st_public_access"></a> [st\_public\_access](#input\_st\_public\_access) | n/a | `bool` | `false` | no |

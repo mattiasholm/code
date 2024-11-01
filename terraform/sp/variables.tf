@@ -31,12 +31,12 @@ variable "secret_name" {
   type = string
 }
 
-variable "secret_expiration" {
+variable "secret_rotation" {
   type    = number
   default = 365
 
   validation {
-    condition     = var.secret_expiration < 730
+    condition     = var.secret_rotation < 730
     error_message = "Invalid value for variable."
   }
 }
