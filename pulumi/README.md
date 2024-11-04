@@ -58,6 +58,11 @@ pulumi new <template> --yes
 pulumi new <template> -y
 ```
 
+## Install packages and plugins:
+```shell
+pulumi install
+```
+
 <br><br>
 
 ## Preview changes before updating:
