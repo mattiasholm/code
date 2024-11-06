@@ -20,31 +20,31 @@ kv = keyvault.Vault('kv',
     vault_name=f'kv-{config.prefix}-01',
     resource_group_name=rg.name,
     tags=config.tags,
-    properties=keyvault.VaultPropertiesArgs(
-        tenant_id=config.tenant_id,
-        sku=keyvault.SkuArgs(
-            family='A',
-            name=config.kv_sku
-        ),
-        access_policies=[
-            keyvault.AccessPolicyEntryArgs(
-                tenant_id=config.tenant_id,
-                object_id=config.kv_user_object_id,
-                permissions=keyvault.PermissionsArgs(
-                    keys=config.kv_user_key_permissions,
-                    secrets=config.kv_user_secret_permissions,
-                    certificates=config.kv_user_certificate_permissions
-                )
-            ),
-            keyvault.AccessPolicyEntryArgs(
-                tenant_id=config.tenant_id,
-                object_id=config.kv_sp_object_id,
-                permissions=keyvault.PermissionsArgs(
-                    secrets=config.kv_sp_secret_permissions
-                )
-            )
+    properties={
+        'tenant_id': config.tenant_id,
+        'sku': {
+            'family': 'A',
+            'name': config.kv_sku
+        },
+        'access_policies': [
+            {
+                'tenant_id': config.tenant_id,
+                'object_id': config.kv_user_object_id,
+                'permissions': {
+                    'keys': config.kv_user_key_permissions,
+                    'secrets': config.kv_user_secret_permissions,
+                    'certificates': config.kv_user_certificate_permissions
+                }
+            },
+            {
+                'tenant_id': config.tenant_id,
+                'object_id': config.kv_sp_object_id,
+                'permissions': {
+                    'secrets': config.kv_sp_secret_permissions
+                }
+            }
         ]
-    )
+    }
 )
 
 if config.appi_kind:
@@ -53,9 +53,9 @@ if config.appi_kind:
         vault_name=kv.name,
         resource_group_name=rg.name,
         tags=config.tags,
-        properties=keyvault.SecretPropertiesArgs(
-            value=appi.connection_string
-        )
+        properties={
+            'value': appi.connection_string
+        }
     )
 
 pdnsz = network.PrivateZone('pdnsz',
@@ -73,13 +73,13 @@ for i, pip_label in enumerate(config.pip_labels):
         public_ip_address_name=f'pip-{config.prefix}-{str(i + 1).zfill(2)}',
         resource_group_name=rg.name,
         tags=config.tags,
-        sku=network.PublicIPAddressSkuArgs(
-            name=config.pip_sku
-        ),
+        sku={
+            'name': config.pip_sku
+        },
         public_ip_allocation_method=config.pip_allocation,
-        dns_settings=network.PublicIPAddressDnsSettingsArgs(
-            domain_name_label=f'{pip_label}-{config.prefix}'
-        )
+        dns_settings={
+            'domain_name_label': f'{pip_label}-{config.prefix}'
+        }
     )
     pips.append(pip)
 
@@ -89,9 +89,9 @@ for i, pip_label in enumerate(config.pip_labels):
         resource_group_name=rg.name,
         ttl=config.pdnsz_ttl,
         record_type='CNAME',
-        cname_record=network.CnameRecordArgs(
-            cname=pip.dns_settings.fqdn
-        )
+        cname_record={
+            'cname': pip.dns_settings.fqdn
+        }
     )
     cnames.append(cname)
 
@@ -103,9 +103,9 @@ for i in range(config.st_count):
         resource_group_name=rg.name,
         tags=config.tags,
         kind=config.st_kind,
-        sku=storage.SkuArgs(
-            name=config.st_sku
-        ),
+        sku={
+            'name': config.st_sku
+        },
         allow_blob_public_access=config.st_public_access,
         enable_https_traffic_only=config.st_https_only,
         minimum_tls_version=config.st_tls_version
@@ -122,16 +122,16 @@ vnet = network.VirtualNetwork('vnet',
     virtual_network_name=f'vnet-{config.prefix}-01',
     resource_group_name=rg.name,
     tags=config.tags,
-    address_space=network.AddressSpaceArgs(
-        address_prefixes=[
+    address_space={
+        'address_prefixes': [
             config.vnet_address_prefix
         ]
-    ),
+    },
     subnets=[
-        network.SubnetArgs(
-            name=f'snet-{str(i + 1).zfill(2)}',
-            address_prefix=str(config.subnets[i])
-        ) for i in range(config.vnet_subnet_count)
+        {
+            'name': f'snet-{str(i + 1).zfill(2)}',
+            'address_prefix': str(config.subnets[i])
+        } for i in range(config.vnet_subnet_count)
     ]
 )
 
@@ -140,9 +140,9 @@ network.VirtualNetworkLink('link',
     private_zone_name=pdnsz.name,
     resource_group_name=rg.name,
     location='global',
-    virtual_network=network.SubResourceArgs(
-        id=vnet.id
-    ),
+    virtual_network={
+        'id': vnet.id
+    },
     registration_enabled=config.pdnsz_registration
 )
 
