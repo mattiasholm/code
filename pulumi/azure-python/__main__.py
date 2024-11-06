@@ -2,15 +2,13 @@ import pulumi
 from pulumi_azure_native import resources, insights, keyvault, network, storage
 import config
 
-rg = resources.ResourceGroup(
-    'rg',
+rg = resources.ResourceGroup('rg',
     resource_group_name=f'rg-{config.prefix}-01',
     tags=config.tags
 )
 
 if config.appi_kind:
-    appi = insights.Component(
-        'appi',
+    appi = insights.Component('appi',
         resource_name_=f'appi-{config.prefix}-01',
         resource_group_name=rg.name,
         tags=config.tags,
@@ -18,8 +16,7 @@ if config.appi_kind:
         ingestion_mode='ApplicationInsights'
     )
 
-kv = keyvault.Vault(
-    'kv',
+kv = keyvault.Vault('kv',
     vault_name=f'kv-{config.prefix}-01',
     resource_group_name=rg.name,
     tags=config.tags,
@@ -51,8 +48,7 @@ kv = keyvault.Vault(
 )
 
 if config.appi_kind:
-    keyvault.Secret(
-        'secret',
+    keyvault.Secret('secret',
         secret_name='APPLICATIONINSIGHTS-CONNECTION-STRING',
         vault_name=kv.name,
         resource_group_name=rg.name,
@@ -62,8 +58,7 @@ if config.appi_kind:
         )
     )
 
-pdnsz = network.PrivateZone(
-    'pdnsz',
+pdnsz = network.PrivateZone('pdnsz',
     private_zone_name=config.pdnsz_name,
     resource_group_name=rg.name,
     location='global',
@@ -72,9 +67,9 @@ pdnsz = network.PrivateZone(
 
 pips = []
 cnames = []
+
 for i, pip_label in enumerate(config.pip_labels):
-    pip = network.PublicIPAddress(
-        f'pip{i}',
+    pip = network.PublicIPAddress(f'pip{i}',
         public_ip_address_name=f'pip-{config.prefix}-{str(i + 1).zfill(2)}',
         resource_group_name=rg.name,
         tags=config.tags,
@@ -88,8 +83,7 @@ for i, pip_label in enumerate(config.pip_labels):
     )
     pips.append(pip)
 
-    cname = network.PrivateRecordSet(
-        f'cname{i}',
+    cname = network.PrivateRecordSet(f'cname{i}',
         relative_record_set_name=pip_label,
         private_zone_name=pdnsz.name,
         resource_group_name=rg.name,
@@ -102,9 +96,9 @@ for i, pip_label in enumerate(config.pip_labels):
     cnames.append(cname)
 
 sts = []
+
 for i in range(config.st_count):
-    st = storage.StorageAccount(
-        f'st{i}',
+    st = storage.StorageAccount(f'st{i}',
         account_name=f'st{config.prefix_stripped}{str(i + 1).zfill(2)}',
         resource_group_name=rg.name,
         tags=config.tags,
@@ -118,15 +112,13 @@ for i in range(config.st_count):
     )
     sts.append(st)
 
-    storage.BlobContainer(
-        f'container{i}',
+    storage.BlobContainer(f'container{i}',
         container_name='container-01',
         account_name=st.name,
         resource_group_name=rg.name
     )
 
-vnet = network.VirtualNetwork(
-    'vnet',
+vnet = network.VirtualNetwork('vnet',
     virtual_network_name=f'vnet-{config.prefix}-01',
     resource_group_name=rg.name,
     tags=config.tags,
@@ -143,8 +135,7 @@ vnet = network.VirtualNetwork(
     ]
 )
 
-network.VirtualNetworkLink(
-    'link',
+network.VirtualNetworkLink('link',
     virtual_network_link_name=vnet.name,
     private_zone_name=pdnsz.name,
     resource_group_name=rg.name,
