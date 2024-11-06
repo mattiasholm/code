@@ -81,6 +81,7 @@ for i, pip_label in enumerate(config.pip_labels):
             'domain_name_label': f'{pip_label}-{config.prefix}'
         }
     )
+
     pips.append(pip)
 
     cname = network.PrivateRecordSet(f'cname{i}',
@@ -93,6 +94,7 @@ for i, pip_label in enumerate(config.pip_labels):
             'cname': pip.dns_settings.fqdn
         }
     )
+
     cnames.append(cname)
 
 sts = []
@@ -110,6 +112,7 @@ for i in range(config.st_count):
         enable_https_traffic_only=config.st_https_only,
         minimum_tls_version=config.st_tls_version
     )
+
     sts.append(st)
 
     storage.BlobContainer(f'container{i}',
