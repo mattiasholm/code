@@ -54,6 +54,7 @@ jobs:
       - name: Pulumi - Preview
         uses: pulumi/actions@v6
         with:
+          pulumi-version: "~3.137.0" # Temporary hardcoded
           command: preview
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
@@ -83,6 +84,7 @@ jobs:
       - name: Pulumi - Up
         uses: pulumi/actions@v6
         with:
+          pulumi-version: "~3.137.0" # Temporary hardcoded
           command: up
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
