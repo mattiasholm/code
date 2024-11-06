@@ -1,8 +1,0 @@
-config:
-  azure-native:subscriptionId: 804fd219-0c15-45f9-ae36-0a4d3725848f
-  azure-native:location: WestEurope
-  azure-typescript:tags:
-    Application: TypeScript
-    Company: Holm
-    Environment: Development
-    Owner: mattias.holm@b3cloud.onmicrosoft.com

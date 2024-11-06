@@ -1,5 +1,0 @@
-name: azure-typescript
-runtime:
-  name: nodejs
-options:
-  refresh: always
