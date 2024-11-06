@@ -421,9 +421,3 @@ expr <int> \* <int>
 ```shell
 expr <int> / <int>
 ```
-
-<!-- Städa upp och kategorisera bättre här vid tillfälle!
-
-Ev bryta loss grep till egen README.md??? FLER?
-
--->
