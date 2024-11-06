@@ -7,7 +7,6 @@ config = pulumi.Config()
 tenant_id = azuread.get_client_config().tenant_id
 tags = config.require_object('tags')
 prefix = '{Company}-{Application}'.format_map(tags).lower()
-prefix_stripped = prefix.replace('-', '')
 
 appi_kind = config.get('appi_kind')
 

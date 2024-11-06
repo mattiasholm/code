@@ -2,6 +2,9 @@ import pulumi
 from pulumi_azure_native import resources, insights, keyvault, network, storage
 import config
 
+def strip(prefix):
+    return prefix.replace('-', '')
+
 rg = resources.ResourceGroup('rg',
     resource_group_name=f'rg-{config.prefix}-01',
     tags=config.tags
@@ -101,7 +104,7 @@ sts = []
 
 for i in range(config.st_count):
     st = storage.StorageAccount(f'st{i}',
-        account_name=f'st{config.prefix_stripped}{str(i + 1).zfill(2)}',
+        account_name=f'st{strip(config.prefix)}{str(i + 1).zfill(2)}',
         resource_group_name=rg.name,
         tags=config.tags,
         kind=config.st_kind,
