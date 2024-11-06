@@ -1,8 +1,8 @@
-import * as resources from '@pulumi/azure-native/resources';
+import { resources } from '@pulumi/azure-native'
 import * as config from './config';
 
 const rg = new resources.ResourceGroup('rg', {
-    resourceGroupName: `rg-${config.prefix}-02`,
+    resourceGroupName: `rg-${config.prefix}-01`,
     tags: config.tags,
 });
 
