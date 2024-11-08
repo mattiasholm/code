@@ -76,6 +76,8 @@ pulumi preview --target <urn>
 pulumi preview -t <urn>
 ```
 
+<br><br>
+
 ## Update current stack:
 ```shell
 pulumi up
@@ -103,6 +105,33 @@ pulumi up -t <urn>
 ```shell
 pulumi up --replace <urn>
 ```
+
+<br><br>
+
+## Cancel the currently running update:
+```shell
+pulumi cancel
+```
+
+## Cancel the currently running update, skip confirmation prompt:
+```shell
+pulumi cancel --yes
+```
+
+<br><br>
+
+## Refresh the current stack's state, based on the actual state in the cloud:
+```shell
+pulumi refresh
+```
+
+## Refresh the current stack's state, based on the actual state in the cloud, skip confirmation prompt:
+```shell
+pulumi refresh --yes
+pulumi refresh -y
+```
+
+<br><br>
 
 ## Destroy current stack:
 ```shell
@@ -210,19 +239,6 @@ pulumi config set <key-name> <value> --secret
 ## Remove a specific configuration key:
 ```shell
 pulumi config rm <key-name>
-```
-
-<br><br>
-
-## Refresh the current stack's state, based on the actual state in the cloud:
-```shell
-pulumi refresh
-```
-
-## Refresh the current stack's state, based on the actual state in the cloud, skip confirmation prompt:
-```shell
-pulumi refresh --yes
-pulumi refresh -y
 ```
 
 <br><br>
