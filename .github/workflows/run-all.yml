@@ -9,16 +9,16 @@ on:
 jobs:
   azure-arm:
     uses: ./.github/workflows/azure-arm.yml
-    secrets: inherit
+    # secrets: inherit
 
   azure-bicep:
     uses: ./.github/workflows/azure-bicep.yml
-    secrets: inherit
+    # secrets: inherit
 
   azure-pulumi:
     uses: ./.github/workflows/azure-pulumi.yml
-    secrets: inherit
+    # secrets: inherit
 
   azure-terraform:
     uses: ./.github/workflows/azure-terraform.yml
-    secrets: inherit
+    # secrets: inherit
