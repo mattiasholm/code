@@ -1,4 +1,3 @@
-
 // import * as pulumi from '@pulumi/pulumi'; // VS endast pulumi.Output ???
 import { resources, operationalinsights, keyvault, network } from '@pulumi/azure-native';
 import * as config from './config.js';
