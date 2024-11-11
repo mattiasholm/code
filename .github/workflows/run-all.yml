@@ -32,3 +32,5 @@ jobs:
   azure-terraform:
     uses: ./.github/workflows/azure-terraform.yml
     secrets: inherit
+
+# Test PR
