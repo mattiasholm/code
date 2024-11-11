@@ -4,21 +4,31 @@ on:
   schedule:
     - cron: 0 0 * * 1
 
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/run-all.yml
+
+  pull_request:
+    paths:
+      - .github/workflows/run-all.yml
+
   workflow_dispatch:
 
 jobs:
   azure-arm:
     uses: ./.github/workflows/azure-arm.yml
-    # secrets: inherit
+    secrets: inherit
 
   azure-bicep:
     uses: ./.github/workflows/azure-bicep.yml
-    # secrets: inherit
+    secrets: inherit
 
   azure-pulumi:
     uses: ./.github/workflows/azure-pulumi.yml
-    # secrets: inherit
+    secrets: inherit
 
   azure-terraform:
     uses: ./.github/workflows/azure-terraform.yml
-    # secrets: inherit
+    secrets: inherit
