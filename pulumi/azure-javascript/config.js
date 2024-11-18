@@ -17,9 +17,14 @@ export const kvSpObjectId = (await azuread.getServicePrincipal({ displayName: kv
 export const kvSpSecretPermissions = config.getObject('kvSpSecretPermissions');
 
 export const pdnszName = config.require('pdnszName');
-// export const pdnszRegistration = config.getBoolean('pdnszRegistration') || false;
 export const pdnszTtl = config.getNumber('pdnszTtl') || 3600;
 
 export const pipLabels = config.getObject('pipLabels') || [];
-// export const pipSku = config.get('pipSku') || 'Basic';
-// export const pipAllocation = config.get('pipAllocation') || 'Dynamic';
+
+export const stCount = config.getNumber('stCount');
+export const stSku = config.get('stSku') || 'Standard_LRS';
+export const stTlsVersion = config.get('stTlsVersion') || 'TLS1_2';
+
+export const vnetAddressPrefix = config.require('vnetAddressPrefix');
+export const vnetSubnetSize = config.requireNumber('vnetSubnetSize');
+export const vnetSubnetCount = config.requireNumber('vnetSubnetCount');

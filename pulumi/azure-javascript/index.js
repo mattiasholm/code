@@ -1,13 +1,9 @@
-// import * as pulumi from '@pulumi/pulumi'; // VS endast pulumi.Output ???
-import { resources, operationalinsights, keyvault, network } from '@pulumi/azure-native';
+import { resources, operationalinsights, keyvault, network, storage } from '@pulumi/azure-native';
+import { name, strip, cidrSubnet } from './functions.js';
 import * as config from './config.js';
 
-// function strip(prefix) {
-//     return prefix.replace(/-/g, '');
-// }
-
 const rg = new resources.ResourceGroup('rg', {
-    resourceGroupName: `rg-${config.prefix}-01`,
+    resourceGroupName: name('rg'),
     tags: config.tags,
 });
 
@@ -15,7 +11,7 @@ let log;
 
 if (config.logRetention) {
     log = new operationalinsights.Workspace('log', {
-        workspaceName: `log-${config.prefix}-01`,
+        workspaceName: name('log'),
         resourceGroupName: rg.name,
         tags: config.tags,
         retentionInDays: config.logRetention,
@@ -23,7 +19,7 @@ if (config.logRetention) {
 }
 
 const kv = new keyvault.Vault('kv', {
-    vaultName: `kv-${config.prefix}-01`,
+    vaultName: name('kv'),
     resourceGroupName: rg.name,
     tags: config.tags,
     properties: {
@@ -75,7 +71,7 @@ const cnames = [];
 
 config.pipLabels.forEach((pipLabel, i) => {
     const pip = new network.PublicIPAddress(`pip${i}`, {
-        publicIpAddressName: `pip-${config.prefix}-${(i + 1).toString().padStart(2, '0')}`,
+        publicIpAddressName: name('pip', i + 1),
         resourceGroupName: rg.name,
         tags: config.tags,
         dnsSettings: {
@@ -99,4 +95,66 @@ config.pipLabels.forEach((pipLabel, i) => {
     cnames.push(cname);
 });
 
-export const rgName = rg.name;
+const sts = [];
+
+for (let i = 0; i < config.stCount; i++) {
+    const st = new storage.StorageAccount(`st${i}`, {
+        accountName: strip(name('st', i + 1)),
+        resourceGroupName: rg.name,
+        tags: config.tags,
+        kind: 'StorageV2',
+        sku: {
+            name: config.stSku
+        },
+        minimumTlsVersion: config.stTlsVersion,
+    });
+
+    sts.push(st);
+
+    new storage.BlobContainer(`container${i}`, {
+        containerName: name('container'),
+        accountName: st.name,
+        resourceGroupName: rg.name,
+    });
+}
+
+const subnets = [];
+
+for (let i = 0; i < config.vnetSubnetCount; i++) {
+    subnets.push({
+        name: name('snet', i + 1),
+        addressPrefix: cidrSubnet(config.vnetAddressPrefix, config.vnetSubnetSize, i),
+    });
+}
+
+const vnet = new network.VirtualNetwork('vnet', {
+    virtualNetworkName: name('vnet'),
+    resourceGroupName: rg.name,
+    tags: config.tags,
+    addressSpace: {
+        addressPrefixes: [
+            config.vnetAddressPrefix,
+        ],
+    },
+    subnets: subnets,
+});
+
+new network.VirtualNetworkLink('link', {
+    virtualNetworkLinkName: vnet.name,
+    privateZoneName: pdnsz.name,
+    resourceGroupName: rg.name,
+    location: 'global',
+    tags: config.tags,
+    virtualNetwork: {
+        id: vnet.id,
+    },
+    registrationEnabled: false,
+});
+
+export const kvUrl = kv.properties.vaultUri;
+
+export const pdnszUrl = cnames.map(cname => cname.fqdn.apply(fqdn => `https://${fqdn.replace(/\.$/, '')}/`));
+
+export const pipUrl = pips.map(pip => pip.dnsSettings.fqdn.apply(fqdn => `https://${fqdn}/`));
+
+export const stUrl = sts.map(st => st.primaryEndpoints);

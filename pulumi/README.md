@@ -70,6 +70,11 @@ pulumi install
 pulumi preview
 ```
 
+## Preview changes before updating, showing diff:
+```shell
+pulumi preview --diff
+```
+
 ## Preview a specific resource before updating:
 ```shell
 pulumi preview --target <urn>
@@ -159,8 +164,19 @@ pulumi stack
 
 ## List all resources in current stack:
 ```shell
+pulumi stack
+```
+
+## List all resources in current stack, showing URNs:
+```shell
 pulumi stack --show-urns
 pulumi stack -u
+```
+
+## List all resources in current stack, showing resource IDs:
+```shell
+pulumi stack --show-ids
+pulumi stack -i
 ```
 
 ## List all stacks:
@@ -176,6 +192,16 @@ pulumi stack output
 ## Show a specific output from current stack:
 ```shell
 pulumi stack output <name>
+```
+
+## Export a stack to JSON:
+```shell
+pulumi stack export
+```
+
+## Export a stack's dependency graph:
+```shell
+pulumi stack graph <filename>
 ```
 
 ## Create a new stack:

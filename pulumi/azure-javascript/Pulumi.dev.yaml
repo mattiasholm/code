@@ -1,4 +1,3 @@
-# OBS: Remove optional param and use smart defaults instead to make examples less cluttered!
 config:
   azuread:tenantId: 34311a99-c681-4ecd-88ce-eab1d59f443a
   azure-native:subscriptionId: 804fd219-0c15-45f9-ae36-0a4d3725848f
@@ -23,10 +22,12 @@ config:
   azure-javascript:kvSpSecretPermissions:
     - Delete
   azure-javascript:pdnszName: holm.io
-  # azure-javascript:pdnszRegistration: false
-  # azure-javascript:pdnszTtl: 3600
   azure-javascript:pipLabels:
     - app
     - web
-  # azure-javascript:pipSku: Basic
-  # azure-javascript:pipAllocation: Dynamic
+  azure-javascript:stCount: 2
+  azure-javascript:stSku: Standard_LRS
+  azure-javascript:stTlsVersion: TLS1_2
+  azure-javascript:vnetAddressPrefix: 10.0.0.0/24
+  azure-javascript:vnetSubnetSize: 26
+  azure-javascript:vnetSubnetCount: 4

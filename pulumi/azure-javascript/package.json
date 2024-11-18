@@ -3,8 +3,8 @@
     "main": "index.js",
     "type": "module",
     "dependencies": {
-        "@pulumi/pulumi": "~3.138.0",
+        "@pulumi/pulumi": "~3.139.0",
         "@pulumi/azuread": "~6.0.0",
-        "@pulumi/azure-native": "~2.69.0"
+        "@pulumi/azure-native": "~2.72.0"
     }
 }
