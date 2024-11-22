@@ -70,6 +70,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "link" {
   name                  = azurerm_virtual_network.vnet.name
   private_dns_zone_name = azurerm_private_dns_zone.pdnsz.name
   resource_group_name   = azurerm_resource_group.rg.name
+  tags                  = var.tags
   virtual_network_id    = azurerm_virtual_network.vnet.id
   registration_enabled  = var.pdnsz_registration
 }
