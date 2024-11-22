@@ -146,6 +146,7 @@ network.VirtualNetworkLink('link',
     private_zone_name=pdnsz.name,
     resource_group_name=rg.name,
     location='global',
+    tags=config.tags,
     virtual_network={
         'id': vnet.id
     },

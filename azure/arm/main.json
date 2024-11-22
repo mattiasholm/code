@@ -271,6 +271,7 @@
                     "apiVersion": "2024-06-01",
                     "name": "[variables('vnetName')]",
                     "location": "global",
+                    "tags": "[parameters('tags')]",
                     "properties": {
                         "virtualNetwork": {
                             "id": "[variables('vnetId')]"

@@ -16,6 +16,7 @@ resource pdnsz 'Microsoft.Network/privateDnsZones@2024-06-01' = {
   resource link 'virtualNetworkLinks' = {
     name: vnetName
     location: location
+    tags: tags
     properties: {
       virtualNetwork: {
         id: vnetId
