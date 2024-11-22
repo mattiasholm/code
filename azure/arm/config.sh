@@ -9,5 +9,4 @@ tags=(
     'Owner=mattias.holm@b3cloud.onmicrosoft.com'
 )
 template='main.json'
-parameters='parameters.json'
-module='./arm-ttk/arm-ttk/arm-ttk.psd1'
+parameters='main.parameters.json'

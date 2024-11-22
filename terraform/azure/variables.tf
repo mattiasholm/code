@@ -38,16 +38,9 @@ variable "kv_user_name" {
   type = string
 }
 
-variable "kv_user_key_permissions" {
-  type = list(string)
-}
-
 variable "kv_user_secret_permissions" {
-  type = list(string)
-}
-
-variable "kv_user_certificate_permissions" {
-  type = list(string)
+  type    = list(string)
+  default = []
 }
 
 variable "kv_sp_name" {
@@ -55,7 +48,8 @@ variable "kv_sp_name" {
 }
 
 variable "kv_sp_secret_permissions" {
-  type = list(string)
+  type    = list(string)
+  default = []
 }
 
 variable "pdnsz_name" {

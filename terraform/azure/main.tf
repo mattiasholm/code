@@ -30,22 +30,16 @@ resource "azurerm_key_vault" "kv" {
   tags                = var.tags
   tenant_id           = data.azurerm_subscription.sub.tenant_id
   sku_name            = var.kv_sku
-}
 
-resource "azurerm_key_vault_access_policy" "policy_user" {
-  key_vault_id            = azurerm_key_vault.kv.id
-  tenant_id               = data.azurerm_subscription.sub.tenant_id
-  object_id               = data.azuread_user.user.object_id
-  key_permissions         = var.kv_user_key_permissions
-  secret_permissions      = var.kv_user_secret_permissions
-  certificate_permissions = var.kv_user_certificate_permissions
-}
+  dynamic "access_policy" {
+    for_each = local.access_policies
 
-resource "azurerm_key_vault_access_policy" "policy_sp" {
-  key_vault_id       = azurerm_key_vault.kv.id
-  tenant_id          = data.azurerm_subscription.sub.tenant_id
-  object_id          = data.azuread_service_principal.sp.object_id
-  secret_permissions = var.kv_sp_secret_permissions
+    content {
+      tenant_id          = data.azurerm_subscription.sub.tenant_id
+      object_id          = access_policy.key
+      secret_permissions = access_policy.value
+    }
+  }
 }
 
 resource "azurerm_key_vault_secret" "secret" {
@@ -54,10 +48,6 @@ resource "azurerm_key_vault_secret" "secret" {
   tags         = var.tags
   value        = azurerm_application_insights.appi[0].connection_string
   key_vault_id = azurerm_key_vault.kv.id
-  depends_on = [
-    azurerm_key_vault_access_policy.policy_user,
-    azurerm_key_vault_access_policy.policy_sp
-  ]
 }
 
 resource "azurerm_private_dns_zone" "pdnsz" {

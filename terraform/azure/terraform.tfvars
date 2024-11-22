@@ -10,24 +10,6 @@ tags = {
 appi_type    = "web"
 kv_sku       = "standard"
 kv_user_name = "mattias.holm@b3cloud.onmicrosoft.com"
-kv_user_key_permissions = [
-  "Get",
-  "List",
-  "Update",
-  "Create",
-  "Import",
-  "Delete",
-  "Recover",
-  "Backup",
-  "Restore",
-  "Decrypt",
-  "Encrypt",
-  "UnwrapKey",
-  "WrapKey",
-  "Verify",
-  "Sign",
-  "Purge"
-]
 kv_user_secret_permissions = [
   "Get",
   "List",
@@ -36,24 +18,6 @@ kv_user_secret_permissions = [
   "Recover",
   "Backup",
   "Restore",
-  "Purge"
-]
-kv_user_certificate_permissions = [
-  "Get",
-  "List",
-  "Update",
-  "Create",
-  "Import",
-  "Delete",
-  "Recover",
-  "Backup",
-  "Restore",
-  "ManageContacts",
-  "ManageIssuers",
-  "GetIssuers",
-  "ListIssuers",
-  "SetIssuers",
-  "DeleteIssuers",
   "Purge"
 ]
 kv_sp_name = "sp-holm-01"

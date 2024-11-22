@@ -1,5 +1,3 @@
-[![Azure Terraform](https://github.com/mattiasholm/code/actions/workflows/azure-terraform.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-terraform.yml)
-
 # Cheat Sheet - Terraform
 
 <br>

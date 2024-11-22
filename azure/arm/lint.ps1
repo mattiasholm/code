@@ -4,6 +4,8 @@ $ErrorActionPreference = 'Stop'
 
 Set-Location $PSScriptRoot
 
+Import-Module -FullyQualifiedName './arm-ttk/arm-ttk/arm-ttk.psd1'
+
 function Get-Config {
     param (
         $Key
@@ -11,8 +13,6 @@ function Get-Config {
     ((Get-Content 'config.sh' | Select-String "$Key=").ToString() -replace '^.+=').Trim("'")
 }
 
-$Module = Get-Config 'module'
 $Template = Get-Config 'template'
 
-Import-Module -FullyQualifiedName $Module
-Test-AzTemplate -MainTemplateFile $Template -TemplatePath $Template
+Test-AzTemplate -TemplatePath $Template
