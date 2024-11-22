@@ -1,18 +1,18 @@
-name: Azure Pulumi
+name: Azure Python
 
 on:
   push:
     branches:
       - main
     paths:
-      - .github/workflows/azure-pulumi.yml
+      - .github/workflows/azure-python.yml
       - pulumi/azure-python/**
       - "!**.md"
       - "!**.gitignore"
 
   pull_request:
     paths:
-      - .github/workflows/azure-pulumi.yml
+      - .github/workflows/azure-python.yml
       - pulumi/azure-python/**
       - "!**.md"
       - "!**.gitignore"
@@ -70,7 +70,7 @@ jobs:
     runs-on: ${{ vars.RUNNER }}
     environment:
       name: dev
-      url: https://pulumi.holm.io/
+      url: https://app.holm.io/
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

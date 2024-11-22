@@ -107,6 +107,12 @@ for (let i = 0; i < config.stCount; i++) {
             name: config.stSku
         },
         minimumTlsVersion: config.stTlsVersion,
+        networkRuleSet: {
+            bypass: 'AzureServices',
+            defaultAction: 'Allow',
+            ipRules: [],
+            virtualNetworkRules: []
+        },
     });
 
     sts.push(st);

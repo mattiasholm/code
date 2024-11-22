@@ -80,7 +80,7 @@ jobs:
     runs-on: ${{ vars.RUNNER }}
     environment:
       name: dev
-      url: https://terraform.holm.io/
+      url: https://app.holm.io/
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
