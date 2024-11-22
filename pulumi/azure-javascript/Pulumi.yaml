@@ -3,5 +3,5 @@ runtime:
   name: nodejs
   options:
     typescript: false
-# options:
-#   refresh: always
+options:
+  refresh: always
