@@ -49,18 +49,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # - name: Cache Node modules
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ${{ env.path }}/node_modules
-      #     key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
+      - name: Cache Node modules
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.path }}/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
-          cache: npm # TESTA HUR FUNKAR!
-          cache-dependency-path: ${{ env.path }}/package-lock.json # TESTA HUR FUNKAR!
 
       - name: Install dependencies
         run: npm install
@@ -89,18 +87,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # - name: Cache Node modules
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ${{ env.path }}/node_modules
-      #     key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
+      - name: Cache Node modules
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.path }}/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
-          cache: npm # TESTA HUR FUNKAR!
-          cache-dependency-path: ${{ env.path }}/package-lock.json # TESTA HUR FUNKAR!
 
       - name: Pulumi - Up
         uses: pulumi/actions@v6

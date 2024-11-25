@@ -31,8 +31,7 @@ permissions:
 
 defaults: # TESTA!
   run:
-    # working-directory: pulumi/azure-python
-    working-directory: pulumi/azure-python/venv/bin
+    working-directory: pulumi/azure-python
 
 env:
   path: pulumi/azure-python
@@ -63,8 +62,7 @@ jobs:
 
       - name: Install dependencies # TESTA!
         # run: python -m venv venv && venv/bin/pip install -r requirements.txt
-        # run: venv/bin/pip install -r requirements.txt
-        run: pip install -r requirements.txt
+        run: venv/bin/pip install -r requirements.txt
 
       - name: Pulumi - Preview
         uses: pulumi/actions@v6
