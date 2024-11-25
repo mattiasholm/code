@@ -47,7 +47,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "~${{ vars.TERRAFORM_VERSION }}"
@@ -91,7 +91,7 @@ jobs:
           name: tfplan
           path: ${{ env.path }}
 
-      - name: Set up Terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "~${{ vars.TERRAFORM_VERSION }}"
