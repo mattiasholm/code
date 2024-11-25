@@ -55,10 +55,10 @@ jobs:
           path: ${{ env.path }}/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
 
-      # - name: Setup Node
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: ${{ vars.NODE_VERSION }}
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Install dependencies
         run: npm install
@@ -93,10 +93,10 @@ jobs:
           path: ${{ env.path }}/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
 
-      # - name: Setup Node
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: ${{ vars.NODE_VERSION }}
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Pulumi - Up
         uses: pulumi/actions@v6
