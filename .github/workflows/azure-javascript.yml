@@ -60,6 +60,7 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: npm # TESTA HUR FUNKAR!
+          cache-dependency-path: ${{ env.path }}/package-lock.json # TESTA HUR FUNKAR!
 
       - name: Install dependencies
         run: npm install
@@ -99,6 +100,7 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: npm # TESTA HUR FUNKAR!
+          cache-dependency-path: ${{ env.path }}/package-lock.json # TESTA HUR FUNKAR!
 
       - name: Pulumi - Up
         uses: pulumi/actions@v6
