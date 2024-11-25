@@ -31,7 +31,8 @@ permissions:
 
 defaults: # TESTA!
   run:
-    working-directory: pulumi/azure-python
+    # working-directory: pulumi/azure-python
+    working-directory: pulumi/azure-python/venv/bin
 
 env:
   path: pulumi/azure-python
@@ -61,7 +62,9 @@ jobs:
           python-version: ${{ vars.PYTHON_VERSION }}
 
       - name: Install dependencies # TESTA!
-        run: python -m venv venv && venv/bin/pip install -r requirements.txt
+        # run: python -m venv venv && venv/bin/pip install -r requirements.txt
+        # run: venv/bin/pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Pulumi - Preview
         uses: pulumi/actions@v6
@@ -93,10 +96,13 @@ jobs:
           path: ${{ env.path }}/venv/
           key: ${{ runner.os }}-venv-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ vars.PYTHON_VERSION }}
+      # - name: Setup Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: ${{ vars.PYTHON_VERSION }}
+
+      - name: CHECK VERSION
+        run: python --version
 
       - name: Pulumi - Up
         uses: pulumi/actions@v6
