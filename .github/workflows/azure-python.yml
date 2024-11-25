@@ -60,9 +60,8 @@ jobs:
         with:
           python-version: ${{ vars.PYTHON_VERSION }}
 
-      - name: Install dependencies # TESTA!
-        # run: python -m venv venv && venv/bin/pip install -r requirements.txt
-        run: venv/bin/pip install -r requirements.txt
+      - name: Install dependencies
+        run: python -m venv venv && venv/bin/pip install -r requirements.txt
 
       - name: Pulumi - Preview
         uses: pulumi/actions@v6

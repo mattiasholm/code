@@ -2,9 +2,6 @@
     "name": "azure-javascript",
     "main": "index.js",
     "type": "module",
-    "engines": {
-        "node": "~23.3.0"
-    },
     "dependencies": {
         "@pulumi/pulumi": "~3.141.0",
         "@pulumi/azuread": "~6.0.0",
