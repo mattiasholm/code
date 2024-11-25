@@ -25,8 +25,8 @@ jobs:
     uses: ./.github/workflows/azure-bicep.yml
     secrets: inherit
 
-  azure-pulumi:
-    uses: ./.github/workflows/azure-pulumi.yml
+  azure-python:
+    uses: ./.github/workflows/azure-python.yml
     secrets: inherit
 
   azure-terraform:
