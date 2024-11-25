@@ -41,11 +41,5 @@ vnet_subnet_count = config.require_int('vnet_subnet_count')
 network = ipaddress.ip_network(vnet_address_prefix)
 subnets = list(network.subnets(new_prefix=vnet_subnet_size))
 
-if len(prefix) > 17:
-    raise ValueError(f"'{prefix}' is longer than 17 characters")
-
-if not network.is_private:
-    raise ValueError(f"'{vnet_address_prefix}' is not a private network")
-
-if network.prefixlen > 24:
-    raise ValueError(f"'{vnet_address_prefix}' is smaller than /24")
+if len(prefix) > 18:
+    raise ValueError(f"Prefix '{prefix}' is longer than 18 characters")

@@ -85,7 +85,7 @@ config.pipLabels.forEach((pipLabel, i) => {
         relativeRecordSetName: pipLabel,
         privateZoneName: pdnsz.name,
         resourceGroupName: rg.name,
-        ttl: config.pdnszTtl,
+        ttl: 3600,
         recordType: 'CNAME',
         cnameRecord: {
             cname: pip.dnsSettings.fqdn
@@ -106,7 +106,6 @@ for (let i = 0; i < config.stCount; i++) {
         sku: {
             name: config.stSku
         },
-        minimumTlsVersion: config.stTlsVersion,
         networkRuleSet: {
             bypass: 'AzureServices',
             defaultAction: 'Allow',
