@@ -54,11 +54,17 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.13 # vars.PYTHON_VERSION
+          # python-version: 3.13 # vars.PYTHON_VERSION
+          python-version: 3
+          # python-version: 3.x
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23 # vars.NODE_VERSION
 
       - name: CHECK PYTHON VERSION # TMP
         run: python --version
-        # Python 3.10.12
 
       - name: CHECK NODE VERSION # TMP
         run: node --version
