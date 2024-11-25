@@ -93,13 +93,10 @@ jobs:
           path: ${{ env.path }}/venv/
           key: ${{ runner.os }}-venv-${{ hashFiles(format('{0}/requirements.txt', env.path)) }}
 
-      # - name: Setup Python
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: ${{ vars.PYTHON_VERSION }}
-
-      - name: CHECK VERSION
-        run: python --version
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ vars.PYTHON_VERSION }}
 
       - name: Pulumi - Up
         uses: pulumi/actions@v6
