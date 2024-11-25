@@ -29,7 +29,7 @@ permissions:
   contents: read
   id-token: write
 
-defaults: # TESTA!
+defaults:
   run:
     working-directory: pulumi/azure-python
 
