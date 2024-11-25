@@ -1,0 +1,114 @@
+name: Azure JavaScript
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/azure-javascript.yml
+      - pulumi/azure-javascript/**
+      - "!**.md"
+      - "!**.gitignore"
+
+  pull_request:
+    paths:
+      - .github/workflows/azure-javascript.yml
+      - pulumi/azure-javascript/**
+      - "!**.md"
+      - "!**.gitignore"
+
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: Debug
+        type: boolean
+
+  workflow_call:
+
+permissions:
+  contents: read
+  id-token: write
+
+# defaults:
+#   run:
+#     working-directory: pulumi/azure-javascript
+
+env:
+  path: pulumi/azure-javascript
+  stack: dev
+  ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+  ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+  ARM_USE_OIDC: true
+  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ vars.RUNNER }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Cache Node modules
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.path }}/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+          # cache: npm # TESTA!
+
+      - name: Install dependencies
+        run: npm install
+        # run: yarn install # TESTA!
+        # run: pulumi install # TESTA!
+
+      - name: Pulumi - Preview
+        uses: pulumi/actions@v6
+        with:
+          pulumi-version: "~${{ vars.PULUMI_VERSION }}"
+          command: preview
+          work-dir: ${{ env.path }}
+          stack-name: ${{ env.stack }}
+
+      - name: Debug
+        if: inputs.debug && (success() || failure())
+        uses: mxschmitt/action-tmate@v3
+
+  release:
+    name: Release
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ${{ vars.RUNNER }}
+    environment:
+      name: dev
+      url: https://app.holm.io/
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Cache Node modules
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.path }}/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Pulumi - Up
+        uses: pulumi/actions@v6
+        with:
+          pulumi-version: "~${{ vars.PULUMI_VERSION }}"
+          command: up
+          work-dir: ${{ env.path }}
+          stack-name: ${{ env.stack }}
+
+      - name: Debug
+        if: inputs.debug && (success() || failure())
+        uses: mxschmitt/action-tmate@v3

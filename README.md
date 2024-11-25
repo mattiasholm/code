@@ -1,5 +1,6 @@
 [![Azure ARM](https://github.com/mattiasholm/code/actions/workflows/azure-arm.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-arm.yml)
 [![Azure Bicep](https://github.com/mattiasholm/code/actions/workflows/azure-bicep.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-bicep.yml)
+[![Azure JavaScript](https://github.com/mattiasholm/code/actions/workflows/azure-javascript.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-javascript.yml)
 [![Azure Python](https://github.com/mattiasholm/code/actions/workflows/azure-python.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-python.yml)
 [![Azure Terraform](https://github.com/mattiasholm/code/actions/workflows/azure-terraform.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-terraform.yml)
 [![Run All](https://github.com/mattiasholm/code/actions/workflows/run-all.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/run-all.yml)

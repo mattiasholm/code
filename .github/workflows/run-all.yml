@@ -25,6 +25,10 @@ jobs:
     uses: ./.github/workflows/azure-bicep.yml
     secrets: inherit
 
+  azure-javascript:
+    uses: ./.github/workflows/azure-javascript.yml
+    secrets: inherit
+
   azure-python:
     uses: ./.github/workflows/azure-python.yml
     secrets: inherit
