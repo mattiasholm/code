@@ -29,9 +29,9 @@ permissions:
   contents: read
   id-token: write
 
-# defaults:
-#   run:
-#     working-directory: pulumi/azure-javascript
+defaults:
+  run:
+    working-directory: pulumi/azure-javascript
 
 env:
   path: pulumi/azure-javascript
@@ -59,12 +59,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
-          # cache: npm # TESTA!
+          # cache: npm # TESTA HUR FUNKAR!
 
       - name: Install dependencies
         run: npm install
-        # run: yarn install # TESTA!
-        # run: pulumi install # TESTA!
 
       - name: Pulumi - Preview
         uses: pulumi/actions@v6
