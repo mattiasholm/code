@@ -4,9 +4,9 @@
 ```shell
 brew install python3
 brew install ffmpeg
-pip3 install pydub
-pip3 install soundfile
-pip3 install numpy
+pip install pydub
+pip install soundfile
+pip install numpy
 ```
 
 <br>
