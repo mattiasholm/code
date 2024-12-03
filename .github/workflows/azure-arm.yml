@@ -38,6 +38,7 @@ defaults:
 jobs:
   build:
     name: Build
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     runs-on: ${{ vars.RUNNER }}
     steps:
       - name: Check out repository
