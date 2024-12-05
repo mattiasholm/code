@@ -74,6 +74,10 @@ config.pipLabels.forEach((pipLabel, i) => {
         publicIpAddressName: name('pip', i + 1),
         resourceGroupName: rg.name,
         tags: config.tags,
+        sku: {
+            name: 'Standard',
+        },
+        publicIPAllocationMethod: 'Static',
         dnsSettings: {
             domainNameLabel: `${pipLabel}-${config.prefix}`
         },
