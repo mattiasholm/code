@@ -40,7 +40,7 @@ env:
   ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
   ARM_USE_OIDC: true
-  TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+  TFE_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
 jobs:
   build:
