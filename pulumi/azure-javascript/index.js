@@ -106,12 +106,12 @@ for (let i = 0; i < config.stCount; i++) {
         sku: {
             name: config.stSku
         },
-        networkRuleSet: {
-            bypass: 'AzureServices',
-            defaultAction: 'Allow',
-            ipRules: [],
-            virtualNetworkRules: []
-        },
+        // networkRuleSet: {
+        //     bypass: 'AzureServices',
+        //     defaultAction: 'Allow',
+        //     ipRules: [],
+        //     virtualNetworkRules: []
+        // },
     });
 
     sts.push(st);
