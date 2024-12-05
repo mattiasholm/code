@@ -69,11 +69,11 @@ jobs:
       - name: Pulumi - Preview
         uses: pulumi/actions@v6
         with:
-          pulumi-version: "~${{ vars.PULUMI_VERSION }}"
           command: preview
           diff: true
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
+          pulumi-version: "~${{ vars.PULUMI_VERSION }}"
 
       - name: Debug
         if: inputs.debug && (success() || failure())
@@ -105,11 +105,11 @@ jobs:
       - name: Pulumi - Up
         uses: pulumi/actions@v6
         with:
-          pulumi-version: "~${{ vars.PULUMI_VERSION }}"
           command: up
           diff: true
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
+          pulumi-version: "~${{ vars.PULUMI_VERSION }}"
 
       - name: Debug
         if: inputs.debug && (success() || failure())
