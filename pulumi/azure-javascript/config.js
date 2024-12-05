@@ -21,7 +21,7 @@ export const pdnszName = config.require('pdnszName');
 export const pipLabels = config.getObject('pipLabels') || [];
 
 export const stCount = config.getNumber('stCount');
-export const stSku = config.get('stSku') || 'Standard_LRS';
+export const stSku = config.get('stSku') || 'Standard_GRS';
 
 export const vnetAddressPrefix = config.require('vnetAddressPrefix');
 export const vnetSubnetSize = config.requireNumber('vnetSubnetSize');
