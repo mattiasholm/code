@@ -1,11 +1,11 @@
-name: Azure JavaScript
+name: Azure Pulumi
 
 on:
   push:
     branches:
       - main
     paths:
-      - .github/workflows/azure-javascript.yml
+      - .github/workflows/azure-pulumi.yml
       - pulumi/azure-javascript/**
       - "!**.md"
       - "!**.gitignore"
@@ -14,7 +14,7 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/azure-javascript.yml
+      - .github/workflows/azure-pulumi.yml
       - pulumi/azure-javascript/**
       - "!**.md"
       - "!**.gitignore"
@@ -56,7 +56,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.path }}/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
+          key: ${{ runner.os }}-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -94,7 +94,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.path }}/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
+          key: ${{ runner.os }}-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
