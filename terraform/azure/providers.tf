@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.9.0"
+  required_version = "~> 1.10.0"
 
   cloud {
     hostname     = "app.terraform.io"
@@ -7,6 +7,10 @@ terraform {
 
     workspaces {
       name = "azure"
+      # project = "azure" # Evalute, same functionality as Pulumi project/stacks???
+      # name = "dev" # VS automatically configured when pointing to project???
+      # https://developer.hashicorp.com/terraform/language/terraform#terraform-cloud
+      # https://developer.hashicorp.com/terraform/cli/cloud/settings
     }
   }
 

@@ -12,6 +12,11 @@ variable "location" {
 
 variable "tags" {
   type = map(string)
+
+  validation {
+    condition     = length(lower("${var.tags.Company}-${var.tags.Application}")) <= 18
+    error_message = "Prefix '${lower("${var.tags.Company}-${var.tags.Application}")}' is longer than 18 characters"
+  }
 }
 
 variable "appi_type" {

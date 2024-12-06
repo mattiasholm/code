@@ -2,6 +2,10 @@
 
 ## Install dependencies:
 ```shell
+pip install -r requirements.txt
+```
+or
+```shell
 brew install python3
 brew install ffmpeg
 pip install pydub

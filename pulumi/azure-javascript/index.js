@@ -1,4 +1,4 @@
-import { resources, operationalinsights, keyvault, network, storage } from '@pulumi/azure-native';
+import { resources, operationalinsights, keyvault, network, storage, authorization } from '@pulumi/azure-native';
 import { name, strip, cidrSubnet } from './functions.js';
 import * as config from './config.js';
 
@@ -28,22 +28,7 @@ const kv = new keyvault.Vault('kv', {
             family: 'A',
             name: 'standard',
         },
-        accessPolicies: [
-            {
-                tenantId: config.tenantId,
-                objectId: config.kvUserObjectId,
-                permissions: {
-                    secrets: config.kvUserSecretPermissions,
-                },
-            },
-            {
-                tenantId: config.tenantId,
-                objectId: config.kvSpObjectId,
-                permissions: {
-                    secrets: config.kvSpSecretPermissions
-                },
-            },
-        ],
+        enableRbacAuthorization: true,
     },
 });
 
@@ -54,7 +39,7 @@ if (config.logRetention) {
         resourceGroupName: rg.name,
         tags: config.tags,
         properties: {
-            value: log.customerId
+            value: log.customerId,
         },
     });
 }
@@ -79,7 +64,7 @@ config.pipLabels.forEach((pipLabel, i) => {
         },
         publicIPAllocationMethod: 'Static',
         dnsSettings: {
-            domainNameLabel: `${pipLabel}-${config.prefix}`
+            domainNameLabel: `${pipLabel}-${config.prefix}`,
         },
     });
 
@@ -92,7 +77,7 @@ config.pipLabels.forEach((pipLabel, i) => {
         ttl: 3600,
         recordType: 'CNAME',
         cnameRecord: {
-            cname: pip.dnsSettings.fqdn
+            cname: pip.dnsSettings.fqdn,
         },
     });
 
@@ -108,13 +93,13 @@ for (let i = 0; i < config.stCount; i++) {
         tags: config.tags,
         kind: 'StorageV2',
         sku: {
-            name: config.stSku
+            name: config.stSku,
         },
         networkRuleSet: {
             bypass: 'AzureServices',
             defaultAction: 'Allow',
             ipRules: [],
-            virtualNetworkRules: []
+            virtualNetworkRules: [],
         },
     });
 
@@ -127,15 +112,6 @@ for (let i = 0; i < config.stCount; i++) {
     });
 }
 
-const subnets = [];
-
-for (let i = 0; i < config.vnetSubnetCount; i++) {
-    subnets.push({
-        name: name('snet', i + 1),
-        addressPrefix: cidrSubnet(config.vnetAddressPrefix, config.vnetSubnetSize, i),
-    });
-}
-
 const vnet = new network.VirtualNetwork('vnet', {
     virtualNetworkName: name('vnet'),
     resourceGroupName: rg.name,
@@ -145,7 +121,10 @@ const vnet = new network.VirtualNetwork('vnet', {
             config.vnetAddressPrefix,
         ],
     },
-    subnets: subnets,
+    subnets: Array.from({ length: config.vnetSubnetCount }, (_, i) => ({
+        name: name('snet', i + 1),
+        addressPrefix: cidrSubnet(config.vnetAddressPrefix, config.vnetSubnetSize, i),
+    })),
 });
 
 new network.VirtualNetworkLink('link', {
@@ -158,6 +137,15 @@ new network.VirtualNetworkLink('link', {
         id: vnet.id,
     },
     registrationEnabled: false,
+});
+
+Object.entries(config.roles).forEach(([key, value]) => {
+    new authorization.RoleAssignment(`rbac${key}`, {
+        principalId: value.principal,
+        principalType: key,
+        roleDefinitionId: value.role,
+        scope: kv.id,
+    });
 });
 
 export const kvUrl = kv.properties.vaultUri;

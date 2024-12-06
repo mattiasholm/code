@@ -9,18 +9,9 @@ config:
     Owner: mattias.holm@b3cloud.onmicrosoft.com
   azure-javascript:logRetention: 30
   azure-javascript:kvUserName: mattias.holm@b3cloud.onmicrosoft.com
-  azure-javascript:kvUserSecretPermissions:
-    - Get
-    - List
-    - Set
-    - Delete
-    - Recover
-    - Backup
-    - Restore
-    - Purge
+  azure-javascript:kvUserRole: Key Vault Administrator
   azure-javascript:kvSpName: sp-holm-01
-  azure-javascript:kvSpSecretPermissions:
-    - Delete
+  azure-javascript:kvSpRole: Key Vault Secrets Officer
   azure-javascript:pdnszName: holm.io
   azure-javascript:pipLabels:
     - app
