@@ -100,9 +100,9 @@ resource "azurerm_storage_account" "st" {
 }
 
 resource "azurerm_storage_container" "container" {
-  count                = var.st_count
-  name                 = "container-01"
-  storage_account_name = azurerm_storage_account.st[count.index].name
+  count              = var.st_count
+  name               = "container-${local.prefix}-01"
+  storage_account_id = azurerm_storage_account.st[count.index].id
 }
 
 resource "azurerm_virtual_network" "vnet" {

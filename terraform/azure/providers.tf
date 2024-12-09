@@ -7,10 +7,6 @@ terraform {
 
     workspaces {
       name = "azure"
-      # project = "azure" # Evalute, same functionality as Pulumi project/stacks???
-      # name = "dev" # VS automatically configured when pointing to project???
-      # https://developer.hashicorp.com/terraform/language/terraform#terraform-cloud
-      # https://developer.hashicorp.com/terraform/cli/cloud/settings
     }
   }
 
@@ -22,7 +18,7 @@ terraform {
 
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 4.6.0"
+      version = "~> 4.13.0"
     }
   }
 }

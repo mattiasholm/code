@@ -18,7 +18,7 @@ kv_user_secret_permissions = [
   "Recover",
   "Backup",
   "Restore",
-  "Purge"
+  "Purge",
 ]
 kv_sp_name = "sp-holm-01"
 kv_sp_secret_permissions = [
@@ -26,14 +26,14 @@ kv_sp_secret_permissions = [
   "Set",
   "Delete",
   "Recover",
-  "Purge"
+  "Purge",
 ]
 pdnsz_name         = "holm.io"
 pdnsz_registration = false
 pdnsz_ttl          = 3600
 pip_labels = [
   "app",
-  "web"
+  "web",
 ]
 pip_sku             = "Basic"
 pip_allocation      = "Dynamic"

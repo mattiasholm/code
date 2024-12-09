@@ -3,13 +3,20 @@ output "kv_url" {
 }
 
 output "pdnsz_url" {
-  value = [for cname in azurerm_private_dns_cname_record.cname : cname.fqdn]
+  value = { for key, value in azurerm_private_dns_cname_record.cname : key => value.fqdn }
 }
 
 output "pip_url" {
-  value = [for pip in azurerm_public_ip.pip : "https://${pip.fqdn}/"]
+  value = { for key, value in azurerm_public_ip.pip : key => "https://${value.fqdn}/" }
 }
 
 output "st_url" {
-  value = concat(azurerm_storage_account.st[*].primary_blob_endpoint, azurerm_storage_account.st[*].primary_file_endpoint, azurerm_storage_account.st[*].primary_queue_endpoint, azurerm_storage_account.st[*].primary_table_endpoint)
+  value = [for st in azurerm_storage_account.st : {
+    blob  = st.primary_blob_endpoint
+    dfs   = st.primary_dfs_endpoint
+    file  = st.primary_file_endpoint
+    queue = st.primary_queue_endpoint
+    table = st.primary_table_endpoint
+    web   = st.primary_web_endpoint
+  }]
 }

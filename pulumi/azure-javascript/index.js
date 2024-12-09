@@ -51,11 +51,11 @@ const pdnsz = new network.PrivateZone('pdnsz', {
     tags: config.tags,
 });
 
-const pips = [];
-const cnames = [];
+const pips = {};
+const cnames = {};
 
-config.pipLabels.forEach((pipLabel, i) => {
-    const pip = new network.PublicIPAddress(`pip${i}`, {
+config.pipLabels.forEach((label, i) => {
+    const pip = new network.PublicIPAddress(`pip_${label}`, {
         publicIpAddressName: name('pip', i + 1),
         resourceGroupName: rg.name,
         tags: config.tags,
@@ -64,14 +64,14 @@ config.pipLabels.forEach((pipLabel, i) => {
         },
         publicIPAllocationMethod: 'Static',
         dnsSettings: {
-            domainNameLabel: `${pipLabel}-${config.prefix}`,
+            domainNameLabel: `${label}-${config.prefix}`,
         },
     });
 
-    pips.push(pip);
+    pips[label] = pip;
 
-    const cname = new network.PrivateRecordSet(`cname${i}`, {
-        relativeRecordSetName: pipLabel,
+    const cname = new network.PrivateRecordSet(`cname_${label}`, {
+        relativeRecordSetName: label,
         privateZoneName: pdnsz.name,
         resourceGroupName: rg.name,
         ttl: 3600,
@@ -81,13 +81,13 @@ config.pipLabels.forEach((pipLabel, i) => {
         },
     });
 
-    cnames.push(cname);
+    cnames[label] = cname;
 });
 
 const sts = [];
 
 for (let i = 0; i < config.stCount; i++) {
-    const st = new storage.StorageAccount(`st${i}`, {
+    const st = new storage.StorageAccount(`st_${i}`, {
         accountName: strip(name('st', i + 1)),
         resourceGroupName: rg.name,
         tags: config.tags,
@@ -105,7 +105,7 @@ for (let i = 0; i < config.stCount; i++) {
 
     sts.push(st);
 
-    new storage.BlobContainer(`container${i}`, {
+    new storage.BlobContainer(`container_${i}`, {
         containerName: name('container'),
         accountName: st.name,
         resourceGroupName: rg.name,
@@ -140,7 +140,7 @@ new network.VirtualNetworkLink('link', {
 });
 
 Object.entries(config.roles).forEach(([key, value]) => {
-    new authorization.RoleAssignment(`rbac${key}`, {
+    new authorization.RoleAssignment(`rbac_${key}`, {
         principalId: value.principal,
         principalType: key,
         roleDefinitionId: value.role,
@@ -150,8 +150,18 @@ Object.entries(config.roles).forEach(([key, value]) => {
 
 export const kvUrl = kv.properties.vaultUri;
 
-export const pdnszUrl = cnames.map(cname => cname.fqdn.apply(fqdn => `https://${fqdn.replace(/\.$/, '')}/`));
+export const pdnszUrl = Object.fromEntries(
+    Object.entries(cnames).map(([key, value]) => [
+        key,
+        value.fqdn.apply(fqdn => `https://${fqdn.replace(/\.$/, '')}/`),
+    ])
+);
 
-export const pipUrl = pips.map(pip => pip.dnsSettings.fqdn.apply(fqdn => `https://${fqdn}/`));
+export const pipUrl = Object.fromEntries(
+    Object.entries(pips).map(([key, value]) => [
+        key,
+        value.dnsSettings.fqdn.apply(fqdn => `https://${fqdn}/`),
+    ])
+);
 
 export const stUrl = sts.map(st => st.primaryEndpoints);
