@@ -66,6 +66,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          allow-no-subscriptions: true
+
       - name: Pulumi - Preview
         uses: pulumi/actions@v6
         with:
@@ -100,6 +107,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          allow-no-subscriptions: true
 
       - name: Pulumi - Up
         uses: pulumi/actions@v6
