@@ -159,6 +159,4 @@ export const cnameUrl = Object.fromEntries(
 
 export const stUrl = sts.map(st => st.primaryEndpoints);
 
-export const subnets = vnet.subnets.apply(subnets =>
-    Object.fromEntries(subnets.map(({ name, addressPrefix }) => [name, addressPrefix]))
-);
+export const subnets = vnet.subnets.apply(subnets => subnets.map(snet => snet.addressPrefix));
