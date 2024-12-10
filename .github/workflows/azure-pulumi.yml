@@ -40,10 +40,12 @@ env:
   stack: dev
   ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
-  # TMP
-  ARM_SUBSCRIPTION_ID: 804fd219-0c15-45f9-ae36-0a4d3725848f # TMP
-  # TMP
   ARM_USE_OIDC: true
+  # TMP
+  AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+  AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+  AZURE_USE_OIDC: true
+  # TMP
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
 jobs:
