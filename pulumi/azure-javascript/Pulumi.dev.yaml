@@ -8,10 +8,6 @@ config:
     Environment: Development
     Owner: mattias.holm@b3cloud.onmicrosoft.com
   azure-javascript:logRetention: 30
-  azure-javascript:kvUserName: mattias.holm@b3cloud.onmicrosoft.com
-  azure-javascript:kvUserRole: Key Vault Administrator
-  azure-javascript:kvSpName: sp-holm-01
-  azure-javascript:kvSpRole: Key Vault Secrets Officer
   azure-javascript:pdnszName: holm.io
   azure-javascript:pipLabels:
     - app
@@ -19,5 +15,9 @@ config:
   azure-javascript:stCount: 2
   azure-javascript:stSku: Standard_LRS
   azure-javascript:vnetAddressPrefix: 10.0.0.0/24
-  azure-javascript:vnetSubnetSize: 26
   azure-javascript:vnetSubnetCount: 4
+  azure-javascript:vnetSubnetSize: 26
+  azure-javascript:userName: mattias.holm@b3cloud.onmicrosoft.com
+  azure-javascript:userRole: Key Vault Administrator
+  azure-javascript:spName: sp-holm-01
+  azure-javascript:spRole: Key Vault Secrets Officer

@@ -64,7 +64,7 @@ config.pipLabels.forEach((label, i) => {
         },
         publicIPAllocationMethod: 'Static',
         dnsSettings: {
-            domainNameLabel: `${label}-${config.prefix}`,
+            domainNameLabel: name('pip', i + 1),
         },
     });
 
@@ -106,7 +106,7 @@ for (let i = 0; i < config.stCount; i++) {
     sts.push(st);
 
     new storage.BlobContainer(`container_${i}`, {
-        containerName: name('container'),
+        containerName: 'data',
         accountName: st.name,
         resourceGroupName: rg.name,
     });
@@ -141,10 +141,10 @@ new network.VirtualNetworkLink('link', {
 
 Object.entries(config.roles).forEach(([key, value]) => {
     new authorization.RoleAssignment(`rbac_${key}`, {
-        principalId: value.principal,
+        principalId: value.principalId,
         principalType: key,
-        roleDefinitionId: value.role,
-        scope: kv.id,
+        roleDefinitionId: value.roleId,
+        scope: rg.id,
     });
 });
 
