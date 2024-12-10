@@ -37,15 +37,10 @@ defaults:
 
 env:
   path: pulumi/azure-javascript
-  stack: dev
+  # stack: dev
   ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
   ARM_USE_OIDC: true
-  # TMP
-  AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-  AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
-  AZURE_USE_OIDC: true
-  # TMP
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
 jobs:
@@ -71,19 +66,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # - name: Log in to Azure
-      #   uses: azure/login@v2
-      #   with:
-      #     tenant-id: ${{ vars.AZURE_TENANT_ID }}
-      #     client-id: ${{ vars.AZURE_CLIENT_ID }}
-      #     allow-no-subscriptions: true
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          allow-no-subscriptions: true
 
       - name: Pulumi - Preview
         uses: pulumi/actions@v6
         with:
           command: preview
           work-dir: ${{ env.path }}
-          stack-name: ${{ env.stack }}
+          # stack-name: ${{ env.stack }}
           pulumi-version: "~${{ vars.PULUMI_VERSION }}"
 
       - name: Debug
@@ -113,19 +108,19 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      # - name: Log in to Azure
-      #   uses: azure/login@v2
-      #   with:
-      #     tenant-id: ${{ vars.AZURE_TENANT_ID }}
-      #     client-id: ${{ vars.AZURE_CLIENT_ID }}
-      #     allow-no-subscriptions: true
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          allow-no-subscriptions: true
 
       - name: Pulumi - Up
         uses: pulumi/actions@v6
         with:
           command: up
           work-dir: ${{ env.path }}
-          stack-name: ${{ env.stack }}
+          # stack-name: ${{ env.stack }}
           pulumi-version: "~${{ vars.PULUMI_VERSION }}"
 
       - name: Debug
