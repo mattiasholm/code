@@ -37,7 +37,7 @@ defaults:
 
 env:
   path: pulumi/azure-javascript
-  # stack: dev
+  stack: dev
   ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
   ARM_USE_OIDC: true
@@ -78,7 +78,7 @@ jobs:
         with:
           command: preview
           work-dir: ${{ env.path }}
-          # stack-name: ${{ env.stack }}
+          stack-name: ${{ env.stack }}
           pulumi-version: "~${{ vars.PULUMI_VERSION }}"
 
       - name: Debug
@@ -120,7 +120,7 @@ jobs:
         with:
           command: up
           work-dir: ${{ env.path }}
-          # stack-name: ${{ env.stack }}
+          stack-name: ${{ env.stack }}
           pulumi-version: "~${{ vars.PULUMI_VERSION }}"
 
       - name: Debug
