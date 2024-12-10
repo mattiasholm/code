@@ -5,7 +5,7 @@ import { authorization } from '@pulumi/azure-native';
 const roleId = {
     'Key Vault Administrator': '00482a5a-887f-4fb3-b363-3b7fe8e74483',
     'Key Vault Secrets Officer': 'b86a8fe4-44ce-4948-aee5-eccb2c155cd7',
-}
+};
 
 const config = new pulumi.Config();
 
@@ -49,7 +49,7 @@ export const roles = {
         principal: kvSpObjectId,
         role: kvSpRoleId,
     },
-}
+};
 
 if (prefix.length > 18) {
     throw new Error(`Prefix '${prefix}' is longer than 18 characters`);
