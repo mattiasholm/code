@@ -150,18 +150,15 @@ Object.entries(config.roles).forEach(([key, value]) => {
 
 export const kvUrl = kv.properties.vaultUri;
 
-export const pdnszUrl = Object.fromEntries(
+export const cnameUrl = Object.fromEntries(
     Object.entries(cnames).map(([key, value]) => [
         key,
         value.fqdn.apply(fqdn => `https://${fqdn.replace(/\.$/, '')}/`),
     ])
 );
 
-export const pipUrl = Object.fromEntries(
-    Object.entries(pips).map(([key, value]) => [
-        key,
-        value.dnsSettings.fqdn.apply(fqdn => `https://${fqdn}/`),
-    ])
-);
-
 export const stUrl = sts.map(st => st.primaryEndpoints);
+
+export const subnets = vnet.subnets.apply(subnets =>
+    Object.fromEntries(subnets.map(({ name, addressPrefix }) => [name, addressPrefix]))
+);
