@@ -7,16 +7,16 @@ output "cname_url" {
 }
 
 output "st_url" {
-  value = { for st in azurerm_storage_account.st : st.name => {
+  value = [for st in azurerm_storage_account.st : {
     blob  = st.primary_blob_endpoint
     dfs   = st.primary_dfs_endpoint
     file  = st.primary_file_endpoint
     queue = st.primary_queue_endpoint
     table = st.primary_table_endpoint
     web   = st.primary_web_endpoint
-  } }
+  }]
 }
 
 output "subnets" {
-  value = { for snet in azurerm_virtual_network.vnet.subnet : snet.name => snet.address_prefixes[0] }
+  value = [for snet in azurerm_virtual_network.vnet.subnet : snet.address_prefixes[0]]
 }
