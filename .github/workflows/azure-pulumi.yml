@@ -70,7 +70,6 @@ jobs:
         uses: pulumi/actions@v6
         with:
           command: preview
-          diff: true
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
           pulumi-version: "~${{ vars.PULUMI_VERSION }}"
@@ -106,7 +105,6 @@ jobs:
         uses: pulumi/actions@v6
         with:
           command: up
-          diff: true
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
           pulumi-version: "~${{ vars.PULUMI_VERSION }}"
