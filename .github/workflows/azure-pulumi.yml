@@ -40,6 +40,9 @@ env:
   stack: dev
   ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+  # TMP
+  ARM_SUBSCRIPTION_ID: 804fd219-0c15-45f9-ae36-0a4d3725848f # TMP
+  # TMP
   ARM_USE_OIDC: true
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
@@ -66,12 +69,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Log in to Azure
-        uses: azure/login@v2
-        with:
-          tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          client-id: ${{ vars.AZURE_CLIENT_ID }}
-          allow-no-subscriptions: true
+      # - name: Log in to Azure
+      #   uses: azure/login@v2
+      #   with:
+      #     tenant-id: ${{ vars.AZURE_TENANT_ID }}
+      #     client-id: ${{ vars.AZURE_CLIENT_ID }}
+      #     allow-no-subscriptions: true
 
       - name: Pulumi - Preview
         uses: pulumi/actions@v6
@@ -108,12 +111,12 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Log in to Azure
-        uses: azure/login@v2
-        with:
-          tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          client-id: ${{ vars.AZURE_CLIENT_ID }}
-          allow-no-subscriptions: true
+      # - name: Log in to Azure
+      #   uses: azure/login@v2
+      #   with:
+      #     tenant-id: ${{ vars.AZURE_TENANT_ID }}
+      #     client-id: ${{ vars.AZURE_CLIENT_ID }}
+      #     allow-no-subscriptions: true
 
       - name: Pulumi - Up
         uses: pulumi/actions@v6
