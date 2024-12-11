@@ -39,5 +39,5 @@ export const roles = {
 };
 
 if (prefix.length > 18) {
-    throw new Error(`Prefix '${prefix}' is longer than 18 characters`);
+    throw new Error(`Prefix '${prefix}' is longer than 18 characters.`);
 }

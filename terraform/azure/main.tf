@@ -1,11 +1,11 @@
 data "azurerm_subscription" "sub" {}
 
 data "azuread_user" "user" {
-  user_principal_name = var.kv_user_name
+  user_principal_name = var.user_name
 }
 
 data "azuread_service_principal" "sp" {
-  display_name = var.kv_sp_name
+  display_name = var.sp_name
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -14,39 +14,33 @@ resource "azurerm_resource_group" "rg" {
   tags     = var.tags
 }
 
-resource "azurerm_application_insights" "appi" {
-  count               = var.appi_type != "" ? 1 : 0
-  name                = "appi-${local.prefix}-01"
+resource "azurerm_log_analytics_workspace" "log" {
+  count               = var.log_retention != null ? 1 : 0
+  name                = "log-${local.prefix}-01"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
-  application_type    = var.appi_type
+  retention_in_days   = var.log_retention
 }
 
 resource "azurerm_key_vault" "kv" {
-  name                = "kv-${local.prefix}-01"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = var.location
-  tags                = var.tags
-  tenant_id           = data.azurerm_subscription.sub.tenant_id
-  sku_name            = var.kv_sku
-
-  dynamic "access_policy" {
-    for_each = local.access_policies
-
-    content {
-      tenant_id          = data.azurerm_subscription.sub.tenant_id
-      object_id          = access_policy.key
-      secret_permissions = access_policy.value
-    }
-  }
+  name                      = "kv-${local.prefix}-01"
+  resource_group_name       = azurerm_resource_group.rg.name
+  location                  = var.location
+  tags                      = var.tags
+  tenant_id                 = data.azurerm_subscription.sub.tenant_id
+  sku_name                  = "standard"
+  enable_rbac_authorization = true
 }
 
 resource "azurerm_key_vault_secret" "secret" {
-  count        = var.appi_type != "" ? 1 : 0
-  name         = "APPLICATIONINSIGHTS-CONNECTION-STRING"
+  depends_on = [
+    azurerm_role_assignment.rbac
+  ]
+  count        = var.log_retention != null ? 1 : 0
+  name         = "log-workspace-id"
   tags         = var.tags
-  value        = azurerm_application_insights.appi[0].connection_string
+  value        = azurerm_log_analytics_workspace.log[0].workspace_id
   key_vault_id = azurerm_key_vault.kv.id
 }
 
@@ -62,7 +56,6 @@ resource "azurerm_private_dns_zone_virtual_network_link" "link" {
   resource_group_name   = azurerm_resource_group.rg.name
   tags                  = var.tags
   virtual_network_id    = azurerm_virtual_network.vnet.id
-  registration_enabled  = var.pdnsz_registration
 }
 
 resource "azurerm_private_dns_cname_record" "cname" {
@@ -70,7 +63,7 @@ resource "azurerm_private_dns_cname_record" "cname" {
   name                = each.value
   zone_name           = azurerm_private_dns_zone.pdnsz.name
   resource_group_name = azurerm_resource_group.rg.name
-  ttl                 = var.pdnsz_ttl
+  ttl                 = 3600
   record              = azurerm_public_ip.pip[each.value].fqdn
 }
 
@@ -80,28 +73,24 @@ resource "azurerm_public_ip" "pip" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   tags                = var.tags
-  sku                 = var.pip_sku
-  allocation_method   = var.pip_allocation
-  domain_name_label   = "${each.value}-${local.prefix}"
+  sku                 = "Standard"
+  allocation_method   = "Static"
+  domain_name_label   = "pip-${local.prefix}-${format("%02d", index(tolist(var.pip_labels), each.value) + 1)}"
 }
 
 resource "azurerm_storage_account" "st" {
-  count                           = var.st_count
-  name                            = "st${local.prefix_stripped}${format("%02d", count.index + 1)}"
-  resource_group_name             = azurerm_resource_group.rg.name
-  location                        = var.location
-  tags                            = var.tags
-  account_kind                    = var.st_kind
-  account_tier                    = var.st_sku
-  account_replication_type        = var.st_replication
-  allow_nested_items_to_be_public = var.st_public_access
-  https_traffic_only_enabled      = var.st_https_only
-  min_tls_version                 = var.st_tls_version
+  count                    = var.st_count
+  name                     = "st${local.prefix_stripped}${format("%02d", count.index + 1)}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = var.location
+  tags                     = var.tags
+  account_tier             = var.st_sku
+  account_replication_type = var.st_replication
 }
 
 resource "azurerm_storage_container" "container" {
   count              = var.st_count
-  name               = "container-${local.prefix}-01"
+  name               = "data"
   storage_account_id = azurerm_storage_account.st[count.index].id
 }
 
@@ -111,17 +100,24 @@ resource "azurerm_virtual_network" "vnet" {
   location            = var.location
   tags                = var.tags
   address_space = [
-    var.vnet_address_prefix
+    var.vnet_cidr
   ]
 
   dynamic "subnet" {
-    for_each = range(var.vnet_subnet_count)
+    for_each = range(var.snet_count)
 
     content {
-      name = "snet-${format("%02d", subnet.value + 1)}"
+      name = "snet-${local.prefix}-${format("%02d", subnet.value + 1)}"
       address_prefixes = [
-        cidrsubnet(var.vnet_address_prefix, var.vnet_subnet_size - local.vnet_size, subnet.value)
+        cidrsubnet(var.vnet_cidr, var.snet_size - local.vnet_size, subnet.value)
       ]
     }
   }
+}
+
+resource "azurerm_role_assignment" "rbac" {
+  for_each             = local.roles
+  principal_id         = each.value.principal
+  role_definition_name = each.value.role
+  scope                = azurerm_resource_group.rg.id
 }

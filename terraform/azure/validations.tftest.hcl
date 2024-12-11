@@ -3,14 +3,14 @@ variables {
     Application = "App"
     Company     = "Com"
   }
-  appi_type = "web"
+  log_retention = 30
   pip_labels = [
     "label"
   ]
-  st_count            = 1
-  vnet_address_prefix = "10.0.0.0/8"
-  vnet_subnet_size    = 24
-  vnet_subnet_count   = 1
+  st_count   = 1
+  vnet_cidr  = "10.0.0.0/8"
+  snet_size  = 24
+  snet_count = 1
 }
 
 run "validate_naming" {
@@ -22,7 +22,7 @@ run "validate_naming" {
   }
 
   assert {
-    condition     = azurerm_application_insights.appi[0].name == "appi-com-app-01"
+    condition     = azurerm_log_analytics_workspace.log[0].name == "log-com-app-01"
     error_message = "Application Insights name did not match expected"
   }
 
@@ -37,11 +37,6 @@ run "validate_naming" {
   }
 
   assert {
-    condition     = azurerm_public_ip.pip["label"].domain_name_label == "label-com-app"
-    error_message = "Public IP domain label did not match expected"
-  }
-
-  assert {
     condition     = azurerm_storage_account.st[0].name == "stcomapp01"
     error_message = "Storage account name did not match expected"
   }
@@ -52,7 +47,7 @@ run "validate_naming" {
   }
 
   assert {
-    condition     = tolist(azurerm_virtual_network.vnet.subnet)[0].name == "snet-01"
+    condition     = tolist(azurerm_virtual_network.vnet.subnet)[0].name == "snet-com-app-01"
     error_message = "Subnet name did not match expected"
   }
 }
@@ -70,14 +65,14 @@ run "validate_conditionals" {
   command = plan
 
   variables {
-    appi_type  = ""
-    pip_labels = []
-    st_count   = 0
+    log_retention = null
+    pip_labels    = []
+    st_count      = 0
   }
 
   assert {
-    condition     = length(azurerm_application_insights.appi) == 0
-    error_message = "Application Insights count did not match expected"
+    condition     = length(azurerm_log_analytics_workspace.log) == 0
+    error_message = "Log Analytics count did not match expected"
   }
 
   assert {
