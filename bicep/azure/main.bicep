@@ -1,44 +1,56 @@
 targetScope = 'subscription'
 
-param config object
+param config {
+  tags: {
+    Application: string
+    Company: string
+    *: string?
+  }
+  logRetention: int?
+  pdnszName: string
+  pipLabels: string[]?
+  stCount: int?
+  stSku: string?
+  vnetCidr: string
+  snetCount: int
+  snetSize: int
+  objectId: string
+  roleId: string
+}
+
 param location string = deployment().location
 
-var prefix = toLower('${config.tags.Company}-${config.tags.Application}')
-var tenantId = tenant().tenantId
+func name(type string, config object, instance int) string =>
+  '${type}-${toLower('${config.tags.Company}-${config.tags.Application}')}-${padLeft(instance, 2, '0')}'
 
-func strip(prefix string) string => replace(prefix, '-', '')
+func strip(name string) string => replace(name, '-', '')
 
-resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
-  name: 'rg-${prefix}-01'
+resource rg 'Microsoft.Resources/resourceGroups@2024-07-01' = {
+  name: name('rg', config, 1)
   location: location
   tags: config.tags
 }
 
-module appi 'modules/appi.bicep' = if (contains(config, 'appi')) {
-  name: 'appi'
+module log 'modules/log.bicep' = if (contains(config, 'logRetention')) {
+  name: 'log'
   scope: rg
   params: {
-    name: 'appi-${prefix}-01'
+    name: name('log', config, 1)
     location: location
-    kind: config.appi.kind
-    kvName: kv.outputs.name
+    retentionInDays: config.?logRetention
+    kvName: name('kv', config, 1)
   }
+  dependsOn: [
+    kv
+  ]
 }
 
 module kv 'modules/kv.bicep' = {
   name: 'kv'
   scope: rg
   params: {
-    name: 'kv-${prefix}-01'
+    name: name('kv', config, 1)
     location: location
-    tenantId: tenantId
-    sku: config.kv.sku
-    accessPolicies: [
-      {
-        objectId: config.kv.objectId
-        permissions: config.kv.permissions
-      }
-    ]
   }
 }
 
@@ -46,13 +58,11 @@ module pdnsz 'modules/pdnsz.bicep' = {
   name: 'pdnsz'
   scope: rg
   params: {
-    name: config.pdnsz.name
-    vnetName: vnet.outputs.name
+    name: config.pdnszName
+    vnetName: name('vnet', config, 1)
     vnetId: vnet.outputs.id
-    registrationEnabled: config.pdnsz.registration
-    ttl: config.pdnsz.ttl
-    cnameRecords: [
-      for (label, i) in contains(config, 'pip') ? config.pip.labels : []: {
+    cnames: [
+      for (label, i) in config.?pipLabels ?? []: {
         name: label
         cname: pip[i].outputs.fqdn
       }
@@ -61,33 +71,27 @@ module pdnsz 'modules/pdnsz.bicep' = {
 }
 
 module pip 'modules/pip.bicep' = [
-  for (label, i) in contains(config, 'pip') ? config.pip.labels : []: {
-    name: 'pip${i}'
+  for (label, i) in config.?pipLabels ?? []: {
+    name: 'pip_${label}'
     scope: rg
     params: {
-      name: 'pip-${prefix}-${padLeft(i + 1, 2, '0')}'
+      name: name('pip', config, i + 1)
       location: location
-      sku: config.pip.sku
-      publicIPAllocationMethod: config.pip.allocation
-      domainNameLabel: '${label}-${prefix}'
+      domainNameLabel: name('pip', config, i + 1)
     }
   }
 ]
 
 module st 'modules/st.bicep' = [
-  for i in range(0, contains(config, 'st') ? config.st.count : 0): {
-    name: 'st${i}'
+  for i in range(0, config.?stCount ?? 0): {
+    name: 'st_${i}'
     scope: rg
     params: {
-      name: 'st${strip(prefix)}${padLeft(i + 1, 2, '0')}'
+      name: strip(name('st', config, i + 1))
       location: location
-      kind: config.st.kind
-      sku: config.st.sku
-      allowBlobPublicAccess: config.st.publicAccess
-      supportsHttpsTrafficOnly: config.st.httpsOnly
-      minimumTlsVersion: config.st.tlsVersion
+      sku: config.?stSku
       containers: [
-        'container-01'
+        'data'
       ]
     }
   }
@@ -97,23 +101,38 @@ module vnet 'modules/vnet.bicep' = {
   name: 'vnet'
   scope: rg
   params: {
-    name: 'vnet-${prefix}-01'
+    name: name('vnet', config, 1)
     location: location
     addressPrefixes: [
-      config.vnet.addressPrefix
+      config.vnetCidr
     ]
     subnets: [
-      for i in range(0, config.vnet.subnetCount): {
-        name: 'snet-${padLeft(i + 1, 2, '0')}'
-        addressPrefix: cidrSubnet(config.vnet.addressPrefix, config.vnet.subnetSize, i)
+      for i in range(0, config.snetCount): {
+        name: name('snet', config, i + 1)
+        addressPrefix: cidrSubnet(config.vnetCidr, config.snetSize, i)
       }
     ]
   }
 }
 
+module rbac 'modules/rbac.bicep' = {
+  name: 'rbac'
+  scope: rg
+  params: {
+    objectId: config.objectId
+    roleId: config.roleId
+  }
+}
+
 output kvUrl string = kv.outputs.vaultUri
-output pdnszUrl array = pdnsz.outputs.fqdn
-output pipUrl array = [
-  for (label, i) in contains(config, 'pip') ? config.pip.labels : []: 'https://${pip[i].outputs.fqdn}/'
-]
-output stUrl array = [for i in range(0, contains(config, 'st') ? config.st.count : 0): st[i].outputs.primaryEndpoints]
+
+output cnameUrl object = toObject(
+  config.?pipLabels ?? [],
+  label => label,
+  label =>
+    'https://${substring(pdnsz.outputs.fqdn[indexOf(config.pipLabels!, label)], 0, length(pdnsz.outputs.fqdn[indexOf(config.pipLabels!, label)]) - 1)}/'
+)
+
+output stUrl object[] = [for i in range(0, config.?stCount ?? 0): st[i].outputs.primaryEndpoints]
+
+output subnets string[] = map(vnet.outputs.subnets, snet => snet.properties.addressPrefix)

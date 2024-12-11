@@ -4,7 +4,7 @@ param tags object = resourceGroup().tags
 param addressPrefixes string[]
 param subnets { name: string, addressPrefix: string }[] = []
 
-resource vnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
+resource vnet 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: name
   location: location
   tags: tags
@@ -20,9 +20,9 @@ resource vnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
         }
       }
     ]
+    privateEndpointVNetPolicies: 'Disabled'
   }
 }
 
-output name string = vnet.name
 output id string = vnet.id
-output subnets array = vnet.properties.subnets
+output subnets object[] = vnet.properties.subnets

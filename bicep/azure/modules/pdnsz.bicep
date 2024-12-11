@@ -2,9 +2,7 @@ param name string
 param tags object = resourceGroup().tags
 param vnetName string
 param vnetId string
-param registrationEnabled bool = false
-param ttl int = 3600
-param cnameRecords { name: string, cname: string }[] = []
+param cnames { name: string, cname: string }[] = []
 
 var location = 'global'
 
@@ -21,21 +19,21 @@ resource pdnsz 'Microsoft.Network/privateDnsZones@2024-06-01' = {
       virtualNetwork: {
         id: vnetId
       }
-      registrationEnabled: registrationEnabled
+      registrationEnabled: false
     }
   }
 
   resource cname 'CNAME' = [
-    for cnameRecord in cnameRecords: {
-      name: cnameRecord.name
+    for cname in cnames: {
+      name: cname.name
       properties: {
-        ttl: ttl
+        ttl: 3600
         cnameRecord: {
-          cname: cnameRecord.cname
+          cname: cname.cname
         }
       }
     }
   ]
 }
 
-output fqdn array = [for (cnameRecord, i) in cnameRecords: pdnsz::cname[i].properties.fqdn]
+output fqdn string[] = [for (_, i) in cnames: pdnsz::cname[i].properties.fqdn]

@@ -2,29 +2,19 @@
 param name string
 param location string
 param tags object = resourceGroup().tags
-param tenantId string = tenant().tenantId
-param sku 'standard' | 'premium' = 'standard'
-param accessPolicies { objectId: string, permissions: object }[] = []
 
 resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: name
   location: location
   tags: tags
   properties: {
-    tenantId: tenantId
+    tenantId: tenant().tenantId
     sku: {
       family: 'A'
-      name: sku
+      name: 'standard'
     }
-    accessPolicies: [
-      for accessPolicy in accessPolicies: {
-        tenantId: tenantId
-        objectId: accessPolicy.objectId
-        permissions: accessPolicy.permissions
-      }
-    ]
+    enableRbacAuthorization: true
   }
 }
 
-output name string = kv.name
 output vaultUri string = kv.properties.vaultUri

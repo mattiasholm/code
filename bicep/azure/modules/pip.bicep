@@ -1,22 +1,23 @@
 param name string
 param location string
 param tags object = resourceGroup().tags
-param sku 'Basic' | 'Standard' = 'Basic'
-param publicIPAllocationMethod 'Dynamic' | 'Static' = 'Dynamic'
 param domainNameLabel string
 
-resource pip 'Microsoft.Network/publicIPAddresses@2024-01-01' = {
+resource pip 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
   name: name
   location: location
   tags: tags
   sku: {
-    name: sku
+    name: 'Standard'
     tier: 'Regional'
   }
   properties: {
-    publicIPAllocationMethod: publicIPAllocationMethod
+    publicIPAllocationMethod: 'Static'
     dnsSettings: {
       domainNameLabel: domainNameLabel
+    }
+    ddosSettings: {
+      protectionMode: 'VirtualNetworkInherited'
     }
   }
 }
