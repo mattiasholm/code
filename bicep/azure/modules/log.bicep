@@ -1,6 +1,6 @@
 param name string
 param location string
-param tags object = resourceGroup().tags
+param tags { *: string } = resourceGroup().tags
 param retentionInDays int = 30
 param kvName string
 

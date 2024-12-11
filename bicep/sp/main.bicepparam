@@ -7,3 +7,5 @@ param subjects = {
   pull_request: 'repo:mattiasholm/code:pull_request'
   dev: 'repo:mattiasholm/code:environment:dev'
 }
+
+param permission = 'User.Read.All'

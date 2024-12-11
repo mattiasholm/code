@@ -4,7 +4,7 @@ param config {
   tags: {
     Application: string
     Company: string
-    *: string?
+    *: string
   }
   logRetention: int?
   pdnszName: string

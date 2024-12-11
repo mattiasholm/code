@@ -7,7 +7,7 @@ permissions = {
     "User.Read.All"
   ]
 }
-role_name       = "Contributor"
+role_name       = "Owner"
 secret_name     = "github"
 secret_rotation = 365
 audiences = [
