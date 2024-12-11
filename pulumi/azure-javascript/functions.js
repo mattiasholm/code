@@ -1,7 +1,7 @@
 import { DefaultAzureCredential } from '@azure/identity';
 import { AuthorizationManagementClient } from '@azure/arm-authorization';
 import { authorization } from '@pulumi/azure-native';
-import { prefix } from './config.js';
+import * as config from './config.js';
 
 export async function getRoleId(roleName) {
     const credential = new DefaultAzureCredential();
@@ -18,7 +18,7 @@ export async function getRoleId(roleName) {
 }
 
 export function name(type, instance = 1) {
-    return `${type}-${prefix}-${String(instance).padStart(2, '0')}`;
+    return `${type}-${config.prefix}-${String(instance).padStart(2, '0')}`;
 }
 
 export function strip(name) {

@@ -14,9 +14,9 @@ config:
     - web
   azure-javascript:stCount: 2
   azure-javascript:stSku: Standard_LRS
-  azure-javascript:vnetAddressPrefix: 10.0.0.0/24
-  azure-javascript:vnetSubnetCount: 4
-  azure-javascript:vnetSubnetSize: 26
+  azure-javascript:vnetCidr: 10.0.0.0/24
+  azure-javascript:snetCount: 4
+  azure-javascript:snetSize: 26
   azure-javascript:userName: mattias.holm@b3cloud.onmicrosoft.com
   azure-javascript:userRole: Key Vault Administrator
   azure-javascript:spName: sp-holm-01

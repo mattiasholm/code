@@ -118,12 +118,12 @@ const vnet = new network.VirtualNetwork('vnet', {
     tags: config.tags,
     addressSpace: {
         addressPrefixes: [
-            config.vnetAddressPrefix,
+            config.vnetCidr,
         ],
     },
-    subnets: Array.from({ length: config.vnetSubnetCount }, (_, i) => ({
+    subnets: Array.from({ length: config.snetCount }, (_, i) => ({
         name: name('snet', i + 1),
-        addressPrefix: cidrSubnet(config.vnetAddressPrefix, config.vnetSubnetSize, i),
+        addressPrefix: cidrSubnet(config.vnetCidr, config.snetSize, i),
     })),
 });
 

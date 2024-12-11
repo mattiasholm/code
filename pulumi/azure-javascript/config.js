@@ -18,9 +18,9 @@ export const pipLabels = config.getObject('pipLabels') || [];
 export const stCount = config.getNumber('stCount');
 export const stSku = config.get('stSku') || 'Standard_GRS';
 
-export const vnetAddressPrefix = config.require('vnetAddressPrefix');
-export const vnetSubnetCount = config.requireNumber('vnetSubnetCount');
-export const vnetSubnetSize = config.requireNumber('vnetSubnetSize');
+export const vnetCidr = config.require('vnetCidr');
+export const snetCount = config.requireNumber('snetCount');
+export const snetSize = config.requireNumber('snetSize');
 
 const userName = config.require('userName');
 const userRole = config.require('userRole');
