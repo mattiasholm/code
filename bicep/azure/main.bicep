@@ -14,8 +14,8 @@ param config {
   vnetCidr: string
   snetCount: int
   snetSize: int
-  objectId: string
-  roleId: string
+  userName: string
+  userRole: string
 }
 
 param location string = deployment().location
@@ -119,8 +119,8 @@ module rbac 'modules/rbac.bicep' = {
   name: 'rbac'
   scope: rg
   params: {
-    objectId: config.objectId
-    roleId: config.roleId
+    userName: config.userName
+    userRole: config.userRole
   }
 }
 
