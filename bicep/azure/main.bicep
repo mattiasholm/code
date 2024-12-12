@@ -119,8 +119,8 @@ module rbac 'modules/rbac.bicep' = {
   name: 'rbac'
   scope: rg
   params: {
-    userName: config.userName
-    userRole: config.userRole
+    principal: config.userName
+    role: config.userRole
   }
 }
 

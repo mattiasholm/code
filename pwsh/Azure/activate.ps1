@@ -25,7 +25,7 @@ switch ($Role) {
 }
 
 $Method = 'PUT'
-$Uri = '/providers/Microsoft.Subscription/subscriptions/{0}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{1}?api-version=2020-10-01' -f $Subscription, (New-Guid)
+$Url = '/providers/Microsoft.Subscription/subscriptions/{0}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{1}?api-version=2020-10-01' -f $Subscription, (New-Guid)
 $Body = ConvertTo-Json -Depth 10 @{
     properties = @{
         principalId      = az ad signed-in-user show --query id --output tsv
@@ -42,4 +42,4 @@ $Body = ConvertTo-Json -Depth 10 @{
     }
 }
 
-$Body | az rest --method $Method --uri $Uri --body '@-' --output table
+$Body | az rest --method $Method --url $Url --body '@-' --output table
