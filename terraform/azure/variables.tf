@@ -40,12 +40,7 @@ variable "st_count" {
 
 variable "st_sku" {
   type    = string
-  default = "Standard"
-}
-
-variable "st_replication" {
-  type    = string
-  default = "GRS"
+  default = "Standard_GRS"
 }
 
 variable "vnet_cidr" {

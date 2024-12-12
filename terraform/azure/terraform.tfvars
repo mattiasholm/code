@@ -13,13 +13,12 @@ pip_labels = [
   "app",
   "web",
 ]
-st_count       = 2
-st_sku         = "Standard"
-st_replication = "LRS"
-vnet_cidr      = "10.0.0.0/24"
-snet_count     = 4
-snet_size      = 26
-user_name      = "mattias.holm@b3cloud.onmicrosoft.com"
-user_role      = "Key Vault Administrator"
-sp_name        = "sp-holm-01"
-sp_role        = "Key Vault Secrets Officer"
+st_count   = 2
+st_sku     = "Standard_LRS"
+vnet_cidr  = "10.0.0.0/24"
+snet_count = 4
+snet_size  = 26
+user_name  = "mattias.holm@b3cloud.onmicrosoft.com"
+user_role  = "Key Vault Administrator"
+sp_name    = "sp-holm-01"
+sp_role    = "Key Vault Secrets Officer"

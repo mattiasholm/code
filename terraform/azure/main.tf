@@ -84,8 +84,8 @@ resource "azurerm_storage_account" "st" {
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = var.location
   tags                     = var.tags
-  account_tier             = var.st_sku
-  account_replication_type = var.st_replication
+  account_tier             = split("_", var.st_sku)[0]
+  account_replication_type = split("_", var.st_sku)[1]
 }
 
 resource "azurerm_storage_container" "container" {
