@@ -109,7 +109,7 @@ $Person2
 
 <# ### METHOD
 TESTA EXEMPELVIS SayName() som finns nedan
-STATIC METHODS???
+STATIC METHODS?
 
 class MyClass
 {
