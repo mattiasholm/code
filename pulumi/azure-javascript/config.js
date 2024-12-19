@@ -13,10 +13,10 @@ export const tenantId = (await azuread.getClientConfig()).tenantId;
 
 export const pdnszName = config.require('pdnszName');
 
-export const pipLabels = config.getObject('pipLabels') || [];
+export const pipLabels = config.getObject('pipLabels') ?? [];
 
 export const stCount = config.getNumber('stCount');
-export const stSku = config.get('stSku') || 'Standard_GRS';
+export const stSku = config.get('stSku') ?? 'Standard_GRS';
 
 export const vnetCidr = config.require('vnetCidr');
 export const snetCount = config.requireNumber('snetCount');
