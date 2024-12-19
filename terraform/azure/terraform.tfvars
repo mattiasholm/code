@@ -11,7 +11,7 @@ log_retention = 30
 pdnsz_name    = "holm.io"
 pip_labels = [
   "app",
-  "web",
+  "web"
 ]
 st_count   = 2
 st_sku     = "Standard_LRS"
