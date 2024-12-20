@@ -1,6 +1,6 @@
 param name string
 param location string
-param tags { *: string } = resourceGroup().tags
+param tags object = resourceGroup().tags
 param domainNameLabel string
 
 resource pip 'Microsoft.Network/publicIPAddresses@2024-05-01' = {

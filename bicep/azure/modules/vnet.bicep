@@ -1,6 +1,6 @@
 param name string
 param location string
-param tags { *: string } = resourceGroup().tags
+param tags object = resourceGroup().tags
 param addressPrefixes string[]
 param subnets { name: string, addressPrefix: string }[] = []
 

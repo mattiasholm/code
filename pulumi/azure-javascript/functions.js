@@ -9,7 +9,7 @@ export async function getRoleId(roleName) {
     const client = new AuthorizationManagementClient(credential, subscriptionId);
 
     for await (const role of client.roleDefinitions.list(`/subscriptions/${subscriptionId}`)) {
-        if (role.roleName === roleName) {
+        if (role.roleName == roleName) {
             return role.id;
         }
     }

@@ -1,5 +1,5 @@
 param name string
-param tags { *: string } = resourceGroup().tags
+param tags object = resourceGroup().tags
 param vnetName string
 param vnetId string
 param cnames { name: string, cname: string }[] = []

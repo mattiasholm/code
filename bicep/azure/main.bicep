@@ -20,25 +20,27 @@ param config {
 
 param location string = deployment().location
 
-func name(type string, config object, instance int) string =>
-  '${type}-${toLower('${config.tags.Company}-${config.tags.Application}')}-${padLeft(instance, 2, '0')}'
+var tags = config.tags
+
+func name(type string, instance int) string =>
+  '${type}-${toLower('${tags.Company}-${tags.Application}')}-${padLeft(instance, 2, '0')}'
 
 func strip(name string) string => replace(name, '-', '')
 
 resource rg 'Microsoft.Resources/resourceGroups@2024-07-01' = {
-  name: name('rg', config, 1)
+  name: name('rg', 1)
   location: location
-  tags: config.tags
+  tags: tags
 }
 
 module log 'modules/log.bicep' = if (contains(config, 'logRetention')) {
   name: 'log'
   scope: rg
   params: {
-    name: name('log', config, 1)
+    name: name('log', 1)
     location: location
     retentionInDays: config.?logRetention
-    kvName: name('kv', config, 1)
+    kvName: name('kv', 1)
   }
   dependsOn: [
     kv
@@ -49,7 +51,7 @@ module kv 'modules/kv.bicep' = {
   name: 'kv'
   scope: rg
   params: {
-    name: name('kv', config, 1)
+    name: name('kv', 1)
     location: location
   }
 }
@@ -59,7 +61,7 @@ module pdnsz 'modules/pdnsz.bicep' = {
   scope: rg
   params: {
     name: config.pdnszName
-    vnetName: name('vnet', config, 1)
+    vnetName: name('vnet', 1)
     vnetId: vnet.outputs.id
     cnames: [
       for (label, i) in config.?pipLabels ?? []: {
@@ -75,9 +77,9 @@ module pip 'modules/pip.bicep' = [
     name: 'pip_${label}'
     scope: rg
     params: {
-      name: name('pip', config, i + 1)
+      name: name('pip', i + 1)
       location: location
-      domainNameLabel: name('pip', config, i + 1)
+      domainNameLabel: name('pip', i + 1)
     }
   }
 ]
@@ -87,7 +89,7 @@ module st 'modules/st.bicep' = [
     name: 'st_${i}'
     scope: rg
     params: {
-      name: strip(name('st', config, i + 1))
+      name: strip(name('st', i + 1))
       location: location
       sku: config.?stSku
       containers: [
@@ -101,14 +103,14 @@ module vnet 'modules/vnet.bicep' = {
   name: 'vnet'
   scope: rg
   params: {
-    name: name('vnet', config, 1)
+    name: name('vnet', 1)
     location: location
     addressPrefixes: [
       config.vnetCidr
     ]
     subnets: [
       for i in range(0, config.snetCount): {
-        name: name('snet', config, i + 1)
+        name: name('snet', i + 1)
         addressPrefix: cidrSubnet(config.vnetCidr, config.snetSize, i)
       }
     ]

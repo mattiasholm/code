@@ -3,7 +3,7 @@ targetScope = 'subscription'
 extension 'br:mcr.microsoft.com/bicep/extensions/microsoftgraph/v1.0:0.1.8-preview'
 
 param name string
-param subjects { *: string }
+param subjects object
 param permission string
 
 var wellKnown = {

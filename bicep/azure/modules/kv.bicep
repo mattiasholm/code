@@ -1,7 +1,7 @@
 @maxLength(24)
 param name string
 param location string
-param tags { *: string } = resourceGroup().tags
+param tags object = resourceGroup().tags
 
 resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: name
