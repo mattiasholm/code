@@ -70,7 +70,3 @@ variable "sp_name" {
 variable "sp_role" {
   type = string
 }
-
-variable "mattiasTestar" { # TMP WARNING TFLINT!
-  type = bool
-}
