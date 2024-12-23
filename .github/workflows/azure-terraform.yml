@@ -50,8 +50,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # - name: Setup TFLint
-      #   uses: terraform-linters/setup-tflint@v4
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
 
       - name: Init TFLint
         run: tflint --init
