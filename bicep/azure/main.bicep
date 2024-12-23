@@ -22,8 +22,8 @@ param location string = deployment().location
 
 var tags = config.tags
 
-func name(type string, instance int) string =>
-  '${type}-${toLower('${tags.Company}-${tags.Application}')}-${padLeft(instance, 2, '0')}'
+func name(resourceType string, instance int) string =>
+  '${resourceType}-${toLower('${tags.Company}-${tags.Application}')}-${padLeft(instance, 2, '0')}'
 
 func strip(name string) string => replace(name, '-', '')
 

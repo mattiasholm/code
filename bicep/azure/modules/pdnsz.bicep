@@ -1,8 +1,13 @@
+type cname = {
+  name: string
+  cname: string
+}
+
 param name string
 param tags object = resourceGroup().tags
 param vnetName string
 param vnetId string
-param cnames { name: string, cname: string }[] = []
+param cnames cname[] = []
 
 var location = 'global'
 

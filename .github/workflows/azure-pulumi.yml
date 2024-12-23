@@ -56,7 +56,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.path }}/node_modules
-          key: ${{ runner.os }}-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
+          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -79,7 +79,7 @@ jobs:
           command: preview
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
-          pulumi-version: "~${{ vars.PULUMI_VERSION }}"
+          pulumi-version: ~${{ vars.PULUMI_VERSION }}
 
       - name: Debug
         if: inputs.debug && (success() || failure())
@@ -101,7 +101,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.path }}/node_modules
-          key: ${{ runner.os }}-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
+          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -121,7 +121,7 @@ jobs:
           command: up
           work-dir: ${{ env.path }}
           stack-name: ${{ env.stack }}
-          pulumi-version: "~${{ vars.PULUMI_VERSION }}"
+          pulumi-version: ~${{ vars.PULUMI_VERSION }}
 
       - name: Debug
         if: inputs.debug && (success() || failure())

@@ -17,8 +17,8 @@ export async function getRoleId(roleName) {
     throw new Error(`Role '${roleName}' not found.`);
 }
 
-export function name(type, instance = 1) {
-    return `${type}-${config.prefix}-${String(instance).padStart(2, '0')}`;
+export function name(resourceType, instance = 1) {
+    return `${resourceType}-${config.prefix}-${String(instance).padStart(2, '0')}`;
 }
 
 export function strip(name) {
