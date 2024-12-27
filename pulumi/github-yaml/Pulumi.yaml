@@ -16,7 +16,7 @@ resources:
     properties:
       name: pulumi
       description: Repository created with Pulumi
-      visibility: public
+      visibility: private
       autoInit: true
 
   file:
