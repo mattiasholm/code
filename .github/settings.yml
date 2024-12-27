@@ -1,6 +1,6 @@
 repository:
   name: code
-  description: A collection of code and cheat sheets to facilitate the daily life of an Azure Solutions Architect!
+  description: A collection of code and cheat sheets to facilitate the daily life of an Azure Solutions Architect
   homepage: https://linkedin.com/in/holmmattias
   topics: azure, infrastructure-as-code, arm-templates, bicep, pulumi, terraform
   private: false
