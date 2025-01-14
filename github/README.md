@@ -372,6 +372,18 @@ gh pr merge -m --disable-auto
 
 <br><br>
 
+## List all GitHub releases in the current repository:
+```shell
+gh release list
+```
+
+## Create a new GitHub release in the current repository::
+```shell
+gh release create <tag> --generate-notes
+```
+
+<br><br>
+
 ## List enabled GitHub Actions workflows in the current repository:
 ```shell
 gh workflow list
