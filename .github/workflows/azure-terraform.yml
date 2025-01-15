@@ -36,7 +36,7 @@ defaults:
     working-directory: terraform/azure
 
 env:
-  path: terraform/azure
+  WORK_DIR: terraform/azure
   ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
   ARM_USE_OIDC: true
@@ -79,7 +79,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
-          path: ${{ env.path }}/tfplan
+          path: ${{ env.WORK_DIR }}/tfplan
 
       - name: Debug
         if: inputs.debug && (success() || failure())
@@ -101,7 +101,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: tfplan
-          path: ${{ env.path }}
+          path: ${{ env.WORK_DIR }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

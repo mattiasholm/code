@@ -36,12 +36,12 @@ defaults:
     working-directory: pulumi/azure-javascript
 
 env:
-  path: pulumi/azure-javascript
-  stack: dev
+  WORK_DIR: pulumi/azure-javascript
   ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
   ARM_USE_OIDC: true
   PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+  STACK: dev
 
 jobs:
   build:
@@ -55,8 +55,8 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v4
         with:
-          path: ${{ env.path }}/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
+          path: ${{ env.WORK_DIR }}/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.WORK_DIR)) }}
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -77,8 +77,8 @@ jobs:
         uses: pulumi/actions@v6
         with:
           command: preview
-          work-dir: ${{ env.path }}
-          stack-name: ${{ env.stack }}
+          work-dir: ${{ env.WORK_DIR }}
+          stack-name: ${{ env.STACK }}
           pulumi-version: ~${{ vars.PULUMI_VERSION }}
 
       - name: Debug
@@ -100,8 +100,8 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v4
         with:
-          path: ${{ env.path }}/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.path)) }}
+          path: ${{ env.WORK_DIR }}/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.WORK_DIR)) }}
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -119,8 +119,8 @@ jobs:
         uses: pulumi/actions@v6
         with:
           command: up
-          work-dir: ${{ env.path }}
-          stack-name: ${{ env.stack }}
+          work-dir: ${{ env.WORK_DIR }}
+          stack-name: ${{ env.STACK }}
           pulumi-version: ~${{ vars.PULUMI_VERSION }}
 
       - name: Debug
