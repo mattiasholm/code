@@ -1,5 +1,5 @@
 ![Last commit](https://img.shields.io/github/last-commit/mattiasholm/code?color=blue)
-![Commit activity](https://img.shields.io/github/commit-activity/t/mattiasholm/code?color=blue)
+![Commit activity](https://img.shields.io/github/commit-activity/t/mattiasholm/code)
 ![Created at](https://img.shields.io/github/created-at/mattiasholm/code?color=blue)
 
 [![Azure Bicep](https://github.com/mattiasholm/code/actions/workflows/azure-bicep.yml/badge.svg)](https://github.com/mattiasholm/code/actions/workflows/azure-bicep.yml)
