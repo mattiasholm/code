@@ -4,11 +4,8 @@ $ErrorActionPreference = 'Stop'
 
 Set-Location $PSScriptRoot
 
-$Modules = @(
-    'azure'
-    'github'
-    'sp'
-)
+$Path = '.'
+$Modules = Get-ChildItem $Path -Name -Directory
 
 foreach ($Module in $Modules) {
     terraform-docs markdown $Module > (Join-Path $Module 'README.md')
