@@ -18,6 +18,11 @@ jq -s '.[0] * .[1]' <file1> <file2>
 cat <filename> | jq .<key-name>
 ```
 
+## Filter a JSON object based on specific keys:
+```shell
+cat <filename> | jq {<key-name>}
+```
+
 ## Get all JSON objects under a specific key one level down:
 ```shell
 cat <filename> | jq .<key-name>.<sub-key>
