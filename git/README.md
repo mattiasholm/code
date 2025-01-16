@@ -47,12 +47,12 @@ git <subcommand> -n
 
 ## Configure username globally:
 ```shell
-git config --global user.name "<name>"
+git config --global user.name '<name>'
 ```
 
 ## Configure email address globally:
 ```shell
-git config --global user.email "<email>"
+git config --global user.email '<email>'
 ```
 
 ## Configure default branch name for all new repositories:
@@ -430,8 +430,8 @@ git ls-tree -d <git-ref>
 
 ## Commit all changes in index (staging area):
 ```shell
-git commit --message "<message>"
-git commit -m "<message>"
+git commit --message '<message>'
+git commit -m '<message>'
 ```
 
 ## Commit all changes in working tree, without having to stage them to index first (will not include untracked files, thus equivalent to running `git add --update`):
@@ -665,7 +665,7 @@ git log -<n>
 
 ## Show commit history for a specific author:
 ```shell
-git log --author "<author-name>"
+git log --author '<author-name>'
 ```
 
 ## Show commit history for a specific file:
@@ -675,37 +675,37 @@ git log -- <filename>
 
 ## Show commit history, include only commits with a message that match a specific pattern:
 ```shell
-git log --grep="<pattern>"
+git log --grep='<pattern>'
 ```
 
 ## Show commit history, include only commits that introduce or remove a particular line of code:
 ```shell
-git log -S "<pattern>"
+git log -S '<pattern>'
 ```
 
 ## Show commit history, before or after 1 month ago:
 ```shell
-git log [--before | --after] "1 month ago"
+git log [--before | --after] '1 month ago'
 ```
 
 ## Show commit history, before or after 1 week ago:
 ```shell
-git log [--before | --after] "1 week ago"
+git log [--before | --after] '1 week ago'
 ```
 
 ## Show commit history, before or after yesterday (i.e. 1 day ago):
 ```shell
-git log [--before | --after] "yesterday"
+git log [--before | --after] 'yesterday'
 ```
 
 ## Show commit history, before or after a specific date:
 ```shell
-git log [--before | --after] "<YYYY-MM-DD>"
+git log [--before | --after] '<YYYY-MM-DD>'
 ```
 
 ## Show commit history, before or after a specific date/time:
 ```shell
-git log [--before | --after] "<YYYY-MM-DD HH:MM:SS>"
+git log [--before | --after] '<YYYY-MM-DD HH:MM:SS>'
 ```
 
 ## Show commit history, include all commits between two specific branches or commits (useful for getting ahead/behind stats between `main` and a feature branch):
@@ -920,7 +920,7 @@ git push -d <remote-name> <branch-name>
 
 ## Amend message of latest commit:
 ```shell
-git commit --amend --message "<commit-message>"
+git commit --amend --message '<commit-message>'
 ```
 
 ## Amend code in latest commit (only safe to do on commits not yet pushed to `origin`):
@@ -930,7 +930,7 @@ git commit --amend --no-edit
 
 ## Amend authorship of latest commit to a specific author:
 ```shell
-git commit --amend --no-edit --author "<author-name> <<author-email>>"
+git commit --amend --no-edit --author '<author-name> <<author-email>>'
 ```
 
 ## Amend authorship of latest commit to the current committer:
@@ -1139,8 +1139,8 @@ git config merge.<ours | theirs>.driver true
 
 ## Merge a specific branch, commit or tag into currently checked out branch, with a custom commit message (will attempt to make a merge commit automatically):
 ```shell
-git merge <git-ref> --message "<message>"
-git merge <git-ref> -m "<message>"
+git merge <git-ref> --message '<message>'
+git merge <git-ref> -m '<message>'
 ```
 
 ## Merge a specific branch, commit or tag into currently checked out branch, without automatically making a commit:
