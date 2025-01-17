@@ -10,6 +10,7 @@ https://git-scm.com/docs
 ## Show Git version:
 ```shell
 git --version
+git -v
 ```
 
 <br><br>
