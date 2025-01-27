@@ -132,7 +132,7 @@ output cnameUrl object = toObject(
   config.?pipLabels ?? [],
   label => label,
   label =>
-    'https://${substring(pdnsz.outputs.fqdn[indexOf(config.pipLabels!, label)], 0, length(pdnsz.outputs.fqdn[indexOf(config.pipLabels!, label)]) - 1)}/'
+    'https://${substring(pdnsz.outputs.fqdn[indexOf(config.?pipLabels!, label)], 0, length(pdnsz.outputs.fqdn[indexOf(config.?pipLabels!, label)]) - 1)}/'
 )
 
 output stUrl object[] = [for i in range(0, config.?stCount ?? 0): st[i].outputs.primaryEndpoints]
