@@ -9,7 +9,7 @@ param vnetName string
 param vnetId string
 param cnames cname[] = []
 
-var location string = 'global'
+var location = 'global'
 
 resource pdnsz 'Microsoft.Network/privateDnsZones@2024-06-01' = {
   name: name
