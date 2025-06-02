@@ -34,7 +34,6 @@ resource rg 'Microsoft.Resources/resourceGroups@2025-04-01' = {
 }
 
 module log 'modules/log.bicep' = if (contains(config, 'logRetention')) {
-  name: 'log'
   scope: rg
   params: {
     name: name('log', 1)
@@ -48,7 +47,6 @@ module log 'modules/log.bicep' = if (contains(config, 'logRetention')) {
 }
 
 module kv 'modules/kv.bicep' = {
-  name: 'kv'
   scope: rg
   params: {
     name: name('kv', 1)
@@ -57,7 +55,6 @@ module kv 'modules/kv.bicep' = {
 }
 
 module pdnsz 'modules/pdnsz.bicep' = {
-  name: 'pdnsz'
   scope: rg
   params: {
     name: config.pdnszName
@@ -74,7 +71,6 @@ module pdnsz 'modules/pdnsz.bicep' = {
 
 module pip 'modules/pip.bicep' = [
   for (label, i) in config.?pipLabels ?? []: {
-    name: 'pip_${label}'
     scope: rg
     params: {
       name: name('pip', i + 1)
@@ -86,7 +82,6 @@ module pip 'modules/pip.bicep' = [
 
 module st 'modules/st.bicep' = [
   for i in range(0, config.?stCount ?? 0): {
-    name: 'st_${i}'
     scope: rg
     params: {
       name: strip(name('st', i + 1))
@@ -100,7 +95,6 @@ module st 'modules/st.bicep' = [
 ]
 
 module vnet 'modules/vnet.bicep' = {
-  name: 'vnet'
   scope: rg
   params: {
     name: name('vnet', 1)
@@ -118,7 +112,6 @@ module vnet 'modules/vnet.bicep' = {
 }
 
 module rbac 'modules/rbac.bicep' = {
-  name: 'rbac'
   scope: rg
   params: {
     principal: config.userName
