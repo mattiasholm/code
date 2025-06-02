@@ -5,7 +5,7 @@ param tags object = resourceGroup().tags
 param sku string = 'Standard_GRS'
 param containers string[] = []
 
-resource st 'Microsoft.Storage/storageAccounts@2023-05-01' = {
+resource st 'Microsoft.Storage/storageAccounts@2024-01-01' = {
   name: name
   location: location
   tags: tags

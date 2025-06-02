@@ -27,7 +27,7 @@ func name(resourceType string, instance int) string =>
 
 func strip(name string) string => replace(name, '-', '')
 
-resource rg 'Microsoft.Resources/resourceGroups@2024-07-01' = {
+resource rg 'Microsoft.Resources/resourceGroups@2025-04-01' = {
   name: name('rg', 1)
   location: location
   tags: tags
