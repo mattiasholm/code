@@ -121,13 +121,15 @@ module rbac 'modules/rbac.bicep' = {
 
 output kvUrl string = kv.outputs.vaultUri
 
-output cnameUrl object = toObject(
+output cnameUrl {} = toObject(
   config.?pipLabels ?? [],
   label => label,
   label =>
     'https://${substring(pdnsz.outputs.fqdn[indexOf(config.?pipLabels!, label)], 0, length(pdnsz.outputs.fqdn[indexOf(config.?pipLabels!, label)]) - 1)}/'
 )
 
-output stUrl object[] = [for i in range(0, config.?stCount ?? 0): st[i].outputs.primaryEndpoints]
+output stUrl {
+  *: string
+}[] = [for i in range(0, config.?stCount ?? 0): st[i].outputs.primaryEndpoints]
 
 output subnets string[] = map(vnet.outputs.subnets, snet => snet.properties.addressPrefix)

@@ -118,6 +118,9 @@
                 "use-stable-vm-image": {
                     "level": "error"
                 },
+                "use-user-defined-types": {
+                    "level": "error"
+                },
                 "what-if-short-circuiting": {
                     "level": "error"
                 }

@@ -1,7 +1,9 @@
 @maxLength(24)
 param name string
 param location string
-param tags object = resourceGroup().tags
+param tags {
+  *: string
+} = resourceGroup().tags
 param sku string = 'Standard_GRS'
 param containers string[] = []
 
@@ -36,4 +38,4 @@ resource st 'Microsoft.Storage/storageAccounts@2024-01-01' = {
   }
 }
 
-output primaryEndpoints object = st.properties.primaryEndpoints
+output primaryEndpoints {} = st.properties.primaryEndpoints
