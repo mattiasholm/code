@@ -20,7 +20,9 @@ param config {
 
 param location string = deployment().location
 
-var tags = config.tags
+var tags {
+  *: string
+} = config.tags
 
 func name(resourceType string, instance int) string =>
   '${resourceType}-${toLower('${tags.Company}-${tags.Application}')}-${padLeft(instance, 2, '0')}'

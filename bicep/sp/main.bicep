@@ -3,17 +3,26 @@ targetScope = 'subscription'
 extension 'br:mcr.microsoft.com/bicep/extensions/microsoftgraph/v1.0:0.1.8-preview'
 
 param name string
-param subjects object
+param subjects {
+  *: string
+}
 param permission string
 
-var wellKnown = {
+var wellKnown {
+  *: {
+    appId: string
+    id: string
+  }
+} = {
   MicrosoftGraph: {
     appId: '00000003-0000-0000-c000-000000000000'
     id: '9bf89b3c-c23d-438c-ac11-4db91749b4b9'
   }
 }
 
-var roles = {
+var roles {
+  *: string
+} = {
   'User.Read.All': 'df021288-bdef-4463-88db-98f22de89214'
 }
 
