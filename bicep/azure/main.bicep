@@ -123,7 +123,9 @@ module rbac 'modules/rbac.bicep' = {
 
 output kvUrl string = kv.outputs.vaultUri
 
-output cnameUrl {} = toObject(
+output cnameUrl {
+  *: string
+} = toObject(
   config.?pipLabels ?? [],
   label => label,
   label =>
