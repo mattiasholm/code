@@ -239,3 +239,17 @@ function midi --argument-names abcFile transposeSteps
     timidity $midiFile -A 300 -K $transposeSteps -Od
     rm $midiFile
 end
+
+function lock
+    defaults write com.apple.Dock contents-immutable -bool true
+    defaults write com.apple.Dock position-immutable -bool true
+    defaults write com.apple.Dock size-immutable -bool true
+    killall Dock
+end
+
+function unlock
+    defaults write com.apple.Dock contents-immutable -bool false
+    defaults write com.apple.Dock position-immutable -bool false
+    defaults write com.apple.Dock size-immutable -bool false
+    killall Dock
+end
