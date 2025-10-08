@@ -60,3 +60,8 @@ az bicep decompile -f <filename>
 az bicep generate-params --file <filename>
 az bicep generate-params -f <filename>
 ```
+
+## Open an interactive Bicep console for evaluating expressions:
+```shell
+bicep console
+```
