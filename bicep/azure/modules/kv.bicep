@@ -5,7 +5,7 @@ param tags {
   *: string
 } = resourceGroup().tags
 
-resource kv 'Microsoft.KeyVault/vaults@2024-11-01' = {
+resource kv 'Microsoft.KeyVault/vaults@2025-05-01' = {
   name: name
   location: location
   tags: tags

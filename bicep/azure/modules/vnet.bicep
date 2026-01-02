@@ -11,7 +11,7 @@ param tags {
 param addressPrefixes string[]
 param subnets subnet[] = []
 
-resource vnet 'Microsoft.Network/virtualNetworks@2024-07-01' = {
+resource vnet 'Microsoft.Network/virtualNetworks@2025-01-01' = {
   name: name
   location: location
   tags: tags

@@ -6,7 +6,7 @@ param tags {
 param retentionInDays int = 30
 param kvName string
 
-resource log 'Microsoft.OperationalInsights/workspaces@2025-02-01' = {
+resource log 'Microsoft.OperationalInsights/workspaces@2025-07-01' = {
   name: name
   location: location
   tags: tags
@@ -18,7 +18,7 @@ resource log 'Microsoft.OperationalInsights/workspaces@2025-02-01' = {
   }
 }
 
-resource kv 'Microsoft.KeyVault/vaults@2024-11-01' existing = {
+resource kv 'Microsoft.KeyVault/vaults@2025-05-01' existing = {
   name: kvName
 
   resource secret 'secrets' = {

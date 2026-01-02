@@ -5,7 +5,7 @@ param tags {
 } = resourceGroup().tags
 param domainNameLabel string
 
-resource pip 'Microsoft.Network/publicIPAddresses@2024-07-01' = {
+resource pip 'Microsoft.Network/publicIPAddresses@2025-01-01' = {
   name: name
   location: location
   tags: tags
