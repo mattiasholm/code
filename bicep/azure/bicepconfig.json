@@ -40,6 +40,9 @@
                 "no-deployments-resources": {
                     "level": "error"
                 },
+                "no-explicit-any": {
+                    "level": "error"
+                },
                 "no-hardcoded-env-urls": {
                     "level": "error"
                 },
@@ -91,10 +94,16 @@
                 "simplify-json-null": {
                     "level": "error"
                 },
+                "stacks-extensibility-compat": {
+                    "level": "error"
+                },
                 "use-parent-property": {
                     "level": "error"
                 },
                 "use-recent-api-versions": {
+                    "level": "error"
+                },
+                "use-recent-az-powershell-version": {
                     "level": "error"
                 },
                 "use-recent-module-versions": {
