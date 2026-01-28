@@ -51,6 +51,28 @@ az bicep generate-params --file main.bicep
 az bicep generate-params -f main.bicep
 ```
 
+## Decompile a JSON parameter file into a Bicep parameter file:
+```shell
+az bicep decompile-params --file main.parameters.json
+az bicep decompile-params -f main.parameters.json
+```
+
+<br><br>
+
+## Formats a Bicep file:
+```shell
+az bicep format --file main.bicep
+az bicep format -f main.bicep
+```
+
+## Lints a Bicep file:
+```shell
+az bicep lint --file main.bicep
+az bicep lint -f main.bicep
+```
+
+<br><br>
+
 ## Open an interactive Bicep console for evaluating expressions:
 ```shell
 bicep console
