@@ -6,14 +6,9 @@
 https://github.com/Azure/bicep
 
 ## Real-time online compiler (Bicep Playground):
-https://bicepdemo.z22.web.core.windows.net/
+https://azure.github.io/bicep/
 
 <br><br>
-
-## Install VSCode extension:
-```shell
-code --install-extension ms-azuretools.vscode-bicep
-```
 
 ## Install Bicep CLI:
 ```shell
@@ -30,11 +25,6 @@ az bicep upgrade
 az bicep version
 ```
 
-## List available versions:
-```shell
-az bicep list-versions
-```
-
 ## Contextual help:
 ```shell
 az bicep [<subcommand>] --help
@@ -45,23 +35,28 @@ az bicep [<subcommand>] -h
 
 ## Build a Bicep file into an ARM template:
 ```shell
-az bicep build --file <filename>
-az bicep build -f <filename>
+az bicep build --file main.bicep
+az bicep build -f main.bicep
 ```
 
 ## Decompile an ARM template into a Bicep file:
 ```shell
-az bicep decompile --file <filename>
-az bicep decompile -f <filename>
+az bicep decompile --file main.json
+az bicep decompile -f main.json
 ```
 
 ## Generate a parameter file for a Bicep file:
 ```shell
-az bicep generate-params --file <filename>
-az bicep generate-params -f <filename>
+az bicep generate-params --file main.bicep
+az bicep generate-params -f main.bicep
 ```
 
 ## Open an interactive Bicep console for evaluating expressions:
 ```shell
 bicep console
+```
+
+## Generate a list of predicted resources for comparing changes:
+```shell
+bicep snapshot main.bicepparam
 ```
