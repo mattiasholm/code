@@ -129,7 +129,7 @@ output cnameUrl {
   config.?pipLabels ?? [],
   label => label,
   label =>
-    'https://${substring(pdnsz.outputs.fqdn[indexOf(config.?pipLabels!, label)], 0, length(pdnsz.outputs.fqdn[indexOf(config.?pipLabels!, label)]) - 1)}/'
+    'https://${substring(pdnsz.outputs.fqdn[indexOf(config.?pipLabels!, label)], 0, max(0, length(pdnsz.outputs.fqdn[indexOf(config.?pipLabels!, label)]) - 1))}/'
 )
 
 output stUrl {
