@@ -96,7 +96,6 @@ brew install azure-cli &&
 brew install --cask iterm2
 brew install --cask dotnet-sdk
 brew install --cask postman
-brew install --cask azure-data-studio
 brew install --cask microsoft-azure-storage-explorer
 brew install --cask google-chrome
 brew install --cask drawio
