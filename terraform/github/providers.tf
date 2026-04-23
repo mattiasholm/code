@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.10.0"
+  required_version = "~> 1.14.0"
 
   cloud {
     hostname     = "app.terraform.io"
@@ -13,7 +13,7 @@ terraform {
   required_providers {
     github = {
       source  = "integrations/github"
-      version = "~> 6.4.0"
+      version = "~> 6.11.0"
     }
   }
 }
