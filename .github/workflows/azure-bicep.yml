@@ -27,6 +27,9 @@ on:
 
   workflow_call:
 
+concurrency:
+  group: azure-bicep
+
 permissions:
   contents: read
   id-token: write
