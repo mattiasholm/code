@@ -63,7 +63,7 @@ jobs:
         run: tflint
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: ~${{ vars.TERRAFORM_VERSION }}
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
@@ -107,7 +107,7 @@ jobs:
           path: ${{ env.WORK_DIR }}
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: ~${{ vars.TERRAFORM_VERSION }}
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
