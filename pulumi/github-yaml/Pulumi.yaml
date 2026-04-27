@@ -7,7 +7,7 @@ resources:
   github:
     type: pulumi:providers:github
     options:
-      version: 6.4.0
+      version: 6.13.0
 
   repo:
     type: github:Repository
@@ -36,7 +36,7 @@ resources:
     properties:
       repository: ${repo.name}
       secretName: SECRET
-      plaintextValue: secret
+      value: secret
 
   variable:
     type: github:ActionsVariable
