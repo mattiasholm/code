@@ -18,6 +18,9 @@ on:
 
   workflow_dispatch:
 
+concurrency:
+  group: run-all
+
 jobs:
   azure-bicep:
     uses: ./.github/workflows/azure-bicep.yml

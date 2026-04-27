@@ -21,7 +21,6 @@ choco install -y python3
 choco install -y jq
 choco install -y 7zip
 choco install -y kubernetes-cli
-choco install -y azure-data-studio
 choco install -y microsoftazurestorageexplorer
 choco install -y docker-desktop
 choco install -y googlechrome

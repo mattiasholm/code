@@ -27,6 +27,9 @@ on:
 
   workflow_call:
 
+concurrency:
+  group: azure-bicep
+
 permissions:
   contents: read
   id-token: write
@@ -42,7 +45,7 @@ jobs:
     runs-on: ${{ vars.RUNNER }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Log in to Azure
         uses: azure/login@v2
@@ -71,7 +74,7 @@ jobs:
       url: https://app.holm.io/
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Log in to Azure
         uses: azure/login@v2

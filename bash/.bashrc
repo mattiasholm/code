@@ -1,7 +1,6 @@
 export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(echo ' ('\$(git rev-parse --abbrev-ref HEAD 2>/dev/null)')' | sed 's/ ()//')\[\033[00m\] $ "
 export PATH="/usr/local/sbin:$PATH"
 export LSCOLORS='cxfxcxdxbxcgcdabagacad'
-export GITHUB_TOKEN=$(cat ~/.config/gh/token)
 
 alias -- -='cd -'
 alias ..='cd ..'
@@ -65,6 +64,7 @@ alias bun='brew uninstall'
 alias ipc='ipcalc'
 alias pwsh='pwsh -NoLogo'
 alias python='python3'
+alias tdocs='terraform-docs markdown . >README.md'
 
 alias gcl='git clone'
 alias gf='git fetch'

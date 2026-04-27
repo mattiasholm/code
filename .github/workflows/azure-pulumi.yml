@@ -27,6 +27,9 @@ on:
 
   workflow_call:
 
+concurrency:
+  group: azure-pulumi
+
 permissions:
   contents: read
   id-token: write
@@ -50,16 +53,17 @@ jobs:
     runs-on: ${{ vars.RUNNER }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ env.WORK_DIR }}/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.WORK_DIR)) }}
+          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json',
+            env.WORK_DIR)) }}
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
@@ -95,16 +99,17 @@ jobs:
       url: https://app.holm.io/
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ env.WORK_DIR }}/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json', env.WORK_DIR)) }}
+          key: ${{ runner.os }}-node-${{ hashFiles(format('{0}/package-lock.json',
+            env.WORK_DIR)) }}
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ vars.NODE_VERSION }}
 

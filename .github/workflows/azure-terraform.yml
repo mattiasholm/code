@@ -27,6 +27,9 @@ on:
 
   workflow_call:
 
+concurrency:
+  group: azure-terraform
+
 permissions:
   contents: read
   id-token: write
@@ -48,10 +51,10 @@ jobs:
     runs-on: ${{ vars.RUNNER }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup TFLint
-        uses: terraform-linters/setup-tflint@v4
+        uses: terraform-linters/setup-tflint@v6
 
       - name: Init TFLint
         run: tflint --init
@@ -60,7 +63,7 @@ jobs:
         run: tflint
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: ~${{ vars.TERRAFORM_VERSION }}
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
@@ -76,7 +79,7 @@ jobs:
 
       - name: Upload artifact
         if: github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tfplan
           path: ${{ env.WORK_DIR }}/tfplan
@@ -95,7 +98,7 @@ jobs:
       url: https://app.holm.io/
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -104,7 +107,7 @@ jobs:
           path: ${{ env.WORK_DIR }}
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: ~${{ vars.TERRAFORM_VERSION }}
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}

@@ -1,6 +1,5 @@
 set -x PATH /usr/local/sbin $PATH
 set -x LSCOLORS cxfxcxdxbxcgcdabagacad
-set -x GITHUB_TOKEN (cat ~/.config/gh/token)
 
 set fish_greeting ''
 set fish_prompt_pwd_dir_length 0
@@ -61,6 +60,7 @@ alias bun='brew uninstall'
 alias ipc='ipcalc'
 alias pwsh='pwsh -NoLogo'
 alias python='python3'
+alias tdocs='terraform-docs markdown . >README.md'
 
 alias gcl='git clone'
 alias gf='git fetch'
