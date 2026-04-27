@@ -4,7 +4,7 @@
     "type": "module",
     "dependencies": {
         "@pulumi/pulumi": "~3.232.0",
-        "@pulumi/azuread": "~6.0.0",
+        "@pulumi/azuread": "~6.9.0",
         "@pulumi/azure-native": "~2.76.0",
         "@azure/identity": "~4.5.0",
         "@azure/arm-authorization": "~9.0.0"
