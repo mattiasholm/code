@@ -2,8 +2,8 @@
 
 <br>
 
-## Official docs:
-https://docs.npmjs.com/
+## Website:
+https://www.npmjs.com/
 
 <br><br>
 
