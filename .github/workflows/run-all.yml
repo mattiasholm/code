@@ -21,6 +21,10 @@ on:
 concurrency:
   group: run-all
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   azure-bicep:
     uses: ./.github/workflows/azure-bicep.yml
