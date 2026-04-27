@@ -1,4 +1,4 @@
-import { resources, operationalinsights, keyvault, network, storage, authorization } from '@pulumi/azure-native';
+import { resources, operationalinsights, keyvault, privatedns, network, storage, authorization } from '@pulumi/azure-native';
 import { name, strip, cidrSubnet } from './functions.js';
 import * as config from './config.js';
 
@@ -44,7 +44,7 @@ if (config.logRetention) {
     });
 }
 
-const pdnsz = new network.PrivateZone('pdnsz', {
+const pdnsz = new privatedns.PrivateZone('pdnsz', {
     privateZoneName: config.pdnszName,
     resourceGroupName: rg.name,
     location: 'global',
@@ -70,7 +70,7 @@ config.pipLabels.forEach((label, i) => {
 
     pips[label] = pip;
 
-    const cname = new network.PrivateRecordSet(`cname_${label}`, {
+    const cname = new privatedns.PrivateRecordSet(`cname_${label}`, {
         relativeRecordSetName: label,
         privateZoneName: pdnsz.name,
         resourceGroupName: rg.name,
@@ -127,7 +127,7 @@ const vnet = new network.VirtualNetwork('vnet', {
     })),
 });
 
-new network.VirtualNetworkLink('link', {
+new privatedns.VirtualNetworkLink('link', {
     virtualNetworkLinkName: vnet.name,
     privateZoneName: pdnsz.name,
     resourceGroupName: rg.name,
