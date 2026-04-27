@@ -60,14 +60,12 @@ resources:
   azuread:
     type: pulumi:providers:azuread
     options:
-      version: 6.0.0
-    properties:
-      metadataHost: management.azure.com
+      version: 6.9.0
 
   azure-native:
     type: pulumi:providers:azure-native
     options:
-      version: 2.76.0
+      version: 3.17.0
 
   time:
     type: pulumi:providers:time
