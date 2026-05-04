@@ -78,7 +78,7 @@ jobs:
           allow-no-subscriptions: true
 
       - name: Pulumi - Preview
-        uses: pulumi/actions@v6
+        uses: pulumi/actions@v7
         with:
           command: preview
           work-dir: ${{ env.WORK_DIR }}
@@ -121,7 +121,7 @@ jobs:
           allow-no-subscriptions: true
 
       - name: Pulumi - Up
-        uses: pulumi/actions@v6
+        uses: pulumi/actions@v7
         with:
           command: up
           work-dir: ${{ env.WORK_DIR }}
