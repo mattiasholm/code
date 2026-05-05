@@ -23,6 +23,9 @@ resource st 'Microsoft.Storage/storageAccounts@2025-08-01' = {
         allowPermanentDelete: false
         enabled: false
       }
+      staticWebsite: {
+        enabled: false
+      }
     }
 
     resource container 'containers' = [
