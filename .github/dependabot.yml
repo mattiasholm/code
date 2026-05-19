@@ -10,7 +10,13 @@ updates:
     schedule:
       interval: weekly
 
-  - package-ecosystem: terraform
+  - package-ecosystem: pip
     directory: /
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: terraform
+    directories:
+      - /terraform/**
     schedule:
       interval: weekly
