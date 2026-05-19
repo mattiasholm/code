@@ -1,14 +1,13 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    directories:
-      - /**
+    directory: /
     schedule:
       interval: weekly
 
   - package-ecosystem: npm
     directories:
-      - /**
+      - /pulumi/**
     schedule:
       interval: weekly
 
@@ -20,6 +19,6 @@ updates:
 
   - package-ecosystem: terraform
     directories:
-      - /**
+      - /terraform/**
     schedule:
       interval: weekly
