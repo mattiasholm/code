@@ -12,9 +12,9 @@ resource "github_repository_file" "file" {
 }
 
 resource "github_actions_secret" "secret" {
-  repository      = github_repository.repo.name
-  secret_name     = "SECRET"
-  plaintext_value = "secret"
+  repository  = github_repository.repo.name
+  secret_name = "SECRET"
+  value       = "secret"
 }
 
 resource "github_actions_variable" "variable" {
