@@ -14,8 +14,7 @@ export interface Role {
 
 const config = new pulumi.Config();
 
-// export const tags = config.requireObject<Tags>('tags');
-export const tags = config.requireObject('tags');
+export const tags = config.requireObject<Tags>('tags');
 export const prefix = `${tags.Company}-${tags.Application}`.toLowerCase();
 
 export const logRetention = config.getNumber('logRetention');
