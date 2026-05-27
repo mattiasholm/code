@@ -1,12 +1,14 @@
-name: Azure Pulumi
+# name: Azure Pulumi
+name: Azure Pulumi 2
 
 on:
   push:
     branches:
       - main
     paths:
-      - .github/workflows/azure-pulumi.yml
-      - pulumi/azure-javascript/**
+      # - .github/workflows/azure-pulumi.yml
+      - .github/workflows/azure-pulumi2.yml
+      - pulumi/azure-typescript/**
       - "!**.md"
       - "!**.gitignore"
 
@@ -14,8 +16,9 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/azure-pulumi.yml
-      - pulumi/azure-javascript/**
+      # - .github/workflows/azure-pulumi.yml
+      - .github/workflows/azure-pulumi2.yml
+      - pulumi/azure-typescript/**
       - "!**.md"
       - "!**.gitignore"
 
@@ -28,7 +31,8 @@ on:
   workflow_call:
 
 concurrency:
-  group: azure-pulumi
+  # group: azure-pulumi
+  group: azure-pulumi2
 
 permissions:
   contents: read
@@ -36,10 +40,10 @@ permissions:
 
 defaults:
   run:
-    working-directory: pulumi/azure-javascript
+    working-directory: pulumi/azure-typescript
 
 env:
-  WORK_DIR: pulumi/azure-javascript
+  WORK_DIR: pulumi/azure-typescript
   ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
   ARM_USE_OIDC: true

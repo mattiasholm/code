@@ -1,0 +1,16 @@
+{
+    "name": "azure-typescript",
+    "type": "module",
+    "main": "index.ts",
+    "dependencies": {
+        "@pulumi/pulumi": "~3.243.0",
+        "@pulumi/azuread": "~6.9.1",
+        "@pulumi/azure-native": "~3.18.0",
+        "@azure/identity": "~4.13.0",
+        "@azure/arm-authorization": "~9.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "~25.9.1",
+        "typescript": "~6.0.3"
+    }
+}
