@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - .github/workflows/azure-pulumi.yml
-      - pulumi/azure-javascript/**
+      - pulumi/azure-typescript/**
       - "!**.md"
       - "!**.gitignore"
 
@@ -15,7 +15,7 @@ on:
       - main
     paths:
       - .github/workflows/azure-pulumi.yml
-      - pulumi/azure-javascript/**
+      - pulumi/azure-typescript/**
       - "!**.md"
       - "!**.gitignore"
 
@@ -36,10 +36,10 @@ permissions:
 
 defaults:
   run:
-    working-directory: pulumi/azure-javascript
+    working-directory: pulumi/azure-typescript
 
 env:
-  WORK_DIR: pulumi/azure-javascript
+  WORK_DIR: pulumi/azure-typescript
   ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
   ARM_USE_OIDC: true
@@ -68,6 +68,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Type check
+        run: npx tsc
 
       - name: Log in to Azure
         uses: azure/login@v3
