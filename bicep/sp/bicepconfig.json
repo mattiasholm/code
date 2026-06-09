@@ -52,6 +52,9 @@
                 "no-loc-expr-outside-params": {
                     "level": "error"
                 },
+                "no-module-name": {
+                    "level": "error"
+                },
                 "no-unnecessary-dependson": {
                     "level": "error"
                 },
@@ -107,6 +110,9 @@
                     "level": "error"
                 },
                 "use-recent-module-versions": {
+                    "level": "error"
+                },
+                "use-recognized-resource-type": {
                     "level": "error"
                 },
                 "use-resource-id-functions": {
