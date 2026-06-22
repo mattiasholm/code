@@ -3,6 +3,9 @@
 set -e
 
 exts=(
+    'GitHub.copilot-chat'
+    'ms-azuretools.vscode-azure-github-copilot'
+    'ms-azuretools.vscode-azure-mcp-server'
     'ms-vscode.powershell'
     'foxundermoon.shell-format'
     'bmalehorn.vscode-fish'
@@ -10,6 +13,7 @@ exts=(
     'hashicorp.terraform'
     'ms-python.python'
     'ms-python.vscode-pylance'
+    'github.vscode-github-actions'
     'ms-azure-devops.azure-pipelines'
     'ms-azuretools.vscode-docker'
     'ms-mssql.mssql'
