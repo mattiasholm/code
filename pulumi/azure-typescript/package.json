@@ -3,7 +3,7 @@
     "type": "module",
     "main": "index.ts",
     "dependencies": {
-        "@pulumi/pulumi": "~3.251.0",
+        "@pulumi/pulumi": "~3.254.0",
         "@pulumi/azuread": "~6.10.0",
         "@pulumi/azure-native": "~3.20.0",
         "@azure/identity": "~4.13.0",
