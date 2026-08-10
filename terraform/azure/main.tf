@@ -59,18 +59,16 @@ resource "azurerm_private_dns_zone" "pdnsz" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "link" {
-  name                  = azurerm_virtual_network.vnet.name
-  private_dns_zone_name = azurerm_private_dns_zone.pdnsz.name
-  resource_group_name   = azurerm_resource_group.rg.name
-  tags                  = var.tags
-  virtual_network_id    = azurerm_virtual_network.vnet.id
+  name                = azurerm_virtual_network.vnet.name
+  private_dns_zone_id = azurerm_private_dns_zone.pdnsz.id
+  tags                = var.tags
+  virtual_network_id  = azurerm_virtual_network.vnet.id
 }
 
 resource "azurerm_private_dns_cname_record" "cname" {
   for_each            = var.pip_labels
   name                = each.value
-  zone_name           = azurerm_private_dns_zone.pdnsz.name
-  resource_group_name = azurerm_resource_group.rg.name
+  private_dns_zone_id = azurerm_private_dns_zone.pdnsz.id
   ttl                 = 3600
   record              = azurerm_public_ip.pip[each.value].fqdn
 }
