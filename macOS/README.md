@@ -80,7 +80,7 @@ echo ". ~/.bashrc" > ~/.bash_profile
 
 ## Flush DNS cache:
 ```shell
-dscacheutil -flushcache
+sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
 ```
 
 <br><br>

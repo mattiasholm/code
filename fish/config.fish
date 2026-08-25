@@ -58,6 +58,7 @@ alias bi='brew install'
 alias bu='brew upgrade'
 alias bun='brew uninstall'
 
+alias flush='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
 alias ipc='ipcalc'
 alias pwsh='pwsh -NoLogo'
 alias python='python3'
