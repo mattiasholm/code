@@ -19,5 +19,5 @@ config:
   azure-typescript:snetSize: 26
   azure-typescript:userName: mattias.holm@b3cloud.onmicrosoft.com
   azure-typescript:userRole: Key Vault Administrator
-  azure-typescript:spName: sp-holm-01
+  azure-typescript:spName: sp-holm-001
   azure-typescript:spRole: Key Vault Secrets Officer

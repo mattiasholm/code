@@ -17,37 +17,37 @@ run "validate_naming" {
   command = plan
 
   assert {
-    condition     = azurerm_resource_group.rg.name == "rg-com-app-01"
+    condition     = azurerm_resource_group.rg.name == "rg-com-app-001"
     error_message = "Resource group name did not match expected"
   }
 
   assert {
-    condition     = azurerm_log_analytics_workspace.log[0].name == "log-com-app-01"
+    condition     = azurerm_log_analytics_workspace.log[0].name == "log-com-app-001"
     error_message = "Application Insights name did not match expected"
   }
 
   assert {
-    condition     = azurerm_key_vault.kv.name == "kv-com-app-01"
+    condition     = azurerm_key_vault.kv.name == "kv-com-app-001"
     error_message = "Key Vault name did not match expected"
   }
 
   assert {
-    condition     = azurerm_public_ip.pip["label"].name == "pip-com-app-01"
+    condition     = azurerm_public_ip.pip["label"].name == "pip-com-app-001"
     error_message = "Public IP name did not match expected"
   }
 
   assert {
-    condition     = azurerm_storage_account.st[0].name == "stcomapp01"
+    condition     = azurerm_storage_account.st[0].name == "stcomapp001"
     error_message = "Storage account name did not match expected"
   }
 
   assert {
-    condition     = azurerm_virtual_network.vnet.name == "vnet-com-app-01"
+    condition     = azurerm_virtual_network.vnet.name == "vnet-com-app-001"
     error_message = "Virtual network name did not match expected"
   }
 
   assert {
-    condition     = tolist(azurerm_virtual_network.vnet.subnet)[0].name == "snet-com-app-01"
+    condition     = tolist(azurerm_virtual_network.vnet.subnet)[0].name == "snet-com-app-001"
     error_message = "Subnet name did not match expected"
   }
 }

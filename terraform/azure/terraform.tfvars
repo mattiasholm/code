@@ -20,5 +20,5 @@ snet_count = 4
 snet_size  = 26
 user_name  = "mattias.holm@b3cloud.onmicrosoft.com"
 user_role  = "Key Vault Administrator"
-sp_name    = "sp-holm-01"
+sp_name    = "sp-holm-001"
 sp_role    = "Key Vault Secrets Officer"

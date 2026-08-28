@@ -12,7 +12,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  appName: app-$(Environment.Name)-01
+  appName: app-$(Environment.Name)-001
 
 stages:
   - template: templates/build.yml

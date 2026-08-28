@@ -18,7 +18,7 @@ export async function getRoleId(roleName: string): Promise<string> {
 }
 
 export function name(resourceType: string, instance: number = 1): string {
-    return `${resourceType}-${config.prefix}-${String(instance).padStart(2, '0')}`;
+    return `${resourceType}-${config.prefix}-${String(instance).padStart(3, '0')}`;
 }
 
 export function strip(name: string): string {

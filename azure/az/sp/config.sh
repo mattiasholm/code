@@ -1,6 +1,6 @@
 tenantId='34311a99-c681-4ecd-88ce-eab1d59f443a'
 subscriptionId='804fd219-0c15-45f9-ae36-0a4d3725848f'
-name='sp-holm-01'
+name='sp-holm-001'
 api='00000003-0000-0000-c000-000000000000'
 permission='df021288-bdef-4463-88db-98f22de89214'
 roleName='Owner'

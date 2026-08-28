@@ -1,6 +1,6 @@
 using 'main.bicep'
 
-param name = 'sp-holm-04'
+param name = 'sp-holm-004'
 
 param subjects = {
   main: 'repo:mattiasholm/code:ref:refs/heads/main'

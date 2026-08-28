@@ -25,7 +25,7 @@ var tags {
 } = config.tags
 
 func name(resourceType string, instance int) string =>
-  '${resourceType}-${toLower('${tags.Company}-${tags.Application}')}-${padLeft(instance, 2, '0')}'
+  '${resourceType}-${toLower('${tags.Company}-${tags.Application}')}-${padLeft(instance, 3, '0')}'
 
 func strip(name string) string => replace(name, '-', '')
 
