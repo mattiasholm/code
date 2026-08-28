@@ -31,6 +31,10 @@ resource "azurerm_key_vault" "kv" {
   tenant_id                  = data.azurerm_subscription.sub.tenant_id
   sku_name                   = "standard"
   rbac_authorization_enabled = true
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_key_vault_secret" "secret" {
@@ -42,6 +46,10 @@ resource "azurerm_key_vault_secret" "secret" {
   tags         = var.tags
   value        = azurerm_log_analytics_workspace.log[0].workspace_id
   key_vault_id = azurerm_key_vault.kv.id
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_private_dns_zone" "pdnsz" {
@@ -84,12 +92,20 @@ resource "azurerm_storage_account" "st" {
   tags                     = var.tags
   account_tier             = split("_", var.st_sku)[0]
   account_replication_type = split("_", var.st_sku)[1]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_storage_container" "container" {
   count              = var.st_count
   name               = "data"
   storage_account_id = azurerm_storage_account.st[count.index].id
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_virtual_network" "vnet" {
