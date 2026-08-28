@@ -2,16 +2,16 @@
 
 | Name | Version |
 | ---- | ------- |
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.14.0 |
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 3.8.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.69.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.15.4 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 3.9.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 5.1.0 |
 
 ## Providers
 
 | Name | Version |
 | ---- | ------- |
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 3.8.0 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.69.0 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 3.9.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 5.1.0 |
 
 ## Modules
 
@@ -44,7 +44,7 @@ No modules.
 | <a name="input_location"></a> [location](#input\_location) | n/a | `string` | n/a | yes |
 | <a name="input_log_retention"></a> [log\_retention](#input\_log\_retention) | n/a | `number` | `null` | no |
 | <a name="input_pdnsz_name"></a> [pdnsz\_name](#input\_pdnsz\_name) | n/a | `string` | n/a | yes |
-| <a name="input_pip_labels"></a> [pip\_labels](#input\_pip\_labels) | n/a | `set(string)` | `[]` | no |
+| <a name="input_pip_labels"></a> [pip\_labels](#input\_pip\_labels) | n/a | `list(string)` | `[]` | no |
 | <a name="input_snet_count"></a> [snet\_count](#input\_snet\_count) | n/a | `number` | n/a | yes |
 | <a name="input_snet_size"></a> [snet\_size](#input\_snet\_size) | n/a | `number` | n/a | yes |
 | <a name="input_sp_name"></a> [sp\_name](#input\_sp\_name) | n/a | `string` | n/a | yes |

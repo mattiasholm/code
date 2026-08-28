@@ -29,7 +29,7 @@ variable "pdnsz_name" {
 }
 
 variable "pip_labels" {
-  type    = set(string)
+  type    = list(string)
   default = []
 }
 
