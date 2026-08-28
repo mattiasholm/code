@@ -124,6 +124,16 @@ terraform apply --replace <terraform-resource-type>.<symbolic-name>
 
 <br><br>
 
+## Query existing unmanaged resources:
+```shell
+terraform query
+```
+
+## Query existing unmanaged resources and generate Terraform config automatically:
+```shell
+terraform query -generate-config-out='<path>'
+```
+
 ## Mark a resource as tainted:
 ```shell
 terraform taint <terraform-resource-type>.<symbolic-name>
