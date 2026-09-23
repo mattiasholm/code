@@ -4,11 +4,15 @@ set -e
 
 function setVariables() {
     path=~/repos
-    urls=(
-        'https://github.com/mattiasholm/code.git'
-        'https://github.com/mattiasholm/drinks.git'
-        'https://github.com/mattiasholm/lyrics.git'
-        'https://github.com/mattiasholm/tunes.git'
+    baseUrl='https://github.com/mattiasholm'
+    repos=(
+        'mattiasholm'
+        'mattiasholm.github.io'
+        'code'
+        'drinks'
+        'tunes'
+        'dives'
+        'lyrics'
     )
 }
 
@@ -18,8 +22,8 @@ function cloneRepos() {
 
     echo ''
 
-    for url in ${urls[*]}; do
-        name=$(basename "$url" | sed 's/.git$//')
+    for name in ${repos[*]}; do
+        url="$baseUrl/$name.git"
 
         if [[ ! -d "$path/$name" ]]; then
             echo "Want to clone $url? (y/n)"

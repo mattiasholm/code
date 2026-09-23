@@ -1,5 +1,5 @@
 export PS1="\[\033[00;32m\]\u@\h\[\033[00m\]:\[\033[00;35m\]\w\[\033[36m\]\$(echo ' ('\$(git rev-parse --abbrev-ref HEAD 2>/dev/null)')' | sed 's/ ()//')\[\033[00m\] $ "
-export PATH="/usr/local/sbin:$PATH"
+export PATH="/opt/homebrew/sbin /opt/homebrew/bin /usr/bin /bin /usr/sbin /sbin"
 export LSCOLORS='cxfxcxdxbxcgcdabagacad'
 
 alias -- -='cd -'

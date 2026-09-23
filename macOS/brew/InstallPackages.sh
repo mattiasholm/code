@@ -11,7 +11,9 @@ topLevel="$(git rev-parse --show-toplevel)"
 
 touch ~/.hushlogin
 
-NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 echo '# sudo: auth account password session
 auth       sufficient     pam_tid.so
@@ -33,9 +35,9 @@ brew install ipcalc
 brew install gh
 brew install azcopy
 brew install azure/bicep/bicep
-brew install terraform
+brew install hashicorp/tap/terraform
 brew install opentofu
-brew install tflint
+brew install terraform-linters/tap/tflint
 brew install tfsec
 brew install terrascan
 brew install terraform-docs
@@ -60,19 +62,14 @@ brew install bash
 . "$topLevel/bash/.bashrc"
 .b
 
-if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/bash)" ]]; then
-    echo '/usr/local/bin/bash' | sudo tee -a /etc/shells
-fi
-
 brew install fish
 cp "$topLevel/fish/config.fish" ~/.config/fish/config.fish
+grep -qx '/opt/homebrew/bin/fish' /etc/shells || echo '/opt/homebrew/bin/fish' | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
 
-if [[ -z "$(cat /etc/shells | grep -- /usr/local/bin/fish)" ]]; then
-    echo '/usr/local/bin/fish' | sudo tee -a /etc/shells
-fi
-
-chsh -s /usr/local/bin/fish
-sudo chsh -s /usr/local/bin/fish
+brew install powershell &&
+    pwsh "$topLevel/pwsh/InstallModules.ps1" &&
+    cp "$topLevel/pwsh/Microsoft.PowerShell_profile.ps1" ~/.config/powershell/Microsoft.PowerShell_profile.ps1
 
 brew install mas &&
     chmod +x "$topLevel/macOS/mas/InstallApps.sh" &&
@@ -84,8 +81,8 @@ brew install git &&
     git config --global init.defaultBranch main &&
     git config --global push.autoSetupRemote true &&
     git config --global credential.helper osxkeychain &&
-    chmod +x "$topLevel/git/cloneRepos.sh" &&
-    "$topLevel/git/cloneRepos.sh"
+    chmod +x "$topLevel/github/clone.sh" &&
+    "$topLevel/github/clone.sh"
 
 brew install azure-cli &&
     (
@@ -94,36 +91,28 @@ brew install azure-cli &&
         az extension add -y --source https://azclishowdeployment.blob.core.windows.net/releases/dist/show_deployment-0.0.7-py2.py3-none-any.whl
     )
 
-brew install --cask iterm2
-brew install --cask dotnet-sdk
-brew install --cask postman
-brew install --cask microsoft-azure-storage-explorer
-brew install --cask google-chrome
-brew install --cask drawio
-brew install --cask intune-company-portal
-brew install --cask microsoft-office
-brew install --cask microsoft-teams
-brew install --cask zoom
-brew install --cask teamviewer
-brew install --cask watchguard-mobile-vpn-with-ssl
-brew install --cask avg-antivirus
-brew install --cask dropbox
-brew install --cask balenaetcher
-brew install --cask zap
-brew install --cask gimp
-brew install --cask paintbrush
-brew install --cask vlc
-brew install --cask spotify
-brew install --cask plex-media-server
-brew install --cask obs
-brew install --cask openemu
-brew install --cask tor-browser
-brew install --cask transmission
+brew install --cask --force iterm2
+brew install --cask --force dotnet-sdk
+brew install --cask --force postman
+brew install --cask --force microsoft-azure-storage-explorer
+brew install --cask --force google-chrome
+brew install --cask --force drawio
+brew install --cask --force intune-company-portal
+brew install --cask --force microsoft-office
+brew install --cask --force microsoft-teams
+brew install --cask --force zoom
+brew install --cask --force teamviewer
+brew install --cask --force avg-antivirus
+brew install --cask --force dropbox
+brew install --cask --force gimp
+brew install --cask --force paintbrush
+brew install --cask --force vlc
+brew install --cask --force spotify
+brew install --cask --force plex-media-server
+brew install --cask --force obs
+brew install --cask --force tor-browser
+brew install --cask --force transmission
 
-brew install --cask visual-studio-code &&
+brew install --cask --force visual-studio-code &&
     chmod +x "$topLevel/vscode/InstallExtensions.sh" &&
     "$topLevel/vscode/InstallExtensions.sh"
-
-brew install --cask powershell &&
-    pwsh "$topLevel/pwsh/InstallModules.ps1" &&
-    cp "$topLevel/pwsh/Microsoft.PowerShell_profile.ps1" ~/.config/powershell/Microsoft.PowerShell_profile.ps1

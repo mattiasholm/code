@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Password for your PFX file
 export PFX_PASSWORD=""

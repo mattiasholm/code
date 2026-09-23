@@ -1,4 +1,4 @@
-set -x PATH /usr/local/sbin $PATH
+set -x PATH /opt/homebrew/sbin /opt/homebrew/bin /usr/bin /bin /usr/sbin /sbin
 set -x LSCOLORS cxfxcxdxbxcgcdabagacad
 
 set fish_greeting ''

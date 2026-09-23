@@ -26,7 +26,6 @@ exts=(
     'bierner.markdown-emoji'
     'bierner.markdown-mermaid'
     'bierner.markdown-footnotes'
-    'cschleiden.vscode-github-actions'
     'waderyan.gitblame'
     'jasonnutter.vscode-codeowners'
     'gurumukhi.selected-lines-count'
