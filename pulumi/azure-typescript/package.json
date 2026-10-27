@@ -6,7 +6,7 @@
         "@pulumi/pulumi": "~3.271.0",
         "@pulumi/azuread": "~6.10.1",
         "@pulumi/azure-native": "~3.28.0",
-        "@azure/identity": "~4.13.3",
+        "@azure/identity": "~4.14.0",
         "@azure/arm-authorization": "~9.0.0"
     },
     "devDependencies": {
