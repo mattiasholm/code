@@ -3,22 +3,22 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
 
   - package-ecosystem: terraform
     directories:
       - /terraform/**
     schedule:
-      interval: weekly
+      interval: monthly
 
   - package-ecosystem: npm
     directories:
       - /pulumi/**
     schedule:
-      interval: weekly
+      interval: monthly
 
   - package-ecosystem: pip
     directories:
       - /**
     schedule:
-      interval: weekly
+      interval: monthly
